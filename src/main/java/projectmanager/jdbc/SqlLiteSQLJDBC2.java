@@ -17,6 +17,7 @@ public class SqlLiteSQLJDBC2 {
             Class.forName("org.sqlite.JDBC");
             
             // Établit la connexion à la base de données
+            // Salma
             c = DriverManager
                .getConnection("jdbc:sqlite:" + DBPath);
             c.setAutoCommit(false);
