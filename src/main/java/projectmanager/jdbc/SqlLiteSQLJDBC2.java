@@ -10,7 +10,7 @@ public class SqlLiteSQLJDBC2 {
     public static void main(String[] args) {
         Connection c = null;
         Statement stmt = null;
-        final String DBPath = "C:\\DEV\\SqLite\\sample.db";
+        final String DBPath = SqlLiteSQLJDBC2.class.getClassLoader().getResource("sample.db").getPath();
 
         try {
             // Charge le driver JDBC de PostgreSQL
