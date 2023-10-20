@@ -69,5 +69,7 @@
 			<artifactId>javafx-swing</artifactId>
 			<version>21.0.1</version>
 		</dependency>
+
+
 	</dependencies>
 </project>
