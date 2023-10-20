@@ -1,4 +1,5 @@
 package gestion.model;
+
 import java.util.*;
 
 public class Projet {
@@ -6,12 +7,23 @@ public class Projet {
 	private String nomMatiere;
 	private String Sujet;
 	private Date dateRemiseRapport;
-	
-	public Projet(int Id,String Matiere,String sujet,Date dateRemise) {
-		this.IdProjet=Id;
-		this.nomMatiere=Matiere;
-		this.Sujet=sujet;
-		this.dateRemiseRapport=dateRemise;
+
+	public Projet(int Id, String Matiere, String sujet, Date dateRemise) {
+		this.IdProjet = Id;
+		this.nomMatiere = Matiere;
+		this.Sujet = sujet;
+		this.dateRemiseRapport = dateRemise;
+	}
+
+	public Projet(String Matiere, String sujet, Date dateRemise) {
+
+		this.nomMatiere = Matiere;
+		this.Sujet = sujet;
+		this.dateRemiseRapport = dateRemise;
+	}
+
+	public Projet() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getIdProjet() {
@@ -51,6 +63,5 @@ public class Projet {
 		return "Projet [IdProjet=" + IdProjet + ", nomMatiere=" + nomMatiere + ", Sujet=" + Sujet
 				+ ", dateRemiseRapport=" + dateRemiseRapport + "]";
 	}
-	
 
 }

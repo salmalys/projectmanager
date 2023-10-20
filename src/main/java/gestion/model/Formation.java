@@ -3,10 +3,15 @@ package gestion.model;
 public class Formation {
 	private int IdFormation;
 	private String NomFormation;
-	private Promotion promot;
+	private String promot;
 
-	public Formation(int Id, String nomF, Promotion promot) {
+	public Formation(int Id, String nomF, String promot) {
 		this.IdFormation = Id;
+		this.NomFormation = nomF;
+		this.promot = promot;
+	}
+	public Formation( String nomF, String promot) {
+		
 		this.NomFormation = nomF;
 		this.promot = promot;
 	}
@@ -27,11 +32,11 @@ public class Formation {
 		NomFormation = nomFormation;
 	}
 
-	public Promotion getPromotion() {
+	public String getPromotion() {
 		return this.promot;
 	}
 
-	public void setPromotion(Promotion promotion) {
+	public void setPromotion(String promotion) {
 		this.promot = promotion;
 	}
 

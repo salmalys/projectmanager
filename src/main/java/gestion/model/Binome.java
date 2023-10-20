@@ -13,6 +13,13 @@ public class Binome {
 		this.projet = p;
 
 	}
+	public Binome( Etudiant e1, Etudiant e2, Projet p) {
+		
+		this.membre1 = e1;
+		this.membre2 = e2;
+		this.projet = p;
+
+	}
 
 	public int getIdBinome() {
 		return IdBinome;

@@ -13,8 +13,17 @@ public class Etudiant {
 		this.Prenom = prenom;
 		this.formation=formation;
 	}
+	public Etudiant( String nom, String prenom,Formation formation) {
+	
+		this.Nom = nom;
+		this.Prenom = prenom;
+		this.formation=formation;
+	}
 	
 
+	public Etudiant() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getIdEtudiant() {
 		return IdEtudiant;
 	}
