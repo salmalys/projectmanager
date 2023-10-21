@@ -1,13 +1,14 @@
-package gestion.dao;
+package eu.dauphine.idd.projectmanager.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.sql.SQLException;
 
-import gestion.model.Binome;
-import gestion.model.Etudiant;
+import eu.dauphine.idd.projectmanager.model.Binome;
+import eu.dauphine.idd.projectmanager.model.Etudiant;
+
+import java.sql.SQLException;
 
 public class BinomeDAO {
 	private Connection connexion;

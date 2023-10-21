@@ -1,11 +1,11 @@
-package gestion.dao;
+package eu.dauphine.idd.projectmanager.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import gestion.model.Note;
+import eu.dauphine.idd.projectmanager.model.Note;
 
 import java.sql.SQLException;
 

@@ -1,12 +1,14 @@
-package gestion.dao;
+package eu.dauphine.idd.projectmanager.main;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import gestion.model.*;
-import projectmanager.jdbc.SqlLiteSQLJDBC2;
+import eu.dauphine.idd.projectmanager.dao.EtudiantDAO;
+import eu.dauphine.idd.projectmanager.dao.FormationDAO;
+import eu.dauphine.idd.projectmanager.jdbc.SqlLiteSQLJDBC2;
+import eu.dauphine.idd.projectmanager.model.*;
 
 public class EnseignantApp {
 	public static void main(String[] args) {

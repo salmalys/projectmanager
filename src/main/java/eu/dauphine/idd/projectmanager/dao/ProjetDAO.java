@@ -1,13 +1,14 @@
-package gestion.dao;
+package eu.dauphine.idd.projectmanager.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.sql.SQLException;
 
-import gestion.model.Etudiant;
-import gestion.model.Projet;
+import eu.dauphine.idd.projectmanager.model.Etudiant;
+import eu.dauphine.idd.projectmanager.model.Projet;
+
+import java.sql.SQLException;
 
 public class ProjetDAO {
 	private Connection connexion;

@@ -1,4 +1,4 @@
-package gestion.model;
+package eu.dauphine.idd.projectmanager.model;
 
 public class Formation {
 	private int IdFormation;

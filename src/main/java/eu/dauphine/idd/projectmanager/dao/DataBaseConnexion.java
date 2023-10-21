@@ -1,4 +1,4 @@
-package gestion.dao;
+package eu.dauphine.idd.projectmanager.dao;
 
 import java.sql.*;
 
