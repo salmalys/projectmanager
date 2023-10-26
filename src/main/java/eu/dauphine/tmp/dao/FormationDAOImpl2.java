@@ -1,23 +1,23 @@
-package eu.dauphine.idd.projectmanager.dao;
+package eu.dauphine.tmp.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import eu.dauphine.idd.projectmanager.model.Etudiant;
-import eu.dauphine.idd.projectmanager.model.Formation;
+import eu.dauphine.idd.pm.model.Etudiant;
+import eu.dauphine.idd.pm.model.Formation;
 
 import java.sql.SQLException;
 
-public class FormationDAO {
+public class FormationDAOImpl2 {
 	private Connection connexion;
 
-	public FormationDAO(Connection connexion) {
+	public FormationDAOImpl2(Connection connexion) {
 		this.connexion = connexion;
 	}
 
-	// Méthode pour créer la table
+	// Mï¿½thode pour crï¿½er la table
 	public void createTable() throws SQLException {
 		String query = "CREATE TABLE IF NOT EXISTS formations (" + "id SERIAL PRIMARY KEY,"
 				+ "nom VARCHAR(255) NOT NULL," + "promotion VARCHAR(255) NOT NULL" + ")";
@@ -29,7 +29,7 @@ public class FormationDAO {
 	    String query = "INSERT INTO formations (nom, promotion) VALUES (?, ?)";
 
 	    try (PreparedStatement statement = connexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-	        statement.setString(1, formation.getNomFormation());
+	        statement.setString(1, formation.getNom());
 	        statement.setString(2, formation.getPromotion());
 
 	        statement.executeUpdate();

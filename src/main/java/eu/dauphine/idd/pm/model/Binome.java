@@ -1,4 +1,4 @@
-package eu.dauphine.idd.projectmanager.model;
+package eu.dauphine.idd.pm.model;
 
 public class Binome {
 	private int IdBinome;

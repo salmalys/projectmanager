@@ -1,11 +1,11 @@
-package eu.dauphine.idd.projectmanager.dao;
+package eu.dauphine.tmp.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import eu.dauphine.idd.projectmanager.model.Note;
+import eu.dauphine.idd.pm.model.Note;
 
 import java.sql.SQLException;
 
@@ -16,7 +16,7 @@ public class NoteDAO {
 		this.connexion = connexion;
 	}
 
-	// Méthode pour créer la table
+	// Mï¿½thode pour crï¿½er la table
 	public void createTable() throws SQLException {
 		String query = "CREATE TABLE IF NOT EXISTS notes (" + "id SERIAL PRIMARY KEY,"
 				+ "note_rapport DOUBLE precision," + "note_soutenance DOUBLE precision," + "date_remise_effective DATE,"

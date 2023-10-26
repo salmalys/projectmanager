@@ -1,4 +1,4 @@
-package eu.dauphine.idd.projectmanager.controller;
+package eu.dauphine.idd.pm.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,6 +6,6 @@ import javafx.fxml.FXML;
 public class MainController {
     @FXML
     private void handleButtonClick(ActionEvent event) {
-        System.out.println("Bouton cliqué!");
+        System.out.println("Bouton cliquï¿½!");
     }
 }

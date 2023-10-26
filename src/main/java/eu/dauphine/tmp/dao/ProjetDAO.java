@@ -1,12 +1,12 @@
-package eu.dauphine.idd.projectmanager.dao;
+package eu.dauphine.tmp.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import eu.dauphine.idd.projectmanager.model.Etudiant;
-import eu.dauphine.idd.projectmanager.model.Projet;
+import eu.dauphine.idd.pm.model.Etudiant;
+import eu.dauphine.idd.pm.model.Projet;
 
 import java.sql.SQLException;
 
@@ -17,7 +17,7 @@ public class ProjetDAO {
 		this.connexion = connexion;
 	}
 
-	// Méthode pour créer la table'
+	// Mï¿½thode pour crï¿½er la table'
 	public void createTable() throws SQLException {
 		String query = "CREATE TABLE IF NOT EXISTS projets (" + "id SERIAL PRIMARY KEY,"
 				+ "nom_matiere VARCHAR(255) NOT NULL," + "sujet VARCHAR(255) NOT NULL," + "date_remise_prevue DATE"

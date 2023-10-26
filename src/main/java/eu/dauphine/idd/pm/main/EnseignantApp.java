@@ -1,14 +1,14 @@
-package eu.dauphine.idd.projectmanager.main;
+package eu.dauphine.idd.pm.main;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.dauphine.idd.projectmanager.dao.EtudiantDAO;
-import eu.dauphine.idd.projectmanager.dao.FormationDAO;
-import eu.dauphine.idd.projectmanager.jdbc.SqlLiteSQLJDBC2;
-import eu.dauphine.idd.projectmanager.model.*;
+import eu.dauphine.idd.pm.jdbc.SqlLiteSQLJDBC2;
+import eu.dauphine.idd.pm.model.*;
+import eu.dauphine.tmp.dao.EtudiantDAOImpl2;
+import eu.dauphine.tmp.dao.FormationDAOImpl2;
 
 public class EnseignantApp {
 	public static void main(String[] args) {
@@ -18,9 +18,9 @@ public class EnseignantApp {
 
 			// Création d'une liste d'objets à ajouter
 			List<Object> objetsAInserer = new ArrayList<>();
-		EtudiantDAO x=	new EtudiantDAO(connection);
+		EtudiantDAOImpl2 x=	new EtudiantDAOImpl2(connection);
 		x.createTable();
-		FormationDAO s=new FormationDAO(connection);
+		FormationDAOImpl2 s=new FormationDAOImpl2(connection);
 		s.createTable();
  
 			// Création de formations

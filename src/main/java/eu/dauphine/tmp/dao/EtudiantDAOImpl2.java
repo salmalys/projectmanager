@@ -1,26 +1,26 @@
-package eu.dauphine.idd.projectmanager.dao;
+package eu.dauphine.tmp.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import eu.dauphine.idd.projectmanager.model.Etudiant;
+import eu.dauphine.idd.pm.model.Etudiant;
 
 import java.sql.SQLException;
 
-public class EtudiantDAO {
+public class EtudiantDAOImpl2 {
 	private Connection connexion;
 
-	public EtudiantDAO(Connection connexion) {
+	public EtudiantDAOImpl2(Connection connexion) {
 		this.connexion = connexion;
 	}
 
-	public EtudiantDAO() {
+	public EtudiantDAOImpl2() {
 		// TODO Auto-generated constructor stub
 	}
 
-	// Méthode pour créer la table
+	// Mï¿½thode pour crï¿½er la table
 	public void createTable() throws SQLException {
 		String query = "CREATE TABLE IF NOT EXISTS etudiants (" + "id SERIAL PRIMARY KEY,"
 				+ "nom VARCHAR(255) NOT NULL," + "prenom VARCHAR(255) NOT NULL," + "id_formation INT,"

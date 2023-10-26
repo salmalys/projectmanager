@@ -1,4 +1,4 @@
-package eu.dauphine.idd.projectmanager.main;
+package eu.dauphine.idd.pm.main;
 	
 import javafx.application.Application;
 import javafx.stage.Stage;

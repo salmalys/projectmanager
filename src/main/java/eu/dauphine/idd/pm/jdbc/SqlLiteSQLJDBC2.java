@@ -1,4 +1,4 @@
-package eu.dauphine.idd.projectmanager.jdbc;
+package eu.dauphine.idd.pm.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import eu.dauphine.idd.projectmanager.model.*;
+import eu.dauphine.idd.pm.model.*;
 
 public class SqlLiteSQLJDBC2 {
     private static Connection connection;
