@@ -2,7 +2,6 @@ package eu.dauphine.idd.pm.service;
 
 import eu.dauphine.idd.pm.dao.DAOFactory;
 import eu.dauphine.idd.pm.dao.FormationDAO;
-import eu.dauphine.idd.pm.dao.impl.FormationDAOImpl;
 import eu.dauphine.idd.pm.model.Formation;
 
 import java.util.List;
@@ -18,12 +17,12 @@ public class FormationService {
     public void createFormation(String nom, String promotion) {
         Formation formation = new Formation(nom, promotion);
         formationDAO.create(formation);
-        System.out.println("Formation créée avec succès : " + formation);
+        System.out.println("Formation cree avec succes : " + formation);
     }
 
     public void deleteFormationById(int id) {
         formationDAO.deleteById(id);
-        System.out.println("Formation avec l'ID " + id + " supprimée avec succès.");
+        System.out.println("Formation avec l'ID " + id + " supprimee avec succes.");
     }
 
     public void listFormations() {
@@ -33,6 +32,4 @@ public class FormationService {
             System.out.println(formation);
         }
     }
-
-    // Vous pouvez ajouter d'autres méthodes pour d'autres opérations si nécessaire
 }

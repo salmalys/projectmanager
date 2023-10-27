@@ -19,7 +19,7 @@ public class FormationDAOImpl implements FormationDAO {
     
     private Connection getConnection() {
         try {
-            return DatabaseConnection.getInstance().getConnection();
+        	return DatabaseConnection.getInstance().getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

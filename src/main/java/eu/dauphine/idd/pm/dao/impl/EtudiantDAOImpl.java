@@ -1,6 +1,7 @@
 package eu.dauphine.idd.pm.dao.impl;
 
 import eu.dauphine.idd.pm.dao.EtudiantDAO;
+import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 import eu.dauphine.idd.pm.model.Etudiant;
 import eu.dauphine.idd.pm.model.Formation;
 
@@ -17,10 +18,14 @@ public class EtudiantDAOImpl implements EtudiantDAO {
     private static final String DELETE_ETUDIANT_BY_ID = "DELETE FROM Etudiant WHERE ID_Etudiant = ?";
 
     private Connection getConnection() {
-        // TODO: Retournez une connexion à la base de données
-        return null;
+        try {
+        	return DatabaseConnection.getInstance().getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
-
+    
     @Override
     public void create(Etudiant etudiant) {
         try (Connection connection = getConnection();
@@ -28,8 +33,7 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 
             preparedStatement.setString(1, etudiant.getNom());
             preparedStatement.setString(2, etudiant.getPrenom());
-            preparedStatement.setInt(3, etudiant.getFormation().getIdFormation()); // Supposant que Formation a une méthode getId()
-
+            preparedStatement.setInt(3, etudiant.getFormation().getIdFormation()); 
             preparedStatement.executeUpdate();
 
             try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
