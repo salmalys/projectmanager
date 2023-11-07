@@ -8,28 +8,28 @@ import java.util.List;
 
 public class FormationService {
 
-    private FormationDAO formationDAO;
+	private FormationDAO formationDAO;
 
-    public FormationService() {
-        this.formationDAO = DAOFactory.getFormationDAO();
-    }
+	public FormationService() {
+		this.formationDAO = DAOFactory.getFormationDAO();
+	}
 
-    public void createFormation(String nom, String promotion) {
-        Formation formation = new Formation(nom, promotion);
-        formationDAO.create(formation);
-        System.out.println("Formation cree avec succes : " + formation);
-    }
+	public void createFormation(String nom, String promotion) {
+		Formation formation = new Formation(nom, promotion);
+		formationDAO.create(formation);
+		System.out.println("Formation cree avec succes : " + formation);
+	}
 
-    public void deleteFormationById(int id) {
-        formationDAO.deleteById(id);
-        System.out.println("Formation avec l'ID " + id + " supprimee avec succes.");
-    }
+	public void deleteFormationById(int id) {
+		formationDAO.deleteById(id);
+		System.out.println("Formation avec l'ID " + id + " supprimee avec succes.");
+	}
 
-    public void listFormations() {
-        List<Formation> formations = formationDAO.findAll();
-        System.out.println("Liste des formations : ");
-        for (Formation formation : formations) {
-            System.out.println(formation);
-        }
-    }
+	public void listFormations() {
+		List<Formation> formations = formationDAO.findAll();
+		System.out.println("Liste des formations : ");
+		for (Formation formation : formations) {
+			System.out.println(formation);
+		}
+	}
 }
