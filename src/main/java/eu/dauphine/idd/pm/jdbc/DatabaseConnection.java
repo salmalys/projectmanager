@@ -8,15 +8,16 @@ public class DatabaseConnection {
 
 	private static DatabaseConnection instance;
 	private Connection connection;
+	private static String dbPath;
 
 	// private static final String DB_PATH =
 	// DatabaseConnection.class.getClassLoader().getResource("sample.db").getPath();
-	private static final String DB_PATH = "./src/main/resources/sample.db";
+	// private static final String DB_PATH = "./src/main/resources/sample.db";
 
 	private DatabaseConnection() throws SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			connection = DriverManager.getConnection("jdbc:sqlite:" + DB_PATH);
+			connection = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
 			// connection.setAutoCommit(true);
 
 		} catch (ClassNotFoundException | SQLException e) {
@@ -29,6 +30,10 @@ public class DatabaseConnection {
 		return connection;
 	}
 
+	public static void setDatabasePath(String dbPath) {
+        DatabaseConnection.dbPath = dbPath;
+    }
+	
 	public static DatabaseConnection getInstance() throws SQLException {
 		if (instance == null) {
 			instance = new DatabaseConnection();

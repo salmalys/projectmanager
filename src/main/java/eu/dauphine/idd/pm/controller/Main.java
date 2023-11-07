@@ -1,5 +1,6 @@
 package eu.dauphine.idd.pm.controller;
 
+import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.FXML;
@@ -46,6 +47,12 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
+		String dbPath = "./src/main/resources/sample.db" ;
+		if (args.length > 0) {
+			dbPath = args[0]; // Utiliser le premier argument comme chemin de la base de données
+	    }
+		System.out.println("dbPath" + dbPath);
+		DatabaseConnection.setDatabasePath(dbPath);
 		launch(args);
 	}
 }
