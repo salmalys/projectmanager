@@ -10,7 +10,7 @@ public class Note {
 	private double noteSoutenance;
 	private Date dateRemiseEffective;
 
-	public Note(int id, Binome b, Etudiant e, double noteR, double noteS, Date date){
+	public Note(int id, Binome b, Etudiant e, double noteR, double noteS, Date date) {
 		this.binome = b;
 		this.etudiant = e;
 		this.noteRapport = noteR;
@@ -27,30 +27,62 @@ public class Note {
 		this.dateRemiseEffective = date;
 	}
 
-	public Note() {}
+	public Note() {
+	}
 
-	public Date getDateRemiseEffective() {return this.dateRemiseEffective;}
-	public void setDateRemiseEffective(Date date) {this.dateRemiseEffective = date;}
+	public Date getDateRemiseEffective() {
+		return this.dateRemiseEffective;
+	}
 
-	public Binome getBinome() {return this.binome;}
-	public void setBinome(Binome binome) {this.binome = binome;}
+	public void setDateRemiseEffective(Date date) {
+		this.dateRemiseEffective = date;
+	}
 
-	public Etudiant getEtudiant() {return this.etudiant;}
-	public void setEtudiant(Etudiant etudiant) {this.etudiant = etudiant;}
+	public Binome getBinome() {
+		return this.binome;
+	}
 
-	public double getNoteRapport() {return this.noteRapport;}
-	public void setNoteRapport(double noteRapport) {this.noteRapport = noteRapport;}
+	public void setBinome(Binome binome) {
+		this.binome = binome;
+	}
 
-	public double getNoteSoutenance() {return this.noteSoutenance;}
-	public void setNoteSoutenance(double noteSoutenance) {this.noteSoutenance = noteSoutenance;}
+	public Etudiant getEtudiant() {
+		return this.etudiant;
+	}
 
-	public int getId() {return this.id;}
-	public void setId(int id) {this.id = id;}
+	public void setEtudiant(Etudiant etudiant) {
+		this.etudiant = etudiant;
+	}
+
+	public double getNoteRapport() {
+		return this.noteRapport;
+	}
+
+	public void setNoteRapport(double noteRapport) {
+		this.noteRapport = noteRapport;
+	}
+
+	public double getNoteSoutenance() {
+		return this.noteSoutenance;
+	}
+
+	public void setNoteSoutenance(double noteSoutenance) {
+		this.noteSoutenance = noteSoutenance;
+	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	@Override
 	public String toString() {
-		return "Note [binome = " + this.binome.toString() + ", etudiant = " + this.etudiant.toString() + ", NoteRapport = " + this.noteRapport
-				+ ", NoteSoutenance = " + this.noteSoutenance + ", dateRemiseEffective =" + this.dateRemiseEffective + "]";
+		return "Note [binome = " + this.binome.toString() + ", etudiant = " + this.etudiant.toString()
+				+ ", NoteRapport = " + this.noteRapport + ", NoteSoutenance = " + this.noteSoutenance
+				+ ", dateRemiseEffective =" + this.dateRemiseEffective + "]";
 	}
 
 }

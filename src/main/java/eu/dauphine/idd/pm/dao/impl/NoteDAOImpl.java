@@ -12,108 +12,112 @@ import java.util.List;
 
 public class NoteDAOImpl implements NoteDAO {
 	private static final String INSERT_NOTE = "INSERT INTO Notes(binome, etudiant, noteRapport, noteSoutenance, dateRemiseEffective) VALUES (?, ?, ?, ?, ?)";
-    private static final String UPDATE_NOTE = "UPDATE Notes SET binome=?, etudiant=?, noteRapport=?, noteSoutenance=?, dateRemiseEffective=? WHERE id=?";
-    private static final String DELETE_NOTE = "DELETE FROM Notes WHERE id=?";
-    private static final String FIND_BY_ID = "SELECT * FROM Notes WHERE id=?";
-    private static final String FIND_ALL = "SELECT * FROM Notes";
+	private static final String UPDATE_NOTE = "UPDATE Notes SET binome=?, etudiant=?, noteRapport=?, noteSoutenance=?, dateRemiseEffective=? WHERE id=?";
+	private static final String DELETE_NOTE = "DELETE FROM Notes WHERE id=?";
+	private static final String FIND_BY_ID = "SELECT * FROM Notes WHERE id=?";
+	private static final String FIND_ALL = "SELECT * FROM Notes";
 
-    private Connection getConnection() {
-        try {
-        	return DatabaseConnection.getInstance().getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    @Override
-    public void create(Note note) {
-        try (Connection connection = getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NOTE, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setInt(1, note.getBinome().getIdBinome()); // Assumant que Binome a une méthode getId()
-            preparedStatement.setInt(2, note.getEtudiant().getIdEtudiant()); // Assumant que Etudiant a une méthode getId()
-            preparedStatement.setDouble(3, note.getNoteRapport());
-            preparedStatement.setDouble(4, note.getNoteSoutenance());
-            preparedStatement.setDate(5, new java.sql.Date(note.getDateRemiseEffective().getTime()));
-            preparedStatement.executeUpdate();
+	private Connection getConnection() {
+		try {
+			return DatabaseConnection.getInstance().getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    note.setId(generatedKeys.getInt(1));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+	@Override
+	public void create(Note note) {
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NOTE,
+						Statement.RETURN_GENERATED_KEYS)) {
+			preparedStatement.setInt(1, note.getBinome().getIdBinome()); // Assumant que Binome a une mï¿½thode getId()
+			preparedStatement.setInt(2, note.getEtudiant().getIdEtudiant()); // Assumant que Etudiant a une mï¿½thode
+																				// getId()
+			preparedStatement.setDouble(3, note.getNoteRapport());
+			preparedStatement.setDouble(4, note.getNoteSoutenance());
+			preparedStatement.setDate(5, new java.sql.Date(note.getDateRemiseEffective().getTime()));
+			preparedStatement.executeUpdate();
 
-    @Override
-    public void update(Note note) {
-        try (Connection connection = getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_NOTE)) {
-            preparedStatement.setInt(1, note.getBinome().getIdBinome());
-            preparedStatement.setInt(2, note.getEtudiant().getIdEtudiant());
-            preparedStatement.setDouble(3, note.getNoteRapport());
-            preparedStatement.setDouble(4, note.getNoteSoutenance());
-            preparedStatement.setDate(5, new java.sql.Date(note.getDateRemiseEffective().getTime()));
-            preparedStatement.setInt(6, note.getId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+			try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+				if (generatedKeys.next()) {
+					note.setId(generatedKeys.getInt(1));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    public void deleteById(int id) {
-        try (Connection connection = getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(DELETE_NOTE)) {
-        	preparedStatement.setInt(1, id);
-        	preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+	@Override
+	public void update(Note note) {
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_NOTE)) {
+			preparedStatement.setInt(1, note.getBinome().getIdBinome());
+			preparedStatement.setInt(2, note.getEtudiant().getIdEtudiant());
+			preparedStatement.setDouble(3, note.getNoteRapport());
+			preparedStatement.setDouble(4, note.getNoteSoutenance());
+			preparedStatement.setDate(5, new java.sql.Date(note.getDateRemiseEffective().getTime()));
+			preparedStatement.setInt(6, note.getId());
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    public Note findById(int id) {
-        try (Connection connection = getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
-        	preparedStatement.setInt(1, id);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                return mapToNote(rs);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+	@Override
+	public void deleteById(int id) {
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(DELETE_NOTE)) {
+			preparedStatement.setInt(1, id);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    public List<Note> findAll() {
-    	Connection connection = getConnection();
-        List<Note> notes = new ArrayList<>();
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(FIND_ALL)) {
-            while (rs.next()) {
-                notes.add(mapToNote(rs));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return notes;
-    }
+	@Override
+	public Note findById(int id) {
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
+			preparedStatement.setInt(1, id);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				return mapToNote(rs);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
-    private Note mapToNote(ResultSet rs) throws SQLException {
-        Note note = new Note();
-        note.setId(rs.getInt("id"));
-        // Pour simplifier, je crée de nouveaux objets Binome et Etudiant uniquement avec leurs IDs.
-        // Dans une implémentation complète, vous souhaiterez peut-être récupérer toutes les informations
-        // de ces objets depuis la base de données.
-        //note.setBinome(new Binome(rs.getInt("binome")));
-        //note.setEtudiant(new Etudiant(rs.getInt("etudiant")));
-        note.setNoteRapport(rs.getDouble("noteRapport"));
-        note.setNoteSoutenance(rs.getDouble("noteSoutenance"));
-        note.setDateRemiseEffective(rs.getDate("dateRemiseEffective"));
-        return note;
-    }
+	@Override
+	public List<Note> findAll() {
+		Connection connection = getConnection();
+		List<Note> notes = new ArrayList<>();
+		try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(FIND_ALL)) {
+			while (rs.next()) {
+				notes.add(mapToNote(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return notes;
+	}
+
+	private Note mapToNote(ResultSet rs) throws SQLException {
+		Note note = new Note();
+		note.setId(rs.getInt("id"));
+		// Pour simplifier, je crï¿½e de nouveaux objets Binome et Etudiant uniquement
+		// avec leurs IDs.
+		// Dans une implï¿½mentation complï¿½te, vous souhaiterez peut-ï¿½tre rï¿½cupï¿½rer toutes
+		// les informations
+		// de ces objets depuis la base de donnï¿½es.
+		// note.setBinome(new Binome(rs.getInt("binome")));
+		// note.setEtudiant(new Etudiant(rs.getInt("etudiant")));
+		note.setNoteRapport(rs.getDouble("noteRapport"));
+		note.setNoteSoutenance(rs.getDouble("noteSoutenance"));
+		note.setDateRemiseEffective(rs.getDate("dateRemiseEffective"));
+		return note;
+	}
 }

@@ -21,19 +21,40 @@ public class Projet {
 		this.dateRemiseRapport = dateRemise;
 	}
 
-	public Projet() {}
+	public Projet() {
+	}
 
-	public int getIdProjet() {return this.idProjet;}
-	public void setIdProjet(int idProjet) {this.idProjet = idProjet;}
+	public int getIdProjet() {
+		return this.idProjet;
+	}
 
-	public String getNomMatiere() {return this.nomMatiere;}
-	public void setNomMatiere(String nomMatiere) {this.nomMatiere = nomMatiere;}
+	public void setIdProjet(int idProjet) {
+		this.idProjet = idProjet;
+	}
 
-	public String getSujet() {return this.sujet;}
-	public void setSujet(String sujet) {this.sujet = sujet;}
+	public String getNomMatiere() {
+		return this.nomMatiere;
+	}
 
-	public Date getDateRemiseRapport() {return dateRemiseRapport;}
-	public void setDateRemiseRapport(Date dateRemiseRapport) {this.dateRemiseRapport = dateRemiseRapport;}
+	public void setNomMatiere(String nomMatiere) {
+		this.nomMatiere = nomMatiere;
+	}
+
+	public String getSujet() {
+		return this.sujet;
+	}
+
+	public void setSujet(String sujet) {
+		this.sujet = sujet;
+	}
+
+	public Date getDateRemiseRapport() {
+		return dateRemiseRapport;
+	}
+
+	public void setDateRemiseRapport(Date dateRemiseRapport) {
+		this.dateRemiseRapport = dateRemiseRapport;
+	}
 
 	@Override
 	public String toString() {

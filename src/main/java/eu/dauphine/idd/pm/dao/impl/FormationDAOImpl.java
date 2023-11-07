@@ -10,113 +10,113 @@ import java.util.List;
 
 public class FormationDAOImpl implements FormationDAO {
 
-    private static final String INSERT_FORMATION = "INSERT INTO Formation (Nom, Promotion) VALUES (?, ?)";
-    private static final String SELECT_FORMATION_BY_ID = "SELECT * FROM Formation WHERE ID_Formation = ?";
-    private static final String SELECT_ALL_FORMATIONS = "SELECT * FROM Formation";
-    private static final String UPDATE_FORMATION = "UPDATE Formation SET Nom = ?, Promotion = ? WHERE ID_Formation = ?";
-    private static final String DELETE_FORMATION_BY_ID = "DELETE FROM Formation WHERE ID_Formation = ?";
+	private static final String INSERT_FORMATION = "INSERT INTO Formation (Nom, Promotion) VALUES (?, ?)";
+	private static final String SELECT_FORMATION_BY_ID = "SELECT * FROM Formation WHERE ID_Formation = ?";
+	private static final String SELECT_ALL_FORMATIONS = "SELECT * FROM Formation";
+	private static final String UPDATE_FORMATION = "UPDATE Formation SET Nom = ?, Promotion = ? WHERE ID_Formation = ?";
+	private static final String DELETE_FORMATION_BY_ID = "DELETE FROM Formation WHERE ID_Formation = ?";
 
-    
-    private Connection getConnection() {
-        try {
-        	return DatabaseConnection.getInstance().getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+	private Connection getConnection() {
+		try {
+			return DatabaseConnection.getInstance().getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
-    @Override
-    public void create(Formation formation) {
-        try (Connection connection = getConnection();
-        		
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_FORMATION, Statement.RETURN_GENERATED_KEYS)) {
+	@Override
+	public void create(Formation formation) {
+		try (Connection connection = getConnection();
 
-            preparedStatement.setString(1, formation.getNom());
-            preparedStatement.setString(2, formation.getPromotion());
+				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_FORMATION,
+						Statement.RETURN_GENERATED_KEYS)) {
 
-            preparedStatement.executeUpdate();
-            
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    formation.setIdFormation(generatedKeys.getInt(1));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+			preparedStatement.setString(1, formation.getNom());
+			preparedStatement.setString(2, formation.getPromotion());
 
-    @Override
-    public Formation findById(int id) {
-        Formation formation = null;
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FORMATION_BY_ID)) {
+			preparedStatement.executeUpdate();
 
-            preparedStatement.setInt(1, id);
-            ResultSet rs = preparedStatement.executeQuery();
+			try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+				if (generatedKeys.next()) {
+					formation.setIdFormation(generatedKeys.getInt(1));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
-            if (rs.next()) {
-                String nom = rs.getString("Nom");
-                String promotion = rs.getString("Promotion");
-                formation = new Formation(id, nom, promotion);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return formation;
-    }
+	@Override
+	public Formation findById(int id) {
+		Formation formation = null;
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FORMATION_BY_ID)) {
 
-    @Override
-    public List<Formation> findAll() {
-        List<Formation> formations = new ArrayList<>();
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FORMATIONS)) {
+			preparedStatement.setInt(1, id);
+			ResultSet rs = preparedStatement.executeQuery();
 
-            ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				String nom = rs.getString("Nom");
+				String promotion = rs.getString("Promotion");
+				formation = new Formation(id, nom, promotion);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return formation;
+	}
 
-            while (rs.next()) {
-                int id = rs.getInt("ID_Formation");
-                String nom = rs.getString("Nom");
-                String promotion = rs.getString("Promotion");
-                Formation formation = new Formation(id, nom, promotion);
-                formations.add(formation);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return formations;
-    }
+	@Override
+	public List<Formation> findAll() {
+		List<Formation> formations = new ArrayList<>();
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FORMATIONS)) {
 
-    @Override
-    public void update(Formation formation) {
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_FORMATION)) {
+			ResultSet rs = preparedStatement.executeQuery();
 
-            preparedStatement.setString(1, formation.getNom());
-            preparedStatement.setString(2, formation.getPromotion());
-            preparedStatement.setInt(3, formation.getIdFormation());
+			while (rs.next()) {
+				int id = rs.getInt("ID_Formation");
+				String nom = rs.getString("Nom");
+				String promotion = rs.getString("Promotion");
+				Formation formation = new Formation(id, nom, promotion);
+				formations.add(formation);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return formations;
+	}
 
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+	@Override
+	public void update(Formation formation) {
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_FORMATION)) {
 
-    @Override
-    public void deleteById(int id) {
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FORMATION_BY_ID)) {
+			preparedStatement.setString(1, formation.getNom());
+			preparedStatement.setString(2, formation.getPromotion());
+			preparedStatement.setInt(3, formation.getIdFormation());
 
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    public void delete(Formation formation) {
-        deleteById(formation.getIdFormation());
-    }
+	@Override
+	public void deleteById(int id) {
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FORMATION_BY_ID)) {
+
+			preparedStatement.setInt(1, id);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void delete(Formation formation) {
+		deleteById(formation.getIdFormation());
+	}
 }
