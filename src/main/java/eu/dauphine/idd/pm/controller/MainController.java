@@ -8,6 +8,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+
+import java.awt.Label;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -125,7 +127,7 @@ public class MainController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Not supported yet");
 
 	}
 
