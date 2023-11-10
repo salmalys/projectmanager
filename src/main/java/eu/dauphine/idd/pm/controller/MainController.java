@@ -2,6 +2,7 @@ package eu.dauphine.idd.pm.controller;
 
 import javafx.scene.Parent;
 
+
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -51,6 +52,7 @@ public class MainController implements Initializable {
 	private ResultSet result;
 	private double x = 0;
 	private double y = 0;
+	public static String getData;
 
 	private Connection getConnection() {
 		try {
@@ -78,6 +80,7 @@ public class MainController implements Initializable {
 				alert.showAndWait();
 			} else {
 				if (result.next()) {
+					getData=username.getText();
 					alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Information Message");
 					alert.setHeaderText(null);
@@ -127,7 +130,7 @@ public class MainController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		throw new UnsupportedOperationException("Not supported yet");
+		//throw new UnsupportedOperationException("Not supported yet");
 
 	}
 
