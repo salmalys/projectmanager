@@ -3,6 +3,8 @@ package eu.dauphine.idd.pm.dao.impl;
 import eu.dauphine.idd.pm.dao.FormationDAO;
 import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 import eu.dauphine.idd.pm.model.Formation;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -68,8 +70,9 @@ public class FormationDAOImpl implements FormationDAO {
 	}
 
 	@Override
-	public List<Formation> findAll() {
+	public ObservableList<Formation> findAll() {
 		List<Formation> formations = new ArrayList<>();
+		ObservableList<Formation> listformation = FXCollections.observableArrayList();
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FORMATIONS)) {
 
@@ -81,11 +84,13 @@ public class FormationDAOImpl implements FormationDAO {
 				String promotion = rs.getString("Promotion");
 				Formation formation = new Formation(id, nom, promotion);
 				formations.add(formation);
+				listformation.add(formation);
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return formations;
+		return listformation;
 	}
 
 	@Override

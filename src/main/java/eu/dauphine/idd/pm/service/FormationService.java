@@ -3,6 +3,7 @@ package eu.dauphine.idd.pm.service;
 import eu.dauphine.idd.pm.dao.DAOFactory;
 import eu.dauphine.idd.pm.dao.FormationDAO;
 import eu.dauphine.idd.pm.model.Formation;
+import javafx.collections.ObservableList;
 
 import java.util.List;
 
@@ -25,11 +26,18 @@ public class FormationService {
 		System.out.println("Formation avec l'ID " + id + " supprimee avec succes.");
 	}
 
-	public void listFormations() {
-		List<Formation> formations = formationDAO.findAll();
+	public ObservableList<Formation> listFormations() {
+		ObservableList<Formation> formations = formationDAO.findAll();
 		System.out.println("Liste des formations : ");
 		for (Formation formation : formations) {
 			System.out.println(formation);
 		}
+		return formations;
+	}
+
+	public void update(int id, String nom, String promotion) {
+		Formation formation = new Formation(id, nom, promotion);
+		formationDAO.update(formation);
+
 	}
 }

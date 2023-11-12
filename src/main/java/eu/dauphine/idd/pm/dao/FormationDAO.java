@@ -1,6 +1,7 @@
 package eu.dauphine.idd.pm.dao;
 
 import eu.dauphine.idd.pm.model.Formation;
+import javafx.collections.ObservableList;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface FormationDAO {
 	Formation findById(int id);
 
 	// Récupérer toutes les formations
-	List<Formation> findAll();
+	ObservableList<Formation> findAll();
 
 	// Mettre à jour les informations d'une formation
 	void update(Formation formation);

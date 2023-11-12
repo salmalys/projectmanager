@@ -7,13 +7,21 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.scene.control.MenuItem;
-
+import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import eu.dauphine.idd.pm.dao.impl.FormationDAOImpl;
+import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 import eu.dauphine.idd.pm.model.Formation;
 import javafx.scene.control.MenuButton;
 import javafx.fxml.FXML;
@@ -26,23 +34,29 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 
 public class DashboardController implements Initializable {
 
 	@FXML
 	private AnchorPane main_form;
+
 	@FXML
 	private Button AddFormation;
 
 	@FXML
 	private Button Clearformation;
+	@FXML
+	private Button Clearformation2;
 
 	@FXML
 	private Label Count_totaletudiant;
@@ -54,7 +68,13 @@ public class DashboardController implements Initializable {
 	private TextField Nomformation;
 
 	@FXML
-	private MenuButton PromotionList;
+	private ComboBox<String> PromotionList;
+
+	@FXML
+	private TextField Nomformation2;
+
+	@FXML
+	private ComboBox<String> PromotionList2;
 
 	@FXML
 	private Button RemoveFormation;
@@ -63,13 +83,13 @@ public class DashboardController implements Initializable {
 	private Button Updateformation;
 
 	@FXML
-	private TableColumn<?, ?> col_Idformation;
+	private TableColumn<Formation, Integer> col_Idformation;
 
 	@FXML
-	private TableColumn<?, ?> col_Nomformation;
+	private TableColumn<Formation, String> col_Nomformation;
 
 	@FXML
-	private TableColumn<?, ?> col_promotion;
+	private TableColumn<Formation, String> col_promotion;
 
 	@FXML
 	private Label count_apresprojet;
@@ -102,7 +122,7 @@ public class DashboardController implements Initializable {
 	private TextField search_formation;
 
 	@FXML
-	private TableView<?> tableFormation;
+	private TableView<Formation> tableFormation;
 
 	@FXML
 	private AnchorPane temp_formation;
@@ -128,7 +148,45 @@ public class DashboardController implements Initializable {
 	@FXML
 	private MenuItem alternance;
 
+	@FXML
+	private Button btn_tmpadd;
+
+	@FXML
+	private Button btn_tmpupdate;
+
+	@FXML
+	private AnchorPane tmp_updateformation;
+
+	@FXML
+	private AnchorPane tmp_addformation;
+
+	@FXML
+	private AnchorPane tmp_btnformation;
+	@FXML
+	private Button Back_formation;
+
+	@FXML
+	private Button Backformation2;
+
+	// DATABASE TOOLS
+	private Connection connection;
+	private PreparedStatement prepare;
+	private ResultSet result;
+	private Statement statement;
+	private double x = 0;
+	private double y = 0;
+
 	private FormationService formationS = ServiceFactory.getFormationService();
+
+	private Connection getConnection() {
+		try {
+			return DatabaseConnection.getInstance().getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
 
 	public void close() {
 		System.exit(0);
@@ -139,85 +197,260 @@ public class DashboardController implements Initializable {
 		stage.setIconified(true);
 	}
 
-	private double x = 0;
-	private double y = 0;
-
 	public void AddFormation() {
-		// Get values from the interface
+		try {
+			String nom = Nomformation2.getText();
+			String promotion = PromotionList2.getSelectionModel().getSelectedItem();
+
+			if (!isInputValid(nom, promotion)) {
+				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+			} else {
+				String check = "SELECT Nom,Promotion FROM Formation WHERE Nom='" + nom + "' and Promotion='" + promotion
+						+ "'";
+				connection = getConnection();
+				statement = connection.createStatement();
+				result = statement.executeQuery(check);
+
+				if (result.next()) {
+					showAlert(AlertType.ERROR, "Error Message",
+							"Nom formation: " + nom + " Promotion: " + promotion + " already exists!");
+				} else {
+					formationS.createFormation(nom, promotion);
+					showAlert(AlertType.INFORMATION, "Success", "Formation added successfully!");
+					addformationshow();
+					addformationReset2();
+				}
+			}
+
+		} catch (Exception e) {
+			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	public void updateFormation() {
 		try {
 			String nom = Nomformation.getText();
-			String promotion = PromotionList.getText();
-			System.out.println(promotion);
-			if (promotion == null || nom == null) {
-				throw new Exception("empty nom/promotion");
+			String promotion = PromotionList.getSelectionModel().getSelectedItem();
+			String IdFormatio = IdFormation.getText();
 
+			Alert alert;
+			if (!isInputValid(nom, promotion)) {
+				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+
+			} else {
+				alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Confirmation Message");
+				alert.setHeaderText(null);
+				alert.setContentText("Are you sure want to Update ID Formation : " + IdFormatio);
+				// showAlert(alert = new Alert(AlertType.CONFIRMATION), "Confirmation Message",
+				// "Are you sure want to Update ID Formation : " + IdFormatio);
+				Optional<ButtonType> option = alert.showAndWait();
+				if (option.get().equals(ButtonType.OK)) {
+					formationS.update(Integer.valueOf(IdFormatio), nom, promotion);
+
+					showAlert(AlertType.INFORMATION, "Information Message", "Formation Updated successfully!");
+
+					addformationshow();
+					addformationReset();
+
+				}
 			}
-			formationS.createFormation(nom, promotion);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
 
-		// Optional: Display a message or perform any other actions after the insertion
-		Alert alert = new Alert(AlertType.INFORMATION);
-		alert.setTitle("Success");
-		alert.setHeaderText(null);
-		alert.setContentText("Formation added successfully!");
-		alert.showAndWait();
+	public void deleteFormation() {
+		try {
 
-		// Optional: Clear the input fields or perform any other actions
-		Nomformation.clear();
-		// PromotionList
+			String IdFormatio = IdFormation.getText();
+
+			Alert alert;
+			if (IdFormatio.isEmpty()) {
+
+				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+
+			} else {
+				alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Confirmation Message");
+				alert.setHeaderText(null);
+				alert.setContentText("Are you sure want to Delete ID Formation : Ligne " + IdFormatio);
+				Optional<ButtonType> option = alert.showAndWait();
+				if (option.get().equals(ButtonType.OK)) {
+					formationS.deleteFormationById(Integer.valueOf(IdFormatio));
+					showAlert(AlertType.INFORMATION, "Information Message", "Formation Deleted successfully!");
+
+					addformationshow();
+					addformationReset();
+
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void refreshData() {
+		try {
+			addformationshow();
+			showAlert(AlertType.INFORMATION, "Refresh", "Data refreshed successfully!");
+		} catch (Exception e) {
+			showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
+		}
+	}
+
+	private ObservableList<Formation> addformation;
+
+	public void addformationshow() {
+		addformation = formationS.listFormations();
+		col_Idformation.setCellValueFactory(new PropertyValueFactory<>("idFormation"));
+		col_Nomformation.setCellValueFactory(new PropertyValueFactory<>("nom"));
+		col_promotion.setCellValueFactory(new PropertyValueFactory<>("promotion"));
+
+		tableFormation.setItems(addformation);
+	}
+
+	public void selectFormation() {
+		Formation formation = tableFormation.getSelectionModel().getSelectedItem();
+		int num = tableFormation.getSelectionModel().getFocusedIndex();
+		if ((num - 1) < -1) {
+			return;
+		}
+
+		IdFormation.setText(String.valueOf(formation.getIdFormation()));
+		Nomformation.setText(formation.getNom());
+		Nomformation2.setText(formation.getNom());
+
+	}
+
+	public void addformationReset() {
+		IdFormation.setText("");
+		Nomformation.setText("");
+		PromotionList.getSelectionModel().clearSelection();
+
+	}
+
+	public void addformationReset2() {
+		IdFormation.setText("");
+		Nomformation2.setText("");
+		PromotionList2.getSelectionModel().clearSelection();
+
+	}
+
+	private String[] listPromotion = { "Initial", "Alternance", "Formation Continue" };
+	private String[] listPromotion2 = { "Initial", "Alternance", "Formation Continue" };
+
+	public void addPromotionList() {
+		List<String> listp = new ArrayList<>();
+		for (String Promot : listPromotion) {
+			listp.add(Promot);
+		}
+		ObservableList promotionL = FXCollections.observableArrayList(listp);
+		PromotionList.setItems(promotionL);
+
+	}
+
+	public void addPromotionList2() {
+		List<String> listp = new ArrayList<>();
+		for (String Promot : listPromotion2) {
+			listp.add(Promot);
+		}
+		ObservableList promotionL = FXCollections.observableArrayList(listp);
+		PromotionList2.setItems(promotionL);
+
 	}
 
 	public void Affichersername() {
-		username.setText(MainController.getData);
+		username.setText(Data.username);
 	}
 
-	
-	public void initialize1() {
-		setMenuButtonText(initiale.getText());
-
-	}
-
-	
-	public void initialize2() {
-
-		setMenuButtonText(continueF.getText());
-
-	}
-
-	
-	public void initialize3() {
-
-		setMenuButtonText(alternance.getText());
-
-	}
-
-	@FXML
-	public void setMenuButtonText(String text) {
-		PromotionList.setText(text);
-
-	}
-
-	@FXML
 	public void tmpSwitch(ActionEvent event) {
 		if (event.getSource() == home_btn) {
-			tmp_home.setVisible(true);
-			temp_formation.setVisible(false);
-
-			home_btn.setStyle(
-					"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
-			formation_btn.setStyle("-fx-background-color: transparent;");
-
+			handleHomeButton();
 		} else if (event.getSource() == formation_btn) {
-			tmp_home.setVisible(false);
-			temp_formation.setVisible(true);
-			formation_btn.setStyle(
-					"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
-			home_btn.setStyle("-fx-background-color: transparent;");
-		}
+			handleFormationButton();
+		} else if (event.getSource() == btn_tmpadd && temp_formation.isVisible()) {
+			handleBtnTmpAdd();
+		} else if (event.getSource() == Back_formation && temp_formation.isVisible()) {
+			handleBackFormation();
 
+		} else if (event.getSource() == btn_tmpupdate && temp_formation.isVisible()) {
+			handleBtnTmpUpdate();
+		} else if (event.getSource() == Backformation2 && temp_formation.isVisible()) {
+			handleBackFormation2();
+		}
+	}
+
+	private void handleHomeButton() {
+		tmp_home.setVisible(true);
+		temp_formation.setVisible(false);
+		home_btn.setStyle(
+				"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
+		formation_btn.setStyle("-fx-background-color: transparent;");
+	}
+
+	private void handleFormationButton() {
+		tmp_home.setVisible(false);
+		temp_formation.setVisible(true);
+		tmp_btnformation.setVisible(true);
+		addPromotionList();
+		formation_btn.setStyle(
+				"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
+		home_btn.setStyle("-fx-background-color: transparent;");
+	}
+
+	private void handleBtnTmpAdd() {
+		tmp_addformation.setVisible(true);
+		tmp_updateformation.setVisible(false);
+		tmp_btnformation.setVisible(false);
+		addformationReset();
+		addformationReset2();
+		addPromotionList2();
+
+	}
+
+	private void handleBackFormation() {
+		tmp_addformation.setVisible(false);
+		tmp_updateformation.setVisible(false);
+		tmp_btnformation.setVisible(true);
+		addformationReset();
+		addPromotionList();
+	}
+
+	private void handleBtnTmpUpdate() {
+		tmp_addformation.setVisible(false);
+		tmp_updateformation.setVisible(true);
+		tmp_btnformation.setVisible(false);
+		addformationReset();
+		addPromotionList();
+	}
+
+	private void handleBackFormation2() {
+		tmp_addformation.setVisible(false);
+		tmp_updateformation.setVisible(false);
+		tmp_btnformation.setVisible(true);
+		addformationReset();
+		addPromotionList();
+	}
+
+	private void showAlert(AlertType alertType, String title, String content) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(content);
+		alert.showAndWait();
+	}
+
+	private boolean isInputValid(String nom, String promotion) {
+		if (promotion == null || promotion.isEmpty() || nom.isEmpty()) {
+			showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+			return false;
+		}
+		return true;
 	}
 
 	// fonction logout permet de revenir a la scene parent, apres deconnexion
@@ -260,7 +493,10 @@ public class DashboardController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// throw new UnsupportedOperationException("Not supported yet");
+
+		addformationshow();
+		addPromotionList();
+		addPromotionList2();
 
 	}
 
