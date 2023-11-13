@@ -168,6 +168,27 @@ public class DashboardController implements Initializable {
 	@FXML
 	private Button Backformation2;
 
+	@FXML
+	private Button binome_btn;
+	@FXML
+	private Button etudiant_btn;
+	@FXML
+	private Button note_btn;
+
+	@FXML
+	private Button projet_btn;
+
+	@FXML
+	private AnchorPane tmp_note;
+
+	@FXML
+	private AnchorPane tmp_projet;
+	@FXML
+	private AnchorPane tmp_etudiant;
+
+	@FXML
+	private AnchorPane tmp_binome;
+
 	// DATABASE TOOLS
 	private Connection connection;
 	private PreparedStatement prepare;
@@ -243,8 +264,7 @@ public class DashboardController implements Initializable {
 				alert.setTitle("Confirmation Message");
 				alert.setHeaderText(null);
 				alert.setContentText("Are you sure want to Update ID Formation : " + IdFormatio);
-				// showAlert(alert = new Alert(AlertType.CONFIRMATION), "Confirmation Message",
-				// "Are you sure want to Update ID Formation : " + IdFormatio);
+
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.get().equals(ButtonType.OK)) {
 					formationS.update(Integer.valueOf(IdFormatio), nom, promotion);
@@ -373,7 +393,71 @@ public class DashboardController implements Initializable {
 			handleHomeButton();
 		} else if (event.getSource() == formation_btn) {
 			handleFormationButton();
-		} else if (event.getSource() == btn_tmpadd && temp_formation.isVisible()) {
+		} else if (event.getSource() == etudiant_btn) {
+			tmp_home.setVisible(false);
+			temp_formation.setVisible(false);
+			tmp_etudiant.setVisible(true);
+			tmp_binome.setVisible(false);
+			tmp_note.setVisible(false);
+			tmp_projet.setVisible(false);
+
+			etudiant_btn.setStyle(
+					"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
+			home_btn.setStyle("-fx-background-color: transparent;");
+			binome_btn.setStyle("-fx-background-color: transparent;");
+			projet_btn.setStyle("-fx-background-color: transparent;");
+			note_btn.setStyle("-fx-background-color: transparent;");
+			formation_btn.setStyle("-fx-background-color: transparent;");
+
+		} else if (event.getSource() == projet_btn) {
+			tmp_home.setVisible(false);
+			temp_formation.setVisible(false);
+			tmp_etudiant.setVisible(false);
+			tmp_binome.setVisible(false);
+			tmp_note.setVisible(false);
+			tmp_projet.setVisible(true);
+
+			projet_btn.setStyle(
+					"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
+			home_btn.setStyle("-fx-background-color: transparent;");
+			etudiant_btn.setStyle("-fx-background-color: transparent;");
+			binome_btn.setStyle("-fx-background-color: transparent;");
+			note_btn.setStyle("-fx-background-color: transparent;");
+			formation_btn.setStyle("-fx-background-color: transparent;");
+
+		} else if (event.getSource() == note_btn) {
+			tmp_home.setVisible(false);
+			temp_formation.setVisible(false);
+			tmp_etudiant.setVisible(false);
+			tmp_binome.setVisible(false);
+			tmp_note.setVisible(true);
+			tmp_projet.setVisible(false);
+
+			note_btn.setStyle(
+					"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
+			home_btn.setStyle("-fx-background-color: transparent;");
+			etudiant_btn.setStyle("-fx-background-color: transparent;");
+			projet_btn.setStyle("-fx-background-color: transparent;");
+			binome_btn.setStyle("-fx-background-color: transparent;");
+			formation_btn.setStyle("-fx-background-color: transparent;");
+		} else if (event.getSource() == binome_btn) {
+			tmp_home.setVisible(false);
+			temp_formation.setVisible(false);
+			tmp_etudiant.setVisible(false);
+			tmp_binome.setVisible(true);
+			tmp_note.setVisible(false);
+			tmp_projet.setVisible(false);
+
+			binome_btn.setStyle(
+					"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
+			home_btn.setStyle("-fx-background-color: transparent;");
+			etudiant_btn.setStyle("-fx-background-color: transparent;");
+			projet_btn.setStyle("-fx-background-color: transparent;");
+			note_btn.setStyle("-fx-background-color: transparent;");
+			formation_btn.setStyle("-fx-background-color: transparent;");
+		}
+
+		else if (event.getSource() == btn_tmpadd && temp_formation.isVisible()) {
 			handleBtnTmpAdd();
 		} else if (event.getSource() == Back_formation && temp_formation.isVisible()) {
 			handleBackFormation();
@@ -388,19 +472,35 @@ public class DashboardController implements Initializable {
 	private void handleHomeButton() {
 		tmp_home.setVisible(true);
 		temp_formation.setVisible(false);
+		tmp_etudiant.setVisible(false);
+		tmp_binome.setVisible(false);
+		tmp_note.setVisible(false);
+		tmp_projet.setVisible(false);
 		home_btn.setStyle(
 				"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
+		binome_btn.setStyle("-fx-background-color: transparent;");
+		etudiant_btn.setStyle("-fx-background-color: transparent;");
+		projet_btn.setStyle("-fx-background-color: transparent;");
+		note_btn.setStyle("-fx-background-color: transparent;");
 		formation_btn.setStyle("-fx-background-color: transparent;");
 	}
 
 	private void handleFormationButton() {
 		tmp_home.setVisible(false);
 		temp_formation.setVisible(true);
+		tmp_etudiant.setVisible(false);
+		tmp_binome.setVisible(false);
+		tmp_note.setVisible(false);
+		tmp_projet.setVisible(false);
 		tmp_btnformation.setVisible(true);
 		addPromotionList();
 		formation_btn.setStyle(
 				"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
 		home_btn.setStyle("-fx-background-color: transparent;");
+		etudiant_btn.setStyle("-fx-background-color: transparent;");
+		projet_btn.setStyle("-fx-background-color: transparent;");
+		note_btn.setStyle("-fx-background-color: transparent;");
+		binome_btn.setStyle("-fx-background-color: transparent;");
 	}
 
 	private void handleBtnTmpAdd() {
@@ -434,6 +534,7 @@ public class DashboardController implements Initializable {
 		tmp_updateformation.setVisible(false);
 		tmp_btnformation.setVisible(true);
 		addformationReset();
+
 		addPromotionList();
 	}
 

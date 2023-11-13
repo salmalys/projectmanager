@@ -7,6 +7,7 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -89,6 +90,26 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
+                              <Button fx:id="etudiant_btn" layoutX="11.0" layoutY="308.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../css/dashboard.css" text="Etudiant">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="WHITE" glyphName="USER_PLUS" size="1.5em" text="" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="projet_btn" layoutX="11.0" layoutY="358.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../css/dashboard.css" text="Projet">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="1.5em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="binome_btn" layoutX="11.0" layoutY="402.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../css/dashboard.css" text="Binome">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="1.5em" text="" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="note_btn" layoutX="10.0" layoutY="445.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../css/dashboard.css" text="Note">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="WHITE" glyphName="CHECK" size="1.5em" />
+                                 </graphic>
+                              </Button>
                            </children>
                            <styleClass>
                               <String fx:value="nav-fram" />
@@ -101,7 +122,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="tmp_home" layoutX="89.0" layoutY="90.0" prefHeight="554.6666666666666" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="tmp_home" layoutX="89.0" layoutY="90.0" prefHeight="554.6666666666666" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="23.0" layoutY="21.0" prefHeight="511.0" prefWidth="841.0" stylesheets="@../css/dashboard.css">
                                  <styleClass>
@@ -208,7 +229,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="temp_formation" layoutX="125.0" layoutY="112.0" prefHeight="554.6666666666666" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="temp_formation" layoutX="125.0" layoutY="112.0" prefHeight="554.6666666666666" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="36.0" layoutY="23.0" prefHeight="507.0" prefWidth="827.0" stylesheets="@../css/dashboard.css">
                                  <styleClass>
@@ -323,6 +344,299 @@
                                        </children>
                                     </AnchorPane>
                                  </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="tmp_etudiant" layoutX="157.0" layoutY="63.0" prefHeight="554.6666666666666" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutX="20.0" layoutY="14.0" prefHeight="525.0" prefWidth="864.0" stylesheets="@../css/dashboard.css">
+                                 <styleClass>
+                                    <String fx:value="shadow" />
+                                    <String fx:value="white-bg" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane layoutX="7.0" layoutY="7.0" prefHeight="513.0" prefWidth="449.0" stylesheets="@../css/dashboard.css">
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="white-bg" />
+                                       </styleClass>
+                                       <children>
+                                          <TableView layoutX="3.0" layoutY="93.0" prefHeight="419.0" prefWidth="443.0">
+                                            <columns>
+                                              <TableColumn prefWidth="72.66670227050781" text="ID Etudiant" />
+                                              <TableColumn prefWidth="84.0" text="Nom" />
+                                                <TableColumn prefWidth="89.33334350585938" text="Prenom" />
+                                                <TableColumn prefWidth="104.66659545898438" text="Nom Formation" />
+                                                <TableColumn prefWidth="92.0" text="Promotion" />
+                                            </columns>
+                                          </TableView>
+                                          <ComboBox fx:id="filtre_formation1" layoutX="69.0" layoutY="50.0" prefWidth="150.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="14.0" layoutY="52.0" prefWidth="42.0" text="Filtre :">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="search_Etudiant" layoutX="45.0" layoutY="10.0" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
+                                          <FontAwesomeIconView glyphName="SEARCH" layoutX="48.0" layoutY="29.0" size="1.5em" />
+                                          <Button layoutX="371.0" layoutY="49.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
+                                             <graphic>
+                                                <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" />
+                                             </graphic></Button>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="466.0" layoutY="8.0" prefHeight="513.0" prefWidth="391.0" stylesheets="@../css/dashboard.css">
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="white-bg" />
+                                       </styleClass>
+                                       <children>
+                                          <Label layoutX="77.0" layoutY="24.0" text="Ajouter un Etudiant">
+                                             <font>
+                                                <Font name="Tahoma Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField layoutX="138.0" layoutY="108.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="28.0" layoutY="108.0" text="Nom Etudiant :">
+                                             <font>
+                                                <Font name="Arial" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField layoutX="138.0" layoutY="184.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="5.0" layoutY="187.0" text="Prenom Etudiant :">
+                                             <font>
+                                                <Font name="Arial" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <ComboBox layoutX="137.0" layoutY="274.0" prefHeight="25.0" prefWidth="178.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="52.0" layoutY="277.0" text="Formation :">
+                                             <font>
+                                                <Font name="Arial" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Button layoutX="26.0" layoutY="398.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter" />
+                                          <Button layoutX="120.0" layoutY="398.0" mnemonicParsing="false" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
+                                          <Button layoutX="209.0" layoutY="398.0" mnemonicParsing="false" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Supprimer" />
+                                          <Button layoutX="313.0" layoutY="398.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                                          <Label layoutX="182.0" layoutY="278.0" text="Nom-Promotion" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="tmp_projet" layoutX="201.0" layoutY="159.0" prefHeight="554.6666666666666" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutX="10.0" layoutY="9.0" prefHeight="533.0" prefWidth="881.0" stylesheets="@../css/dashboard.css">
+                                 <styleClass>
+                                    <String fx:value="shadow" />
+                                    <String fx:value="white-bg" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane layoutX="11.0" layoutY="6.0" prefHeight="522.0" prefWidth="507.0" stylesheets="@../css/dashboard.css">
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="white-bg" />
+                                       </styleClass>
+                                       <children>
+                                          <TableView layoutX="14.0" layoutY="72.0" prefHeight="450.0" prefWidth="493.0">
+                                            <columns>
+                                              <TableColumn prefWidth="75.0" text="ID Projet" />
+                                              <TableColumn prefWidth="133.3333740234375" text="Nom Matiere" />
+                                                <TableColumn prefWidth="147.33328247070312" text="Sujet " />
+                                                <TableColumn prefWidth="133.33331298828125" text="DateRemiseRapport" />
+                                            </columns>
+                                          </TableView>
+                                          <Button layoutX="422.0" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
+                                             <graphic>
+                                                <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="1.5em" />
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="526.0" layoutY="6.0" prefHeight="522.0" prefWidth="342.0" stylesheets="@../css/dashboard.css">
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="white-bg" />
+                                       </styleClass>
+                                       <children>
+                                          <Label layoutX="67.0" layoutY="29.0" text="Ajouter un Projet">
+                                             <font>
+                                                <Font name="Tahoma Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField layoutX="97.0" layoutY="98.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="14.0" layoutY="101.0" text="ID Projet :">
+                                             <font>
+                                                <Font name="Arial" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField layoutX="97.0" layoutY="171.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutY="175.0" text="Nom Matiere :">
+                                             <font>
+                                                <Font name="Arial" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField layoutX="97.0" layoutY="261.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="46.0" layoutY="265.0" text="Sujet :">
+                                             <font>
+                                                <Font name="Arial" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <DatePicker layoutX="159.0" layoutY="335.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="9.0" layoutY="339.0" text="DateRemiseRapport :">
+                                             <font>
+                                                <Font name="Arial" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Button layoutX="14.0" layoutY="419.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter" />
+                                          <Button layoutX="89.0" layoutY="419.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Supprimer" />
+                                          <Button layoutX="189.0" layoutY="419.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
+                                          <Button layoutX="270.0" layoutY="419.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="tmp_binome" layoutX="165.0" layoutY="77.0" prefHeight="554.6666666666666" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutX="6.0" layoutY="5.0" prefHeight="541.0" prefWidth="885.0" stylesheets="@../css/dashboard.css">
+                                 <styleClass>
+                                    <String fx:value="shadow" />
+                                    <String fx:value="white-bg" />
+                                 </styleClass>
+                                 <children>
+                                    <AnchorPane layoutX="10.0" layoutY="11.0" prefHeight="521.0" prefWidth="544.0" stylesheets="@../css/dashboard.css">
+                                       <styleClass>
+                                          <String fx:value="white-bg" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <TableView layoutX="2.0" layoutY="108.0" prefHeight="405.0" prefWidth="537.0">
+                                            <columns>
+                                              <TableColumn prefWidth="68.00001525878906" text="ID Binome" />
+                                              <TableColumn prefWidth="138.0" text=" Etudiant1" />
+                                                <TableColumn prefWidth="141.99996948242188" text=" Etudiant2" />
+                                                <TableColumn prefWidth="94.0" text="Sujet Projet" />
+                                                <TableColumn prefWidth="92.66668701171875" text="Nom Matiere" />
+                                            </columns>
+                                          </TableView>
+                                          <Button layoutX="462.0" layoutY="64.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="67.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
+                                             <graphic>
+                                                <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="1.5em" />
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="562.0" layoutY="11.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css">
+                                       <styleClass>
+                                          <String fx:value="white-bg" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <Label layoutX="54.0" layoutY="14.0" text="Ajouter un Binome">
+                                             <font>
+                                                <Font name="Tahoma Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="26.0" layoutY="98.0" text="ID Binome :" />
+                                          <TextField layoutX="92.0" layoutY="94.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <ComboBox layoutX="92.0" layoutY="168.0" prefWidth="150.0" promptText="NOM-PRENOM" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="26.0" layoutY="172.0" text="Etudiant1 :" />
+                                          <ComboBox layoutX="92.0" layoutY="226.0" prefWidth="150.0" promptText="NOM-PRENOM" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="26.0" layoutY="230.0" text="Etudiant2 :" />
+                                          <ComboBox layoutX="92.0" layoutY="283.0" prefWidth="150.0" promptText="SUJET-NOMMatiere" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="38.0" layoutY="287.0" text="Projet :" />
+                                          <Button layoutX="12.0" layoutY="435.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Add" />
+                                          <Button layoutX="92.0" layoutY="435.0" mnemonicParsing="false" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Update" />
+                                          <Button layoutX="167.0" layoutY="435.0" mnemonicParsing="false" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Delete" />
+                                          <Button layoutX="236.0" layoutY="435.0" mnemonicParsing="false" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane fx:id="tmp_note" layoutX="250.0" layoutY="159.0" prefHeight="554.6666666666666" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <AnchorPane layoutX="6.0" layoutY="8.0" prefHeight="537.0" prefWidth="885.0" stylesheets="@../css/dashboard.css">
+                                 <children>
+                                    <AnchorPane layoutX="12.0" layoutY="6.0" prefHeight="263.0" prefWidth="864.0" stylesheets="@../css/dashboard.css">
+                                       <styleClass>
+                                          <String fx:value="white-bg" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <TableView layoutX="25.0" layoutY="49.0" prefHeight="200.0" prefWidth="402.0">
+                                            <columns>
+                                              <TableColumn prefWidth="69.99996948242188" text="ID Note" />
+                                              <TableColumn prefWidth="85.33334350585938" text=" ID Binome" />
+                                                <TableColumn prefWidth="96.66665649414062" text="Note Rapport" />
+                                                <TableColumn prefWidth="148.66668701171875" text="DateRemiseEffective" />
+                                            </columns>
+                                          </TableView>
+                                          <TableView layoutX="448.0" layoutY="49.0" prefHeight="200.0" prefWidth="402.0">
+                                             <columns>
+                                                <TableColumn prefWidth="56.6666259765625" text="ID Note" />
+                                                <TableColumn prefWidth="70.0" text="Etudiant" />
+                                                <TableColumn prefWidth="96.0" text="Note Soutenance" />
+                                                <TableColumn minWidth="0.0" prefWidth="97.33331298828125" text="DateRemiseEffective" />
+                                                <TableColumn prefWidth="146.6666259765625" text="NoteFinale" />
+                                             </columns>
+                                          </TableView>
+                                          <Button layoutX="777.0" layoutY="14.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
+                                             <graphic>
+                                                <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="1.5em" />
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="12.0" layoutY="278.0" prefHeight="251.0" prefWidth="864.0" stylesheets="@../css/dashboard.css">
+                                       <styleClass>
+                                          <String fx:value="white-bg" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <Label layoutX="300.0" layoutY="4.0" text="Ajouter Note aux Projets" textFill="#0a5331">
+                                             <font>
+                                                <Font name="System Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField layoutX="174.0" layoutY="52.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="105.0" layoutY="56.0" text="ID Note :" />
+                                          <TextField layoutX="174.0" layoutY="93.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="98.0" layoutY="97.0" text="ID Binome :" />
+                                          <DatePicker layoutX="175.0" layoutY="135.0" prefHeight="25.0" prefWidth="148.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="94.0" layoutY="139.0" text="DateRemise :" />
+                                          <TextField layoutX="442.0" layoutY="52.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="351.0" layoutY="56.0" text="NoteRapport :" />
+                                          <TextField layoutX="442.0" layoutY="93.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="341.0" layoutY="97.0" text="NoteSoutenance :" />
+                                          <Button layoutX="90.0" layoutY="212.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Add noteR" />
+                                          <Button layoutX="186.0" layoutY="179.0" mnemonicParsing="false" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Add noteS" />
+                                          <Button layoutX="635.0" layoutY="179.0" mnemonicParsing="false" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Update noteR" />
+                                          <Button layoutX="298.0" layoutY="212.0" mnemonicParsing="false" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Delete noteR" />
+                                          <Button layoutX="399.0" layoutY="179.0" mnemonicParsing="false" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Delete NoteS" />
+                                          <Button layoutX="305.0" layoutY="179.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Delete" />
+                                          <Button layoutX="400.0" layoutY="212.0" mnemonicParsing="false" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Delete noteF" />
+                                          <TextField layoutX="700.0" layoutY="52.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="625.0" layoutY="56.0" text="NoteFinale :" />
+                                          <Button layoutX="775.0" layoutY="208.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="61.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                                          <Button layoutX="91.0" layoutY="179.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="84.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Add " />
+                                          <Button layoutX="515.0" layoutY="208.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Update noteR" />
+                                          <Button layoutX="636.0" layoutY="208.0" mnemonicParsing="false" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Update noteS" />
+                                          <Button layoutX="714.0" layoutY="93.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="121.0" styleClass="card" stylesheets="@../css/dashboard.css" text="Calculer Les Notes" />
+                                          <TextField layoutX="442.0" layoutY="135.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="382.0" layoutY="139.0" text="Etudiant :" />
+                                          <Button layoutX="186.0" layoutY="212.0" mnemonicParsing="false" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Add noteF" />
+                                          <Button layoutX="524.0" layoutY="179.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Update" />
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                                 <styleClass>
+                                    <String fx:value="white-bg" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
                               </AnchorPane>
                            </children>
                         </AnchorPane>
