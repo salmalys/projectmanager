@@ -3,12 +3,10 @@ package eu.dauphine.idd.pm.dao.impl;
 import eu.dauphine.idd.pm.dao.NoteDAO;
 import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 import eu.dauphine.idd.pm.model.Note;
-import eu.dauphine.idd.pm.model.Binome;
-import eu.dauphine.idd.pm.model.Etudiant;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class NoteDAOImpl implements NoteDAO {
 	private static final String INSERT_NOTE = "INSERT INTO Notes(binome, etudiant, noteRapport, noteSoutenance, dateRemiseEffective) VALUES (?, ?, ?, ?, ?)";
@@ -92,9 +90,9 @@ public class NoteDAOImpl implements NoteDAO {
 	}
 
 	@Override
-	public List<Note> findAll() {
+	public ObservableList<Note> findAll() {
 		Connection connection = getConnection();
-		List<Note> notes = new ArrayList<>();
+		ObservableList<Note> notes = FXCollections.observableArrayList();
 		try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(FIND_ALL)) {
 			while (rs.next()) {
 				notes.add(mapToNote(rs));
@@ -119,5 +117,10 @@ public class NoteDAOImpl implements NoteDAO {
 		note.setNoteSoutenance(rs.getDouble("noteSoutenance"));
 		note.setDateRemiseEffective(rs.getDate("dateRemiseEffective"));
 		return note;
+	}
+	
+	@Override
+	public void delete(Note note) {
+		deleteById(note.getId());
 	}
 }

@@ -5,7 +5,6 @@ import eu.dauphine.idd.pm.dao.FormationDAO;
 import eu.dauphine.idd.pm.model.Formation;
 import javafx.collections.ObservableList;
 
-import java.util.List;
 
 public class FormationService {
 
