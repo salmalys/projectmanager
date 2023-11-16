@@ -190,7 +190,6 @@ public class DashboardController implements Initializable {
 	private AnchorPane tmp_binome;
 
 	// DATABASE TOOLS
-	private Connection connection;
 	private PreparedStatement prepare;
 	private ResultSet result;
 	private Statement statement;
@@ -226,23 +225,22 @@ public class DashboardController implements Initializable {
 			if (!isInputValid(nom, promotion)) {
 				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
 			} else {
-				String check = "SELECT Nom,Promotion FROM Formation WHERE Nom='" + nom + "' and Promotion='" + promotion
-						+ "'";
-				connection = getConnection();
-				statement = connection.createStatement();
-				result = statement.executeQuery(check);
-
-				if (result.next()) {
-					showAlert(AlertType.ERROR, "Error Message",
-							"Nom formation: " + nom + " Promotion: " + promotion + " already exists!");
-				} else {
-					formationS.createFormation(nom, promotion);
+				int result = formationS.createFormation(nom, promotion);
+				switch(result) {
+				case 0: //Success
 					showAlert(AlertType.INFORMATION, "Success", "Formation added successfully!");
 					addformationshow();
 					addformationReset2();
+					break;
+				case 1: 
+					showAlert(AlertType.ERROR, "Error Message", "Nom formation: " + nom + " Promotion: " + promotion + " already exists!");
+					break;
+				default: 
+					showAlert(Alert.AlertType.ERROR, "Error", "An error occurred while creating the formation.");
+                    break;
+					
 				}
 			}
-
 		} catch (Exception e) {
 			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
 			e.printStackTrace();
