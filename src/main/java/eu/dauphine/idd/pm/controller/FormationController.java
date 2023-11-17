@@ -18,11 +18,12 @@ import java.sql.Statement;
 
 import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 
-public class HomeController {
+public class FormationController {
 	private FormationService formationS = ServiceFactory.getFormationService();
 
 	public void addFormation(TextField nomFormation, ComboBox<String> promotionList) {
 
+		
 	}
 
 	public void updateFormation(TextField nomFormation, ComboBox<String> promotionList, TextField idFormation) {

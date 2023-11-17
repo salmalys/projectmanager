@@ -190,30 +190,20 @@ public class DashboardController implements Initializable {
 	private AnchorPane tmp_binome;
 
 
-	private HomeController homeController = new HomeController();
+	private FormationController homeController = new FormationController();
 
 	@FXML
 	private Button Printformation;
 
 
 	// DATABASE TOOLS
-	private PreparedStatement prepare;
-	private ResultSet result;
-	private Statement statement;
+
 	private double x = 0;
 	private double y = 0;
 
 	private FormationService formationS = ServiceFactory.getFormationService();
 
-	private Connection getConnection() {
-		try {
-			return DatabaseConnection.getInstance().getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
 
-	}
 
 	public void close() {
 		System.exit(0);
@@ -225,37 +215,7 @@ public class DashboardController implements Initializable {
 	}
 
 	public void AddFormation() {
-		try {
-			String nom = Nomformation2.getText();
-			String promotion = PromotionList2.getSelectionModel().getSelectedItem();
-
-			if (!isInputValid(nom, promotion)) {
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
-			} else {
-				int result = formationS.createFormation(nom, promotion);
-				switch(result) {
-				case 0: //Success
-					showAlert(AlertType.INFORMATION, "Success", "Formation added successfully!");
-					addformationshow();
-					addformationReset2();
-
-					SearchFormation() ;
-
-					break;
-				case 1: 
-					showAlert(AlertType.ERROR, "Error Message", "Nom formation: " + nom + " Promotion: " + promotion + " already exists!");
-					break;
-				default: 
-					showAlert(Alert.AlertType.ERROR, "Error", "An error occurred while creating the formation.");
-                    break;
-					
-
-				}
-			}
-		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
-			e.printStackTrace();
-		}
+		
 	}
 
 	public void updateFormation() {
