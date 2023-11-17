@@ -1,6 +1,7 @@
 package eu.dauphine.idd.pm.controller;
 
 import java.io.FileOutputStream;
+
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,10 +13,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.Document;
 
 import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 import eu.dauphine.idd.pm.model.Formation;
