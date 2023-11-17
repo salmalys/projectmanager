@@ -192,12 +192,12 @@ public class DashboardController implements Initializable {
 	@FXML
 	private AnchorPane tmp_binome;
 
-<<<<<<< HEAD
+
 	private HomeController homeController = new HomeController();
-=======
+
 	@FXML
 	private Button Printformation;
->>>>>>> branch 'develop' of https://github.com/salmalys/projectmanager.git
+
 
 	// DATABASE TOOLS
 	private PreparedStatement prepare;
