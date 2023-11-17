@@ -237,9 +237,9 @@ public class DashboardController implements Initializable {
 					showAlert(AlertType.INFORMATION, "Success", "Formation added successfully!");
 					addformationshow();
 					addformationReset2();
-<<<<<<< HEAD
+
 					SearchFormation() ;
-=======
+
 					break;
 				case 1: 
 					showAlert(AlertType.ERROR, "Error Message", "Nom formation: " + nom + " Promotion: " + promotion + " already exists!");
@@ -248,7 +248,7 @@ public class DashboardController implements Initializable {
 					showAlert(Alert.AlertType.ERROR, "Error", "An error occurred while creating the formation.");
                     break;
 					
->>>>>>> branch 'develop' of https://github.com/salmalys/projectmanager.git
+
 				}
 			}
 		} catch (Exception e) {
