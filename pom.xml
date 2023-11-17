@@ -28,7 +28,7 @@
 		<dependency>
 			<groupId>de.jensd</groupId>
 			<artifactId>fontawesomefx-fontawesome</artifactId>
-			<version>RELEASE</version>
+			<version>4.7.0-9.1.2</version>
 		</dependency>
 
 
