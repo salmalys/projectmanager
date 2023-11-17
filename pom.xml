@@ -103,7 +103,7 @@
 					<target>${maven.compiler.target}</target>
 				</configuration>
 			</plugin>
-
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
@@ -123,12 +123,41 @@
 									<mainClass>eu.dauphine.idd.pm.controller.Main</mainClass>
 								</transformer>
 							</transformers>
-
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 
+        	<plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-site-plugin</artifactId>
+            	<version>3.9.1</version> <!-- Utilisez la dernière version disponible -->
+        	</plugin>
 		</plugins>
 	</build>
+	
+	<reporting>
+    	<plugins>
+        	<plugin>
+            	<groupId>org.apache.maven.plugins</groupId>
+            	<artifactId>maven-javadoc-plugin</artifactId>
+            	<version>3.3.0</version> <!-- Utilisez la dernière version disponible -->
+        	</plugin>
+        
+ 			<plugin>
+            	<groupId>org.jacoco</groupId>
+            	<artifactId>jacoco-maven-plugin</artifactId>
+            	<version>0.8.7</version> <!-- Utilisez la dernière version disponible -->
+            	<reportSets>
+	                <reportSet>
+	                    <reports>
+	                        <!-- Définissez les rapports que vous souhaitez générer -->
+	                        <report>report</report>
+	                    </reports>
+	                </reportSet>
+            	</reportSets>
+        	</plugin>
+        <!-- Ajoutez d'autres plugins de rapport ici si nécessaire -->
+    	</plugins>
+	</reporting>
 </project> 

@@ -18,7 +18,7 @@ public class ProjetDAOImpl implements ProjetDAO {
 	private static final String INSERT_PROJET = "INSERT INTO Projet (Nom_Matiere, Sujet, Date_Remise_Prevue) VALUES (?, ?, ?)";
 	private static final String SELECT_PROJET_BY_ID = "SELECT * FROM Projet WHERE ID_Projet = ?";
 	private static final String SELECT_ALL_PROJETS = "SELECT * FROM Projet";
-	private static final String UPDATE_PROJET = "UPDATE Projet SET Nom_Matiere = ?, Sujet = ?, Date_Remise_Prevue = ? WHERE ID_¨Projet = ?";
+	private static final String UPDATE_PROJET = "UPDATE Projet SET Nom_Matiere = ?, Sujet = ?, Date_Remise_Prevue = ? WHERE ID_Projet = ?";
 	private static final String DELETE_PROJET_BY_ID = "DELETE FROM Projet WHERE ID_Projet = ?";
 
 	private Connection getConnection() {
