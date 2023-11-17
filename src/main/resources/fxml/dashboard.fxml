@@ -85,7 +85,7 @@
                                     <String fx:value="shadow" />
                                  </styleClass>
                               </Button>
-                              <Label layoutX="61.0" layoutY="522.0" text="Logout">
+                              <Label layoutX="70.0" layoutY="519.0" text="Logout">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -102,7 +102,7 @@
                               </Button>
                               <Button fx:id="binome_btn" layoutX="11.0" layoutY="402.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../css/dashboard.css" text="Binome">
                                  <graphic>
-                                    <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="1.5em" text="" />
+                                    <FontAwesomeIconView fill="WHITE" glyphName="USERS" size="1.5em" />
                                  </graphic>
                               </Button>
                               <Button fx:id="note_btn" layoutX="10.0" layoutY="445.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../css/dashboard.css" text="Note">
@@ -237,7 +237,7 @@
                                     <String fx:value="white-bg" />
                                  </styleClass>
                                  <children>
-                                    <AnchorPane prefHeight="507.0" prefWidth="409.0" stylesheets="@../css/dashboard.css">
+                                    <AnchorPane layoutX="-10.0" prefHeight="507.0" prefWidth="419.0" stylesheets="@../css/dashboard.css">
                                        <styleClass>
                                           <String fx:value="shadow" />
                                           <String fx:value="white-bg" />
@@ -245,12 +245,12 @@
                                        <children>
                                           <TableView fx:id="tableFormation" layoutX="21.0" layoutY="98.0" onMouseClicked="#selectFormation" prefHeight="391.0" prefWidth="369.0">
                                             <columns>
-                                              <TableColumn fx:id="col_Idformation" prefWidth="91.33331298828125" text="ID Formation" />
-                                              <TableColumn fx:id="col_Nomformation" prefWidth="142.6666259765625" text="Nom Formation" />
-                                                <TableColumn fx:id="col_promotion" prefWidth="133.99993896484375" text="Promotion" />
+                                              <TableColumn fx:id="col_Idformation" prefWidth="91.33332824707031" text="ID Formation" />
+                                              <TableColumn fx:id="col_Nomformation" prefWidth="138.0" text="Nom Formation" />
+                                                <TableColumn fx:id="col_promotion" prefWidth="140.00003051757812" sortable="false" text="Promotion" />
                                             </columns>
                                           </TableView>
-                                          <TextField fx:id="search_formation" layoutX="58.0" layoutY="14.0" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
+                                          <TextField fx:id="search_formation" focusTraversable="false" layoutX="58.0" layoutY="14.0" onAction="#SearchFormation" onKeyTyped="#SearchFormation" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
                                           <FontAwesomeIconView glyphName="SEARCH" layoutX="62.0" layoutY="33.0" size="1.5em" />
                                           <Label layoutX="21.0" layoutY="52.0" text="Filtre :">
                                              <font>
@@ -258,10 +258,18 @@
                                              </font>
                                           </Label>
                                           <ComboBox fx:id="filtre_formation" layoutX="70.0" layoutY="49.0" prefWidth="150.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-                                          <Button fx:id="RefreshFormation" layoutX="312.0" layoutY="54.0" mnemonicParsing="false" onAction="#refreshData" prefHeight="36.0" prefWidth="77.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Refresh" />
+                                          <Button fx:id="RefreshFormation" layoutX="312.0" layoutY="54.0" mnemonicParsing="false" onAction="#refreshData" prefHeight="36.0" prefWidth="77.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
+                                             <graphic>
+                                                <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="1.5em" />
+                                             </graphic></Button>
+                                          <Button fx:id="Printformation" layoutX="234.0" layoutY="54.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="77.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
+                                             <graphic>
+                                                <FontAwesomeIconView fill="WHITE" glyphName="PRINT" size="1.5em" />
+                                             </graphic>
+                                          </Button>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="tmp_btnformation" layoutX="414.0" layoutY="2.0" prefHeight="499.0" prefWidth="409.0" stylesheets="@../css/dashboard.css">
+                                    <AnchorPane fx:id="tmp_btnformation" layoutX="416.0" prefHeight="502.0" prefWidth="409.0" stylesheets="@../css/dashboard.css">
                                        <styleClass>
                                           <String fx:value="shadow" />
                                           <String fx:value="white-bg" />
@@ -269,14 +277,14 @@
                                        <children>
                                           <Button fx:id="btn_tmpupdate" layoutX="249.0" layoutY="356.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="36.0" prefWidth="136.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier Formation" />
                                           <Button fx:id="btn_tmpadd" layoutX="52.0" layoutY="356.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="36.0" prefWidth="139.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter Formation" />
-                                          <Button fx:id="RemoveFormation" layoutX="106.0" layoutY="232.0" mnemonicParsing="false" onAction="#deleteFormation" prefHeight="36.0" prefWidth="77.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Remove" />
+                                          <Button fx:id="RemoveFormation" layoutX="68.0" layoutY="233.0" mnemonicParsing="false" onAction="#deleteFormation" prefHeight="36.0" prefWidth="108.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Remove" />
                                           <TextField fx:id="IdFormation" layoutX="160.0" layoutY="38.0" prefHeight="25.0" prefWidth="177.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
                                           <Label layoutX="52.0" layoutY="42.0" text="ID Formation :">
                                              <font>
                                                 <Font name="Tahoma" size="14.0" />
                                              </font>
                                           </Label>
-                                          <Button fx:id="Clearformation1" layoutX="249.0" layoutY="232.0" mnemonicParsing="false" onAction="#addformationReset" prefHeight="36.0" prefWidth="77.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                                          <Button fx:id="Clearformation1" layoutX="269.0" layoutY="233.0" mnemonicParsing="false" onAction="#addformationReset" prefHeight="36.0" prefWidth="77.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane fx:id="tmp_addformation" layoutX="416.0" layoutY="1.0" prefHeight="503.0" prefWidth="409.0" stylesheets="@../css/dashboard.css" visible="false">
@@ -303,10 +311,13 @@
                                              </font>
                                           </Label>
                                           <Button fx:id="Clearformation2" layoutX="265.0" layoutY="374.0" mnemonicParsing="false" onAction="#addformationReset2" prefHeight="36.0" prefWidth="77.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
-                                          <Button fx:id="AddFormation" layoutX="127.0" layoutY="374.0" mnemonicParsing="false" onAction="#AddFormation" prefHeight="36.0" prefWidth="77.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter" />
+                                          <Button fx:id="AddFormation" layoutX="127.0" layoutY="374.0" mnemonicParsing="false" onAction="#AddFormation" prefHeight="36.0" prefWidth="77.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Add">
+                                             <graphic>
+                                                <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="1.5em" />
+                                             </graphic></Button>
                                           <Button fx:id="Back_formation" layoutX="331.0" layoutY="460.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="36.0" prefWidth="77.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css">
                                              <graphic>
-                                                <FontAwesomeIconView glyphName="REFRESH" text="" />
+                                                <FontAwesomeIconView glyphName="REFRESH" size="1.5em" />
                                              </graphic>
                                           </Button>
                                        </children>
@@ -318,7 +329,7 @@
                                        </styleClass>
                                        <children>
                                           <Button fx:id="Clearformation" layoutX="286.0" layoutY="402.0" mnemonicParsing="false" onAction="#addformationReset" prefHeight="36.0" prefWidth="77.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
-                                          <Button fx:id="Updateformation" layoutX="100.0" layoutY="402.0" mnemonicParsing="false" onAction="#updateFormation" prefHeight="36.0" prefWidth="77.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
+                                          <Button fx:id="Updateformation" layoutX="100.0" layoutY="402.0" mnemonicParsing="false" onAction="#updateFormation" prefHeight="36.0" prefWidth="93.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
                                           <TextField fx:id="Nomformation" layoutX="164.0" layoutY="96.0" prefHeight="25.0" prefWidth="177.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
                                           <Label layoutX="24.0" layoutY="100.0" text="Nom Formation :">
                                              <font>
@@ -338,7 +349,7 @@
                                           </Label>
                                           <Button fx:id="Backformation2" layoutX="324.0" layoutY="456.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="36.0" prefWidth="77.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css">
                                              <graphic>
-                                                <FontAwesomeIconView glyphName="REFRESH" />
+                                                <FontAwesomeIconView glyphName="REFRESH" size="1.5em" />
                                              </graphic>
                                           </Button>
                                        </children>

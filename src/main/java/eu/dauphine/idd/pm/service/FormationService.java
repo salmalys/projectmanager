@@ -5,7 +5,6 @@ import eu.dauphine.idd.pm.dao.FormationDAO;
 import eu.dauphine.idd.pm.model.Formation;
 import javafx.collections.ObservableList;
 
-import java.util.List;
 
 public class FormationService {
 
@@ -15,10 +14,19 @@ public class FormationService {
 		this.formationDAO = DAOFactory.getFormationDAO();
 	}
 
-	public void createFormation(String nom, String promotion) {
-		Formation formation = new Formation(nom, promotion);
-		formationDAO.create(formation);
-		System.out.println("Formation cree avec succes : " + formation);
+	public int createFormation(String nom, String promotion) {
+		//Gerer exceptions ??
+	    Formation existingFormation = formationDAO.findByNameAndPromotion(nom, promotion);
+
+	    if (existingFormation != null) {
+	        System.out.println("Formation already exists with name: " + nom + " and promotion: " + promotion);
+	        return 1;
+	    } else {
+	        Formation formation = new Formation(nom, promotion);
+	        formationDAO.create(formation);
+	        System.out.println("Formation created successfully: " + formation.toString());
+	        return 0;
+	    }
 	}
 
 	public void deleteFormationById(int id) {

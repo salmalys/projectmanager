@@ -1,11 +1,6 @@
 package eu.dauphine.idd.pm.controller;
 
-import eu.dauphine.idd.pm.service.*;
-
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-
+import java.io.FileOutputStream;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,33 +12,41 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import javafx.scene.control.MenuItem;
-import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import eu.dauphine.idd.pm.dao.impl.FormationDAOImpl;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.Document;
+
 import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 import eu.dauphine.idd.pm.model.Formation;
-import javafx.scene.control.MenuButton;
+import eu.dauphine.idd.pm.service.FormationService;
+import eu.dauphine.idd.pm.service.ServiceFactory;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 
 public class DashboardController implements Initializable {
 
@@ -189,10 +192,14 @@ public class DashboardController implements Initializable {
 	@FXML
 	private AnchorPane tmp_binome;
 
+<<<<<<< HEAD
 	private HomeController homeController = new HomeController();
+=======
+	@FXML
+	private Button Printformation;
+>>>>>>> branch 'develop' of https://github.com/salmalys/projectmanager.git
 
 	// DATABASE TOOLS
-	private Connection connection;
 	private PreparedStatement prepare;
 	private ResultSet result;
 	private Statement statement;
@@ -228,23 +235,26 @@ public class DashboardController implements Initializable {
 			if (!isInputValid(nom, promotion)) {
 				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
 			} else {
-				String check = "SELECT Nom,Promotion FROM Formation WHERE Nom='" + nom + "' and Promotion='" + promotion
-						+ "'";
-				connection = getConnection();
-				statement = connection.createStatement();
-				result = statement.executeQuery(check);
-
-				if (result.next()) {
-					showAlert(AlertType.ERROR, "Error Message",
-							"Nom formation: " + nom + " Promotion: " + promotion + " already exists!");
-				} else {
-					formationS.createFormation(nom, promotion);
+				int result = formationS.createFormation(nom, promotion);
+				switch(result) {
+				case 0: //Success
 					showAlert(AlertType.INFORMATION, "Success", "Formation added successfully!");
 					addformationshow();
 					addformationReset2();
+
+					SearchFormation() ;
+
+					break;
+				case 1: 
+					showAlert(AlertType.ERROR, "Error Message", "Nom formation: " + nom + " Promotion: " + promotion + " already exists!");
+					break;
+				default: 
+					showAlert(Alert.AlertType.ERROR, "Error", "An error occurred while creating the formation.");
+                    break;
+					
+
 				}
 			}
-
 		} catch (Exception e) {
 			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
 			e.printStackTrace();
@@ -275,6 +285,7 @@ public class DashboardController implements Initializable {
 
 					addformationshow();
 					addformationReset();
+					SearchFormation() ;
 
 				}
 			}
@@ -306,6 +317,7 @@ public class DashboardController implements Initializable {
 
 					addformationshow();
 					addformationReset();
+					SearchFormation();
 
 				}
 			}
@@ -315,6 +327,35 @@ public class DashboardController implements Initializable {
 		}
 	}
 
+	@FXML
+	public void SearchFormation() {
+	    FilteredList<Formation> filter = new FilteredList<>(addformation, e -> true);
+	    search_formation.textProperty().addListener((observable, oldValue, newValue) -> {
+	        filter.setPredicate(predData -> {
+	            if (newValue == null || newValue.isEmpty()) {
+	                return true;
+	            }
+	            String searchKey = newValue.toLowerCase();
+
+	            // Check if any of the fields contain the search keyword
+	            boolean idMatches = Integer.toString(predData.getIdFormation()).equalsIgnoreCase(searchKey);
+
+
+	            boolean nomMatches = predData.getNom().toLowerCase().contains(searchKey);
+	            boolean promotionMatches = predData.getPromotion().toLowerCase().contains(searchKey);
+
+	            System.out.println("ID: " + predData.getIdFormation() + ", Nom: " + predData.getNom() + ", Promotion: " + predData.getPromotion());
+	            System.out.println("ID Match: " + idMatches + ", Nom Match: " + nomMatches + ", Promotion Match: " + promotionMatches);
+
+	            return idMatches || nomMatches || promotionMatches;
+	        });
+	    });
+
+	    SortedList<Formation> sortedList = new SortedList<>(filter);
+	    sortedList.comparatorProperty().bind(tableFormation.comparatorProperty());
+
+	    System.out.println(filter.toString());
+	}
 	@FXML
 	public void refreshData() {
 		try {
@@ -334,6 +375,7 @@ public class DashboardController implements Initializable {
 		col_promotion.setCellValueFactory(new PropertyValueFactory<>("promotion"));
 
 		tableFormation.setItems(addformation);
+
 	}
 
 	public void selectFormation() {
@@ -395,6 +437,7 @@ public class DashboardController implements Initializable {
 			handleHomeButton();
 		} else if (event.getSource() == formation_btn) {
 			handleFormationButton();
+
 		} else if (event.getSource() == etudiant_btn) {
 			tmp_home.setVisible(false);
 			temp_formation.setVisible(false);
@@ -461,13 +504,16 @@ public class DashboardController implements Initializable {
 
 		else if (event.getSource() == btn_tmpadd && temp_formation.isVisible()) {
 			handleBtnTmpAdd();
+
 		} else if (event.getSource() == Back_formation && temp_formation.isVisible()) {
 			handleBackFormation();
 
 		} else if (event.getSource() == btn_tmpupdate && temp_formation.isVisible()) {
 			handleBtnTmpUpdate();
+
 		} else if (event.getSource() == Backformation2 && temp_formation.isVisible()) {
 			handleBackFormation2();
+
 		}
 	}
 
@@ -496,6 +542,7 @@ public class DashboardController implements Initializable {
 		tmp_projet.setVisible(false);
 		tmp_btnformation.setVisible(true);
 		addPromotionList();
+		SearchFormation();
 		formation_btn.setStyle(
 				"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
 		home_btn.setStyle("-fx-background-color: transparent;");
@@ -600,6 +647,7 @@ public class DashboardController implements Initializable {
 		addformationshow();
 		addPromotionList();
 		addPromotionList2();
+		SearchFormation();
 
 	}
 

@@ -9,6 +9,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+
 public class EtudiantDAOImpl implements EtudiantDAO {
 
 	private static final String INSERT_ETUDIANT = "INSERT INTO Etudiant (Nom, Prenom, ID_Formation) VALUES (?, ?, ?)";
@@ -59,7 +63,7 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 			if (rs.next()) {
 				String nom = rs.getString("Nom");
 				String prenom = rs.getString("Prenom");
-				Formation formation = new Formation(); // Vous devrez probablement récupérer la formation complète ici
+				Formation formation = new Formation(); 
 				formation.setIdFormation(rs.getInt("ID_Formation"));
 				etudiant = new Etudiant(id, nom, prenom, formation);
 			}
@@ -70,8 +74,9 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 	}
 
 	@Override
-	public List<Etudiant> findAll() {
+	public ObservableList<Etudiant> findAll() {
 		List<Etudiant> etudiants = new ArrayList<>();
+		ObservableList<Etudiant> listetudiant = FXCollections.observableArrayList();
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ETUDIANTS)) {
 
@@ -85,11 +90,12 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 				formation.setIdFormation(rs.getInt("ID_Formation"));
 				Etudiant etudiant = new Etudiant(id, nom, prenom, formation);
 				etudiants.add(etudiant);
+				listetudiant.add(etudiant);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return etudiants;
+		return listetudiant;
 	}
 
 	@Override

@@ -1,10 +1,9 @@
-package eu.dauphine.idd.pm.controller;
+package eu.dauphine.idd.pm.main;
 
 import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.input.*;
 import javafx.scene.layout.StackPane;
@@ -49,11 +48,16 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		String dbPath = "./src/main/resources/sample.db" ;
+		
+		//Si argument en ligne de commande on recupere le chemin de la base de donnees
 		if (args.length > 0) {
-			dbPath = args[0]; // Utiliser le premier argument comme chemin de la base de données
+			dbPath = args[0]; 
 	    }
-		System.out.println("dbPath" + dbPath);
+		System.out.println("Data Base Path: " + dbPath);
+		
+		//Injection du chemin de la BDD pour la connexion
 		DatabaseConnection.setDatabasePath(dbPath);
+		
 		launch(args);
 	}
 }

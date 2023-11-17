@@ -9,7 +9,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-import java.awt.Label;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +27,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class MainController implements Initializable {
+public class LoginController implements Initializable {
 
 	@FXML
 	private Button close;
