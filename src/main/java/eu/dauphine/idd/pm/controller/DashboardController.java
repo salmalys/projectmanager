@@ -189,6 +189,8 @@ public class DashboardController implements Initializable {
 	@FXML
 	private AnchorPane tmp_binome;
 
+	private HomeController homeController = new HomeController();
+
 	// DATABASE TOOLS
 	private Connection connection;
 	private PreparedStatement prepare;
