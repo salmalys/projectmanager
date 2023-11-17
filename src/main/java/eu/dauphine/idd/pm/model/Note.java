@@ -8,7 +8,6 @@ public class Note {
 	private Etudiant etudiant;
 	private double noteRapport;
 	private double noteSoutenance;
-	private Date dateRemiseEffective;
 
 	public Note(int id, Binome b, Etudiant e, double noteR, double noteS, Date date) {
 		this.binome = b;
@@ -16,7 +15,6 @@ public class Note {
 		this.noteRapport = noteR;
 		this.noteSoutenance = noteS;
 		this.id = id;
-		this.dateRemiseEffective = date;
 	}
 
 	public Note(Binome b, Etudiant e, double noteR, double noteS, Date date) {
@@ -24,18 +22,9 @@ public class Note {
 		this.etudiant = e;
 		this.noteRapport = noteR;
 		this.noteSoutenance = noteS;
-		this.dateRemiseEffective = date;
 	}
 
 	public Note() {
-	}
-
-	public Date getDateRemiseEffective() {
-		return this.dateRemiseEffective;
-	}
-
-	public void setDateRemiseEffective(Date date) {
-		this.dateRemiseEffective = date;
 	}
 
 	public Binome getBinome() {
@@ -81,8 +70,7 @@ public class Note {
 	@Override
 	public String toString() {
 		return "Note [binome = " + this.binome.toString() + ", etudiant = " + this.etudiant.toString()
-				+ ", NoteRapport = " + this.noteRapport + ", NoteSoutenance = " + this.noteSoutenance
-				+ ", dateRemiseEffective =" + this.dateRemiseEffective + "]";
+				+ ", NoteRapport = " + this.noteRapport + ", NoteSoutenance = " + this.noteSoutenance + "]";
 	}
 
 }

@@ -1,6 +1,7 @@
 package eu.dauphine.idd.pm.dao.impl;
 
 import eu.dauphine.idd.pm.dao.BinomeDAO;
+import java.util.Date;
 import eu.dauphine.idd.pm.dao.DAOFactory;
 import eu.dauphine.idd.pm.dao.EtudiantDAO;
 import eu.dauphine.idd.pm.dao.ProjetDAO;
@@ -67,7 +68,9 @@ public class BinomeDAOImpl implements BinomeDAO {
                 Etudiant e1 = etudiantDAO.findById(idEtudiant1);
                 Etudiant e2 = etudiantDAO.findById(idEtudiant2);
                 Projet p = projetDAO.findById(idProjet);
-                binome = new Binome(id, e1, e2, p);
+                //A MODIFIER
+                Date date = new Date();
+                binome = new Binome(id, e1, e2, p,date);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -92,7 +95,10 @@ public class BinomeDAOImpl implements BinomeDAO {
                 Etudiant e1 = etudiantDAO.findById(idEtudiant1);
                 Etudiant e2 = etudiantDAO.findById(idEtudiant2);
                 Projet p = projetDAO.findById(idProjet);
-                binomes.add(new Binome(id, e1, e2, p));
+                
+                //A MODIFIER
+                Date date = new Date();
+                binomes.add(new Binome(id, e1, e2, p, date));
             }
         } catch (SQLException e) {
             e.printStackTrace();

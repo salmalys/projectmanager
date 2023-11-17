@@ -34,7 +34,7 @@ public class NoteDAOImpl implements NoteDAO {
 																				// getId()
 			preparedStatement.setDouble(3, note.getNoteRapport());
 			preparedStatement.setDouble(4, note.getNoteSoutenance());
-			preparedStatement.setDate(5, new java.sql.Date(note.getDateRemiseEffective().getTime()));
+			//A MODIFIER 
 			preparedStatement.executeUpdate();
 
 			try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
@@ -55,7 +55,7 @@ public class NoteDAOImpl implements NoteDAO {
 			preparedStatement.setInt(2, note.getEtudiant().getIdEtudiant());
 			preparedStatement.setDouble(3, note.getNoteRapport());
 			preparedStatement.setDouble(4, note.getNoteSoutenance());
-			preparedStatement.setDate(5, new java.sql.Date(note.getDateRemiseEffective().getTime()));
+			//A MODIFIER
 			preparedStatement.setInt(6, note.getId());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -115,7 +115,7 @@ public class NoteDAOImpl implements NoteDAO {
 		// note.setEtudiant(new Etudiant(rs.getInt("etudiant")));
 		note.setNoteRapport(rs.getDouble("noteRapport"));
 		note.setNoteSoutenance(rs.getDouble("noteSoutenance"));
-		note.setDateRemiseEffective(rs.getDate("dateRemiseEffective"));
+		//A MODIFIER
 		return note;
 	}
 	
