@@ -3,7 +3,7 @@ package eu.dauphine.idd.pm.model;
 import java.util.Date;
 
 public class Note {
-	private int id;
+	private int idNote;
 	private Binome binome;
 	private Etudiant etudiant;
 	private double noteRapport;
@@ -14,7 +14,7 @@ public class Note {
 		this.etudiant = e;
 		this.noteRapport = noteR;
 		this.noteSoutenance = noteS;
-		this.id = id;
+		this.idNote = id;
 	}
 
 	public Note(Binome b, Etudiant e, double noteR, double noteS, Date date) {
@@ -60,11 +60,11 @@ public class Note {
 	}
 
 	public int getId() {
-		return this.id;
+		return this.idNote;
 	}
 
 	public void setId(int id) {
-		this.id = id;
+		this.idNote = id;
 	}
 
 	@Override
