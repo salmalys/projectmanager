@@ -243,6 +243,41 @@ public class FormationController {
 	// *******************handling button actions in a
 	// UI.******************************//
 
+	// Button pour switch vers la fenetre d'ajout d'étudiant
+	private void handleBtnTmpAddEtudiant(AnchorPane tmp_addEtudiant, AnchorPane tmp_btnEtudiant,
+			AnchorPane tmp_updateEtudiant) {
+		tmp_addEtudiant.setVisible(true);
+		tmp_btnEtudiant.setVisible(false);
+		tmp_updateEtudiant.setVisible(false);
+	}
+
+	// Button pour retour de formulaire ajout étudiant vers la fenêtre étudiant
+	private void handleBackEtudiant(Button btn_tmpbackEtudient, AnchorPane tmp_addEtudiant,
+			AnchorPane tmp_btnEtudiant,AnchorPane tmp_updateEtudiant) {
+		tmp_addEtudiant.setVisible(false);
+		tmp_btnEtudiant.setVisible(true);
+		tmp_updateEtudiant.setVisible(false);
+		
+	}
+
+	// Button pour switch vers la fenêtre de mise à jour d'étudiant
+	private void handleBtnTmpUpdateEtudiant(AnchorPane tmp_addEtudiant, AnchorPane tmp_btnEtudiant,
+			AnchorPane tmp_updateEtudiant) {
+		tmp_addEtudiant.setVisible(false);
+		tmp_btnEtudiant.setVisible(false);
+		tmp_updateEtudiant.setVisible(true);
+	}
+
+	// Button pour retour de formulaire mise à jour étudiant vers la fenêtre
+	// étudiant
+	private void handleBackEtudiant2(Button btn_tmpBackEtudient2, AnchorPane tmp_addEtudiant,
+			AnchorPane tmp_btnEtudiant,AnchorPane tmp_updateEtudiant) {
+		tmp_addEtudiant.setVisible(false);
+		tmp_btnEtudiant.setVisible(true);
+		tmp_updateEtudiant.setVisible(false);
+		
+	}
+
 	// Mettre vesibilité fenetre Home quand on clic sur button Home
 	private void handleHomeButton(AnchorPane tmp_home, AnchorPane temp_formation, AnchorPane tmp_etudiant,
 			AnchorPane tmp_binome, AnchorPane tmp_note, AnchorPane tmp_projet, Button home_btn, Button binome_btn,
@@ -344,7 +379,9 @@ public class FormationController {
 			Button Back_formation, Button btn_tmpupdate, Button Backformation2, AnchorPane tmp_btnformation,
 			ComboBox<String> PromotionList, TextField search_formation, TableView<Formation> tableFormation,
 			AnchorPane tmp_addformation, AnchorPane tmp_updateformation, TextField IdFormation, TextField Nomformation,
-			TextField Nomformation2, ComboBox<String> PromotionList2) {
+			TextField Nomformation2, ComboBox<String> PromotionList2, AnchorPane tmp_addEtudiant,
+			AnchorPane tmp_btnEtudiant, AnchorPane tmp_updateEtudiant, Button btn_tmpBackEtudient2,
+			Button btn_tmpaddEtudient, Button btn_tmpbackEtudient, Button btn_tmpupdateEtudient) {
 		if (event.getSource() == home_btn) {
 			handleHomeButton(tmp_home, temp_formation, tmp_etudiant, tmp_binome, tmp_note, tmp_projet, home_btn,
 					binome_btn, etudiant_btn, projet_btn, note_btn, formation_btn);
@@ -433,6 +470,14 @@ public class FormationController {
 			handleBackFormation2(tmp_addformation, tmp_updateformation, tmp_btnformation, IdFormation, Nomformation,
 					PromotionList);
 
+		} else if (event.getSource() == btn_tmpaddEtudient) {
+			handleBtnTmpAddEtudiant(tmp_addEtudiant, tmp_btnEtudiant, tmp_updateEtudiant);
+		} else if (event.getSource() == btn_tmpbackEtudient) {
+			handleBackEtudiant(btn_tmpbackEtudient, tmp_addEtudiant, tmp_btnEtudiant, tmp_updateEtudiant);
+		} else if (event.getSource() == btn_tmpupdateEtudient) {
+			handleBtnTmpUpdateEtudiant(tmp_addEtudiant, tmp_btnEtudiant, tmp_updateEtudiant);
+		} else if (event.getSource() == btn_tmpBackEtudient2) {
+			handleBackEtudiant2(btn_tmpBackEtudient2, tmp_addEtudiant, tmp_btnEtudiant, tmp_updateEtudiant);
 		}
 	}
 

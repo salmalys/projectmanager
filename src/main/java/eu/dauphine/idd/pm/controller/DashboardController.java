@@ -4,6 +4,8 @@ import java.net.URL;
 
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import eu.dauphine.idd.pm.model.Etudiant;
 import eu.dauphine.idd.pm.model.Formation;
 import eu.dauphine.idd.pm.service.FormationService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
@@ -236,10 +238,82 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	public void tmpSwitch(ActionEvent event) {
-		formationController.tmpSwitch(event, tmp_home, temp_formation, tmp_etudiant, tmp_binome, tmp_note, tmp_projet,
-				home_btn, binome_btn, etudiant_btn, projet_btn, note_btn, formation_btn, btn_tmpadd, Back_formation,
-				btn_tmpupdate, Backformation2, tmp_btnformation, PromotionList, search_formation, tableFormation,
-				tmp_addformation, tmp_updateformation, IdFormation, Nomformation, Nomformation2, PromotionList2);
+		formationController.tmpSwitch(event, tmp_home, temp_formation, tmp_etudiant, tmp_binome, tmp_note, tmp_projet, home_btn, binome_btn,
+				etudiant_btn, projet_btn, note_btn, formation_btn, btn_tmpadd, Back_formation, btn_tmpupdate, Backformation2, tmp_btnformation,
+				PromotionList, search_formation, tableFormation, tmp_addformation, tmp_updateformation, IdFormation, Nomformation, Nomformation2, 
+				PromotionList2, tmp_addEtudiant,tmp_btnEtudiant, tmp_updateEtudiant,
+				btn_tmpBackEtudient2, btn_tmpaddEtudient, btn_tmpbackEtudient, btn_tmpupdateEtudient);
+	}
+	
+	
+	
+	// ****Partie 2: ************************Button Etudiant**********************************//
+    @FXML
+    private ComboBox<Formation> Formation;
+
+    @FXML
+    private ComboBox<Formation> Formation2;
+    @FXML
+    private TextField IdEtudiant;
+    @FXML
+    private TextField NomEtudiant;
+
+    @FXML
+    private TextField NomEtudiant2;
+    @FXML
+    private TextField PrenomEtudiant;
+
+    @FXML
+    private TextField PrenomEtudiant2;
+    @FXML
+    private Button RefreshEtudiant;
+
+    @FXML
+    private TableColumn<?, ?> col_PrenomEtudiant;
+
+    @FXML
+    private TableColumn<?, ?> col_PromotionEtudiant;
+    @FXML
+    private TableColumn<?, ?> col_NomEtudiant;
+
+    @FXML
+    private TableColumn<?, ?> col_NomformEtudiant;
+    @FXML
+    private TableColumn<?, ?> col_Idetudiant;
+    @FXML
+    private TextField search_Etudiant;
+    @FXML
+    private TableView<Etudiant> tableEtudiant;
+
+    @FXML
+    private AnchorPane tmp_addEtudiant;
+    @FXML
+    private AnchorPane tmp_btnEtudiant;
+    @FXML
+    private AnchorPane tmp_updateEtudiant;
+    @FXML
+    private Button btn_tmpBackEtudient2;
+    @FXML
+    private Button btn_tmpaddEtudient;
+
+    @FXML
+    private Button btn_tmpbackEtudient;
+    @FXML
+    private Button btn_tmpupdateEtudient;
+	
+	
+    public void selectEtudient() {
+		Formation formation = tableFormation.getSelectionModel().getSelectedItem();
+		Etudiant etudiant=tableEtudiant.getSelectionModel().getSelectedItem();
+		int num = tableFormation.getSelectionModel().getFocusedIndex();
+		if ((num - 1) < -1) {
+			return;
+		}
+
+		IdEtudiant.setText(String.valueOf(etudiant.getIdEtudiant()));
+		NomEtudiant.setText(etudiant.getNom());
+		NomEtudiant2.setText(etudiant.getNom());
+
 	}
 
 	// Partie :****************Deconnexion et Reglage de Scene Dashboard**********************//
