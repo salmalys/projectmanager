@@ -1,6 +1,7 @@
 package eu.dauphine.idd.pm.controller;
 
 import java.net.URL;
+
 import java.util.Optional;
 import java.util.ResourceBundle;
 import eu.dauphine.idd.pm.model.Formation;
@@ -159,8 +160,7 @@ public class DashboardController implements Initializable {
 	private Button Printformation;
 
 	private FormationController formationController = new FormationController();
-	private FormationService formationS = ServiceFactory.getFormationService();
-
+	
 	private double x = 0;
 	private double y = 0;
 
