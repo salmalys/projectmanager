@@ -1,27 +1,11 @@
 package eu.dauphine.idd.pm.controller;
 
-import java.io.FileOutputStream;
-
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-
-import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 import eu.dauphine.idd.pm.model.Formation;
 import eu.dauphine.idd.pm.service.FormationService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,11 +19,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -47,19 +29,41 @@ import javafx.stage.StageStyle;
 
 public class DashboardController implements Initializable {
 
+	// ****Partie 0: ************************Button Home********************************//
+	
 	@FXML
-	private AnchorPane main_form;
+	private Label Count_totaletudiant;
+	@FXML
+	private Label count_apresprojet;
+
+	@FXML
+	private Label count_avantprojet;
+
+	@FXML
+	private Label count_totalbinome;
+
+	@FXML
+	private Label count_totalprojet;
+	@FXML
+	private Button home_btn;
+
+	@FXML
+	private BarChart<?, ?> home_chart;
+	@FXML
+	private AnchorPane tmp_home;
+
+	
+	
+	// ****Partie 1: ************************Button Formation****************************//
 
 	@FXML
 	private Button AddFormation;
 
 	@FXML
 	private Button Clearformation;
-	@FXML
-	private Button Clearformation2;
 
 	@FXML
-	private Label Count_totaletudiant;
+	private Button Clearformation2;
 
 	@FXML
 	private TextField IdFormation;
@@ -92,31 +96,10 @@ public class DashboardController implements Initializable {
 	private TableColumn<Formation, String> col_promotion;
 
 	@FXML
-	private Label count_apresprojet;
-
-	@FXML
-	private Label count_avantprojet;
-
-	@FXML
-	private Label count_totalbinome;
-
-	@FXML
-	private Label count_totalprojet;
-
-	@FXML
 	private ComboBox<?> filtre_formation;
 
 	@FXML
 	private Button formation_btn;
-
-	@FXML
-	private Button home_btn;
-
-	@FXML
-	private BarChart<?, ?> home_chart;
-
-	@FXML
-	private Button logout;
 
 	@FXML
 	private TextField search_formation;
@@ -126,27 +109,6 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	private AnchorPane temp_formation;
-
-	@FXML
-	private AnchorPane tmp_home;
-
-	@FXML
-	private Label username;
-
-	@FXML
-	private Button close;
-
-	@FXML
-	private Button minimize;
-
-	@FXML
-	private MenuItem initiale;
-
-	@FXML
-	private MenuItem continueF;
-
-	@FXML
-	private MenuItem alternance;
 
 	@FXML
 	private Button btn_tmpadd;
@@ -162,6 +124,7 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	private AnchorPane tmp_btnformation;
+
 	@FXML
 	private Button Back_formation;
 
@@ -170,8 +133,10 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	private Button binome_btn;
+
 	@FXML
 	private Button etudiant_btn;
+
 	@FXML
 	private Button note_btn;
 
@@ -183,155 +148,52 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	private AnchorPane tmp_projet;
+
 	@FXML
 	private AnchorPane tmp_etudiant;
 
 	@FXML
 	private AnchorPane tmp_binome;
 
-
-	private FormationController homeController = new FormationController();
-
 	@FXML
 	private Button Printformation;
 
-
-	// DATABASE TOOLS
+	private FormationController formationController = new FormationController();
+	private FormationService formationS = ServiceFactory.getFormationService();
 
 	private double x = 0;
 	private double y = 0;
 
-	private FormationService formationS = ServiceFactory.getFormationService();
-
-
-
-	public void close() {
-		System.exit(0);
-	}
-
-	public void minimize() {
-		Stage stage = (Stage) main_form.getScene().getWindow();
-		stage.setIconified(true);
-	}
-
+	@FXML
 	public void AddFormation() {
-		
+		formationController.addFormation(IdFormation, Nomformation2, PromotionList2, search_formation, col_Idformation,
+				col_Nomformation, col_promotion, tableFormation);
 	}
 
+	@FXML
 	public void updateFormation() {
-		try {
-			String nom = Nomformation.getText();
-			String promotion = PromotionList.getSelectionModel().getSelectedItem();
-			String IdFormatio = IdFormation.getText();
-
-			Alert alert;
-			if (!isInputValid(nom, promotion)) {
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
-
-			} else {
-				alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Confirmation Message");
-				alert.setHeaderText(null);
-				alert.setContentText("Are you sure want to Update ID Formation : " + IdFormatio);
-
-				Optional<ButtonType> option = alert.showAndWait();
-				if (option.get().equals(ButtonType.OK)) {
-					formationS.update(Integer.valueOf(IdFormatio), nom, promotion);
-
-					showAlert(AlertType.INFORMATION, "Information Message", "Formation Updated successfully!");
-
-					addformationshow();
-					addformationReset();
-					SearchFormation() ;
-
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		formationController.updateFormation(IdFormation, Nomformation, PromotionList, search_formation, col_Idformation,
+				col_Nomformation, col_promotion, tableFormation);
 	}
 
+	@FXML
 	public void deleteFormation() {
-		try {
-
-			String IdFormatio = IdFormation.getText();
-
-			Alert alert;
-			if (IdFormatio.isEmpty()) {
-
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
-
-			} else {
-				alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Confirmation Message");
-				alert.setHeaderText(null);
-				alert.setContentText("Are you sure want to Delete ID Formation : Ligne " + IdFormatio);
-				Optional<ButtonType> option = alert.showAndWait();
-				if (option.get().equals(ButtonType.OK)) {
-					formationS.deleteFormationById(Integer.valueOf(IdFormatio));
-					showAlert(AlertType.INFORMATION, "Information Message", "Formation Deleted successfully!");
-
-					addformationshow();
-					addformationReset();
-					SearchFormation();
-
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		formationController.deleteFormation(IdFormation, Nomformation, PromotionList, search_formation, col_Idformation,
+				col_Nomformation, col_promotion, tableFormation);
 	}
 
 	@FXML
 	public void SearchFormation() {
-	    FilteredList<Formation> filter = new FilteredList<>(addformation, e -> true);
-	    search_formation.textProperty().addListener((observable, oldValue, newValue) -> {
-	        filter.setPredicate(predData -> {
-	            if (newValue == null || newValue.isEmpty()) {
-	                return true;
-	            }
-	            String searchKey = newValue.toLowerCase();
-
-	            // Check if any of the fields contain the search keyword
-	            boolean idMatches = Integer.toString(predData.getIdFormation()).equalsIgnoreCase(searchKey);
-
-
-	            boolean nomMatches = predData.getNom().toLowerCase().contains(searchKey);
-	            boolean promotionMatches = predData.getPromotion().toLowerCase().contains(searchKey);
-
-	            System.out.println("ID: " + predData.getIdFormation() + ", Nom: " + predData.getNom() + ", Promotion: " + predData.getPromotion());
-	            System.out.println("ID Match: " + idMatches + ", Nom Match: " + nomMatches + ", Promotion Match: " + promotionMatches);
-
-	            return idMatches || nomMatches || promotionMatches;
-	        });
-	    });
-
-	    SortedList<Formation> sortedList = new SortedList<>(filter);
-	    sortedList.comparatorProperty().bind(tableFormation.comparatorProperty());
-
-	    System.out.println(filter.toString());
+		formationController.SearchFormation(search_formation, tableFormation);
 	}
+
 	@FXML
 	public void refreshData() {
-		try {
-			addformationshow();
-			showAlert(AlertType.INFORMATION, "Refresh", "Data refreshed successfully!");
-		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
-		}
+		formationController.refreshData(col_Idformation, col_Nomformation, col_promotion, tableFormation);
 	}
 
-	private ObservableList<Formation> addformation;
-
 	public void addformationshow() {
-		addformation = formationS.listFormations();
-		col_Idformation.setCellValueFactory(new PropertyValueFactory<>("idFormation"));
-		col_Nomformation.setCellValueFactory(new PropertyValueFactory<>("nom"));
-		col_promotion.setCellValueFactory(new PropertyValueFactory<>("promotion"));
-
-		tableFormation.setItems(addformation);
+		formationController.addformationshow(col_Idformation, col_Nomformation, col_promotion, tableFormation);
 
 	}
 
@@ -348,219 +210,53 @@ public class DashboardController implements Initializable {
 
 	}
 
+	@FXML
 	public void addformationReset() {
-		IdFormation.setText("");
-		Nomformation.setText("");
-		PromotionList.getSelectionModel().clearSelection();
+		formationController.addformationReset2(IdFormation, Nomformation, PromotionList);
 
 	}
 
+	@FXML
 	public void addformationReset2() {
-		IdFormation.setText("");
-		Nomformation2.setText("");
-		PromotionList2.getSelectionModel().clearSelection();
+		formationController.addformationReset2(IdFormation, Nomformation2, PromotionList2);
 
 	}
 
-	private String[] listPromotion = { "Initial", "Alternance", "Formation Continue" };
-	private String[] listPromotion2 = { "Initial", "Alternance", "Formation Continue" };
-
+	@FXML
 	public void addPromotionList() {
-		List<String> listp = new ArrayList<>();
-		for (String Promot : listPromotion) {
-			listp.add(Promot);
-		}
-		ObservableList promotionL = FXCollections.observableArrayList(listp);
-		PromotionList.setItems(promotionL);
+		formationController.addPromotionList(PromotionList);
 
 	}
 
+	@FXML
 	public void addPromotionList2() {
-		List<String> listp = new ArrayList<>();
-		for (String Promot : listPromotion2) {
-			listp.add(Promot);
-		}
-		ObservableList promotionL = FXCollections.observableArrayList(listp);
-		PromotionList2.setItems(promotionL);
+		formationController.addPromotionList(PromotionList2);
 
 	}
 
-	public void Affichersername() {
-		username.setText(Data.username);
-	}
-
+	@FXML
 	public void tmpSwitch(ActionEvent event) {
-		if (event.getSource() == home_btn) {
-			handleHomeButton();
-		} else if (event.getSource() == formation_btn) {
-			handleFormationButton();
-
-		} else if (event.getSource() == etudiant_btn) {
-			tmp_home.setVisible(false);
-			temp_formation.setVisible(false);
-			tmp_etudiant.setVisible(true);
-			tmp_binome.setVisible(false);
-			tmp_note.setVisible(false);
-			tmp_projet.setVisible(false);
-
-			etudiant_btn.setStyle(
-					"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
-			home_btn.setStyle("-fx-background-color: transparent;");
-			binome_btn.setStyle("-fx-background-color: transparent;");
-			projet_btn.setStyle("-fx-background-color: transparent;");
-			note_btn.setStyle("-fx-background-color: transparent;");
-			formation_btn.setStyle("-fx-background-color: transparent;");
-
-		} else if (event.getSource() == projet_btn) {
-			tmp_home.setVisible(false);
-			temp_formation.setVisible(false);
-			tmp_etudiant.setVisible(false);
-			tmp_binome.setVisible(false);
-			tmp_note.setVisible(false);
-			tmp_projet.setVisible(true);
-
-			projet_btn.setStyle(
-					"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
-			home_btn.setStyle("-fx-background-color: transparent;");
-			etudiant_btn.setStyle("-fx-background-color: transparent;");
-			binome_btn.setStyle("-fx-background-color: transparent;");
-			note_btn.setStyle("-fx-background-color: transparent;");
-			formation_btn.setStyle("-fx-background-color: transparent;");
-
-		} else if (event.getSource() == note_btn) {
-			tmp_home.setVisible(false);
-			temp_formation.setVisible(false);
-			tmp_etudiant.setVisible(false);
-			tmp_binome.setVisible(false);
-			tmp_note.setVisible(true);
-			tmp_projet.setVisible(false);
-
-			note_btn.setStyle(
-					"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
-			home_btn.setStyle("-fx-background-color: transparent;");
-			etudiant_btn.setStyle("-fx-background-color: transparent;");
-			projet_btn.setStyle("-fx-background-color: transparent;");
-			binome_btn.setStyle("-fx-background-color: transparent;");
-			formation_btn.setStyle("-fx-background-color: transparent;");
-		} else if (event.getSource() == binome_btn) {
-			tmp_home.setVisible(false);
-			temp_formation.setVisible(false);
-			tmp_etudiant.setVisible(false);
-			tmp_binome.setVisible(true);
-			tmp_note.setVisible(false);
-			tmp_projet.setVisible(false);
-
-			binome_btn.setStyle(
-					"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
-			home_btn.setStyle("-fx-background-color: transparent;");
-			etudiant_btn.setStyle("-fx-background-color: transparent;");
-			projet_btn.setStyle("-fx-background-color: transparent;");
-			note_btn.setStyle("-fx-background-color: transparent;");
-			formation_btn.setStyle("-fx-background-color: transparent;");
-		}
-
-		else if (event.getSource() == btn_tmpadd && temp_formation.isVisible()) {
-			handleBtnTmpAdd();
-
-		} else if (event.getSource() == Back_formation && temp_formation.isVisible()) {
-			handleBackFormation();
-
-		} else if (event.getSource() == btn_tmpupdate && temp_formation.isVisible()) {
-			handleBtnTmpUpdate();
-
-		} else if (event.getSource() == Backformation2 && temp_formation.isVisible()) {
-			handleBackFormation2();
-
-		}
+		formationController.tmpSwitch(event, tmp_home, temp_formation, tmp_etudiant, tmp_binome, tmp_note, tmp_projet,
+				home_btn, binome_btn, etudiant_btn, projet_btn, note_btn, formation_btn, btn_tmpadd, Back_formation,
+				btn_tmpupdate, Backformation2, tmp_btnformation, PromotionList, search_formation, tableFormation,
+				tmp_addformation, tmp_updateformation, IdFormation, Nomformation, Nomformation2, PromotionList2);
 	}
 
-	private void handleHomeButton() {
-		tmp_home.setVisible(true);
-		temp_formation.setVisible(false);
-		tmp_etudiant.setVisible(false);
-		tmp_binome.setVisible(false);
-		tmp_note.setVisible(false);
-		tmp_projet.setVisible(false);
-		home_btn.setStyle(
-				"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
-		binome_btn.setStyle("-fx-background-color: transparent;");
-		etudiant_btn.setStyle("-fx-background-color: transparent;");
-		projet_btn.setStyle("-fx-background-color: transparent;");
-		note_btn.setStyle("-fx-background-color: transparent;");
-		formation_btn.setStyle("-fx-background-color: transparent;");
-	}
+	// Partie :****************Deconnexion et Reglage de Scene Dashboard**********************//
 
-	private void handleFormationButton() {
-		tmp_home.setVisible(false);
-		temp_formation.setVisible(true);
-		tmp_etudiant.setVisible(false);
-		tmp_binome.setVisible(false);
-		tmp_note.setVisible(false);
-		tmp_projet.setVisible(false);
-		tmp_btnformation.setVisible(true);
-		addPromotionList();
-		SearchFormation();
-		formation_btn.setStyle(
-				"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
-		home_btn.setStyle("-fx-background-color: transparent;");
-		etudiant_btn.setStyle("-fx-background-color: transparent;");
-		projet_btn.setStyle("-fx-background-color: transparent;");
-		note_btn.setStyle("-fx-background-color: transparent;");
-		binome_btn.setStyle("-fx-background-color: transparent;");
-	}
-
-	private void handleBtnTmpAdd() {
-		tmp_addformation.setVisible(true);
-		tmp_updateformation.setVisible(false);
-		tmp_btnformation.setVisible(false);
-		addformationReset();
-		addformationReset2();
-		addPromotionList2();
-
-	}
-
-	private void handleBackFormation() {
-		tmp_addformation.setVisible(false);
-		tmp_updateformation.setVisible(false);
-		tmp_btnformation.setVisible(true);
-		addformationReset();
-		addPromotionList();
-	}
-
-	private void handleBtnTmpUpdate() {
-		tmp_addformation.setVisible(false);
-		tmp_updateformation.setVisible(true);
-		tmp_btnformation.setVisible(false);
-		addformationReset();
-		addPromotionList();
-	}
-
-	private void handleBackFormation2() {
-		tmp_addformation.setVisible(false);
-		tmp_updateformation.setVisible(false);
-		tmp_btnformation.setVisible(true);
-		addformationReset();
-
-		addPromotionList();
-	}
-
-	private void showAlert(AlertType alertType, String title, String content) {
-		Alert alert = new Alert(alertType);
-		alert.setTitle(title);
-		alert.setHeaderText(null);
-		alert.setContentText(content);
-		alert.showAndWait();
-	}
-
-	private boolean isInputValid(String nom, String promotion) {
-		if (promotion == null || promotion.isEmpty() || nom.isEmpty()) {
-			showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
-			return false;
-		}
-		return true;
-	}
+	@FXML
+	private Button close;
+	@FXML
+	private AnchorPane main_form;
+	@FXML
+	private Label username;
+	@FXML
+	private Button logout;
+	@FXML
+	private Button minimize;
 
 	// fonction logout permet de revenir a la scene parent, apres deconnexion
+	@FXML
 	public void logout() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Message");
@@ -598,6 +294,22 @@ public class DashboardController implements Initializable {
 
 	}
 
+	// recuperer Username quand on reussi a connecté et entrer dans dashbord pour
+	// modifer label username dans UI Dashboard
+	public void Affichersername() {
+		username.setText(Data.username);
+	}
+
+	public void close() {
+		System.exit(0);
+	}
+
+	public void minimize() {
+		Stage stage = (Stage) main_form.getScene().getWindow();
+		stage.setIconified(true);
+	}
+
+	// Partie:********************** Initialisation Action UI******************************//
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 

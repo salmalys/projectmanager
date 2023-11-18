@@ -424,7 +424,7 @@
                                                 <Font name="Arial" size="16.0" />
                                              </font>
                                           </Label>
-                                          <Button layoutX="26.0" layoutY="398.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter" />
+                                          <Button layoutX="26.0" layoutY="398.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="64.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter" />
                                           <Button layoutX="120.0" layoutY="398.0" mnemonicParsing="false" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
                                           <Button layoutX="209.0" layoutY="398.0" mnemonicParsing="false" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Supprimer" />
                                           <Button layoutX="313.0" layoutY="398.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
