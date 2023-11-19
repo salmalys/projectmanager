@@ -229,7 +229,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="temp_formation" layoutX="125.0" layoutY="112.0" prefHeight="554.6666666666666" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="temp_formation" layoutX="125.0" layoutY="112.0" prefHeight="554.6666666666666" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="36.0" layoutY="23.0" prefHeight="507.0" prefWidth="827.0" stylesheets="@../css/dashboard.css">
                                  <styleClass>
@@ -250,7 +250,7 @@
                                                 <TableColumn fx:id="col_promotion" prefWidth="140.00003051757812" sortable="false" text="Promotion" />
                                             </columns>
                                           </TableView>
-                                          <TextField fx:id="search_formation" focusTraversable="false" layoutX="58.0" layoutY="14.0" onAction="#SearchFormation" onKeyTyped="#SearchFormation" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
+                                          <TextField fx:id="search_formation" focusTraversable="false" layoutX="58.0" layoutY="14.0" onKeyTyped="#SearchFormation" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
                                           <FontAwesomeIconView glyphName="SEARCH" layoutX="62.0" layoutY="33.0" size="1.5em" />
                                           <Label layoutX="21.0" layoutY="52.0" text="Filtre :">
                                              <font>
@@ -358,7 +358,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="tmp_etudiant" layoutX="157.0" layoutY="63.0" prefHeight="554.6666666666666" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="tmp_etudiant" layoutX="157.0" layoutY="63.0" prefHeight="554.6666666666666" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="20.0" layoutY="14.0" prefHeight="525.0" prefWidth="864.0" stylesheets="@../css/dashboard.css">
                                  <styleClass>

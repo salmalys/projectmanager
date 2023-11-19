@@ -30,7 +30,8 @@ public class FormationController {
 			TextField search_formation, TableColumn<Formation, Integer> col_Idformation,
 			TableColumn<Formation, String> col_Nomformation, TableColumn<Formation, String> col_promotion,
 			TableView<Formation> tableFormation) {
-		try {			String nom = nomFormation.getText();
+		try {
+			String nom = nomFormation.getText();
 			String promotion = promotionList.getSelectionModel().getSelectedItem();
 
 			if (!isInputValid(nom, promotion)) {
@@ -184,33 +185,30 @@ public class FormationController {
 
 	// fonction qui permet de chercher et filter le tableau de formation dans GUI
 	public void SearchFormation(TextField search_formation, TableView<Formation> tableFormation) {
-		FilteredList<Formation> filter = new FilteredList<>(addformation, e -> true);
-		search_formation.textProperty().addListener((observable, oldValue, newValue) -> {
-			filter.setPredicate(predData -> {
-				if (newValue == null || newValue.isEmpty()) {
-					return true;
-				}
-				String searchKey = newValue.toLowerCase();
+		   FilteredList<Formation> filter = new FilteredList<>(addformation, e -> true);
+		    search_formation.textProperty().addListener((Observable, oldValue, newValue) -> {
+		        filter.setPredicate(predData -> {
+		            if (newValue == null || newValue.isEmpty()) {
+		                return true;
+		            }
+		            String searchKey = newValue.toLowerCase();
+		            String idformation = String.valueOf(predData.getIdFormation());
 
-				// Check if any of the fields contain the search keyword
-				boolean idMatches = Integer.toString(predData.getIdFormation()).equalsIgnoreCase(searchKey);
-
-				boolean nomMatches = predData.getNom().toLowerCase().contains(searchKey);
-				boolean promotionMatches = predData.getPromotion().toLowerCase().contains(searchKey);
-
-				System.out.println("ID: " + predData.getIdFormation() + ", Nom: " + predData.getNom() + ", Promotion: "
-						+ predData.getPromotion());
-				System.out.println("ID Match: " + idMatches + ", Nom Match: " + nomMatches + ", Promotion Match: "
-						+ promotionMatches);
-
-				return idMatches || nomMatches || promotionMatches;
-			});
-		});
-
-		SortedList<Formation> sortedList = new SortedList<>(filter);
-		sortedList.comparatorProperty().bind(tableFormation.comparatorProperty());
-
-		System.out.println(filter.toString());
+		            if (idformation.contains(searchKey)) {
+		                return true;
+		            } else if (predData.getNom().toLowerCase().contains(searchKey)) {
+		                return true;
+		            } else if (predData.getPromotion().toLowerCase().contains(searchKey)) {
+		                return true;
+		            } else
+		                return false;
+		        });
+		        
+		        SortedList<Formation> sortList = new SortedList<>(filter);
+		        sortList.comparatorProperty().bind(tableFormation.comparatorProperty());
+		        tableFormation.setItems(sortList);
+		        tableFormation.refresh();  // Ajoutez cette ligne pour forcer le rafraîchissement
+		    });
 	}
 
 	// initialisé la liste deroulente promotion pour liste deroulante ajouter et
@@ -251,12 +249,12 @@ public class FormationController {
 	}
 
 	// Button pour retour de formulaire ajout étudiant vers la fenêtre étudiant
-	private void handleBackEtudiant(Button btn_tmpbackEtudient, AnchorPane tmp_addEtudiant,
-			AnchorPane tmp_btnEtudiant,AnchorPane tmp_updateEtudiant) {
+	private void handleBackEtudiant(Button btn_tmpbackEtudient, AnchorPane tmp_addEtudiant, AnchorPane tmp_btnEtudiant,
+			AnchorPane tmp_updateEtudiant) {
 		tmp_addEtudiant.setVisible(false);
 		tmp_btnEtudiant.setVisible(true);
 		tmp_updateEtudiant.setVisible(false);
-		
+
 	}
 
 	// Button pour switch vers la fenêtre de mise à jour d'étudiant
@@ -270,7 +268,7 @@ public class FormationController {
 	// Button pour retour de formulaire mise à jour étudiant vers la fenêtre
 	// étudiant
 	private void handleBackEtudiant2(Button btn_tmpBackEtudient2, AnchorPane tmp_addEtudiant,
-			AnchorPane tmp_btnEtudiant,AnchorPane tmp_updateEtudiant) {
+			AnchorPane tmp_btnEtudiant, AnchorPane tmp_updateEtudiant) {
 		tmp_addEtudiant.setVisible(false);
 		tmp_btnEtudiant.setVisible(true);
 		tmp_updateEtudiant.setVisible(false);
@@ -388,6 +386,7 @@ public class FormationController {
 			handleFormationButton(tmp_home, temp_formation, tmp_etudiant, tmp_binome, tmp_note, tmp_projet,
 					tmp_btnformation, home_btn, binome_btn, etudiant_btn, projet_btn, note_btn, formation_btn,
 					PromotionList, search_formation, tableFormation);
+			SearchFormation(search_formation, tableFormation);
 
 		} else if (event.getSource() == etudiant_btn) {
 			tmp_home.setVisible(false);

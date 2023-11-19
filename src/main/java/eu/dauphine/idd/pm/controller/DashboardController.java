@@ -207,10 +207,11 @@ public class DashboardController implements Initializable {
 		if ((num - 1) < -1) {
 			return;
 		}
-
-		IdFormation.setText(String.valueOf(formation.getIdFormation()));
-		Nomformation.setText(formation.getNom());
-		Nomformation2.setText(formation.getNom());
+		if (formation != null) {
+			IdFormation.setText(String.valueOf(formation.getIdFormation()));
+			Nomformation.setText(formation.getNom());
+			Nomformation2.setText(formation.getNom());
+		}
 
 	}
 
@@ -301,18 +302,18 @@ public class DashboardController implements Initializable {
 	private Button btn_tmpbackEtudient;
 	@FXML
 	private Button btn_tmpupdateEtudient;
-	
-	private EtudiantController etudiantC=new EtudiantController();
-	
-	
-    public void addEtudiant() {
-    }
+
+	private EtudiantController etudiantC = new EtudiantController();
+
+	public void addEtudiant() {
+	}
+
 	private void fillFormationComboBox() {
 		etudiantC.fillFormationComboBox(Formation, Formation2);
 	}
 
 	public void selectEtudient() {
-		
+
 		Etudiant etudiant = tableEtudiant.getSelectionModel().getSelectedItem();
 		int num = tableEtudiant.getSelectionModel().getFocusedIndex();
 		if ((num - 1) < -1) {
@@ -324,19 +325,19 @@ public class DashboardController implements Initializable {
 		NomEtudiant2.setText(etudiant.getNom());
 		PrenomEtudiant.setText(etudiant.getPrenom());
 		PrenomEtudiant2.setText(etudiant.getPrenom());
-		
-		
 
 	}
+
 	public void addEtudiantReset() {
 		etudiantC.addEtudiantReset(IdEtudiant, NomEtudiant, PrenomEtudiant, Formation);
 	}
+
 	public void addEtudiantReset2() {
 		etudiantC.addEtudiantReset(IdEtudiant, NomEtudiant2, PrenomEtudiant2, Formation2);
 	}
 
-
-	// Partie :****************Deconnexion et Reglage de Scene Dashboard**********************//
+	// Partie :****************Deconnexion et Reglage de Scene
+	// Dashboard**********************//
 
 	@FXML
 	private Button close;
@@ -407,11 +408,10 @@ public class DashboardController implements Initializable {
 	// UI******************************//
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+	
 		addformationshow();
 		addPromotionList();
 		addPromotionList2();
-		SearchFormation();
 		fillFormationComboBox();
 		Affichersername();
 
