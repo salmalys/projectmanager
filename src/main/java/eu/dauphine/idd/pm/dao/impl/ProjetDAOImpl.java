@@ -39,8 +39,8 @@ public class ProjetDAOImpl implements ProjetDAO {
 
 			preparedStatement.setString(1, projet.getNomMatiere());
 			preparedStatement.setString(2, projet.getSujet());
-			java.sql.Date sqlDate = new java.sql.Date(projet.getDateRemiseRapport().getTime());
-			preparedStatement.setDate(3, sqlDate);
+			java.sql.Date date = new java.sql.Date(projet.getDateRemiseRapport().getTime());
+			preparedStatement.setDate(3, date);
 
 			preparedStatement.executeUpdate();
 
@@ -110,7 +110,7 @@ public class ProjetDAOImpl implements ProjetDAO {
 			preparedStatement.setString(2, projet.getSujet());
 			java.sql.Date date = new java.sql.Date(projet.getDateRemiseRapport().getTime());
 			preparedStatement.setDate(3, date);
-			preparedStatement.setInt(3, projet.getIdProjet());
+			preparedStatement.setInt(4, projet.getIdProjet());
 
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -133,6 +133,27 @@ public class ProjetDAOImpl implements ProjetDAO {
 	@Override
 	public void delete(Projet projet) {
 		deleteById(projet.getIdProjet());
+	}
+	
+	@Override
+	public Projet findByCourseSubject(String nomMatiere, String sujet) {
+		Projet projet = null;
+	    try (Connection connection = getConnection();
+	         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Projet WHERE Nom_Matiere = ? AND Sujet = ?")) {
+
+	        preparedStatement.setString(1, nomMatiere);
+	        preparedStatement.setString(2, sujet);
+	        ResultSet rs = preparedStatement.executeQuery();
+
+	        if (rs.next()) {
+	            int idProjet = rs.getInt("ID_Projet");
+	            java.sql.Date date = rs.getDate("Date_Remise_Prevue");
+	            projet = new Projet(idProjet, nomMatiere, sujet, date);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return projet;
 	}
 
 }

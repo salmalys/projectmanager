@@ -6,6 +6,7 @@ public class ServiceFactory {
 
     private static FormationService formationService;
     private static EtudiantService etudiantService;
+    private static ProjetService projetService;
 
     public static FormationService getFormationService() {
         if (formationService == null) {
@@ -19,5 +20,12 @@ public class ServiceFactory {
         	etudiantService = new EtudiantServiceImpl();
         }
         return etudiantService;
+    }
+    
+    public static ProjetService getProjetService() {
+        if (projetService == null) {
+        	projetService = new ProjetServiceImpl();
+        }
+        return projetService;
     }
 }

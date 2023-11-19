@@ -2,14 +2,14 @@ package eu.dauphine.idd.pm.model;
 
 import java.util.Date;
 
-public class Binome {
+public class BinomeProjet {
 	private int idBinome;
 	private Etudiant membre1;
 	private Etudiant membre2;
 	private Projet projet;
 	private Date dateRemiseEffective;
 
-	public Binome(int id, Etudiant e1, Etudiant e2, Projet p, Date d) {
+	public BinomeProjet(int id, Etudiant e1, Etudiant e2, Projet p, Date d) {
 		this.idBinome = id;
 		this.membre1 = e1;
 		this.membre2 = e2;
@@ -17,14 +17,14 @@ public class Binome {
 		this.dateRemiseEffective = d;
 	}
 
-	public Binome(Etudiant e1, Etudiant e2, Projet p, Date d) {
+	public BinomeProjet(Etudiant e1, Etudiant e2, Projet p, Date d) {
 		this.membre1 = e1;
 		this.membre2 = e2;
 		this.projet = p;
 		this.dateRemiseEffective = d;
 	}
 
-	public Binome() {
+	public BinomeProjet() {
 	}
 
 	public int getIdBinome() {

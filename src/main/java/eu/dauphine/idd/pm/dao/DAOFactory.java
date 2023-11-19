@@ -6,7 +6,7 @@ public class DAOFactory {
 	private static FormationDAO formationDAO;
 	private static EtudiantDAO etudiantDAO;
 	private static NotesDAO noteDAO;
-	private static BinomeDAO binomeDAO;
+	private static BinomeProjetDAO binomeDAO;
 	private static ProjetDAO projetDAO;
 
 	public static FormationDAO getFormationDAO() {
@@ -30,14 +30,14 @@ public class DAOFactory {
 		return projetDAO;
 	}
 	
-	public static BinomeDAO getBinomeDAO() {
+	public static BinomeProjetDAO getBinomeProjetDAO() {
 		if (binomeDAO == null) {
-			binomeDAO = new BinomeDAOImpl();
+			binomeDAO = new BinomeProjetDAOImpl();
 		}
 		return binomeDAO;
 	}
 
-	public static NotesDAO getNoteDAO() {
+	public static NotesDAO getNotesDAO() {
 		if (noteDAO == null) {
 			noteDAO = new NotesDAOImpl();
 		}
