@@ -1,7 +1,7 @@
 package eu.dauphine.idd.pm.controller;
 
-import eu.dauphine.idd.pm.service.ServiceFactory;
 import eu.dauphine.idd.pm.service.FormationService;
+import eu.dauphine.idd.pm.service.ServiceFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -30,8 +30,7 @@ public class FormationController {
 			TextField search_formation, TableColumn<Formation, Integer> col_Idformation,
 			TableColumn<Formation, String> col_Nomformation, TableColumn<Formation, String> col_promotion,
 			TableView<Formation> tableFormation) {
-		try {
-			String nom = nomFormation.getText();
+		try {			String nom = nomFormation.getText();
 			String promotion = promotionList.getSelectionModel().getSelectedItem();
 
 			if (!isInputValid(nom, promotion)) {
@@ -275,7 +274,7 @@ public class FormationController {
 		tmp_addEtudiant.setVisible(false);
 		tmp_btnEtudiant.setVisible(true);
 		tmp_updateEtudiant.setVisible(false);
-		
+
 	}
 
 	// Mettre vesibilité fenetre Home quand on clic sur button Home

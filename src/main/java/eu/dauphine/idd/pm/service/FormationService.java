@@ -8,4 +8,5 @@ public interface FormationService {
 	public void deleteFormationById(int id);
 	public ObservableList<Formation> listFormations();
 	public void update(int id, String nom, String promotion);
+	public int getFormationIdByNameAndPromotion(String formationNom, String formationPromotion);
 }

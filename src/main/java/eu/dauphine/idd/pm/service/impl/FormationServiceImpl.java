@@ -49,4 +49,8 @@ public class FormationServiceImpl implements FormationService{
 		System.out.println("Formation with ID "+ id + "succesfully updated.");
 		System.out.println(formation.toString());
 	}
+	public int getFormationIdByNameAndPromotion(String formationNom, String formationPromotion) {
+		return formationDAO.findByNameAndPromotion(formationNom, formationPromotion).getIdFormation();
+	}
+
 }

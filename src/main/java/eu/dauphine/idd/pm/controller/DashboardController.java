@@ -7,8 +7,10 @@ import java.util.ResourceBundle;
 
 import eu.dauphine.idd.pm.model.Etudiant;
 import eu.dauphine.idd.pm.model.Formation;
+import eu.dauphine.idd.pm.service.FormationService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
-import eu.dauphine.idd.pm.service.impl.FormationServiceImpl;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,8 +34,9 @@ import javafx.stage.StageStyle;
 
 public class DashboardController implements Initializable {
 
-	// ****Partie 0: ************************Button Home********************************//
-	
+	// ****Partie 0: ************************Button
+	// Home********************************//
+
 	@FXML
 	private Label Count_totaletudiant;
 	@FXML
@@ -55,9 +58,8 @@ public class DashboardController implements Initializable {
 	@FXML
 	private AnchorPane tmp_home;
 
-	
-	
-	// ****Partie 1: ************************Button Formation****************************//
+	// ****Partie 1: ************************Button
+	// Formation****************************//
 
 	@FXML
 	private Button AddFormation;
@@ -162,7 +164,7 @@ public class DashboardController implements Initializable {
 	private Button Printformation;
 
 	private FormationController formationController = new FormationController();
-	
+
 	private double x = 0;
 	private double y = 0;
 
@@ -238,74 +240,81 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	public void tmpSwitch(ActionEvent event) {
-		formationController.tmpSwitch(event, tmp_home, temp_formation, tmp_etudiant, tmp_binome, tmp_note, tmp_projet, home_btn, binome_btn,
-				etudiant_btn, projet_btn, note_btn, formation_btn, btn_tmpadd, Back_formation, btn_tmpupdate, Backformation2, tmp_btnformation,
-				PromotionList, search_formation, tableFormation, tmp_addformation, tmp_updateformation, IdFormation, Nomformation, Nomformation2, 
-				PromotionList2, tmp_addEtudiant,tmp_btnEtudiant, tmp_updateEtudiant,
-				btn_tmpBackEtudient2, btn_tmpaddEtudient, btn_tmpbackEtudient, btn_tmpupdateEtudient);
+		formationController.tmpSwitch(event, tmp_home, temp_formation, tmp_etudiant, tmp_binome, tmp_note, tmp_projet,
+				home_btn, binome_btn, etudiant_btn, projet_btn, note_btn, formation_btn, btn_tmpadd, Back_formation,
+				btn_tmpupdate, Backformation2, tmp_btnformation, PromotionList, search_formation, tableFormation,
+				tmp_addformation, tmp_updateformation, IdFormation, Nomformation, Nomformation2, PromotionList2,
+				tmp_addEtudiant, tmp_btnEtudiant, tmp_updateEtudiant, btn_tmpBackEtudient2, btn_tmpaddEtudient,
+				btn_tmpbackEtudient, btn_tmpupdateEtudient);
 	}
+
+	// ****Partie 2: ************************Button
+	// Etudiant**********************************//
+	@FXML
+	private ComboBox<String> Formation;
+	@FXML
+	private ComboBox<String> Formation2;
+	@FXML
+	private TextField IdEtudiant;
+	@FXML
+	private TextField NomEtudiant;
+
+	@FXML
+	private TextField NomEtudiant2;
+	@FXML
+	private TextField PrenomEtudiant;
+
+	@FXML
+	private TextField PrenomEtudiant2;
+	@FXML
+	private Button RefreshEtudiant;
+
+	@FXML
+	private TableColumn<Etudiant, String> col_PrenomEtudiant;
+
+	@FXML
+	private TableColumn<Etudiant, String> col_PromotionEtudiant;
+	@FXML
+	private TableColumn<Etudiant, String> col_NomEtudiant;
+
+	@FXML
+	private TableColumn<Etudiant, String> col_NomformEtudiant;
+	@FXML
+	private TableColumn<Etudiant, Integer> col_Idetudiant;
+	@FXML
+	private TextField search_Etudiant;
+	@FXML
+	private TableView<Etudiant> tableEtudiant;
+
+	@FXML
+	private AnchorPane tmp_addEtudiant;
+	@FXML
+	private AnchorPane tmp_btnEtudiant;
+	@FXML
+	private AnchorPane tmp_updateEtudiant;
+	@FXML
+	private Button btn_tmpBackEtudient2;
+	@FXML
+	private Button btn_tmpaddEtudient;
+
+	@FXML
+	private Button btn_tmpbackEtudient;
+	@FXML
+	private Button btn_tmpupdateEtudient;
+	
+	private EtudiantController etudiantC=new EtudiantController();
 	
 	
-	
-	// ****Partie 2: ************************Button Etudiant**********************************//
-    @FXML
-    private ComboBox<Formation> Formation;
+    public void addEtudiant() {
+    }
+	private void fillFormationComboBox() {
+		etudiantC.fillFormationComboBox(Formation, Formation2);
+	}
 
-    @FXML
-    private ComboBox<Formation> Formation2;
-    @FXML
-    private TextField IdEtudiant;
-    @FXML
-    private TextField NomEtudiant;
-
-    @FXML
-    private TextField NomEtudiant2;
-    @FXML
-    private TextField PrenomEtudiant;
-
-    @FXML
-    private TextField PrenomEtudiant2;
-    @FXML
-    private Button RefreshEtudiant;
-
-    @FXML
-    private TableColumn<?, ?> col_PrenomEtudiant;
-
-    @FXML
-    private TableColumn<?, ?> col_PromotionEtudiant;
-    @FXML
-    private TableColumn<?, ?> col_NomEtudiant;
-
-    @FXML
-    private TableColumn<?, ?> col_NomformEtudiant;
-    @FXML
-    private TableColumn<?, ?> col_Idetudiant;
-    @FXML
-    private TextField search_Etudiant;
-    @FXML
-    private TableView<Etudiant> tableEtudiant;
-
-    @FXML
-    private AnchorPane tmp_addEtudiant;
-    @FXML
-    private AnchorPane tmp_btnEtudiant;
-    @FXML
-    private AnchorPane tmp_updateEtudiant;
-    @FXML
-    private Button btn_tmpBackEtudient2;
-    @FXML
-    private Button btn_tmpaddEtudient;
-
-    @FXML
-    private Button btn_tmpbackEtudient;
-    @FXML
-    private Button btn_tmpupdateEtudient;
-	
-	
-    public void selectEtudient() {
-		Formation formation = tableFormation.getSelectionModel().getSelectedItem();
-		Etudiant etudiant=tableEtudiant.getSelectionModel().getSelectedItem();
-		int num = tableFormation.getSelectionModel().getFocusedIndex();
+	public void selectEtudient() {
+		
+		Etudiant etudiant = tableEtudiant.getSelectionModel().getSelectedItem();
+		int num = tableEtudiant.getSelectionModel().getFocusedIndex();
 		if ((num - 1) < -1) {
 			return;
 		}
@@ -313,8 +322,19 @@ public class DashboardController implements Initializable {
 		IdEtudiant.setText(String.valueOf(etudiant.getIdEtudiant()));
 		NomEtudiant.setText(etudiant.getNom());
 		NomEtudiant2.setText(etudiant.getNom());
+		PrenomEtudiant.setText(etudiant.getPrenom());
+		PrenomEtudiant2.setText(etudiant.getPrenom());
+		
+		
 
 	}
+	public void addEtudiantReset() {
+		etudiantC.addEtudiantReset(IdEtudiant, NomEtudiant, PrenomEtudiant, Formation);
+	}
+	public void addEtudiantReset2() {
+		etudiantC.addEtudiantReset(IdEtudiant, NomEtudiant2, PrenomEtudiant2, Formation2);
+	}
+
 
 	// Partie :****************Deconnexion et Reglage de Scene Dashboard**********************//
 
@@ -383,7 +403,8 @@ public class DashboardController implements Initializable {
 		stage.setIconified(true);
 	}
 
-	// Partie:********************** Initialisation Action UI******************************//
+	// Partie:********************** Initialisation Action
+	// UI******************************//
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -391,6 +412,7 @@ public class DashboardController implements Initializable {
 		addPromotionList();
 		addPromotionList2();
 		SearchFormation();
+		fillFormationComboBox();
 		Affichersername();
 
 	}
