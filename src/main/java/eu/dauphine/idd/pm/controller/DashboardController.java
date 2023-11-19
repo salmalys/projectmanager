@@ -391,6 +391,7 @@ public class DashboardController implements Initializable {
 		addPromotionList();
 		addPromotionList2();
 		SearchFormation();
+		Affichersername();
 
 	}
 
