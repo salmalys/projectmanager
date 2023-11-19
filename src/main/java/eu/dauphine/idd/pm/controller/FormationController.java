@@ -1,7 +1,7 @@
 package eu.dauphine.idd.pm.controller;
 
-import eu.dauphine.idd.pm.service.FormationService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
+import eu.dauphine.idd.pm.service.FormationService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;

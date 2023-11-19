@@ -5,7 +5,7 @@ import eu.dauphine.idd.pm.dao.impl.*;
 public class DAOFactory {
 	private static FormationDAO formationDAO;
 	private static EtudiantDAO etudiantDAO;
-	private static NoteDAO noteDAO;
+	private static NotesDAO noteDAO;
 	private static BinomeDAO binomeDAO;
 	private static ProjetDAO projetDAO;
 
@@ -37,9 +37,9 @@ public class DAOFactory {
 		return binomeDAO;
 	}
 
-	public static NoteDAO getNoteDAO() {
+	public static NotesDAO getNoteDAO() {
 		if (noteDAO == null) {
-			noteDAO = new NoteDAOImpl();
+			noteDAO = new NotesDAOImpl();
 		}
 		return noteDAO;
 	}

@@ -1,13 +1,13 @@
 package eu.dauphine.idd.pm.dao.impl;
 
+import eu.dauphine.idd.pm.dao.DAOFactory;
 import eu.dauphine.idd.pm.dao.EtudiantDAO;
+import eu.dauphine.idd.pm.dao.FormationDAO;
 import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 import eu.dauphine.idd.pm.model.Etudiant;
 import eu.dauphine.idd.pm.model.Formation;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +20,8 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 	private static final String SELECT_ALL_ETUDIANTS = "SELECT * FROM Etudiant";
 	private static final String UPDATE_ETUDIANT = "UPDATE Etudiant SET Nom = ?, Prenom = ?, ID_Formation = ? WHERE ID_Etudiant = ?";
 	private static final String DELETE_ETUDIANT_BY_ID = "DELETE FROM Etudiant WHERE ID_Etudiant = ?";
+	
+	private FormationDAO formationDAO = DAOFactory.getFormationDAO();
 
 	private Connection getConnection() {
 		try {
@@ -52,20 +54,20 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 	}
 
 	@Override
-	public Etudiant findById(int id) {
+	public Etudiant findById(int idEtudiant) {
 		Etudiant etudiant = null;
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ETUDIANT_BY_ID)) {
 
-			preparedStatement.setInt(1, id);
+			preparedStatement.setInt(1, idEtudiant);
 			ResultSet rs = preparedStatement.executeQuery();
 
 			if (rs.next()) {
 				String nom = rs.getString("Nom");
 				String prenom = rs.getString("Prenom");
-				Formation formation = new Formation(); 
-				formation.setIdFormation(rs.getInt("ID_Formation"));
-				etudiant = new Etudiant(id, nom, prenom, formation);
+				int idFormation = rs.getInt("ID_Formation");
+				Formation formation = formationDAO.findById(idFormation);
+				etudiant = new Etudiant(idEtudiant, nom, prenom, formation);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -75,27 +77,25 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 
 	@Override
 	public ObservableList<Etudiant> findAll() {
-		List<Etudiant> etudiants = new ArrayList<>();
-		ObservableList<Etudiant> listetudiant = FXCollections.observableArrayList();
+		ObservableList<Etudiant> etudiants = FXCollections.observableArrayList();
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ETUDIANTS)) {
 
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-				int id = rs.getInt("ID_Etudiant");
+				int idEtudiant = rs.getInt("ID_Etudiant");
 				String nom = rs.getString("Nom");
 				String prenom = rs.getString("Prenom");
-				Formation formation = new Formation(); // Encore une fois, récupérez la formation complète ici
-				formation.setIdFormation(rs.getInt("ID_Formation"));
-				Etudiant etudiant = new Etudiant(id, nom, prenom, formation);
+				int idFormation = rs.getInt("ID_Formation");
+				Formation formation = formationDAO.findById(idFormation); 
+				Etudiant etudiant = new Etudiant(idEtudiant, nom, prenom, formation);
 				etudiants.add(etudiant);
-				listetudiant.add(etudiant);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return listetudiant;
+		return etudiants;
 	}
 
 	@Override
@@ -129,5 +129,27 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 	@Override
 	public void delete(Etudiant etudiant) {
 		deleteById(etudiant.getIdEtudiant());
+	}
+	
+	@Override
+	public Etudiant findByName(String nom, String prenom) {
+		Etudiant etudiant = null;
+	    try (Connection connection = getConnection();
+	         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Etudiant WHERE Nom = ? AND Prenom = ?")) {
+
+	        preparedStatement.setString(1, nom);
+	        preparedStatement.setString(2, prenom);
+	        ResultSet rs = preparedStatement.executeQuery();
+
+	        if (rs.next()) {
+	            int idEtudiant = rs.getInt("ID_Etudiant");
+	            int idFormation = rs.getInt("ID_Etudiant");
+	            Formation formation = formationDAO.findById(idFormation);
+	            etudiant = new Etudiant(idEtudiant, nom, prenom, formation);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return etudiant;
 	}
 }

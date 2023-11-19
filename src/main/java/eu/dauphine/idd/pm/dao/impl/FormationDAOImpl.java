@@ -7,8 +7,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FormationDAOImpl implements FormationDAO {
 
@@ -71,8 +69,7 @@ public class FormationDAOImpl implements FormationDAO {
 
 	@Override
 	public ObservableList<Formation> findAll() {
-		List<Formation> formations = new ArrayList<>();
-		ObservableList<Formation> listformation = FXCollections.observableArrayList();
+		ObservableList<Formation> formations = FXCollections.observableArrayList();
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FORMATIONS)) {
 
@@ -84,13 +81,12 @@ public class FormationDAOImpl implements FormationDAO {
 				String promotion = rs.getString("Promotion");
 				Formation formation = new Formation(id, nom, promotion);
 				formations.add(formation);
-				listformation.add(formation);
 
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return listformation;
+		return formations;
 	}
 
 	@Override
@@ -125,6 +121,7 @@ public class FormationDAOImpl implements FormationDAO {
 		deleteById(formation.getIdFormation());
 	}
 
+	@Override
 	public Formation findByNameAndPromotion(String nom, String promotion) {
 	    Formation formation = null;
 	    try (Connection connection = getConnection();

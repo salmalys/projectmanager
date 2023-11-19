@@ -7,8 +7,8 @@ import java.util.ResourceBundle;
 
 import eu.dauphine.idd.pm.model.Etudiant;
 import eu.dauphine.idd.pm.model.Formation;
-import eu.dauphine.idd.pm.service.FormationService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
+import eu.dauphine.idd.pm.service.impl.FormationServiceImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

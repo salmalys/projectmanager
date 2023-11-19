@@ -1,14 +1,14 @@
 package eu.dauphine.idd.pm.dao.impl;
 
-import eu.dauphine.idd.pm.dao.NoteDAO;
+import eu.dauphine.idd.pm.dao.NotesDAO;
 import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
-import eu.dauphine.idd.pm.model.Note;
+import eu.dauphine.idd.pm.model.Notes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
 
-public class NoteDAOImpl implements NoteDAO {
+public class NotesDAOImpl implements NotesDAO {
 	private static final String INSERT_NOTE = "INSERT INTO Notes(binome, etudiant, noteRapport, noteSoutenance, dateRemiseEffective) VALUES (?, ?, ?, ?, ?)";
 	private static final String UPDATE_NOTE = "UPDATE Notes SET binome=?, etudiant=?, noteRapport=?, noteSoutenance=?, dateRemiseEffective=? WHERE id=?";
 	private static final String DELETE_NOTE = "DELETE FROM Notes WHERE id=?";
@@ -25,15 +25,15 @@ public class NoteDAOImpl implements NoteDAO {
 	}
 
 	@Override
-	public void create(Note note) {
+	public void create(Notes note) {
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NOTE,
 						Statement.RETURN_GENERATED_KEYS)) {
 			preparedStatement.setInt(1, note.getBinome().getIdBinome()); // Assumant que Binome a une m�thode getId()
-			preparedStatement.setInt(2, note.getEtudiant().getIdEtudiant()); // Assumant que Etudiant a une m�thode
+			//preparedStatement.setInt(2, note.getEtudiant().getIdEtudiant()); // Assumant que Etudiant a une m�thode
 																				// getId()
 			preparedStatement.setDouble(3, note.getNoteRapport());
-			preparedStatement.setDouble(4, note.getNoteSoutenance());
+			//preparedStatement.setDouble(4, note.getNoteSoutenance());
 			//A MODIFIER 
 			preparedStatement.executeUpdate();
 
@@ -48,13 +48,13 @@ public class NoteDAOImpl implements NoteDAO {
 	}
 
 	@Override
-	public void update(Note note) {
+	public void update(Notes note) {
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_NOTE)) {
-			preparedStatement.setInt(1, note.getBinome().getIdBinome());
-			preparedStatement.setInt(2, note.getEtudiant().getIdEtudiant());
+			//preparedStatement.setInt(1, note.getBinome().getIdBinome());
+			//preparedStatement.setInt(2, note.getEtudiant().getIdEtudiant());
 			preparedStatement.setDouble(3, note.getNoteRapport());
-			preparedStatement.setDouble(4, note.getNoteSoutenance());
+			//preparedStatement.setDouble(4, note.getNoteSoutenance());
 			//A MODIFIER
 			preparedStatement.setInt(6, note.getId());
 			preparedStatement.executeUpdate();
@@ -75,7 +75,7 @@ public class NoteDAOImpl implements NoteDAO {
 	}
 
 	@Override
-	public Note findById(int id) {
+	public Notes findById(int id) {
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
 			preparedStatement.setInt(1, id);
@@ -90,9 +90,9 @@ public class NoteDAOImpl implements NoteDAO {
 	}
 
 	@Override
-	public ObservableList<Note> findAll() {
+	public ObservableList<Notes> findAll() {
 		Connection connection = getConnection();
-		ObservableList<Note> notes = FXCollections.observableArrayList();
+		ObservableList<Notes> notes = FXCollections.observableArrayList();
 		try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(FIND_ALL)) {
 			while (rs.next()) {
 				notes.add(mapToNote(rs));
@@ -103,8 +103,8 @@ public class NoteDAOImpl implements NoteDAO {
 		return notes;
 	}
 
-	private Note mapToNote(ResultSet rs) throws SQLException {
-		Note note = new Note();
+	private Notes mapToNote(ResultSet rs) throws SQLException {
+		Notes note = new Notes();
 		note.setId(rs.getInt("id"));
 		// Pour simplifier, je cr�e de nouveaux objets Binome et Etudiant uniquement
 		// avec leurs IDs.
@@ -114,13 +114,13 @@ public class NoteDAOImpl implements NoteDAO {
 		// note.setBinome(new Binome(rs.getInt("binome")));
 		// note.setEtudiant(new Etudiant(rs.getInt("etudiant")));
 		note.setNoteRapport(rs.getDouble("noteRapport"));
-		note.setNoteSoutenance(rs.getDouble("noteSoutenance"));
+		//note.setNoteSoutenance(rs.getDouble("noteSoutenance"));
 		//A MODIFIER
 		return note;
 	}
 	
 	@Override
-	public void delete(Note note) {
+	public void delete(Notes note) {
 		deleteById(note.getId());
 	}
 }
