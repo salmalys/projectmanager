@@ -207,11 +207,11 @@ public class FormationController {
 		        SortedList<Formation> sortList = new SortedList<>(filter);
 		        sortList.comparatorProperty().bind(tableFormation.comparatorProperty());
 		        tableFormation.setItems(sortList);
-		        tableFormation.refresh();  // Ajoutez cette ligne pour forcer le rafraîchissement
+		        tableFormation.refresh();  // Ajoutez cette ligne pour forcer le rafraechissement
 		    });
 	}
 
-	// initialisé la liste deroulente promotion pour liste deroulante ajouter et
+	// initialise la liste deroulente promotion pour liste deroulante ajouter et
 	// modifier formation
 	private String[] listPromotion = { "Initial", "Alternance", "Formation Continue" };
 
@@ -225,7 +225,7 @@ public class FormationController {
 
 	}
 
-	// Refresh les données de tableau dans UI
+	// Refresh les donnees de tableau dans UI
 	public void refreshData(TableColumn<Formation, Integer> col_Idformation,
 			TableColumn<Formation, String> col_Nomformation, TableColumn<Formation, String> col_promotion,
 			TableView<Formation> tableFormation) {
@@ -240,7 +240,7 @@ public class FormationController {
 	// *******************handling button actions in a
 	// UI.******************************//
 
-	// Button pour switch vers la fenetre d'ajout d'étudiant
+	// Button pour switch vers la fenetre d'ajout d'etudiant
 	private void handleBtnTmpAddEtudiant(AnchorPane tmp_addEtudiant, AnchorPane tmp_btnEtudiant,
 			AnchorPane tmp_updateEtudiant) {
 		tmp_addEtudiant.setVisible(true);
@@ -248,7 +248,7 @@ public class FormationController {
 		tmp_updateEtudiant.setVisible(false);
 	}
 
-	// Button pour retour de formulaire ajout étudiant vers la fenêtre étudiant
+	// Button pour retour de formulaire ajout etudiant vers la fenetre etudiant
 	private void handleBackEtudiant(Button btn_tmpbackEtudient, AnchorPane tmp_addEtudiant, AnchorPane tmp_btnEtudiant,
 			AnchorPane tmp_updateEtudiant) {
 		tmp_addEtudiant.setVisible(false);
@@ -257,7 +257,7 @@ public class FormationController {
 
 	}
 
-	// Button pour switch vers la fenêtre de mise à jour d'étudiant
+	// Button pour switch vers la fenetre de mise e jour d'etudiant
 	private void handleBtnTmpUpdateEtudiant(AnchorPane tmp_addEtudiant, AnchorPane tmp_btnEtudiant,
 			AnchorPane tmp_updateEtudiant) {
 		tmp_addEtudiant.setVisible(false);
@@ -265,8 +265,8 @@ public class FormationController {
 		tmp_updateEtudiant.setVisible(true);
 	}
 
-	// Button pour retour de formulaire mise à jour étudiant vers la fenêtre
-	// étudiant
+	// Button pour retour de formulaire mise e jour etudiant vers la fenetre
+	// etudiant
 	private void handleBackEtudiant2(Button btn_tmpBackEtudient2, AnchorPane tmp_addEtudiant,
 			AnchorPane tmp_btnEtudiant, AnchorPane tmp_updateEtudiant) {
 		tmp_addEtudiant.setVisible(false);
@@ -275,7 +275,7 @@ public class FormationController {
 
 	}
 
-	// Mettre vesibilité fenetre Home quand on clic sur button Home
+	// Mettre vesibilite fenetre Home quand on clic sur button Home
 	private void handleHomeButton(AnchorPane tmp_home, AnchorPane temp_formation, AnchorPane tmp_etudiant,
 			AnchorPane tmp_binome, AnchorPane tmp_note, AnchorPane tmp_projet, Button home_btn, Button binome_btn,
 			Button etudiant_btn, Button projet_btn, Button note_btn, Button formation_btn) {
@@ -294,7 +294,7 @@ public class FormationController {
 		formation_btn.setStyle("-fx-background-color: transparent;");
 	}
 
-	// Mettre vesibilité fenetre formation quand on clic sur button Formation
+	// Mettre vesibilite fenetre formation quand on clic sur button Formation
 	private void handleFormationButton(AnchorPane tmp_home, AnchorPane temp_formation, AnchorPane tmp_etudiant,
 			AnchorPane tmp_binome, AnchorPane tmp_note, AnchorPane tmp_projet, AnchorPane tmp_btnformation,
 			Button home_btn, Button binome_btn, Button etudiant_btn, Button projet_btn, Button note_btn,
@@ -318,7 +318,7 @@ public class FormationController {
 		binome_btn.setStyle("-fx-background-color: transparent;");
 	}
 
-	// Mettre vesibilité fenetre pour formulaire ajouter formation quand on clic sur
+	// Mettre vesibilite fenetre pour formulaire ajouter formation quand on clic sur
 	// button Ajouter Formation
 	private void handleBtnTmpAdd(AnchorPane tmp_addformation, AnchorPane tmp_updateformation,
 			AnchorPane tmp_btnformation, TextField IdFormation, TextField Nomformation, ComboBox<String> PromotionList,
@@ -343,7 +343,7 @@ public class FormationController {
 		addPromotionList(PromotionList);
 	}
 
-	// Mettre vesibilité fenetre pour formulaire modifier formation quand on clic
+	// Mettre vesibilite fenetre pour formulaire modifier formation quand on clic
 	// sur
 	// button Modifier Formation
 	private void handleBtnTmpUpdate(AnchorPane tmp_addformation, AnchorPane tmp_updateformation,

@@ -40,6 +40,13 @@
 			<version>5.8.2</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+	        <groupId>org.mockito</groupId>
+	        <artifactId>mockito-core</artifactId>
+	        <version>3.6.0</version>
+	        <scope>test</scope>
+    	</dependency>
 
 		<dependency>
 			<groupId>org.xerial</groupId>
@@ -101,6 +108,7 @@
 				<configuration>
 					<source>${maven.compiler.source}</source>
 					<target>${maven.compiler.target}</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			
@@ -157,6 +165,18 @@
 	                </reportSet>
             	</reportSets>
         	</plugin>
+        	<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report-only</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
         <!-- Ajoutez d'autres plugins de rapport ici si nécessaire -->
     	</plugins>
 	</reporting>
