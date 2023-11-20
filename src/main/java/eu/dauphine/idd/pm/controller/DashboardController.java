@@ -389,7 +389,7 @@ public class DashboardController implements Initializable {
 
 	}
 
-	// recuperer Username quand on reussi a connecté et entrer dans dashbord pour
+	// recuperer Username quand on reussi a connectÃ© et entrer dans dashbord pour
 	// modifer label username dans UI Dashboard
 	public void Affichersername() {
 		username.setText(Data.username);

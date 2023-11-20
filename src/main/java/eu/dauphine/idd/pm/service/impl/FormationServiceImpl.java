@@ -14,6 +14,12 @@ public class FormationServiceImpl implements FormationService{
 	public FormationServiceImpl() {
 		this.formationDAO = DAOFactory.getFormationDAO();
 	}
+	
+	//Constructeur pour l'injection de dependance (Test unitaire)
+    public FormationServiceImpl(FormationDAO formationDAO) {
+        this.formationDAO = formationDAO;
+    }
+	
 
 	@Override
 	public int createFormation(String nom, String promotion) {
