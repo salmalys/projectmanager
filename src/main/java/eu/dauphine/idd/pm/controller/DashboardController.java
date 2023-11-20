@@ -408,7 +408,7 @@ public class DashboardController implements Initializable {
 	// UI******************************//
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-	
+
 		addformationshow();
 		addPromotionList();
 		addPromotionList2();
