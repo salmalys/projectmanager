@@ -47,7 +47,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	}
 
 	@Override
-	public void update(int id, String nom, String prenom, int idFormation) {
+	public void updateEtudiant(int id, String nom, String prenom, int idFormation) {
 		Formation formation = formationDAO.findById(idFormation);
 		Etudiant etudiant = new Etudiant(id, nom, prenom, formation);
 		etudiantDAO.update(etudiant);

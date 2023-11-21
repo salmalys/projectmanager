@@ -20,7 +20,8 @@ public class FormationDAOImpl implements FormationDAO {
 		try {
 			return DatabaseConnection.getInstance().getConnection();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("Connexion failed");
 			return null;
 		}
 	}
@@ -84,6 +85,7 @@ public class FormationDAOImpl implements FormationDAO {
 
 			}
 		} catch (SQLException e) {
+			System.out.println("Error");
 			e.printStackTrace();
 		}
 		return formations;
@@ -141,7 +143,6 @@ public class FormationDAOImpl implements FormationDAO {
 		}
 		return formation;
 	}
-
 
 
 }
