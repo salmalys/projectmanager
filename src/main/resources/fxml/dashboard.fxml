@@ -87,7 +87,7 @@
                               </Button>
                               <Label layoutX="70.0" layoutY="519.0" text="Logout">
                                  <font>
-                                    <Font size="14.0" />
+                                    <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
                               <Button fx:id="etudiant_btn" layoutX="11.0" layoutY="308.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="35.0" prefWidth="180.0" styleClass="nav-btn" stylesheets="@../css/dashboard.css" text="Etudiant">
@@ -245,9 +245,9 @@
                                        <children>
                                           <TableView fx:id="tableFormation" layoutX="21.0" layoutY="98.0" onMouseClicked="#selectFormation" prefHeight="391.0" prefWidth="369.0">
                                             <columns>
-                                              <TableColumn fx:id="col_Idformation" prefWidth="91.33332824707031" text="ID Formation" />
-                                              <TableColumn fx:id="col_Nomformation" prefWidth="138.0" text="Nom Formation" />
-                                                <TableColumn fx:id="col_promotion" prefWidth="140.00003051757812" sortable="false" text="Promotion" />
+                                              <TableColumn fx:id="col_Idformation" prefWidth="104.66665649414062" text="ID Formation" />
+                                              <TableColumn fx:id="col_Nomformation" prefWidth="125.33331298828125" text="Nom Formation" />
+                                                <TableColumn fx:id="col_promotion" prefWidth="140.66668701171875" sortable="false" text="Promotion" />
                                             </columns>
                                           </TableView>
                                           <TextField fx:id="search_formation" focusTraversable="false" layoutX="58.0" layoutY="14.0" onKeyTyped="#SearchFormation" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
@@ -284,7 +284,7 @@
                                                 <Font name="Tahoma" size="14.0" />
                                              </font>
                                           </Label>
-                                          <Button fx:id="Clearformation1" layoutX="269.0" layoutY="233.0" mnemonicParsing="false" onAction="#addformationReset" prefHeight="36.0" prefWidth="77.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                                          <Button fx:id="Clearformation1" layoutX="269.0" layoutY="233.0" mnemonicParsing="false" onAction="#addEtudiantReset" prefHeight="36.0" prefWidth="77.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane fx:id="tmp_addformation" layoutX="416.0" layoutY="1.0" prefHeight="503.0" prefWidth="409.0" stylesheets="@../css/dashboard.css" visible="false">
@@ -358,7 +358,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="tmp_etudiant" layoutX="157.0" layoutY="63.0" prefHeight="554.6666666666666" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="tmp_etudiant" layoutX="157.0" layoutY="63.0" prefHeight="554.6666666666666" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="20.0" layoutY="14.0" prefHeight="525.0" prefWidth="864.0" stylesheets="@../css/dashboard.css">
                                  <styleClass>
@@ -392,10 +392,11 @@
                                           <Button fx:id="RefreshEtudiant" layoutX="371.0" layoutY="49.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
                                              <graphic>
                                                 <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" />
-                                             </graphic></Button>
+                                             </graphic>
+                                          </Button>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="tmp_btnEtudiant" layoutX="466.0" layoutY="8.0" prefHeight="513.0" prefWidth="391.0" stylesheets="@../css/dashboard.css" visible="false">
+                                    <AnchorPane fx:id="tmp_btnEtudiant" layoutX="466.0" layoutY="8.0" prefHeight="513.0" prefWidth="391.0" stylesheets="@../css/dashboard.css">
                                        <styleClass>
                                           <String fx:value="shadow" />
                                           <String fx:value="white-bg" />
@@ -418,7 +419,7 @@
                                           <Button layoutX="246.0" layoutY="282.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="76.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="tmp_addEtudiant" layoutX="465.0" layoutY="8.0" prefHeight="510.0" prefWidth="396.0" stylesheets="@../css/dashboard.css">
+                                    <AnchorPane fx:id="tmp_addEtudiant" layoutX="465.0" layoutY="8.0" prefHeight="510.0" prefWidth="396.0" stylesheets="@../css/dashboard.css" visible="false">
                                        <styleClass>
                                           <String fx:value="shadow" />
                                           <String fx:value="white-bg" />
@@ -469,7 +470,7 @@
                                              </font>
                                           </Label>
                                           <Button layoutX="80.0" layoutY="383.0" mnemonicParsing="false" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
-                                          <Button layoutX="277.0" layoutY="381.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="73.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                                          <Button layoutX="277.0" layoutY="381.0" mnemonicParsing="false" onAction="#addEtudiantReset2" prefHeight="31.0" prefWidth="73.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
                                           <Button fx:id="btn_tmpBackEtudient2" layoutX="307.0" layoutY="467.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="32.0" prefWidth="67.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
                                           <Label layoutX="65.0" layoutY="287.0" text="Formation :">
                                              <font>
@@ -490,7 +491,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="tmp_projet" layoutX="201.0" layoutY="159.0" prefHeight="554.6666666666666" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="tmp_projet" layoutX="201.0" layoutY="159.0" prefHeight="554.6666666666666" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="10.0" layoutY="9.0" prefHeight="533.0" prefWidth="881.0" stylesheets="@../css/dashboard.css">
                                  <styleClass>
@@ -504,60 +505,122 @@
                                           <String fx:value="white-bg" />
                                        </styleClass>
                                        <children>
-                                          <TableView layoutX="14.0" layoutY="72.0" prefHeight="450.0" prefWidth="493.0">
+                                          <TableView fx:id="tableProjet" layoutX="7.0" layoutY="97.0" prefHeight="415.0" prefWidth="493.0">
                                             <columns>
-                                              <TableColumn prefWidth="75.0" text="ID Projet" />
-                                              <TableColumn prefWidth="133.3333740234375" text="Nom Matiere" />
-                                                <TableColumn prefWidth="147.33328247070312" text="Sujet " />
-                                                <TableColumn prefWidth="133.33331298828125" text="DateRemiseRapport" />
+                                              <TableColumn fx:id="col_idProjet" prefWidth="75.0" text="ID Projet" />
+                                              <TableColumn fx:id="col_MatiereProjet" prefWidth="133.3333740234375" text="Nom Matiere" />
+                                                <TableColumn fx:id="col_SujetProjet" prefWidth="147.33328247070312" text="Sujet " />
+                                                <TableColumn fx:id="col_DateRemiseProjet" prefWidth="133.33331298828125" text="DateRemiseRapport" />
                                             </columns>
                                           </TableView>
-                                          <Button layoutX="422.0" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
+                                          <Button fx:id="refreshDataProjet" layoutX="422.0" layoutY="35.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
                                              <graphic>
                                                 <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="1.5em" />
                                              </graphic>
                                           </Button>
+                                          <ComboBox layoutX="66.0" layoutY="55.0" prefWidth="150.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="14.0" layoutY="60.0" prefWidth="42.0" text="Filtre :">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="search_projet" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
+                                          <FontAwesomeIconView glyphName="SEARCH" layoutX="17.0" layoutY="33.0" size="1.5em" />
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane layoutX="526.0" layoutY="6.0" prefHeight="522.0" prefWidth="342.0" stylesheets="@../css/dashboard.css">
+                                    <AnchorPane fx:id="tmpDeleteProjet" layoutX="526.0" layoutY="6.0" prefHeight="522.0" prefWidth="342.0" stylesheets="@../css/dashboard.css">
                                        <styleClass>
                                           <String fx:value="shadow" />
                                           <String fx:value="white-bg" />
                                        </styleClass>
                                        <children>
-                                          <Label layoutX="67.0" layoutY="29.0" text="Ajouter un Projet">
+                                          <Label layoutX="48.0" layoutY="28.0" text="Supprimer un Projet">
                                              <font>
                                                 <Font name="Tahoma Bold" size="24.0" />
                                              </font>
                                           </Label>
-                                          <TextField layoutX="97.0" layoutY="98.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <TextField fx:id="Idprojet" layoutX="97.0" layoutY="98.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
                                           <Label layoutX="14.0" layoutY="101.0" text="ID Projet :">
                                              <font>
                                                 <Font name="Arial" size="15.0" />
                                              </font>
                                           </Label>
-                                          <TextField layoutX="97.0" layoutY="171.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-                                          <Label layoutY="175.0" text="Nom Matiere :">
+                                          <Button fx:id="btn_ajoutProjet" layoutX="35.0" layoutY="419.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="123.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter un Projet" />
+                                          <Button fx:id="btn_supprimProjet" layoutX="53.0" layoutY="317.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="87.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Supprimer" />
+                                          <Button fx:id="btn_modifierProjet" layoutX="192.0" layoutY="419.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="129.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier un Projet" />
+                                          <Button fx:id="ClearProjet" layoutX="225.0" layoutY="316.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="tmp_addProjet" layoutX="526.0" layoutY="7.0" prefHeight="520.0" prefWidth="349.0" stylesheets="@../css/dashboard.css" visible="false">
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="white-bg" />
+                                       </styleClass>
+                                       <children>
+                                          <Label layoutX="73.0" layoutY="27.0" text="Ajouter un Projet">
+                                             <font>
+                                                <Font name="Tahoma Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <Button fx:id="btn_Add_projet" layoutX="69.0" layoutY="387.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="77.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Add">
+                                             <graphic>
+                                                <FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="1.5em" />
+                                             </graphic>
+                                          </Button>
+                                          <Button layoutX="232.0" layoutY="386.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                                          <Button fx:id="back_projet" layoutX="270.0" layoutY="461.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
+                                          <DatePicker fx:id="dateRemisePorjet" layoutX="150.0" layoutY="246.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutY="250.0" text="DateRemiseRapport :">
                                              <font>
                                                 <Font name="Arial" size="15.0" />
                                              </font>
                                           </Label>
-                                          <TextField layoutX="97.0" layoutY="261.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-                                          <Label layoutX="46.0" layoutY="265.0" text="Sujet :">
+                                          <TextField fx:id="SujetProjet" layoutX="152.0" layoutY="151.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="101.0" layoutY="155.0" text="Sujet :">
                                              <font>
                                                 <Font name="Arial" size="15.0" />
                                              </font>
                                           </Label>
-                                          <DatePicker layoutX="159.0" layoutY="335.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-                                          <Label layoutX="9.0" layoutY="339.0" text="DateRemiseRapport :">
+                                          <TextField fx:id="NomMatiereP" layoutX="153.0" layoutY="96.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="56.0" layoutY="100.0" text="Nom Matiere :">
                                              <font>
                                                 <Font name="Arial" size="15.0" />
                                              </font>
                                           </Label>
-                                          <Button layoutX="14.0" layoutY="419.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter" />
-                                          <Button layoutX="89.0" layoutY="419.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="83.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Supprimer" />
-                                          <Button layoutX="189.0" layoutY="419.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="69.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
-                                          <Button layoutX="270.0" layoutY="419.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane fx:id="tmp_updateProjet" layoutX="526.0" layoutY="8.0" prefHeight="517.0" prefWidth="346.0" stylesheets="@../css/dashboard.css" visible="false">
+                                       <styleClass>
+                                          <String fx:value="white-bg" />
+                                          <String fx:value="shadow" />
+                                       </styleClass>
+                                       <children>
+                                          <Label layoutX="69.0" layoutY="24.0" text="Modifier un Projet">
+                                             <font>
+                                                <Font name="Tahoma Bold" size="24.0" />
+                                             </font>
+                                          </Label>
+                                          <DatePicker fx:id="dateRemisePorjet2" layoutX="157.0" layoutY="270.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="7.0" layoutY="274.0" text="DateRemiseRapport :">
+                                             <font>
+                                                <Font name="Arial" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="NomMatiereP2" layoutX="158.0" layoutY="122.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="61.0" layoutY="126.0" text="Nom Matiere :">
+                                             <font>
+                                                <Font name="Arial" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="SujetProjet2" layoutX="158.0" layoutY="195.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="107.0" layoutY="199.0" text="Sujet :">
+                                             <font>
+                                                <Font name="Arial" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Button fx:id="btn_updateProjet" layoutX="72.0" layoutY="366.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="69.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
+                                          <Button layoutX="223.0" layoutY="363.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                                          <Button fx:id="back_projet2" layoutX="269.0" layoutY="469.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
                                        </children>
                                     </AnchorPane>
                                  </children>
@@ -592,6 +655,14 @@
                                                 <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="1.5em" />
                                              </graphic>
                                           </Button>
+                                          <TextField layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
+                                          <FontAwesomeIconView glyphName="SEARCH" layoutX="20.0" layoutY="33.0" size="1.5em" />
+                                          <ComboBox layoutX="66.0" layoutY="63.0" prefWidth="150.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="16.0" layoutY="67.0" prefWidth="42.0" text="Filtre :">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane layoutX="562.0" layoutY="11.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css">
@@ -655,6 +726,14 @@
                                                 <FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="1.5em" />
                                              </graphic>
                                           </Button>
+                                          <TextField layoutX="25.0" layoutY="14.0" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
+                                          <FontAwesomeIconView glyphName="SEARCH" layoutX="25.0" layoutY="33.0" size="1.5em" />
+                                          <ComboBox layoutX="395.0" layoutY="12.0" prefWidth="150.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                                          <Label layoutX="335.0" layoutY="17.0" prefWidth="42.0" text="Filtre :">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane layoutX="12.0" layoutY="278.0" prefHeight="251.0" prefWidth="864.0" stylesheets="@../css/dashboard.css">

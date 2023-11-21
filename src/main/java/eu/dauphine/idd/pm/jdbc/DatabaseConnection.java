@@ -13,13 +13,13 @@ public class DatabaseConnection {
 	private DatabaseConnection() throws SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			connection = DriverManager.getConnection("jdbc:sqlite:" + dbPath);
-		}catch (ClassNotFoundException | SQLException e) {
+			connection = DriverManager.getConnection("jdbc:sqlite:./src/main/resources/sample.db");
+		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Error : Connexion to DataBase SQLite failed.");
+			throw new SQLException("Error: Connection to the SQLite database failed.", e);
 		}
 	}
-	
+
 	public static DatabaseConnection getInstance() throws SQLException {
 		if (instance == null) {
 			instance = new DatabaseConnection();
@@ -28,22 +28,23 @@ public class DatabaseConnection {
 		}
 		return instance;
 	}
-	
+
 	public static void setDatabasePath(String dbPath) {
-        DatabaseConnection.dbPath = dbPath;
-    }
-	
+		DatabaseConnection.dbPath = dbPath;
+	}
+
 	public Connection getConnection() {
 		return connection;
 	}
 
-	public static void closeConnection() throws SQLException {
+	public static void closeConnection() {
 		try {
 			if (instance != null && !instance.connection.isClosed()) {
 				instance.connection.close();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+
 		}
 	}
 }

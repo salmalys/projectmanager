@@ -123,21 +123,25 @@ public class FormationDAOImpl implements FormationDAO {
 
 	@Override
 	public Formation findByNameAndPromotion(String nom, String promotion) {
-	    Formation formation = null;
-	    try (Connection connection = getConnection();
-	         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Formation WHERE Nom = ? AND Promotion = ?")) {
+		Formation formation = null;
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection
+						.prepareStatement("SELECT * FROM Formation WHERE Nom = ? AND Promotion = ?")) {
 
-	        preparedStatement.setString(1, nom);
-	        preparedStatement.setString(2, promotion);
-	        ResultSet rs = preparedStatement.executeQuery();
+			preparedStatement.setString(1, nom);
+			preparedStatement.setString(2, promotion);
+			ResultSet rs = preparedStatement.executeQuery();
 
-	        if (rs.next()) {
-	            int id = rs.getInt("ID_Formation");
-	            formation = new Formation(id, nom, promotion);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-	    return formation;
+			if (rs.next()) {
+				int id = rs.getInt("ID_Formation");
+				formation = new Formation(id, nom, promotion);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return formation;
 	}
+
+
+
 }

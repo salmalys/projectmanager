@@ -2,6 +2,7 @@ package eu.dauphine.idd.pm.dao.impl;
 import eu.dauphine.idd.pm.dao.ProjetDAO;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -65,11 +66,12 @@ public class ProjetDAOImpl implements ProjetDAO {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			if (rs.next()) {
+				
 				String nomMatiere = rs.getString("Nom_Matiere");
 				String sujet = rs.getString("Sujet");
 				java.sql.Date date = rs.getDate("Date_Remise_Prevue");
 				
-				projet = new Projet(nomMatiere, sujet, date);
+				projet = new Projet(id,nomMatiere, sujet, date);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -154,6 +156,15 @@ public class ProjetDAOImpl implements ProjetDAO {
 	        e.printStackTrace();
 	    }
 	    return projet;
+	}
+	
+	public static void main(String[] args) {
+		ProjetDAOImpl s = new ProjetDAOImpl();
+		Date d=new Date(0);
+		//s.create(new Projet(1,"informatique","WEBDEV",d));
+	//	 System.out.println(s.findAll());
+		// System.out.println(s.findById(3).toString());
+
 	}
 
 }

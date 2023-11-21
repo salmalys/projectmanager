@@ -1,38 +1,30 @@
 
-
 package eu.dauphine.idd.pm.controller;
 
 import eu.dauphine.idd.pm.service.EtudiantService;
+
 import eu.dauphine.idd.pm.service.FormationService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
+
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.control.ButtonType;
+
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 import eu.dauphine.idd.pm.model.Etudiant;
 import eu.dauphine.idd.pm.model.Formation;
 
 public class EtudiantController {
 	private FormationService formationS = ServiceFactory.getFormationService();
-	private EtudiantService etudiantS=ServiceFactory.getEtudiantService();
-	private FormationController formationController = new FormationController();
+	private EtudiantService etudiantS = ServiceFactory.getEtudiantService();
 
 	public void addEtudiant(TextField idEtudiant, TextField nomEtudiant, TextField prenomEtudiant,
 			ComboBox<String> Formation, TableColumn<Etudiant, Integer> col_IdEtudiant,
@@ -58,10 +50,11 @@ public class EtudiantController {
 				switch (result) {
 				case 0: // Success
 					showAlert(AlertType.INFORMATION, "Success", "Etudiant added successfully!");
-					addEtudiantShow(col_IdEtudiant, col_NomEtudiant, col_PrenomEtudiant, col_Formation, col_Formation, tableEtudiant);
+					addEtudiantShow(col_IdEtudiant, col_NomEtudiant, col_PrenomEtudiant, col_Formation, col_Formation,
+							tableEtudiant);
 					addEtudiantReset(idEtudiant, nomEtudiant, prenomEtudiant, Formation);
 
-				//	SearchEtudiant(search_etudiant, tableEtudiant);
+					// SearchEtudiant(search_etudiant, tableEtudiant);
 
 					break;
 				case 1:
@@ -94,17 +87,23 @@ public class EtudiantController {
 		Formation.setItems(formationNamesAndPromotions);
 		Formation2.setItems(formationNamesAndPromotions);
 	}
-	
+
 	private ObservableList<Etudiant> addEtudiant;
+
 	// fonction qui affiche le tableau de Etudiant dans l'interface graphique
-	public void addEtudiantShow(TableColumn<Etudiant, Integer> col_IdEtudiant, TableColumn<Etudiant, String> col_NomEtudiant, TableColumn<Etudiant, String> col_PrenomEtudiant,TableColumn<Etudiant, String> col_NomformEtudiant, TableColumn<Etudiant, String> col_PromotionEtudiant,  TableView<Etudiant> tableEtudiant) {
+	public void addEtudiantShow(TableColumn<Etudiant, Integer> col_IdEtudiant,
+			TableColumn<Etudiant, String> col_NomEtudiant, TableColumn<Etudiant, String> col_PrenomEtudiant,
+			TableColumn<Etudiant, String> col_NomformEtudiant, TableColumn<Etudiant, String> col_PromotionEtudiant,
+			TableView<Etudiant> tableEtudiant) {
 		allFormations = formationS.listFormations();
-		addEtudiant=etudiantS.listEtudiants();
+		addEtudiant = etudiantS.listEtudiants();
 		col_IdEtudiant.setCellValueFactory(new PropertyValueFactory<>("idEtudiant"));
 		col_NomEtudiant.setCellValueFactory(new PropertyValueFactory<>("nom"));
 		col_PrenomEtudiant.setCellValueFactory(new PropertyValueFactory<>("prenom"));
-		col_NomformEtudiant.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFormation().getNom()));
-	    col_PromotionEtudiant.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFormation().getPromotion()));
+		col_NomformEtudiant
+				.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFormation().getNom()));
+		col_PromotionEtudiant
+				.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFormation().getPromotion()));
 		tableEtudiant.setItems(addEtudiant);
 
 	}
@@ -137,7 +136,6 @@ public class EtudiantController {
 //		    });
 //	}
 
-
 	// methode qui relier l'action dans intergace graphique avec le button clear
 	public void addEtudiantReset(TextField idEtudiant, TextField nomEtudiant, TextField prenomEtudiant,
 			ComboBox<String> Formation) {
@@ -169,4 +167,3 @@ public class EtudiantController {
 	}
 
 }
-

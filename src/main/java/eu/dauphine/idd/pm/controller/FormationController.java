@@ -1,6 +1,7 @@
 package eu.dauphine.idd.pm.controller;
 
 import eu.dauphine.idd.pm.service.FormationService;
+
 import eu.dauphine.idd.pm.service.ServiceFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -167,6 +168,8 @@ public class FormationController {
 			TableColumn<Formation, String> col_Nomformation, TableColumn<Formation, String> col_promotion,
 			TableView<Formation> tableFormation) {
 		addformation = formationS.listFormations();
+		
+
 		col_Idformation.setCellValueFactory(new PropertyValueFactory<>("idFormation"));
 		col_Nomformation.setCellValueFactory(new PropertyValueFactory<>("nom"));
 		col_promotion.setCellValueFactory(new PropertyValueFactory<>("promotion"));
@@ -185,30 +188,30 @@ public class FormationController {
 
 	// fonction qui permet de chercher et filter le tableau de formation dans GUI
 	public void SearchFormation(TextField search_formation, TableView<Formation> tableFormation) {
-		   FilteredList<Formation> filter = new FilteredList<>(addformation, e -> true);
-		    search_formation.textProperty().addListener((Observable, oldValue, newValue) -> {
-		        filter.setPredicate(predData -> {
-		            if (newValue == null || newValue.isEmpty()) {
-		                return true;
-		            }
-		            String searchKey = newValue.toLowerCase();
-		            String idformation = String.valueOf(predData.getIdFormation());
+		FilteredList<Formation> filter = new FilteredList<>(addformation, e -> true);
+		search_formation.textProperty().addListener((Observable, oldValue, newValue) -> {
+			filter.setPredicate(predData -> {
+				if (newValue == null || newValue.isEmpty()) {
+					return true;
+				}
+				String searchKey = newValue.toLowerCase();
+				String idformation = String.valueOf(predData.getIdFormation());
 
-		            if (idformation.contains(searchKey)) {
-		                return true;
-		            } else if (predData.getNom().toLowerCase().contains(searchKey)) {
-		                return true;
-		            } else if (predData.getPromotion().toLowerCase().contains(searchKey)) {
-		                return true;
-		            } else
-		                return false;
-		        });
-		        
-		        SortedList<Formation> sortList = new SortedList<>(filter);
-		        sortList.comparatorProperty().bind(tableFormation.comparatorProperty());
-		        tableFormation.setItems(sortList);
-		        tableFormation.refresh();  // Ajoutez cette ligne pour forcer le rafraechissement
-		    });
+				if (idformation.contains(searchKey)) {
+					return true;
+				} else if (predData.getNom().toLowerCase().contains(searchKey)) {
+					return true;
+				} else if (predData.getPromotion().toLowerCase().contains(searchKey)) {
+					return true;
+				} else
+					return false;
+			});
+
+			SortedList<Formation> sortList = new SortedList<>(filter);
+			sortList.comparatorProperty().bind(tableFormation.comparatorProperty());
+			tableFormation.setItems(sortList);
+			tableFormation.refresh(); // Ajoutez cette ligne pour forcer le rafraechissement
+		});
 	}
 
 	// initialise la liste deroulente promotion pour liste deroulante ajouter et
@@ -239,6 +242,36 @@ public class FormationController {
 
 	// *******************handling button actions in a
 	// UI.******************************//
+
+	// Button for switching to the add projet form
+
+	private void handleBtnTmpAddProjet(AnchorPane tmp_addProjet, AnchorPane tmp_btnProjet,
+			AnchorPane tmp_updateProjet) {
+		tmp_addProjet.setVisible(true);
+		tmp_btnProjet.setVisible(false);
+		tmp_updateProjet.setVisible(false);
+
+	}
+
+	// Button for going back from the add projet form
+
+	private void handleBackProjet( AnchorPane tmp_addProjet, AnchorPane tmp_btnProjet,
+			AnchorPane tmp_updateProjet) {
+		tmp_addProjet.setVisible(false);
+		tmp_btnProjet.setVisible(true);
+		tmp_updateProjet.setVisible(false);
+
+	}
+
+	// Button for switching to the update projet form
+
+	private void handleBtnTmpUpdateProjet(AnchorPane tmp_addProjet, AnchorPane tmp_btnProjet,
+			AnchorPane tmp_updateProjet) {
+		tmp_addProjet.setVisible(false);
+		tmp_btnProjet.setVisible(false);
+		tmp_updateProjet.setVisible(true);
+
+	}
 
 	// Button pour switch vers la fenetre d'ajout d'etudiant
 	private void handleBtnTmpAddEtudiant(AnchorPane tmp_addEtudiant, AnchorPane tmp_btnEtudiant,

@@ -1,16 +1,13 @@
 package eu.dauphine.idd.pm.controller;
 
 import java.net.URL;
-
+import java.sql.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import eu.dauphine.idd.pm.model.Etudiant;
 import eu.dauphine.idd.pm.model.Formation;
-import eu.dauphine.idd.pm.service.FormationService;
-import eu.dauphine.idd.pm.service.ServiceFactory;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import eu.dauphine.idd.pm.model.Projet;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +20,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,8 +32,10 @@ import javafx.stage.StageStyle;
 
 public class DashboardController implements Initializable {
 
-	// ****Partie 0: ************************Button
-	// Home********************************//
+	/**
+	 * *Partie 0: ************************ButtonHome****************************
+	 * 
+	 **/
 
 	@FXML
 	private Label Count_totaletudiant;
@@ -58,8 +58,11 @@ public class DashboardController implements Initializable {
 	@FXML
 	private AnchorPane tmp_home;
 
-	// ****Partie 1: ************************Button
-	// Formation****************************//
+	/**
+	 * *Partie 1:
+	 * ************************ButtonFormation****************************
+	 * 
+	 **/
 
 	@FXML
 	private Button AddFormation;
@@ -249,8 +252,10 @@ public class DashboardController implements Initializable {
 				btn_tmpbackEtudient, btn_tmpupdateEtudient);
 	}
 
-	// ****Partie 2: ************************Button
-	// Etudiant**********************************//
+	/**
+	 * *Partie 2: ************************ButtonEtudiant****************************
+	 * 
+	 **/
 	@FXML
 	private ComboBox<String> Formation;
 	@FXML
@@ -306,7 +311,8 @@ public class DashboardController implements Initializable {
 	private EtudiantController etudiantC = new EtudiantController();
 
 	public void addEtudiant() {
-		etudiantC.addEtudiant(IdEtudiant, NomEtudiant, PrenomEtudiant, Formation, col_Idetudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomEtudiant, tableEtudiant);
+//		etudiantC.addEtudiant(IdEtudiant, NomEtudiant, PrenomEtudiant, Formation, col_Idetudiant, col_NomEtudiant,
+//				col_PrenomEtudiant, col_NomEtudiant, tableEtudiant);
 	}
 
 	private void fillFormationComboBox() {
@@ -314,9 +320,11 @@ public class DashboardController implements Initializable {
 	}
 
 	public void addEtudiantshow() {
-		etudiantC.addEtudiantShow(col_Idetudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant, col_PromotionEtudiant, tableEtudiant);
+//		etudiantC.addEtudiantShow(col_Idetudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant,
+//				col_PromotionEtudiant, tableEtudiant);
 
 	}
+
 	public void selectEtudient() {
 
 		Etudiant etudiant = tableEtudiant.getSelectionModel().getSelectedItem();
@@ -324,13 +332,13 @@ public class DashboardController implements Initializable {
 		if ((num - 1) < -1) {
 			return;
 		}
-
-		IdEtudiant.setText(String.valueOf(etudiant.getIdEtudiant()));
-		NomEtudiant.setText(etudiant.getNom());
-		NomEtudiant2.setText(etudiant.getNom());
-		PrenomEtudiant.setText(etudiant.getPrenom());
-		PrenomEtudiant2.setText(etudiant.getPrenom());
-
+		if (etudiant != null) {
+			IdEtudiant.setText(String.valueOf(etudiant.getIdEtudiant()));
+			NomEtudiant.setText(etudiant.getNom());
+			NomEtudiant2.setText(etudiant.getNom());
+			PrenomEtudiant.setText(etudiant.getPrenom());
+			PrenomEtudiant2.setText(etudiant.getPrenom());
+		}
 	}
 
 	public void addEtudiantReset() {
@@ -341,8 +349,77 @@ public class DashboardController implements Initializable {
 		etudiantC.addEtudiantReset(IdEtudiant, NomEtudiant2, PrenomEtudiant2, Formation2);
 	}
 
-	// Partie :****************Deconnexion et Reglage de Scene
-	// Dashboard**********************//
+	/**
+	 * *Partie 3: ************************ButtonProjet****************************
+	 * 
+	 **/
+	@FXML
+	private TextField Idprojet;
+	@FXML
+	private TextField NomMatiereP;
+
+	@FXML
+	private TextField NomMatiereP2;
+	@FXML
+	private TextField SujetProjet;
+
+	@FXML
+	private TextField SujetProjet2;
+	@FXML
+	private Button back_projet;
+
+	@FXML
+	private Button back_projet2;
+	@FXML
+	private Button btn_Add_projet;
+
+	@FXML
+	private Button btn_ajoutProjet;
+
+	@FXML
+	private Button btn_modifierProjet;
+
+	@FXML
+	private Button btn_supprimProjet;
+
+	@FXML
+	private Button btn_updateProjet;
+	@FXML
+	private DatePicker dateRemisePorjet;
+
+	@FXML
+	private DatePicker dateRemisePorjet2;
+	@FXML
+	private Button refreshDataProjet;
+
+	@FXML
+	private TextField search_projet;
+	@FXML
+	private TableView<Projet> tableProjet;
+
+	@FXML
+	private AnchorPane tmpDeleteProjet;
+	@FXML
+	private AnchorPane tmp_addProjet;
+
+	@FXML
+	private AnchorPane tmp_updateProjet;
+
+	@FXML
+	private TableColumn<Projet, String> col_MatiereProjet;
+	@FXML
+	private TableColumn<Projet, Date> col_DateRemiseProjet;
+	@FXML
+	private TableColumn<Projet, String> col_SujetProjet;
+
+	@FXML
+	private TableColumn<Projet, String> col_idProjet;
+
+	/**
+	 * *Partie X: ************************Deconnexion et reglage de scene
+	 * dashboard***********************
+	 * 
+	 **/
 
 	@FXML
 	private Button close;
@@ -409,8 +486,11 @@ public class DashboardController implements Initializable {
 		stage.setIconified(true);
 	}
 
-	// Partie:********************** Initialisation Action
-	// UI******************************//
+	/**
+	 * *Partie UI:
+	 * ************************InitialisationActionUI****************************
+	 * 
+	 **/
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
