@@ -7,5 +7,5 @@ public interface EtudiantService {
 	public int createEtudiant(String nom, String prenom, int idFormation);
 	public void deleteEtudiantById(int id);
 	public ObservableList<Etudiant> listEtudiants();
-	public void update(int id, String nom, String prenom, int idFormation);
+	public void updateEtudiant(int id, String nom, String prenom, int idFormation);
 }
