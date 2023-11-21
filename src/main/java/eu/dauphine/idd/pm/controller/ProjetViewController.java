@@ -7,4 +7,6 @@ import eu.dauphine.idd.pm.service.ServiceFactory;
 public class ProjetViewController {
 	private ProjetService projetS = ServiceFactory.getProjetService();
 	
+	
+	
 }

@@ -168,7 +168,6 @@ public class FormationController {
 			TableColumn<Formation, String> col_Nomformation, TableColumn<Formation, String> col_promotion,
 			TableView<Formation> tableFormation) {
 		addformation = formationS.listFormations();
-		
 
 		col_Idformation.setCellValueFactory(new PropertyValueFactory<>("idFormation"));
 		col_Nomformation.setCellValueFactory(new PropertyValueFactory<>("nom"));
@@ -255,8 +254,7 @@ public class FormationController {
 
 	// Button for going back from the add projet form
 
-	private void handleBackProjet( AnchorPane tmp_addProjet, AnchorPane tmp_btnProjet,
-			AnchorPane tmp_updateProjet) {
+	private void handleBackProjet(AnchorPane tmp_addProjet, AnchorPane tmp_btnProjet, AnchorPane tmp_updateProjet) {
 		tmp_addProjet.setVisible(false);
 		tmp_btnProjet.setVisible(true);
 		tmp_updateProjet.setVisible(false);
@@ -411,7 +409,9 @@ public class FormationController {
 			AnchorPane tmp_addformation, AnchorPane tmp_updateformation, TextField IdFormation, TextField Nomformation,
 			TextField Nomformation2, ComboBox<String> PromotionList2, AnchorPane tmp_addEtudiant,
 			AnchorPane tmp_btnEtudiant, AnchorPane tmp_updateEtudiant, Button btn_tmpBackEtudient2,
-			Button btn_tmpaddEtudient, Button btn_tmpbackEtudient, Button btn_tmpupdateEtudient) {
+			Button btn_tmpaddEtudient, Button btn_tmpbackEtudient, Button btn_tmpupdateEtudient,
+			AnchorPane tmp_addProjet, AnchorPane tmp_btnProjet, AnchorPane tmp_updateProjet, Button back_projet,
+			Button back_projet2, Button btn_Add_projet, Button btn_updateProjet) {
 		if (event.getSource() == home_btn) {
 			handleHomeButton(tmp_home, temp_formation, tmp_etudiant, tmp_binome, tmp_note, tmp_projet, home_btn,
 					binome_btn, etudiant_btn, projet_btn, note_btn, formation_btn);
@@ -509,6 +509,16 @@ public class FormationController {
 			handleBtnTmpUpdateEtudiant(tmp_addEtudiant, tmp_btnEtudiant, tmp_updateEtudiant);
 		} else if (event.getSource() == btn_tmpBackEtudient2) {
 			handleBackEtudiant2(btn_tmpBackEtudient2, tmp_addEtudiant, tmp_btnEtudiant, tmp_updateEtudiant);
+		} else if (event.getSource() == back_projet) {
+			handleBackProjet(tmp_addProjet, tmp_btnProjet, tmp_updateProjet);
+
+		} else if (event.getSource() == back_projet2) {
+			handleBackProjet(tmp_addProjet, tmp_btnProjet, tmp_updateProjet);
+		} else if (event.getSource() == btn_Add_projet) {
+			handleBtnTmpAddProjet(tmp_addProjet, tmp_btnProjet, tmp_updateProjet);
+		} else if (event.getSource() == btn_updateProjet) {
+			handleBtnTmpUpdateProjet(tmp_addProjet, tmp_btnProjet, tmp_updateProjet);
+
 		}
 	}
 

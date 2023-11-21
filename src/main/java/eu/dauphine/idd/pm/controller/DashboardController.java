@@ -249,7 +249,8 @@ public class DashboardController implements Initializable {
 				btn_tmpupdate, Backformation2, tmp_btnformation, PromotionList, search_formation, tableFormation,
 				tmp_addformation, tmp_updateformation, IdFormation, Nomformation, Nomformation2, PromotionList2,
 				tmp_addEtudiant, tmp_btnEtudiant, tmp_updateEtudiant, btn_tmpBackEtudient2, btn_tmpaddEtudient,
-				btn_tmpbackEtudient, btn_tmpupdateEtudient);
+				btn_tmpBackEtudient2, btn_tmpupdateEtudient, tmp_addProjet, tmp_projet, tmp_updateProjet, back_projet,
+				back_projet2, btn_Add_projet, btn_updateProjet);
 	}
 
 	/**

@@ -545,9 +545,9 @@
                                                 <Font name="Arial" size="15.0" />
                                              </font>
                                           </Label>
-                                          <Button fx:id="btn_ajoutProjet" layoutX="35.0" layoutY="419.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="123.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter un Projet" />
+                                          <Button fx:id="btn_ajoutProjet" layoutX="35.0" layoutY="419.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="31.0" prefWidth="123.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter un Projet" />
                                           <Button fx:id="btn_supprimProjet" layoutX="53.0" layoutY="317.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="87.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Supprimer" />
-                                          <Button fx:id="btn_modifierProjet" layoutX="192.0" layoutY="419.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="129.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier un Projet" />
+                                          <Button fx:id="btn_modifierProjet" layoutX="192.0" layoutY="419.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="31.0" prefWidth="129.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier un Projet" />
                                           <Button fx:id="ClearProjet" layoutX="225.0" layoutY="316.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
                                        </children>
                                     </AnchorPane>
@@ -568,7 +568,7 @@
                                              </graphic>
                                           </Button>
                                           <Button layoutX="232.0" layoutY="386.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
-                                          <Button fx:id="back_projet" layoutX="270.0" layoutY="461.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
+                                          <Button fx:id="back_projet" layoutX="270.0" layoutY="461.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
                                           <DatePicker fx:id="dateRemisePorjet" layoutX="150.0" layoutY="246.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
                                           <Label layoutY="250.0" text="DateRemiseRapport :">
                                              <font>
@@ -620,7 +620,7 @@
                                           </Label>
                                           <Button fx:id="btn_updateProjet" layoutX="72.0" layoutY="366.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="69.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
                                           <Button layoutX="223.0" layoutY="363.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
-                                          <Button fx:id="back_projet2" layoutX="269.0" layoutY="469.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
+                                          <Button fx:id="back_projet2" layoutX="269.0" layoutY="469.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
                                        </children>
                                     </AnchorPane>
                                  </children>
