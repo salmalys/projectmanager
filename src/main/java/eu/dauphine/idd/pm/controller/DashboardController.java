@@ -306,12 +306,17 @@ public class DashboardController implements Initializable {
 	private EtudiantController etudiantC = new EtudiantController();
 
 	public void addEtudiant() {
+		etudiantC.addEtudiant(IdEtudiant, NomEtudiant, PrenomEtudiant, Formation, col_Idetudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomEtudiant, tableEtudiant);
 	}
 
 	private void fillFormationComboBox() {
 		etudiantC.fillFormationComboBox(Formation, Formation2);
 	}
 
+	public void addEtudiantshow() {
+		etudiantC.addEtudiantShow(col_Idetudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant, col_PromotionEtudiant, tableEtudiant);
+
+	}
 	public void selectEtudient() {
 
 		Etudiant etudiant = tableEtudiant.getSelectionModel().getSelectedItem();
@@ -410,6 +415,7 @@ public class DashboardController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		addformationshow();
+		addEtudiantshow();
 		addPromotionList();
 		addPromotionList2();
 		fillFormationComboBox();
