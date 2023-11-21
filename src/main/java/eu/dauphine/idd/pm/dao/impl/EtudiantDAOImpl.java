@@ -8,6 +8,8 @@ import eu.dauphine.idd.pm.model.Etudiant;
 import eu.dauphine.idd.pm.model.Formation;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -78,6 +80,7 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 	@Override
 	public ObservableList<Etudiant> findAll() {
 		ObservableList<Etudiant> etudiants = FXCollections.observableArrayList();
+		Map<Etudiant, Integer> etudiantFormationMap = new HashMap<>();
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ETUDIANTS)) {
 
@@ -88,13 +91,20 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 				String nom = rs.getString("Nom");
 				String prenom = rs.getString("Prenom");
 				int idFormation = rs.getInt("ID_Formation");
-				Formation formation = formationDAO.findById(idFormation); 
-				Etudiant etudiant = new Etudiant(idEtudiant, nom, prenom, formation);
-				etudiants.add(etudiant);
+				//Formation formation = formationDAO.findById(idFormation); 
+				Etudiant etudiant = new Etudiant(idEtudiant, nom, prenom, null);
+	            etudiants.add(etudiant);
+	            etudiantFormationMap.put(etudiant, idFormation);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+	    for (Etudiant etudiant : etudiants) {
+	        int idFormation = etudiantFormationMap.get(etudiant);
+	        Formation formation = formationDAO.findById(idFormation);
+	        etudiant.setFormation(formation);
+	    }
 		return etudiants;
 	}
 
