@@ -8,16 +8,20 @@ import eu.dauphine.idd.pm.service.ServiceFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.Alert;
 
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+
+import java.util.Optional;
 
 import eu.dauphine.idd.pm.model.Etudiant;
 import eu.dauphine.idd.pm.model.Formation;
@@ -72,6 +76,79 @@ public class EtudiantController {
 			e.printStackTrace();
 		}
 	}
+	// methode(action) qui modifie un étudiant dans l'interface graphique
+	public void updateEtudiant(TextField idEtudiant, TextField nomEtudiant, TextField prenomEtudiant,
+	        ComboBox<Formation> formationList, TextField search_etudiant,
+	        TableColumn<Etudiant, Integer> col_IdEtudiant, TableColumn<Etudiant, String> col_NomEtudiant,
+	        TableColumn<Etudiant, String> col_PrenomEtudiant, TableColumn<Etudiant, String> col_NomformEtudiant,
+	        TableColumn<Etudiant, String> col_PromotionEtudiant, TableView<Etudiant> tableEtudiant) {
+	    try {
+	        String nom = nomEtudiant.getText();
+	        String prenom = prenomEtudiant.getText();
+	        Formation formation = formationList.getSelectionModel().getSelectedItem();
+	        String idEtudiantString = idEtudiant.getText();
+
+	        Alert alert;
+	        if (!isInputValid(nom, prenom,formation.getNom())) {
+	            showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+	        } else {
+	            alert = new Alert(AlertType.CONFIRMATION);
+	            alert.setTitle("Confirmation Message");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Are you sure you want to Update ID Etudiant: " + idEtudiantString);
+
+	            Optional<ButtonType> option = alert.showAndWait();
+	            if (option.isPresent() && option.get().equals(ButtonType.OK)) {
+	                etudiantS.updateEtudiant(Integer.valueOf(idEtudiantString), nom, prenom, formation.getIdFormation());
+
+	                showAlert(AlertType.INFORMATION, "Information Message", "Etudiant Updated successfully!");
+
+	                addEtudiantShow(col_IdEtudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant,
+	                        col_PromotionEtudiant, tableEtudiant);
+	              addEtudiantReset(idEtudiant, nomEtudiant, prenomEtudiant, null);
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	// methode(action) qui supprime un étudiant dans l'interface graphique
+	public void deleteEtudiant(TextField idEtudiant, TextField nomEtudiant, TextField prenomEtudiant,
+	        ComboBox<Formation> formationList, TextField search_etudiant,
+	        TableColumn<Etudiant, Integer> col_IdEtudiant, TableColumn<Etudiant, String> col_NomEtudiant,
+	        TableColumn<Etudiant, String> col_PrenomEtudiant, TableColumn<Etudiant, String> col_NomformEtudiant,
+	        TableColumn<Etudiant, String> col_PromotionEtudiant, TableView<Etudiant> tableEtudiant) {
+	    try {
+
+	        String idEtudiantString = idEtudiant.getText();
+
+	        Alert alert;
+	        if (idEtudiantString.isEmpty()) {
+	            showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+	        } else {
+	            alert = new Alert(AlertType.CONFIRMATION);
+	            alert.setTitle("Confirmation Message");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Are you sure you want to Delete ID Etudiant : Ligne " + idEtudiantString);
+	            Optional<ButtonType> option = alert.showAndWait();
+	            if (option.isPresent() && option.get().equals(ButtonType.OK)) {
+	                etudiantS.deleteEtudiantById(Integer.valueOf(idEtudiantString));
+	                showAlert(AlertType.INFORMATION, "Information Message", "Etudiant Deleted successfully!");
+
+	                addEtudiantShow(col_IdEtudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant,
+	                        col_PromotionEtudiant, tableEtudiant);
+	                addEtudiantReset(idEtudiant, nomEtudiant, prenomEtudiant, null);
+	                searchEtudiant(search_etudiant, tableEtudiant);
+
+	            }
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+
+
 
 	private ObservableList<Formation> allFormations;
 
@@ -108,33 +185,36 @@ public class EtudiantController {
 
 	}
 
-//	// fonction qui permet de chercher et filter le tableau de formation dans GUI
-//	public void SearchEtudiant(TextField search_etudiant, TableView<Formation> tableFormation) {
-//		   FilteredList<Formation> filter = new FilteredList<>(addformation, e -> true);
-//		    search_formation.textProperty().addListener((Observable, oldValue, newValue) -> {
-//		        filter.setPredicate(predData -> {
-//		            if (newValue == null || newValue.isEmpty()) {
-//		                return true;
-//		            }
-//		            String searchKey = newValue.toLowerCase();
-//		            String idformation = String.valueOf(predData.getIdFormation());
-//
-//		            if (idformation.contains(searchKey)) {
-//		                return true;
-//		            } else if (predData.getNom().toLowerCase().contains(searchKey)) {
-//		                return true;
-//		            } else if (predData.getPromotion().toLowerCase().contains(searchKey)) {
-//		                return true;
-//		            } else
-//		                return false;
-//		        });
-//		        
-//		        SortedList<Formation> sortList = new SortedList<>(filter);
-//		        sortList.comparatorProperty().bind(tableFormation.comparatorProperty());
-//		        tableFormation.setItems(sortList);
-//		        tableFormation.refresh();  // Ajoutez cette ligne pour forcer le rafraechissement
-//		    });
-//	}
+	// fonction qui permet de chercher et filter le tableau d'étudiants dans
+	// l'interface graphique
+	public void searchEtudiant(TextField search_etudiant, TableView<Etudiant> tableEtudiant) {
+		if (search_etudiant != null) {
+			FilteredList<Etudiant> filter = new FilteredList<>(addEtudiant, e -> true);
+
+			search_etudiant.textProperty().addListener((observable, oldValue, newValue) -> {
+				filter.setPredicate(predData -> {
+					if (newValue == null || newValue.isEmpty()) {
+						return true;
+					}
+					String searchKey = newValue.toLowerCase();
+
+					// Check if any of the fields contain the search keyword
+					boolean idMatches = Integer.toString(predData.getIdEtudiant()).contains(searchKey);
+					boolean nomMatches = predData.getNom().toLowerCase().contains(searchKey);
+					boolean prenomMatches = predData.getPrenom().toLowerCase().contains(searchKey);
+					boolean nomFormationMatches = predData.getFormation().getNom().toLowerCase().contains(searchKey);
+					boolean promotionMatches = predData.getFormation().getPromotion().toLowerCase().contains(searchKey);
+
+					return idMatches || nomMatches || prenomMatches || nomFormationMatches || promotionMatches;
+				});
+			});
+
+			SortedList<Etudiant> sortedList = new SortedList<>(filter);
+			sortedList.comparatorProperty().bind(tableEtudiant.comparatorProperty());
+
+			tableEtudiant.setItems(sortedList);
+		}
+	}
 
 	// methode qui relier l'action dans intergace graphique avec le button clear
 	public void addEtudiantReset(TextField idEtudiant, TextField nomEtudiant, TextField prenomEtudiant,

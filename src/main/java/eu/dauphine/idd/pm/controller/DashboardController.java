@@ -249,8 +249,8 @@ public class DashboardController implements Initializable {
 				btn_tmpupdate, Backformation2, tmp_btnformation, PromotionList, search_formation, tableFormation,
 				tmp_addformation, tmp_updateformation, IdFormation, Nomformation, Nomformation2, PromotionList2,
 				tmp_addEtudiant, tmp_btnEtudiant, tmp_updateEtudiant, btn_tmpBackEtudient2, btn_tmpaddEtudient,
-				btn_tmpBackEtudient2, btn_tmpupdateEtudient, tmp_addProjet, tmp_projet, tmp_updateProjet, back_projet,
-				back_projet2, btn_Add_projet, btn_updateProjet);
+				btn_tmpbackEtudient, btn_tmpupdateEtudient, tmp_addProjet, tmpDeleteProjet, tmp_updateProjet,
+				back_projet, back_projet2, btn_ajoutProjet, btn_modifierProjet);
 	}
 
 	/**
@@ -312,8 +312,15 @@ public class DashboardController implements Initializable {
 	private EtudiantController etudiantC = new EtudiantController();
 
 	public void addEtudiant() {
-//		etudiantC.addEtudiant(IdEtudiant, NomEtudiant, PrenomEtudiant, Formation, col_Idetudiant, col_NomEtudiant,
-//				col_PrenomEtudiant, col_NomEtudiant, tableEtudiant);
+		etudiantC.addEtudiant(IdEtudiant, NomEtudiant, PrenomEtudiant, Formation, col_Idetudiant, col_NomEtudiant,
+				col_PrenomEtudiant, col_NomEtudiant, tableEtudiant);
+	}
+	public void updateEtudiant() {
+		etudiantC.updateEtudiant(IdEtudiant, NomEtudiant, PrenomEtudiant, null, search_Etudiant, col_Idetudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant, col_PromotionEtudiant, tableEtudiant);
+	}
+	public void deleteEtudiant() {
+		etudiantC.deleteEtudiant(
+				IdEtudiant, NomEtudiant, PrenomEtudiant, null, search_Etudiant, col_Idetudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant, col_PromotionEtudiant, tableEtudiant);
 	}
 
 	private void fillFormationComboBox() {
@@ -321,8 +328,8 @@ public class DashboardController implements Initializable {
 	}
 
 	public void addEtudiantshow() {
-//		etudiantC.addEtudiantShow(col_Idetudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant,
-//				col_PromotionEtudiant, tableEtudiant);
+		etudiantC.addEtudiantShow(col_Idetudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant,
+				col_PromotionEtudiant, tableEtudiant);
 
 	}
 
@@ -350,6 +357,9 @@ public class DashboardController implements Initializable {
 		etudiantC.addEtudiantReset(IdEtudiant, NomEtudiant2, PrenomEtudiant2, Formation2);
 	}
 
+	public void searchEtudiant() {
+		etudiantC.searchEtudiant(search_Etudiant, tableEtudiant);
+	}
 	/**
 	 * *Partie 3: ************************ButtonProjet****************************
 	 * 
@@ -371,8 +381,6 @@ public class DashboardController implements Initializable {
 
 	@FXML
 	private Button back_projet2;
-	@FXML
-	private Button btn_Add_projet;
 
 	@FXML
 	private Button btn_ajoutProjet;
@@ -383,8 +391,6 @@ public class DashboardController implements Initializable {
 	@FXML
 	private Button btn_supprimProjet;
 
-	@FXML
-	private Button btn_updateProjet;
 	@FXML
 	private DatePicker dateRemisePorjet;
 

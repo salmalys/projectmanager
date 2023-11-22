@@ -358,7 +358,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="tmp_etudiant" layoutX="157.0" layoutY="63.0" prefHeight="554.6666666666666" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="tmp_etudiant" layoutX="157.0" layoutY="63.0" prefHeight="554.6666666666666" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="20.0" layoutY="14.0" prefHeight="525.0" prefWidth="864.0" stylesheets="@../css/dashboard.css">
                                  <styleClass>
@@ -372,7 +372,7 @@
                                           <String fx:value="white-bg" />
                                        </styleClass>
                                        <children>
-                                          <TableView fx:id="tableEtudiant" layoutX="3.0" layoutY="93.0" prefHeight="419.0" prefWidth="443.0">
+                                          <TableView fx:id="tableEtudiant" layoutX="3.0" layoutY="93.0" onMouseClicked="#selectEtudient" prefHeight="419.0" prefWidth="443.0">
                                             <columns>
                                               <TableColumn fx:id="col_Idetudiant" prefWidth="72.66670227050781" text="ID Etudiant" />
                                               <TableColumn fx:id="col_NomEtudiant" prefWidth="84.0" text="Nom" />
@@ -387,7 +387,7 @@
                                                 <Font name="System Bold" size="14.0" />
                                              </font>
                                           </Label>
-                                          <TextField fx:id="search_Etudiant" layoutX="45.0" layoutY="10.0" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
+                                          <TextField fx:id="search_Etudiant" layoutX="45.0" layoutY="10.0" onAction="#searchEtudiant" onKeyTyped="#searchEtudiant" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
                                           <FontAwesomeIconView glyphName="SEARCH" layoutX="48.0" layoutY="29.0" size="1.5em" />
                                           <Button fx:id="RefreshEtudiant" layoutX="371.0" layoutY="49.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
                                              <graphic>
@@ -396,7 +396,7 @@
                                           </Button>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="tmp_btnEtudiant" layoutX="466.0" layoutY="8.0" prefHeight="513.0" prefWidth="391.0" stylesheets="@../css/dashboard.css">
+                                    <AnchorPane fx:id="tmp_btnEtudiant" layoutX="466.0" layoutY="8.0" prefHeight="513.0" prefWidth="391.0" stylesheets="@../css/dashboard.css" visible="false">
                                        <styleClass>
                                           <String fx:value="shadow" />
                                           <String fx:value="white-bg" />
@@ -415,8 +415,8 @@
                                           </Label>
                                           <Button fx:id="btn_tmpaddEtudient" layoutX="56.0" layoutY="413.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="30.0" prefWidth="143.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter un Etudiant" />
                                           <Button fx:id="btn_tmpupdateEtudient" layoutX="225.0" layoutY="412.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="33.0" prefWidth="139.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier un Etudiant" />
-                                          <Button layoutX="91.0" layoutY="283.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="74.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Delete" />
-                                          <Button layoutX="246.0" layoutY="282.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="76.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                                          <Button layoutX="91.0" layoutY="283.0" mnemonicParsing="false" onAction="#deleteEtudiant" prefHeight="33.0" prefWidth="74.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Delete" />
+                                          <Button layoutX="246.0" layoutY="282.0" mnemonicParsing="false" onAction="#addEtudiantReset" prefHeight="34.0" prefWidth="76.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane fx:id="tmp_addEtudiant" layoutX="465.0" layoutY="8.0" prefHeight="510.0" prefWidth="396.0" stylesheets="@../css/dashboard.css" visible="false">
@@ -453,7 +453,7 @@
                                           <Button fx:id="btn_tmpbackEtudient" layoutX="316.0" layoutY="464.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="32.0" prefWidth="67.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="tmp_updateEtudiant" layoutX="462.0" layoutY="7.0" prefHeight="513.0" prefWidth="397.0" stylesheets="@../css/dashboard.css" visible="false">
+                                    <AnchorPane fx:id="tmp_updateEtudiant" layoutX="462.0" layoutY="7.0" prefHeight="513.0" prefWidth="397.0" stylesheets="@../css/dashboard.css">
                                        <styleClass>
                                           <String fx:value="shadow" />
                                           <String fx:value="white-bg" />
@@ -469,7 +469,7 @@
                                                 <Font name="Tahoma Bold" size="24.0" />
                                              </font>
                                           </Label>
-                                          <Button layoutX="80.0" layoutY="383.0" mnemonicParsing="false" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
+                                          <Button layoutX="80.0" layoutY="383.0" mnemonicParsing="false" onAction="#updateEtudiant" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
                                           <Button layoutX="277.0" layoutY="381.0" mnemonicParsing="false" onAction="#addEtudiantReset2" prefHeight="31.0" prefWidth="73.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
                                           <Button fx:id="btn_tmpBackEtudient2" layoutX="307.0" layoutY="467.0" mnemonicParsing="false" onAction="#tmpSwitch" prefHeight="32.0" prefWidth="67.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
                                           <Label layoutX="65.0" layoutY="287.0" text="Formation :">
@@ -491,7 +491,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="tmp_projet" layoutX="201.0" layoutY="159.0" prefHeight="554.6666666666666" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="tmp_projet" layoutX="201.0" layoutY="159.0" prefHeight="554.6666666666666" prefWidth="900.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="10.0" layoutY="9.0" prefHeight="533.0" prefWidth="881.0" stylesheets="@../css/dashboard.css">
                                  <styleClass>
