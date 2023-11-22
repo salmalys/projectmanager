@@ -33,7 +33,9 @@ public class EtudiantController {
 	public void addEtudiant(TextField idEtudiant, TextField nomEtudiant, TextField prenomEtudiant,
 			ComboBox<String> Formation, TableColumn<Etudiant, Integer> col_IdEtudiant,
 			TableColumn<Etudiant, String> col_NomEtudiant, TableColumn<Etudiant, String> col_PrenomEtudiant,
-			TableColumn<Etudiant, String> col_Formation, TableView<Etudiant> tableEtudiant) {
+			TableColumn<Etudiant, String> col_Formation, TableColumn<Etudiant, String> col_PromotionEtudiant,
+			TableColumn<Etudiant, String> col_NomformEtudiant, TableView<Etudiant> tableEtudiant,
+			TextField search_Etudiant) {
 		try {
 			String nom = nomEtudiant.getText();
 			String prenom = prenomEtudiant.getText();
@@ -54,11 +56,11 @@ public class EtudiantController {
 				switch (result) {
 				case 0: // Success
 					showAlert(AlertType.INFORMATION, "Success", "Etudiant added successfully!");
-					addEtudiantShow(col_IdEtudiant, col_NomEtudiant, col_PrenomEtudiant, col_Formation, col_Formation,
-							tableEtudiant);
+					addEtudiantShow(col_IdEtudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant,
+							col_PromotionEtudiant, tableEtudiant);
 					addEtudiantReset(idEtudiant, nomEtudiant, prenomEtudiant, Formation);
 
-					// SearchEtudiant(search_etudiant, tableEtudiant);
+					searchEtudiant(search_Etudiant, tableEtudiant);
 
 					break;
 				case 1:
@@ -76,79 +78,85 @@ public class EtudiantController {
 			e.printStackTrace();
 		}
 	}
+
 	// methode(action) qui modifie un étudiant dans l'interface graphique
 	public void updateEtudiant(TextField idEtudiant, TextField nomEtudiant, TextField prenomEtudiant,
-	        ComboBox<Formation> formationList, TextField search_etudiant,
-	        TableColumn<Etudiant, Integer> col_IdEtudiant, TableColumn<Etudiant, String> col_NomEtudiant,
-	        TableColumn<Etudiant, String> col_PrenomEtudiant, TableColumn<Etudiant, String> col_NomformEtudiant,
-	        TableColumn<Etudiant, String> col_PromotionEtudiant, TableView<Etudiant> tableEtudiant) {
-	    try {
-	        String nom = nomEtudiant.getText();
-	        String prenom = prenomEtudiant.getText();
-	        Formation formation = formationList.getSelectionModel().getSelectedItem();
-	        String idEtudiantString = idEtudiant.getText();
+			TextField search_etudiant, TableColumn<Etudiant, Integer> col_IdEtudiant,
+			TableColumn<Etudiant, String> col_NomEtudiant, TableColumn<Etudiant, String> col_PrenomEtudiant,
+			TableColumn<Etudiant, String> col_NomformEtudiant, TableColumn<Etudiant, String> col_PromotionEtudiant,
+			TableView<Etudiant> tableEtudiant, ComboBox<String> Formation2) {
+		try {
+			String nom = nomEtudiant.getText();
+			String prenom = prenomEtudiant.getText();
+			String formationName = Formation2.getSelectionModel().getSelectedItem();
+			String idEtudiantString = idEtudiant.getText();
 
-	        Alert alert;
-	        if (!isInputValid(nom, prenom,formation.getNom())) {
-	            showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
-	        } else {
-	            alert = new Alert(AlertType.CONFIRMATION);
-	            alert.setTitle("Confirmation Message");
-	            alert.setHeaderText(null);
-	            alert.setContentText("Are you sure you want to Update ID Etudiant: " + idEtudiantString);
+			Alert alert;
+			if (!isInputValid(nom, prenom, formationName)) {
+				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+			} else {
+				// Extract formation name and promotion from the combo box
+				String[] formationParts = formationName.split(" - ");
+				String formationNom = formationParts[0];
+				String formationPromotion = formationParts[1];
+				// Get the ID of the selected formation
+				int idFormation = formationS.getFormationIdByNameAndPromotion(formationNom, formationPromotion);
+				alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Confirmation Message");
+				alert.setHeaderText(null);
+				alert.setContentText("Are you sure you want to Update ID Etudiant: " + idEtudiantString);
 
-	            Optional<ButtonType> option = alert.showAndWait();
-	            if (option.isPresent() && option.get().equals(ButtonType.OK)) {
-	                etudiantS.updateEtudiant(Integer.valueOf(idEtudiantString), nom, prenom, formation.getIdFormation());
+				Optional<ButtonType> option = alert.showAndWait();
+				if (option.isPresent() && option.get().equals(ButtonType.OK)) {
+					etudiantS.updateEtudiant(Integer.valueOf(idEtudiantString), nom, prenom, idFormation);
 
-	                showAlert(AlertType.INFORMATION, "Information Message", "Etudiant Updated successfully!");
+					showAlert(AlertType.INFORMATION, "Information Message", "Etudiant Updated successfully!");
 
-	                addEtudiantShow(col_IdEtudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant,
-	                        col_PromotionEtudiant, tableEtudiant);
-	              addEtudiantReset(idEtudiant, nomEtudiant, prenomEtudiant, null);
-	            }
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+					addEtudiantShow(col_IdEtudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant,
+							col_PromotionEtudiant, tableEtudiant);
+					addEtudiantReset(idEtudiant, nomEtudiant, prenomEtudiant, Formation2);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+
 	// methode(action) qui supprime un étudiant dans l'interface graphique
 	public void deleteEtudiant(TextField idEtudiant, TextField nomEtudiant, TextField prenomEtudiant,
-	        ComboBox<Formation> formationList, TextField search_etudiant,
-	        TableColumn<Etudiant, Integer> col_IdEtudiant, TableColumn<Etudiant, String> col_NomEtudiant,
-	        TableColumn<Etudiant, String> col_PrenomEtudiant, TableColumn<Etudiant, String> col_NomformEtudiant,
-	        TableColumn<Etudiant, String> col_PromotionEtudiant, TableView<Etudiant> tableEtudiant) {
-	    try {
+			TextField search_etudiant, TableColumn<Etudiant, Integer> col_IdEtudiant,
+			TableColumn<Etudiant, String> col_NomEtudiant, TableColumn<Etudiant, String> col_PrenomEtudiant,
+			TableColumn<Etudiant, String> col_NomformEtudiant, TableColumn<Etudiant, String> col_PromotionEtudiant,
+			TableView<Etudiant> tableEtudiant, ComboBox<String> Formation) {
+		try {
 
-	        String idEtudiantString = idEtudiant.getText();
+			String idEtudiantString = idEtudiant.getText();
 
-	        Alert alert;
-	        if (idEtudiantString.isEmpty()) {
-	            showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
-	        } else {
-	            alert = new Alert(AlertType.CONFIRMATION);
-	            alert.setTitle("Confirmation Message");
-	            alert.setHeaderText(null);
-	            alert.setContentText("Are you sure you want to Delete ID Etudiant : Ligne " + idEtudiantString);
-	            Optional<ButtonType> option = alert.showAndWait();
-	            if (option.isPresent() && option.get().equals(ButtonType.OK)) {
-	                etudiantS.deleteEtudiantById(Integer.valueOf(idEtudiantString));
-	                showAlert(AlertType.INFORMATION, "Information Message", "Etudiant Deleted successfully!");
+			Alert alert;
+			if (idEtudiantString.isEmpty()) {
+				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+			} else {
+				alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Confirmation Message");
+				alert.setHeaderText(null);
+				alert.setContentText("Are you sure you want to Delete ID Etudiant : Ligne " + idEtudiantString);
+				Optional<ButtonType> option = alert.showAndWait();
+				if (option.isPresent() && option.get().equals(ButtonType.OK)) {
+					etudiantS.deleteEtudiantById(Integer.valueOf(idEtudiantString));
+					showAlert(AlertType.INFORMATION, "Information Message", "Etudiant Deleted successfully!");
 
-	                addEtudiantShow(col_IdEtudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant,
-	                        col_PromotionEtudiant, tableEtudiant);
-	                addEtudiantReset(idEtudiant, nomEtudiant, prenomEtudiant, null);
-	                searchEtudiant(search_etudiant, tableEtudiant);
+					addEtudiantShow(col_IdEtudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant,
+							col_PromotionEtudiant, tableEtudiant);
+					addEtudiantReset(idEtudiant, nomEtudiant, prenomEtudiant, Formation);
+					searchEtudiant(search_etudiant, tableEtudiant);
 
-	            }
-	        }
+				}
+			}
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-
-
 
 	private ObservableList<Formation> allFormations;
 

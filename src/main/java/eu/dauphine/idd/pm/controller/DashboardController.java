@@ -313,14 +313,20 @@ public class DashboardController implements Initializable {
 
 	public void addEtudiant() {
 		etudiantC.addEtudiant(IdEtudiant, NomEtudiant, PrenomEtudiant, Formation, col_Idetudiant, col_NomEtudiant,
-				col_PrenomEtudiant, col_NomEtudiant, tableEtudiant);
+				col_PrenomEtudiant, col_NomEtudiant, col_PromotionEtudiant, col_NomformEtudiant, tableEtudiant,
+				search_Etudiant);
 	}
+
 	public void updateEtudiant() {
-		etudiantC.updateEtudiant(IdEtudiant, NomEtudiant, PrenomEtudiant, null, search_Etudiant, col_Idetudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant, col_PromotionEtudiant, tableEtudiant);
+		etudiantC.updateEtudiant(IdEtudiant, NomEtudiant, PrenomEtudiant, search_Etudiant, col_Idetudiant,
+				col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant, col_PromotionEtudiant, tableEtudiant,
+				Formation2);
 	}
+
 	public void deleteEtudiant() {
-		etudiantC.deleteEtudiant(
-				IdEtudiant, NomEtudiant, PrenomEtudiant, null, search_Etudiant, col_Idetudiant, col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant, col_PromotionEtudiant, tableEtudiant);
+		etudiantC.deleteEtudiant(IdEtudiant, NomEtudiant, PrenomEtudiant, search_Etudiant, col_Idetudiant,
+				col_NomEtudiant, col_PrenomEtudiant, col_NomformEtudiant, col_PromotionEtudiant, tableEtudiant,
+				Formation);
 	}
 
 	private void fillFormationComboBox() {
@@ -360,6 +366,7 @@ public class DashboardController implements Initializable {
 	public void searchEtudiant() {
 		etudiantC.searchEtudiant(search_Etudiant, tableEtudiant);
 	}
+
 	/**
 	 * *Partie 3: ************************ButtonProjet****************************
 	 * 
