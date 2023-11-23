@@ -224,7 +224,7 @@ public class EtudiantController {
 		}
 	}
 
-	// methode qui relier l'action dans intergace graphique avec le button clear
+	// methode qui relier l'action dans interface graphique avec le button clear
 	public void addEtudiantReset(TextField idEtudiant, TextField nomEtudiant, TextField prenomEtudiant,
 			ComboBox<String> Formation) {
 		idEtudiant.setText("");

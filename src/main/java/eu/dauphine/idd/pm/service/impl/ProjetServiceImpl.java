@@ -10,44 +10,50 @@ import javafx.collections.ObservableList;
 
 public class ProjetServiceImpl implements ProjetService {
 
-    private ProjetDAO projetDAO;
+	private ProjetDAO projetDAO;
 
-    public ProjetServiceImpl() {
-        this.projetDAO = DAOFactory.getProjetDAO();
-    }
+	public ProjetServiceImpl() {
+		this.projetDAO = DAOFactory.getProjetDAO();
+	}
 
-    @Override
-    public int createProjet(String nomMatiere, String sujet, Date dateRemise) {
-        Projet existingProjet = projetDAO.findByCourseSubject(nomMatiere,sujet);
+	@Override
+	public int createProjet(String nomMatiere, String sujet, Date dateRemise) {
+		Projet existingProjet = projetDAO.findByCourseSubject(nomMatiere, sujet);
 
-        if (existingProjet != null) {
-            System.out.println("For this course: " + nomMatiere + " Project already exists with subject: " + sujet);
-            return 1;
-        } else {
-            Projet projet = new Projet(nomMatiere, sujet, dateRemise);
-            projetDAO.create(projet);
-            System.out.println("Project created successfully: " + projet.toString());
-            return 0;
-        }
-    }
+		if (existingProjet != null) {
+			System.out.println("For this course: " + nomMatiere + " Project already exists with subject: " + sujet);
+			return 1;
+		} else {
+			Projet projet = new Projet(nomMatiere, sujet, dateRemise);
+			projetDAO.create(projet);
+			System.out.println("Project created successfully: " + projet.toString());
+			return 0;
+		}
+	}
 
-    @Override
-    public void deleteProjetById(int id) {
-        projetDAO.deleteById(id);
-        System.out.println("Project with ID " + id + " successfully removed.");
-    }
+	@Override
+	public void deleteProjetById(int id) {
+		projetDAO.deleteById(id);
+		System.out.println("Project with ID " + id + " successfully removed.");
+	}
 
-    @Override
-    public ObservableList<Projet> listProjets() {
-        ObservableList<Projet> projets = projetDAO.findAll();
-        return projets;
-    }
+	@Override
+	public ObservableList<Projet> listProjets() {
+		ObservableList<Projet> projets = projetDAO.findAll();
+		System.err.println(projets.toString());
+		return projets;
+	}
 
-    @Override
-    public void updateProjet(int id, String nomMatiere, String sujet, Date date) {
-        Projet projet = new Projet(id, nomMatiere, sujet, date);
-        projetDAO.update(projet);
-        System.out.println("Project with ID " + id + " successfully updated.");
-        System.out.println(projet.toString());
-    }
+	@Override
+	public void updateProjet(int id, String nomMatiere, String sujet, Date date) {
+		Projet projet = new Projet(id, nomMatiere, sujet, date);
+		projetDAO.update(projet);
+		System.out.println("Project with ID " + id + " successfully updated.");
+		System.out.println(projet.toString());
+	}
+	public static void main(String[] args) {
+		ProjetServiceImpl s=new ProjetServiceImpl();
+		//s.listProjets();
+	}
+
 }

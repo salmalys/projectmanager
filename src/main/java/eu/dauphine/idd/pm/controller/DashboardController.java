@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import eu.dauphine.idd.pm.dao.impl.EtudiantDAOImpl;
+import eu.dauphine.idd.pm.dao.impl.ProjetDAOImpl;
 import eu.dauphine.idd.pm.model.Etudiant;
 import eu.dauphine.idd.pm.model.Formation;
 import eu.dauphine.idd.pm.model.Projet;
@@ -22,6 +24,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -57,6 +60,16 @@ public class DashboardController implements Initializable {
 	private BarChart<?, ?> home_chart;
 	@FXML
 	private AnchorPane tmp_home;
+	private ProjetDAOImpl p =new ProjetDAOImpl();
+	private EtudiantDAOImpl e=new EtudiantDAOImpl();
+	
+	public void home_countEtudiant() {
+		Count_totaletudiant.setText(String.valueOf(e.getTotalEtudiants()));
+	}
+	public void home_countProjet() {
+		count_totalprojet.setText(String.valueOf(p.getTotalProjets()));
+	}
+	
 
 	/**
 	 * *Partie 1:
@@ -250,7 +263,9 @@ public class DashboardController implements Initializable {
 				tmp_addformation, tmp_updateformation, IdFormation, Nomformation, Nomformation2, PromotionList2,
 				tmp_addEtudiant, tmp_btnEtudiant, tmp_updateEtudiant, btn_tmpBackEtudient2, btn_tmpaddEtudient,
 				btn_tmpbackEtudient, btn_tmpupdateEtudient, tmp_addProjet, tmpDeleteProjet, tmp_updateProjet,
-				back_projet, back_projet2, btn_ajoutProjet, btn_modifierProjet);
+				back_projet, back_projet2, btn_ajoutProjet, btn_modifierProjet, tableEtudiant, search_Etudiant);
+		home_countEtudiant();
+		home_countProjet();
 	}
 
 	/**
@@ -429,6 +444,58 @@ public class DashboardController implements Initializable {
 	@FXML
 	private TableColumn<Projet, String> col_idProjet;
 
+	private ProjetController projetC = new ProjetController();
+
+	@FXML
+	private void addProjet() {
+		projetC.addProjet(Idprojet, NomMatiereP, SujetProjet, dateRemisePorjet, col_idProjet, col_MatiereProjet,
+				col_DateRemiseProjet, col_SujetProjet, tableProjet);
+	}
+	@FXML
+	private void updateProjet() {
+		projetC.updateProjet(
+				Idprojet, NomMatiereP, SujetProjet, dateRemisePorjet, col_idProjet, col_MatiereProjet, col_DateRemiseProjet, col_SujetProjet, tableProjet);
+	}
+	@FXML
+	private void deleteProjet() {
+		projetC.deleteProjet(Idprojet, NomMatiereP, SujetProjet, dateRemisePorjet, col_idProjet, col_MatiereProjet, col_DateRemiseProjet, col_SujetProjet, tableProjet);
+	}
+	
+	public void selectProjet() {
+	    Projet projet = tableProjet.getSelectionModel().getSelectedItem();
+	    int num = tableProjet.getSelectionModel().getFocusedIndex();
+	    if ((num - 1) < -1) {
+	        return;
+	    }
+	    if (projet != null) {
+	        Idprojet.setText(String.valueOf(projet.getIdProjet()));
+	     
+			NomMatiereP.setText(projet.getNomMatiere());
+	        SujetProjet.setText(projet.getSujet());
+	        NomMatiereP2.setText(projet.getNomMatiere());
+	        SujetProjet2.setText(projet.getSujet());
+	        // Convertir la date de java.sql.Date à LocalDate pour l'DatePicker
+	     //   col_DateRemiseProjet.setVisible(((Date) projet.getDateRemiseRapport()).toLocalDate());
+	    }
+	}
+
+
+	@FXML
+	private void resetProjetFields() {
+		projetC.resetProjetField(Idprojet, NomMatiereP, SujetProjet, dateRemisePorjet);
+	}
+
+	@FXML
+	private void resetProjetFields2() {
+		projetC.resetProjetField(Idprojet, NomMatiereP2, SujetProjet2, dateRemisePorjet2);
+	}
+
+	@FXML
+	private void addProjetShow() {
+		projetC.addProjetShow(col_idProjet, col_MatiereProjet, col_DateRemiseProjet, col_SujetProjet, tableProjet);
+
+	}
+
 	/**
 	 * *Partie X: ************************Deconnexion et reglage de scene
 	 * dashboard***********************
@@ -514,6 +581,9 @@ public class DashboardController implements Initializable {
 		addPromotionList2();
 		fillFormationComboBox();
 		Affichersername();
+		addProjetShow();
+		home_countEtudiant();
+		home_countProjet();
 
 	}
 

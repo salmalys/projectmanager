@@ -21,6 +21,7 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 	private static final String SELECT_ALL_ETUDIANTS = "SELECT * FROM Etudiant";
 	private static final String UPDATE_ETUDIANT = "UPDATE Etudiant SET Nom = ?, Prenom = ?, ID_Formation = ? WHERE ID_Etudiant = ?";
 	private static final String DELETE_ETUDIANT_BY_ID = "DELETE FROM Etudiant WHERE ID_Etudiant = ?";
+	private static final String COUNT_NBETUDIANT = "SELECT COUNT(ID_Etudiant) AS totalEtudiants FROM Etudiant";
 
 	private FormationDAO formationDAO = DAOFactory.getFormationDAO();
 
@@ -82,7 +83,6 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 
 		Map<Etudiant, Integer> etudiantFormationMap = new HashMap<>();
 
-
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_ETUDIANTS);
 				ResultSet rs = preparedStatement.executeQuery()) {
@@ -93,22 +93,21 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 				String prenom = rs.getString("Prenom");
 				int idFormation = rs.getInt("ID_Formation");
 
-				//Formation formation = formationDAO.findById(idFormation); 
+				// Formation formation = formationDAO.findById(idFormation);
 				Etudiant etudiant = new Etudiant(idEtudiant, nom, prenom, null);
-	            etudiants.add(etudiant);
-	            etudiantFormationMap.put(etudiant, idFormation);
+				etudiants.add(etudiant);
+				etudiantFormationMap.put(etudiant, idFormation);
 
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		
-	    for (Etudiant etudiant : etudiants) {
-	        int idFormation = etudiantFormationMap.get(etudiant);
-	        Formation formation = formationDAO.findById(idFormation);
-	        etudiant.setFormation(formation);
-	    }
+		for (Etudiant etudiant : etudiants) {
+			int idFormation = etudiantFormationMap.get(etudiant);
+			Formation formation = formationDAO.findById(idFormation);
+			etudiant.setFormation(formation);
+		}
 
 		return etudiants;
 	}
@@ -169,10 +168,23 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 		return etudiant;
 	}
 
-	public static void main(String[] args) {
-		EtudiantDAOImpl s = new EtudiantDAOImpl();
-		 System.out.println(s.findAll());
-		 System.out.println(s.findById(1).toString());
+	public int getTotalEtudiants() {
+		int totalEtudiants = 0;
 
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(COUNT_NBETUDIANT);
+				ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				totalEtudiants = resultSet.getInt("totalEtudiants");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return totalEtudiants;
 	}
+
+	
 }

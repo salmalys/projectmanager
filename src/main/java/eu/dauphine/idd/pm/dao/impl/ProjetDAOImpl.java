@@ -1,4 +1,5 @@
 package eu.dauphine.idd.pm.dao.impl;
+
 import eu.dauphine.idd.pm.dao.ProjetDAO;
 
 import java.sql.Connection;
@@ -15,12 +16,13 @@ import javafx.collections.ObservableList;
 import java.sql.SQLException;
 
 public class ProjetDAOImpl implements ProjetDAO {
-	
+
 	private static final String INSERT_PROJET = "INSERT INTO Projet (Nom_Matiere, Sujet, Date_Remise_Prevue) VALUES (?, ?, ?)";
 	private static final String SELECT_PROJET_BY_ID = "SELECT * FROM Projet WHERE ID_Projet = ?";
 	private static final String SELECT_ALL_PROJETS = "SELECT * FROM Projet";
 	private static final String UPDATE_PROJET = "UPDATE Projet SET Nom_Matiere = ?, Sujet = ?, Date_Remise_Prevue = ? WHERE ID_Projet = ?";
 	private static final String DELETE_PROJET_BY_ID = "DELETE FROM Projet WHERE ID_Projet = ?";
+	private static final String COUNT_NBPROJET = "SELECT COUNT(ID_Projet) AS totalProjets FROM Projet";
 
 	private Connection getConnection() {
 		try {
@@ -30,7 +32,7 @@ public class ProjetDAOImpl implements ProjetDAO {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public void create(Projet projet) {
 		try (Connection connection = getConnection();
@@ -54,9 +56,8 @@ public class ProjetDAOImpl implements ProjetDAO {
 			e.printStackTrace();
 		}
 	}
-    
-    
-    @Override
+
+	@Override
 	public Projet findById(int id) {
 		Projet projet = null;
 		try (Connection connection = getConnection();
@@ -66,12 +67,12 @@ public class ProjetDAOImpl implements ProjetDAO {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			if (rs.next()) {
-				
+
 				String nomMatiere = rs.getString("Nom_Matiere");
 				String sujet = rs.getString("Sujet");
 				java.sql.Date date = rs.getDate("Date_Remise_Prevue");
-				
-				projet = new Projet(id,nomMatiere, sujet, date);
+
+				projet = new Projet(id, nomMatiere, sujet, date);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -88,12 +89,12 @@ public class ProjetDAOImpl implements ProjetDAO {
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while (rs.next()) {
-				
+
 				int id = rs.getInt("ID_Projet");
 				String nomMatiere = rs.getString("Nom_Matiere");
 				String sujet = rs.getString("Sujet");
 				java.sql.Date date = rs.getDate("Date_Remise_Prevue");
-				
+
 				Projet projet = new Projet(id, nomMatiere, sujet, date);
 				projets.add(projet);
 			}
@@ -119,7 +120,7 @@ public class ProjetDAOImpl implements ProjetDAO {
 			e.printStackTrace();
 		}
 	}
-    
+
 	@Override
 	public void deleteById(int id) {
 		try (Connection connection = getConnection();
@@ -136,35 +137,47 @@ public class ProjetDAOImpl implements ProjetDAO {
 	public void delete(Projet projet) {
 		deleteById(projet.getIdProjet());
 	}
-	
+
 	@Override
 	public Projet findByCourseSubject(String nomMatiere, String sujet) {
 		Projet projet = null;
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection
+						.prepareStatement("SELECT * FROM Projet WHERE Nom_Matiere = ? AND Sujet = ?")) {
+
+			preparedStatement.setString(1, nomMatiere);
+			preparedStatement.setString(2, sujet);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			if (rs.next()) {
+				int idProjet = rs.getInt("ID_Projet");
+				java.sql.Date date = rs.getDate("Date_Remise_Prevue");
+				projet = new Projet(idProjet, nomMatiere, sujet, date);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return projet;
+	}
+
+	public int getTotalProjets() {
+	    int totalProjets = 0;
+
 	    try (Connection connection = getConnection();
-	         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Projet WHERE Nom_Matiere = ? AND Sujet = ?")) {
+	         PreparedStatement preparedStatement = connection.prepareStatement(COUNT_NBPROJET);
+	         ResultSet resultSet = preparedStatement.executeQuery()) {
 
-	        preparedStatement.setString(1, nomMatiere);
-	        preparedStatement.setString(2, sujet);
-	        ResultSet rs = preparedStatement.executeQuery();
-
-	        if (rs.next()) {
-	            int idProjet = rs.getInt("ID_Projet");
-	            java.sql.Date date = rs.getDate("Date_Remise_Prevue");
-	            projet = new Projet(idProjet, nomMatiere, sujet, date);
+	        if (resultSet.next()) {
+	            totalProjets = resultSet.getInt("totalProjets");
 	        }
+
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    }
-	    return projet;
-	}
-	
-	public static void main(String[] args) {
-		ProjetDAOImpl s = new ProjetDAOImpl();
-		Date d=new Date(0);
-		//s.create(new Projet(1,"informatique","WEBDEV",d));
-	//	 System.out.println(s.findAll());
-		// System.out.println(s.findById(3).toString());
 
+	    return totalProjets;
 	}
+
+
 
 }

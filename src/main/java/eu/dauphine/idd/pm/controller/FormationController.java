@@ -1,6 +1,5 @@
 package eu.dauphine.idd.pm.controller;
 
-import eu.dauphine.idd.pm.service.EtudiantService;
 import eu.dauphine.idd.pm.service.FormationService;
 
 import eu.dauphine.idd.pm.service.ServiceFactory;
@@ -22,11 +21,12 @@ import javafx.scene.control.TextField;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import eu.dauphine.idd.pm.model.Etudiant;
 import eu.dauphine.idd.pm.model.Formation;
 
 public class FormationController {
 	private FormationService formationS = ServiceFactory.getFormationService();
-	//private EtudiantService etudiantS = ServiceFactory.getEtudiantService();
 
 	// methode(action) qui ajoute formtion dans l'interface graphique
 	public void addFormation(TextField IdFormation, TextField nomFormation, ComboBox<String> promotionList,
@@ -46,8 +46,6 @@ public class FormationController {
 					showAlert(AlertType.INFORMATION, "Success", "Formation added successfully!");
 					addformationshow(col_Idformation, col_Nomformation, col_promotion, tableFormation);
 					addformationReset2(IdFormation, nomFormation, promotionList);
-
-					SearchFormation(search_formation, tableFormation);
 
 					break;
 				case 1:
@@ -413,7 +411,8 @@ public class FormationController {
 			AnchorPane tmp_btnEtudiant, AnchorPane tmp_updateEtudiant, Button btn_tmpBackEtudient2,
 			Button btn_tmpaddEtudient, Button btn_tmpbackEtudient, Button btn_tmpupdateEtudient,
 			AnchorPane tmp_addProjet, AnchorPane tmpDeleteProjet, AnchorPane tmp_updateProjet, Button back_projet,
-			Button back_projet2, Button btn_Add_projet, Button btn_updateProjet) {
+			Button back_projet2, Button btn_Add_projet, Button btn_updateProjet, TableView<Etudiant> tableEtudiant,
+			TextField search_Etudiant) {
 		if (event.getSource() == home_btn) {
 			handleHomeButton(tmp_home, temp_formation, tmp_etudiant, tmp_binome, tmp_note, tmp_projet, home_btn,
 					binome_btn, etudiant_btn, projet_btn, note_btn, formation_btn);
@@ -421,8 +420,6 @@ public class FormationController {
 			handleFormationButton(tmp_home, temp_formation, tmp_etudiant, tmp_binome, tmp_note, tmp_projet,
 					tmp_btnformation, home_btn, binome_btn, etudiant_btn, projet_btn, note_btn, formation_btn,
 					PromotionList, search_formation, tableFormation);
-			SearchFormation(search_formation, tableFormation);
-			
 
 		} else if (event.getSource() == etudiant_btn) {
 			tmp_home.setVisible(false);
@@ -431,7 +428,7 @@ public class FormationController {
 			tmp_binome.setVisible(false);
 			tmp_note.setVisible(false);
 			tmp_projet.setVisible(false);
-		 
+			// etudiantS.searchEtudiant(search_Etudiant, tableEtudiant);
 
 			etudiant_btn.setStyle(
 					"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
