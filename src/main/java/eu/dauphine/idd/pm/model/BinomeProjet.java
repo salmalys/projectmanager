@@ -1,5 +1,6 @@
 package eu.dauphine.idd.pm.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class BinomeProjet {
@@ -69,8 +70,10 @@ public class BinomeProjet {
 
 	@Override
 	public String toString() {
+		SimpleDateFormat newFormatter = new SimpleDateFormat("dd-MM-yyyy");
+		String formattedDate = newFormatter.format(this.dateRemiseEffective);
 		return "Binome [Id = " + this.idBinome + ", membre1 = " + this.membre1.toString() + ", membre2 = "
-				+ this.membre2.toString() + ", projet = " + this.projet.toString() + ", dateRemiseEffective =" + this.dateRemiseEffective + "]";
+				+ this.membre2.toString() + ", projet = " + this.projet.toString() + ", dateRemiseEffective =" + formattedDate + "]";
 	}
 
 }

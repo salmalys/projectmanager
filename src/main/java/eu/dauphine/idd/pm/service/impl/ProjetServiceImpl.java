@@ -1,6 +1,8 @@
 package eu.dauphine.idd.pm.service.impl;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import eu.dauphine.idd.pm.dao.DAOFactory;
 import eu.dauphine.idd.pm.dao.ProjetDAO;
@@ -17,14 +19,21 @@ public class ProjetServiceImpl implements ProjetService {
 	}
 
 	@Override
-	public int createProjet(String nomMatiere, String sujet, Date dateRemise) {
+	public int createProjet(String nomMatiere, String sujet, String dateRemise) {
 		Projet existingProjet = projetDAO.findByCourseSubject(nomMatiere, sujet);
 
 		if (existingProjet != null) {
 			System.out.println("For this course: " + nomMatiere + " Project already exists with subject: " + sujet);
 			return 1;
 		} else {
-			Projet projet = new Projet(nomMatiere, sujet, dateRemise);
+			java.util.Date date = null;
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	        try {
+	            date = formatter.parse(dateRemise);
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	        }
+			Projet projet = new Projet(nomMatiere, sujet, date);
 			projetDAO.create(projet);
 			System.out.println("Project created successfully: " + projet.toString());
 			return 0;
@@ -40,20 +49,22 @@ public class ProjetServiceImpl implements ProjetService {
 	@Override
 	public ObservableList<Projet> listProjets() {
 		ObservableList<Projet> projets = projetDAO.findAll();
-		System.err.println(projets.toString());
 		return projets;
 	}
 
 	@Override
-	public void updateProjet(int id, String nomMatiere, String sujet, Date date) {
+	public void updateProjet(int id, String nomMatiere, String sujet, String dateRemise) {
+		java.util.Date date = null;
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            date = formatter.parse(dateRemise);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 		Projet projet = new Projet(id, nomMatiere, sujet, date);
 		projetDAO.update(projet);
 		System.out.println("Project with ID " + id + " successfully updated.");
 		System.out.println(projet.toString());
-	}
-	public static void main(String[] args) {
-		ProjetServiceImpl s=new ProjetServiceImpl();
-		//s.listProjets();
 	}
 
 }

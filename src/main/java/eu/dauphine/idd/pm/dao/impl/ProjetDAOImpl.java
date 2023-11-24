@@ -3,10 +3,12 @@ package eu.dauphine.idd.pm.dao.impl;
 import eu.dauphine.idd.pm.dao.ProjetDAO;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 import eu.dauphine.idd.pm.model.Projet;
@@ -24,6 +26,8 @@ public class ProjetDAOImpl implements ProjetDAO {
 	private static final String DELETE_PROJET_BY_ID = "DELETE FROM Projet WHERE ID_Projet = ?";
 	private static final String COUNT_NBPROJET = "SELECT COUNT(ID_Projet) AS totalProjets FROM Projet";
 
+	private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	
 	private Connection getConnection() {
 		try {
 			return DatabaseConnection.getInstance().getConnection();
@@ -42,8 +46,9 @@ public class ProjetDAOImpl implements ProjetDAO {
 
 			preparedStatement.setString(1, projet.getNomMatiere());
 			preparedStatement.setString(2, projet.getSujet());
-			java.sql.Date date = new java.sql.Date(projet.getDateRemiseRapport().getTime());
-			preparedStatement.setDate(3, date);
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			String formattedDate = formatter.format(projet.getDateRemiseRapport());
+			preparedStatement.setString(3, formattedDate);
 
 			preparedStatement.executeUpdate();
 
@@ -70,13 +75,15 @@ public class ProjetDAOImpl implements ProjetDAO {
 
 				String nomMatiere = rs.getString("Nom_Matiere");
 				String sujet = rs.getString("Sujet");
-				java.sql.Date date = rs.getDate("Date_Remise_Prevue");
-
+				Date date = formatter.parse(rs.getString("Date_Remise_Prevue"));
+				
 				projet = new Projet(id, nomMatiere, sujet, date);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}catch (ParseException e) {
+            e.printStackTrace();
+        }
 		return projet;
 	}
 
@@ -93,14 +100,16 @@ public class ProjetDAOImpl implements ProjetDAO {
 				int id = rs.getInt("ID_Projet");
 				String nomMatiere = rs.getString("Nom_Matiere");
 				String sujet = rs.getString("Sujet");
-				java.sql.Date date = rs.getDate("Date_Remise_Prevue");
-
+				Date date = formatter.parse(rs.getString("Date_Remise_Prevue"));
 				Projet projet = new Projet(id, nomMatiere, sujet, date);
 				projets.add(projet);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		catch (ParseException e) {
+            e.printStackTrace();
+        }
 		return projets;
 	}
 
@@ -111,8 +120,9 @@ public class ProjetDAOImpl implements ProjetDAO {
 
 			preparedStatement.setString(1, projet.getNomMatiere());
 			preparedStatement.setString(2, projet.getSujet());
-			java.sql.Date date = new java.sql.Date(projet.getDateRemiseRapport().getTime());
-			preparedStatement.setDate(3, date);
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			String formattedDate = formatter.format(projet.getDateRemiseRapport());
+			preparedStatement.setString(3, formattedDate);
 			preparedStatement.setInt(4, projet.getIdProjet());
 
 			preparedStatement.executeUpdate();
@@ -151,12 +161,14 @@ public class ProjetDAOImpl implements ProjetDAO {
 
 			if (rs.next()) {
 				int idProjet = rs.getInt("ID_Projet");
-				java.sql.Date date = rs.getDate("Date_Remise_Prevue");
+				Date date = formatter.parse(rs.getString("Date_Remise_Prevue"));
 				projet = new Projet(idProjet, nomMatiere, sujet, date);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}		catch (ParseException e) {
+            e.printStackTrace();
+        }
 		return projet;
 	}
 

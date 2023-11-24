@@ -36,6 +36,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 
 	@Override
 	public void deleteEtudiantById(int id) {
+		//Faire un select by ID pour verifier que l'etudiant a supprimer existe bien 
 		etudiantDAO.deleteById(id);
 		System.out.println("Student with ID " + id + " succesfully removed.");
 	}

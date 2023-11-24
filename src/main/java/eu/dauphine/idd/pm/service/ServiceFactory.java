@@ -7,6 +7,8 @@ public class ServiceFactory {
     private static FormationService formationService;
     private static EtudiantService etudiantService;
     private static ProjetService projetService;
+    private static BinomeProjetService binomeProjetService;
+    private static NotesService notesService;
 
     public static FormationService getFormationService() {
         if (formationService == null) {
@@ -27,5 +29,19 @@ public class ServiceFactory {
         	projetService = new ProjetServiceImpl();
         }
         return projetService;
+    }
+    
+    public static BinomeProjetService getBinomeProjetService() {
+        if (binomeProjetService == null) {
+        	binomeProjetService = new BinomeProjetServiceImpl();
+        }
+        return binomeProjetService;
+    }
+    
+    public static NotesService getNotesService() {
+        if (notesService == null) {
+        	notesService = new NotesServiceImpl();
+        }
+        return notesService;
     }
 }
