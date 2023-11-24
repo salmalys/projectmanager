@@ -1,5 +1,6 @@
 package eu.dauphine.idd.pm.model;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Projet {
@@ -58,7 +59,9 @@ public class Projet {
 
 	@Override
 	public String toString() {
+		SimpleDateFormat newFormatter = new SimpleDateFormat("dd-MM-yyyy");
+		String formattedDate = newFormatter.format(this.dateRemiseRapport);
 		return "Projet [Id =" + this.idProjet + ", nomMatiere =" + this.nomMatiere + ", Sujet =" + this.sujet
-				+ ", dateRemiseRapport =" + this.dateRemiseRapport + "]";
+				+ ", dateRemiseRapport =" + formattedDate + "]";
 	}
 }

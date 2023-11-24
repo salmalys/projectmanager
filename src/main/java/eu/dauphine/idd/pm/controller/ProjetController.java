@@ -41,7 +41,7 @@ public class ProjetController implements Initializable {
 			} else {
 
 				// Call the ProjetService to add the project
-				int result = projetS.createProjet(nomMatiere, sujet, dateRemise);
+				int result = projetS.createProjet(nomMatiere, sujet, null);
 
 				// Handle the result
 				switch (result) {
@@ -108,7 +108,7 @@ public class ProjetController implements Initializable {
 
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.get().equals(ButtonType.OK)) {
-					projetS.updateProjet(Integer.valueOf(idProjetStr), matiere, sujet, dateRemise);
+					//projetS.updateProjet(Integer.valueOf(idProjetStr), matiere, sujet, dateRemise);
 
 					showAlert(AlertType.INFORMATION, "Information Message", "Projet Updated successfully!");
 
