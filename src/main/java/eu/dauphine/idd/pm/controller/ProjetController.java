@@ -78,8 +78,7 @@ public class ProjetController implements Initializable {
 		col_DateRemiseProjet.toString();
 		col_idProjet.setCellValueFactory(new PropertyValueFactory<>("idProjet"));
 		col_MatiereProjet.setCellValueFactory(new PropertyValueFactory<>("nomMatiere"));
-		// col_DateRemiseProjet.setCellValueFactory(new
-		// PropertyValueFactory<>("dateRemiseRapport"));
+		 col_DateRemiseProjet.setCellValueFactory(new PropertyValueFactory<>("dateRemiseRapport"));
 		col_SujetProjet.setCellValueFactory(new PropertyValueFactory<>("sujet"));
 
 		// Affichage des projets dans le tableau

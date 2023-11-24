@@ -1,5 +1,6 @@
 package eu.dauphine.idd.pm.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.Optional;
@@ -30,6 +31,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -60,16 +62,16 @@ public class DashboardController implements Initializable {
 	private BarChart<?, ?> home_chart;
 	@FXML
 	private AnchorPane tmp_home;
-	private ProjetDAOImpl p =new ProjetDAOImpl();
-	private EtudiantDAOImpl e=new EtudiantDAOImpl();
-	
+	private ProjetDAOImpl p = new ProjetDAOImpl();
+	private EtudiantDAOImpl e = new EtudiantDAOImpl();
+
 	public void home_countEtudiant() {
 		Count_totaletudiant.setText(String.valueOf(e.getTotalEtudiants()));
 	}
+
 	public void home_countProjet() {
 		count_totalprojet.setText(String.valueOf(p.getTotalProjets()));
 	}
-	
 
 	/**
 	 * *Partie 1:
@@ -78,79 +80,10 @@ public class DashboardController implements Initializable {
 	 **/
 
 	@FXML
-	private Button AddFormation;
-
-	@FXML
-	private Button Clearformation;
-
-	@FXML
-	private Button Clearformation2;
-
-	@FXML
-	private TextField IdFormation;
-
-	@FXML
-	private TextField Nomformation;
-
-	@FXML
-	private ComboBox<String> PromotionList;
-
-	@FXML
-	private TextField Nomformation2;
-
-	@FXML
-	private ComboBox<String> PromotionList2;
-
-	@FXML
-	private Button RemoveFormation;
-
-	@FXML
-	private Button Updateformation;
-
-	@FXML
-	private TableColumn<Formation, Integer> col_Idformation;
-
-	@FXML
-	private TableColumn<Formation, String> col_Nomformation;
-
-	@FXML
-	private TableColumn<Formation, String> col_promotion;
-
-	@FXML
-	private ComboBox<?> filtre_formation;
-
-	@FXML
 	private Button formation_btn;
 
 	@FXML
-	private TextField search_formation;
-
-	@FXML
-	private TableView<Formation> tableFormation;
-
-	@FXML
 	private AnchorPane temp_formation;
-
-	@FXML
-	private Button btn_tmpadd;
-
-	@FXML
-	private Button btn_tmpupdate;
-
-	@FXML
-	private AnchorPane tmp_updateformation;
-
-	@FXML
-	private AnchorPane tmp_addformation;
-
-	@FXML
-	private AnchorPane tmp_btnformation;
-
-	@FXML
-	private Button Back_formation;
-
-	@FXML
-	private Button Backformation2;
 
 	@FXML
 	private Button binome_btn;
@@ -176,94 +109,15 @@ public class DashboardController implements Initializable {
 	@FXML
 	private AnchorPane tmp_binome;
 
-	@FXML
-	private Button Printformation;
-
 	private FormationController formationController = new FormationController();
-
-	private double x = 0;
-	private double y = 0;
-
-	@FXML
-	public void AddFormation() {
-		formationController.addFormation(IdFormation, Nomformation2, PromotionList2, search_formation, col_Idformation,
-				col_Nomformation, col_promotion, tableFormation);
-	}
-
-	@FXML
-	public void updateFormation() {
-		formationController.updateFormation(IdFormation, Nomformation, PromotionList, search_formation, col_Idformation,
-				col_Nomformation, col_promotion, tableFormation);
-	}
-
-	@FXML
-	public void deleteFormation() {
-		formationController.deleteFormation(IdFormation, Nomformation, PromotionList, search_formation, col_Idformation,
-				col_Nomformation, col_promotion, tableFormation);
-	}
-
-	@FXML
-	public void SearchFormation() {
-		formationController.SearchFormation(search_formation, tableFormation);
-	}
-
-	@FXML
-	public void refreshData() {
-		formationController.refreshData(col_Idformation, col_Nomformation, col_promotion, tableFormation);
-	}
-
-	public void addformationshow() {
-		formationController.addformationshow(col_Idformation, col_Nomformation, col_promotion, tableFormation);
-
-	}
-
-	public void selectFormation() {
-		Formation formation = tableFormation.getSelectionModel().getSelectedItem();
-		int num = tableFormation.getSelectionModel().getFocusedIndex();
-		if ((num - 1) < -1) {
-			return;
-		}
-		if (formation != null) {
-			IdFormation.setText(String.valueOf(formation.getIdFormation()));
-			Nomformation.setText(formation.getNom());
-			Nomformation2.setText(formation.getNom());
-		}
-
-	}
-
-	@FXML
-	public void addformationReset() {
-		formationController.addformationReset2(IdFormation, Nomformation, PromotionList);
-
-	}
-
-	@FXML
-	public void addformationReset2() {
-		formationController.addformationReset2(IdFormation, Nomformation2, PromotionList2);
-
-	}
-
-	@FXML
-	public void addPromotionList() {
-		formationController.addPromotionList(PromotionList);
-
-	}
-
-	@FXML
-	public void addPromotionList2() {
-		formationController.addPromotionList(PromotionList2);
-
-	}
 
 	@FXML
 	public void tmpSwitch(ActionEvent event) {
 		formationController.tmpSwitch(event, tmp_home, temp_formation, tmp_etudiant, tmp_binome, tmp_note, tmp_projet,
-				home_btn, binome_btn, etudiant_btn, projet_btn, note_btn, formation_btn, btn_tmpadd, Back_formation,
-				btn_tmpupdate, Backformation2, tmp_btnformation, PromotionList, search_formation, tableFormation,
-				tmp_addformation, tmp_updateformation, IdFormation, Nomformation, Nomformation2, PromotionList2,
-				tmp_addEtudiant, tmp_btnEtudiant, tmp_updateEtudiant, btn_tmpBackEtudient2, btn_tmpaddEtudient,
-				btn_tmpbackEtudient, btn_tmpupdateEtudient, tmp_addProjet, tmpDeleteProjet, tmp_updateProjet,
-				back_projet, back_projet2, btn_ajoutProjet, btn_modifierProjet, tableEtudiant, search_Etudiant);
+				home_btn, binome_btn, etudiant_btn, projet_btn, note_btn, formation_btn, tmp_addEtudiant,
+				tmp_btnEtudiant, tmp_updateEtudiant, btn_tmpBackEtudient2, btn_tmpaddEtudient, btn_tmpBackEtudient2,
+				btn_tmpupdateEtudient, tmp_addProjet, tmpDeleteProjet, tmp_updateProjet, back_projet, back_projet2,
+				back_projet, projet_btn, tableEtudiant, search_Etudiant);
 		home_countEtudiant();
 		home_countProjet();
 	}
@@ -451,34 +305,37 @@ public class DashboardController implements Initializable {
 		projetC.addProjet(Idprojet, NomMatiereP, SujetProjet, dateRemisePorjet, col_idProjet, col_MatiereProjet,
 				col_DateRemiseProjet, col_SujetProjet, tableProjet);
 	}
+
 	@FXML
 	private void updateProjet() {
-		projetC.updateProjet(
-				Idprojet, NomMatiereP, SujetProjet, dateRemisePorjet, col_idProjet, col_MatiereProjet, col_DateRemiseProjet, col_SujetProjet, tableProjet);
-	}
-	@FXML
-	private void deleteProjet() {
-		projetC.deleteProjet(Idprojet, NomMatiereP, SujetProjet, dateRemisePorjet, col_idProjet, col_MatiereProjet, col_DateRemiseProjet, col_SujetProjet, tableProjet);
-	}
-	
-	public void selectProjet() {
-	    Projet projet = tableProjet.getSelectionModel().getSelectedItem();
-	    int num = tableProjet.getSelectionModel().getFocusedIndex();
-	    if ((num - 1) < -1) {
-	        return;
-	    }
-	    if (projet != null) {
-	        Idprojet.setText(String.valueOf(projet.getIdProjet()));
-	     
-			NomMatiereP.setText(projet.getNomMatiere());
-	        SujetProjet.setText(projet.getSujet());
-	        NomMatiereP2.setText(projet.getNomMatiere());
-	        SujetProjet2.setText(projet.getSujet());
-	        // Convertir la date de java.sql.Date à LocalDate pour l'DatePicker
-	     //   col_DateRemiseProjet.setVisible(((Date) projet.getDateRemiseRapport()).toLocalDate());
-	    }
+		projetC.updateProjet(Idprojet, NomMatiereP, SujetProjet, dateRemisePorjet, col_idProjet, col_MatiereProjet,
+				col_DateRemiseProjet, col_SujetProjet, tableProjet);
 	}
 
+	@FXML
+	private void deleteProjet() {
+		projetC.deleteProjet(Idprojet, NomMatiereP, SujetProjet, dateRemisePorjet, col_idProjet, col_MatiereProjet,
+				col_DateRemiseProjet, col_SujetProjet, tableProjet);
+	}
+
+	public void selectProjet() {
+		Projet projet = tableProjet.getSelectionModel().getSelectedItem();
+		int num = tableProjet.getSelectionModel().getFocusedIndex();
+		if ((num - 1) < -1) {
+			return;
+		}
+		if (projet != null) {
+			Idprojet.setText(String.valueOf(projet.getIdProjet()));
+
+			NomMatiereP.setText(projet.getNomMatiere());
+			SujetProjet.setText(projet.getSujet());
+			NomMatiereP2.setText(projet.getNomMatiere());
+			SujetProjet2.setText(projet.getSujet());
+			// Convertir la date de java.sql.Date à LocalDate pour l'DatePicker
+			// col_DateRemiseProjet.setVisible(((Date)
+			// projet.getDateRemiseRapport()).toLocalDate());
+		}
+	}
 
 	@FXML
 	private void resetProjetFields() {
@@ -512,6 +369,9 @@ public class DashboardController implements Initializable {
 	private Button logout;
 	@FXML
 	private Button minimize;
+
+	private double x = 0;
+	private double y = 0;
 
 	// fonction logout permet de revenir a la scene parent, apres deconnexion
 	@FXML
@@ -572,13 +432,13 @@ public class DashboardController implements Initializable {
 	 * ************************InitialisationActionUI****************************
 	 * 
 	 **/
+	@FXML
+	private BinomeConrolleur binomeController;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		addformationshow();
 		addEtudiantshow();
-		addPromotionList();
-		addPromotionList2();
 		fillFormationComboBox();
 		Affichersername();
 		addProjetShow();
