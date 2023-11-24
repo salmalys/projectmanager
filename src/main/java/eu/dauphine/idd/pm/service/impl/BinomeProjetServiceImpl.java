@@ -68,4 +68,6 @@ public class BinomeProjetServiceImpl implements BinomeProjetService {
         System.out.println("BinomeProjet with ID " + idBinome + " successfully updated.");
         System.out.println(binomeProjet.toString());
     }
+    
+    //Count
 }

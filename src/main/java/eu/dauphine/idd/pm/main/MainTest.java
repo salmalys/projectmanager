@@ -1,17 +1,10 @@
 package eu.dauphine.idd.pm.main;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.sql.Date;
-
-import eu.dauphine.idd.pm.dao.DAOFactory;
-import eu.dauphine.idd.pm.dao.EtudiantDAO;
-import eu.dauphine.idd.pm.dao.FormationDAO;
-import eu.dauphine.idd.pm.dao.impl.EtudiantDAOImpl;
 import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 import eu.dauphine.idd.pm.model.BinomeProjet;
 import eu.dauphine.idd.pm.model.Formation;
 import eu.dauphine.idd.pm.service.BinomeProjetService;
+import eu.dauphine.idd.pm.service.FormationService;
 import eu.dauphine.idd.pm.service.ProjetService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
 
@@ -27,15 +20,25 @@ public class MainTest {
 		//Injection du chemin de la BDD pour la connexion
 		DatabaseConnection.setDatabasePath(dbPath);
 		
+		FormationService f = ServiceFactory.getFormationService();
+		System.out.println(f.listFormations());
+		f.createFormation("CAP", "Initiale");
+		f.deleteFormationById(7);
+		System.out.println(f.listFormations());
+		
+		/*
 		ProjetService p  = ServiceFactory.getProjetService();
 		System.out.println(p.listProjets());
 		p.createProjet("Programmation C", "Algorithme du PageRank","2024-05-15");
 		p.deleteProjetById(3);
 		System.out.println(p.listProjets());
 		p.updateProjet(1, "POA" , "Gestion de Projets", "2023-12-01");
+		*/
 		
+		/*
 		BinomeProjetService b = ServiceFactory.getBinomeProjetService();
 		System.out.println(b.listBinomeProjets());
+		*/
 		
 	}
 }

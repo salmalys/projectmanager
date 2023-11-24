@@ -38,6 +38,7 @@ public class FormationServiceImpl implements FormationService{
 
 	@Override
 	public void deleteFormationById(int id) {
+		//Verifier que la formation existe
 		formationDAO.deleteById(id);
 		System.out.println("Formation with ID " + id + " succesfully removed.");
 	}

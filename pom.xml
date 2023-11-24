@@ -128,7 +128,7 @@
 								<!-- add Main-Class to manifest file -->
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>eu.dauphine.idd.pm.controller.Main</mainClass>
+									<mainClass>eu.dauphine.idd.pm.main.Main</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
