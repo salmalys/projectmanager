@@ -2,9 +2,6 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import java.lang.String?>
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -13,114 +10,140 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane  xmlns:fx="http://javafx.com/fxml"
-	fx:controller="eu.dauphine.idd.pm.controller.BinomeConrolleur">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="eu.dauphine.idd.pm.controller.BinomeController">
 	<children>
 
-		<AnchorPane layoutX="6.0" layoutY="5.0" prefHeight="541.0"
-			prefWidth="885.0" stylesheets="@../css/dashboard.css">
+		<AnchorPane layoutX="6.0" layoutY="5.0" prefHeight="541.0" prefWidth="885.0" stylesheets="@../css/dashboard.css">
 			<styleClass>
 				<String fx:value="shadow" />
 				<String fx:value="white-bg" />
 			</styleClass>
 			<children>
-				<AnchorPane layoutX="10.0" layoutY="11.0"
-					prefHeight="521.0" prefWidth="544.0"
-					stylesheets="@../css/dashboard.css">
+				<AnchorPane layoutX="10.0" layoutY="11.0" prefHeight="521.0" prefWidth="544.0" stylesheets="@../css/dashboard.css">
 					<styleClass>
 						<String fx:value="white-bg" />
 						<String fx:value="shadow" />
 					</styleClass>
 					<children>
-						<TableView layoutX="2.0" layoutY="108.0"
-							prefHeight="405.0" prefWidth="537.0">
+						<TableView fx:id="tableBinome" layoutX="2.0" layoutY="108.0" prefHeight="405.0" prefWidth="537.0">
 							<columns>
-								<TableColumn prefWidth="68.00001525878906"
-									text="ID Binome" />
-								<TableColumn prefWidth="138.0" text=" Etudiant1" />
-								<TableColumn prefWidth="141.99996948242188"
-									text=" Etudiant2" />
-								<TableColumn prefWidth="94.0" text="Sujet Projet" />
-								<TableColumn prefWidth="92.66668701171875"
-									text="Nom Matiere" />
+								<TableColumn fx:id="col_idBinome" prefWidth="64.00000190734863" text="ID Binome" />
+								<TableColumn fx:id="col_Etudiant1" prefWidth="105.99999237060547" text=" Etudiant1" />
+								<TableColumn fx:id="col_Etudiant2" prefWidth="115.33335876464844" text=" Etudiant2" />
+								<TableColumn fx:id="col_Sujtprojet" prefWidth="90.6666259765625" text="Sujet Projet" />
+								<TableColumn fx:id="col_NomMatiere" prefWidth="80.66668701171875" text="Nom Matiere" />
+                        <TableColumn fx:id="col_DateRemiseProjet" prefWidth="80.66668701171875" text="DateRemise" />
 							</columns>
 						</TableView>
-						<Button layoutX="462.0" layoutY="64.0"
-							mnemonicParsing="false" prefHeight="27.0" prefWidth="67.0"
-							styleClass="update-btn" stylesheets="@../css/dashboard.css">
+						<Button fx:id="RefreshBinome" layoutX="462.0" layoutY="64.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="67.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
 							<graphic>
-								<FontAwesomeIconView fill="WHITE"
-									glyphName="REFRESH" size="1.5em" />
+								<FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="1.5em" />
 							</graphic>
 						</Button>
-						<TextField layoutX="14.0" layoutY="14.0"
-							prefHeight="25.0" prefWidth="293.0" styleClass="search"
-							stylesheets="@../css/dashboard.css" />
-						<FontAwesomeIconView glyphName="SEARCH"
-							layoutX="20.0" layoutY="33.0" size="1.5em" />
-						<ComboBox layoutX="66.0" layoutY="63.0" prefWidth="150.0"
-							promptText="Select" styleClass="textfield"
-							stylesheets="@../css/dashboard.css" />
-						<Label layoutX="16.0" layoutY="67.0" prefWidth="42.0"
-							text="Filtre :">
+						<TextField fx:id="search_Binome" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
+						<FontAwesomeIconView glyphName="SEARCH" layoutX="20.0" layoutY="33.0" size="1.5em" />
+						<ComboBox layoutX="66.0" layoutY="63.0" prefWidth="150.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<Label layoutX="16.0" layoutY="67.0" prefWidth="42.0" text="Filtre :">
 							<font>
 								<Font name="System Bold" size="14.0" />
 							</font>
 						</Label>
 					</children>
 				</AnchorPane>
-				<AnchorPane layoutX="562.0" layoutY="11.0"
-					prefHeight="521.0" prefWidth="317.0"
-					stylesheets="@../css/dashboard.css">
+				<AnchorPane fx:id="tmp_DeleteBinome" layoutX="562.0" layoutY="11.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css" visible="false">
 					<styleClass>
 						<String fx:value="white-bg" />
 						<String fx:value="shadow" />
 					</styleClass>
 					<children>
-						<Label layoutX="54.0" layoutY="14.0"
-							text="Ajouter un Binome">
+						<Label layoutX="28.0" layoutY="14.0" text="Supprimer un Binome">
 							<font>
 								<Font name="Tahoma Bold" size="24.0" />
 							</font>
 						</Label>
-						<Label layoutX="26.0" layoutY="98.0" text="ID Binome :" />
-						<TextField fx:id="id_binome" layoutX="92.0"
-							layoutY="94.0" styleClass="textfield"
-							stylesheets="@../css/dashboard.css" />
-						<ComboBox layoutX="92.0" layoutY="168.0"
-							prefWidth="150.0" promptText="NOM-PRENOM" styleClass="textfield"
-							stylesheets="@../css/dashboard.css" />
-						<Label layoutX="26.0" layoutY="172.0" text="Etudiant1 :" />
-						<ComboBox layoutX="92.0" layoutY="226.0"
-							prefWidth="150.0" promptText="NOM-PRENOM" styleClass="textfield"
-							stylesheets="@../css/dashboard.css" />
-						<Label layoutX="26.0" layoutY="230.0" text="Etudiant2 :" />
-						<ComboBox layoutX="92.0" layoutY="283.0"
-							prefWidth="150.0" promptText="SUJET-NOMMatiere"
-							styleClass="textfield" stylesheets="@../css/dashboard.css" />
-						<Label layoutX="38.0" layoutY="287.0" text="Projet :" />
-						<Button layoutX="12.0" layoutY="435.0"
-							mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0"
-							styleClass="add-btn" stylesheets="@../css/dashboard.css"
-							text="Add" />
-						<Button layoutX="92.0" layoutY="435.0"
-							mnemonicParsing="false" styleClass="update-btn"
-							stylesheets="@../css/dashboard.css" text="Update" />
-						<Button layoutX="167.0" layoutY="435.0"
-							mnemonicParsing="false" styleClass="delete-btn"
-							stylesheets="@../css/dashboard.css" text="Delete" />
-						<Button layoutX="236.0" layoutY="435.0"
-							mnemonicParsing="false" onAction="#rest" styleClass="clear-btn"
-							stylesheets="@../css/dashboard.css" text="Clear" />
+						<Label layoutX="41.0" layoutY="125.0" text="ID Binome :">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+						<TextField fx:id="id_binome" layoutX="124.0" layoutY="123.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<Button fx:id="btn_addBinome" layoutX="24.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleBtnTmpAddBinome" prefHeight="30.0" prefWidth="120.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter Binome" />
+						<Button fx:id="btn_updateBinome" layoutX="167.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleBtnTmpUpdateBinome" prefHeight="30.0" prefWidth="120.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier Binome" />
+						<Button layoutX="43.0" layoutY="271.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Delete" />
+						<Button layoutX="197.0" layoutY="271.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                  <Button fx:id="btn_RemisBinome" layoutX="103.0" layoutY="444.0" mnemonicParsing="false" onAction="#handleBtnTmpRemiseProjet" prefHeight="30.0" prefWidth="111.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Remise Projet" />
 					</children>
 				</AnchorPane>
+            <AnchorPane fx:id="tmp_addBinome" layoutX="564.0" layoutY="11.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css" visible="false">
+               <styleClass>
+                  <String fx:value="shadow" />
+                  <String fx:value="white-bg" />
+               </styleClass>
+               <children>
+                  <Label layoutX="46.0" layoutY="14.0" text="Ajouter un Binome">
+                     <font>
+                        <Font name="Tahoma Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="54.0" layoutY="343.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="71.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="ADD" />
+                  <Button layoutX="205.0" layoutY="343.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                  <Button fx:id="Back_Binome1" layoutX="242.0" layoutY="477.0" mnemonicParsing="false" onAction="#handleBackBinome" prefHeight="30.0" prefWidth="60.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="BACK" />
+                  <ComboBox fx:id="Etudiant1List" layoutX="100.0" layoutY="92.0" prefWidth="150.0" promptText="NOM-PRENOM" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                  <Label layoutX="18.0" layoutY="95.0" text="Etudiant1 :" />
+      						<ComboBox fx:id="Etudiant2List" layoutX="100.0" layoutY="162.0" prefWidth="150.0" promptText="NOM-PRENOM" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+      						<Label layoutX="18.0" layoutY="165.0" text="Etudiant2 :" />
+                  <ComboBox fx:id="Projet" layoutX="100.0" layoutY="227.0" prefWidth="150.0" promptText="NOM-PRENOM" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                  <Label layoutX="35.0" layoutY="230.0" text="Projet :" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="tmp_updateBinome" layoutX="559.0" layoutY="9.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css" visible="false">
+               <styleClass>
+                  <String fx:value="shadow" />
+                  <String fx:value="white-bg" />
+               </styleClass>
+               <children>
+                  <Label layoutX="46.0" layoutY="14.0" text="Modifier un Binome">
+                     <font>
+                        <Font name="Tahoma Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="Etudiant1List2" layoutX="118.0" layoutY="108.0" prefWidth="150.0" promptText="NOM-PRENOM" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                  <ComboBox fx:id="Etudiant2List2" layoutX="118.0" layoutY="187.0" prefWidth="150.0" promptText="NOM-PRENOM" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                  <ComboBox fx:id="Projet2" layoutX="121.0" layoutY="263.0" prefWidth="150.0" promptText="NOM-PRENOM" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                  <Label layoutX="26.0" layoutY="111.0" text="Etudiant1 :" />
+                  <Label layoutX="26.0" layoutY="190.0" text="Etudiant2 :" />
+                  <Label layoutX="46.0" layoutY="266.0" text="Projet :" />
+                  <Button layoutX="47.0" layoutY="357.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="71.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Update" />
+                  <Button layoutX="193.0" layoutY="357.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="71.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                  <Button fx:id="Back_Binome2" layoutX="246.0" layoutY="477.0" mnemonicParsing="false" onAction="#handleBackBinome" prefHeight="30.0" prefWidth="57.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="BACK" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="tmp_RemisBinome" layoutX="562.0" layoutY="11.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css">
+               <styleClass>
+                  <String fx:value="shadow" />
+                  <String fx:value="white-bg" />
+               </styleClass>
+               <children>
+                  <Label layoutX="42.0" layoutY="154.0" text="ID Binome :">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="Id_Binome2" layoutX="129.0" layoutY="152.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                  <Label layoutX="41.0" layoutY="14.0" text="Ajoute date Remise &#10;     Projet Binome&#10;">
+                     <font>
+                        <Font name="Tahoma Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="DateRemise" layoutX="129.0" layoutY="240.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                  <Label layoutX="8.0" layoutY="243.0" prefHeight="17.0" prefWidth="111.0" text="Date Remise Projet : " />
+                  <Button layoutX="23.0" layoutY="347.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="136.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="UPDATE DATE" />
+                  <Button layoutX="215.0" layoutY="347.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="71.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                  <Button fx:id="Back_Binome3" layoutX="242.0" layoutY="471.0" mnemonicParsing="false" onAction="#handleBackBinome" prefHeight="30.0" prefWidth="60.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="BACK" />
+               </children>
+            </AnchorPane>
 			</children>
 		</AnchorPane>
 	</children>
 </AnchorPane>
-

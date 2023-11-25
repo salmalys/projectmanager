@@ -109,10 +109,10 @@ public class FormationController implements Initializable {
 
 	// methode(action) qui ajoute formtion dans l'interface graphique
 	@FXML
-	public void addFormation( ) {
+	public void addFormation() {
 		try {
-			String nom = Nomformation.getText();
-			String promotion = PromotionList.getSelectionModel().getSelectedItem();
+			String nom = Nomformation2.getText();
+			String promotion = PromotionList2.getSelectionModel().getSelectedItem();
 
 			if (!isInputValid(nom, promotion)) {
 				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
@@ -143,8 +143,10 @@ public class FormationController implements Initializable {
 	}
 
 	// methode(action) qui modifier formtion dans l'interface graphique
+	// 1 probleme a regler on doit avoir id formation pour chaque nom et promotion
+	// correspoen
 	@FXML
-	public void updateFormation( ) {
+	public void updateFormation() {
 		try {
 			String nom = Nomformation.getText();
 			String promotion = PromotionList.getSelectionModel().getSelectedItem();
@@ -154,23 +156,24 @@ public class FormationController implements Initializable {
 			if (!isInputValid(nom, promotion)) {
 				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
 
-			} else {
+			} else if (!IdFormatio.isEmpty()) {
 				alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Confirmation Message");
 				alert.setHeaderText(null);
 				alert.setContentText("Are you sure want to Update ID Formation : " + IdFormatio);
 
 				Optional<ButtonType> option = alert.showAndWait();
-				if (option.get().equals(ButtonType.OK)) {
+				if (option.isPresent() && option.get().equals(ButtonType.OK)) {
+
 					formationS.update(Integer.valueOf(IdFormatio), nom, promotion);
 
 					showAlert(AlertType.INFORMATION, "Information Message", "Formation Updated successfully!");
 
 					addformationshow();
 					addformationReset2();
-					SearchFormation();
-
 				}
+			} else {
+				showAlert(AlertType.ERROR, "Error Message", "ID Formation cannot be empty Select IDformation in table");
 			}
 
 		} catch (Exception e) {
@@ -217,7 +220,7 @@ public class FormationController implements Initializable {
 	// graphique
 	public boolean isInputValid(String nom, String promotion) {
 
-		if (promotion == null || promotion.isEmpty() || nom.isEmpty()) {
+		if (promotion == null || promotion.isEmpty() || nom.isEmpty() || nom == null) {
 			showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
 			return false;
 		}
@@ -234,10 +237,10 @@ public class FormationController implements Initializable {
 	}
 
 	// Liste element de formation
-	private ObservableList<Formation> addformation;
+	private ObservableList<Formation> addformation = FXCollections.observableArrayList();
 
 	// fonction qui affiche le tableau de formation dans l'interface graphique
-	
+
 	public void addformationshow() {
 		addformation = formationS.listFormations();
 
@@ -251,7 +254,7 @@ public class FormationController implements Initializable {
 
 	// methode qui relier l'action dans intergace graphique avec le button clear
 	@FXML
-	public void addformationReset2( ) {
+	public void addformationReset2() {
 		IdFormation.setText("");
 		Nomformation2.setText("");
 		PromotionList2.getSelectionModel().clearSelection();
@@ -270,31 +273,31 @@ public class FormationController implements Initializable {
 	// fonction qui permet de chercher et filter le tableau de formation dans GUI
 	@FXML
 	public void SearchFormation() {
-		
-//		FilteredList<Formation> filter = new FilteredList<>(addformation, e -> true);
-//		search_formation.textProperty().addListener((Observable, oldValue, newValue) -> {
-//			filter.setPredicate(predData -> {
-//				if (newValue == null || newValue.isEmpty()) {
-//					return true;
-//				}
-//				String searchKey = newValue.toLowerCase();
-//				String idformation = String.valueOf(predData.getIdFormation());
-//
-//				if (idformation.contains(searchKey)) {
-//					return true;
-//				} else if (predData.getNom().toLowerCase().contains(searchKey)) {
-//					return true;
-//				} else if (predData.getPromotion().toLowerCase().contains(searchKey)) {
-//					return true;
-//				} else
-//					return false;
-//			});
-//
-//			SortedList<Formation> sortList = new SortedList<>(filter);
-//			sortList.comparatorProperty().bind(tableFormation.comparatorProperty());
-//			tableFormation.setItems(sortList);
-//			tableFormation.refresh(); // Ajoutez cette ligne pour forcer le rafraechissement
-//		});
+
+		FilteredList<Formation> filter = new FilteredList<>(addformation, e -> true);
+		search_formation.textProperty().addListener((Observable, oldValue, newValue) -> {
+			filter.setPredicate(predData -> {
+				if (newValue == null || newValue.isEmpty()) {
+					return true;
+				}
+				String searchKey = newValue.toLowerCase();
+				String idformation = String.valueOf(predData.getIdFormation());
+
+				if (idformation.contains(searchKey)) {
+					return true;
+				} else if (predData.getNom().toLowerCase().contains(searchKey)) {
+					return true;
+				} else if (predData.getPromotion().toLowerCase().contains(searchKey)) {
+					return true;
+				} else
+					return false;
+			});
+
+			SortedList<Formation> sortList = new SortedList<>(filter);
+			sortList.comparatorProperty().bind(tableFormation.comparatorProperty());
+			tableFormation.setItems(sortList);
+			tableFormation.refresh(); // Ajoutez cette ligne pour forcer le rafraechissement
+		});
 	}
 
 	// initialise la liste deroulente promotion pour liste deroulante ajouter et
@@ -356,68 +359,6 @@ public class FormationController implements Initializable {
 
 	// Button for switching to the add projet form
 
-	private void handleBtnTmpAddProjet(AnchorPane tmp_addProjet, AnchorPane tmp_btnProjet,
-			AnchorPane tmp_updateProjet) {
-		tmp_addProjet.setVisible(true);
-		tmp_btnProjet.setVisible(false);
-		tmp_updateProjet.setVisible(false);
-
-	}
-
-	// Button for going back from the add projet form
-
-	private void handleBackProjet(AnchorPane tmp_addProjet, AnchorPane tmp_btnProjet, AnchorPane tmp_updateProjet) {
-		tmp_addProjet.setVisible(false);
-		tmp_btnProjet.setVisible(true);
-		tmp_updateProjet.setVisible(false);
-
-	}
-
-	// Button for switching to the update projet form
-
-	private void handleBtnTmpUpdateProjet(AnchorPane tmp_addProjet, AnchorPane tmp_btnProjet,
-			AnchorPane tmp_updateProjet) {
-		tmp_addProjet.setVisible(false);
-		tmp_btnProjet.setVisible(false);
-		tmp_updateProjet.setVisible(true);
-
-	}
-
-	// Button pour switch vers la fenetre d'ajout d'etudiant
-	private void handleBtnTmpAddEtudiant(AnchorPane tmp_addEtudiant, AnchorPane tmp_btnEtudiant,
-			AnchorPane tmp_updateEtudiant) {
-		tmp_addEtudiant.setVisible(true);
-		tmp_btnEtudiant.setVisible(false);
-		tmp_updateEtudiant.setVisible(false);
-	}
-
-	// Button pour retour de formulaire ajout etudiant vers la fenetre etudiant
-	private void handleBackEtudiant(Button btn_tmpbackEtudient, AnchorPane tmp_addEtudiant, AnchorPane tmp_btnEtudiant,
-			AnchorPane tmp_updateEtudiant) {
-		tmp_addEtudiant.setVisible(false);
-		tmp_btnEtudiant.setVisible(true);
-		tmp_updateEtudiant.setVisible(false);
-
-	}
-
-	// Button pour switch vers la fenetre de mise e jour d'etudiant
-	private void handleBtnTmpUpdateEtudiant(AnchorPane tmp_addEtudiant, AnchorPane tmp_btnEtudiant,
-			AnchorPane tmp_updateEtudiant) {
-		tmp_addEtudiant.setVisible(false);
-		tmp_btnEtudiant.setVisible(false);
-		tmp_updateEtudiant.setVisible(true);
-	}
-
-	// Button pour retour de formulaire mise e jour etudiant vers la fenetre
-	// etudiant
-	private void handleBackEtudiant2(Button btn_tmpBackEtudient2, AnchorPane tmp_addEtudiant,
-			AnchorPane tmp_btnEtudiant, AnchorPane tmp_updateEtudiant) {
-		tmp_addEtudiant.setVisible(false);
-		tmp_btnEtudiant.setVisible(true);
-		tmp_updateEtudiant.setVisible(false);
-
-	}
-
 	// Mettre vesibilite fenetre Home quand on clic sur button Home
 	private void handleHomeButton(AnchorPane tmp_home, AnchorPane temp_formation, AnchorPane tmp_etudiant,
 			AnchorPane tmp_binome, AnchorPane tmp_note, AnchorPane tmp_projet, Button home_btn, Button binome_btn,
@@ -440,8 +381,7 @@ public class FormationController implements Initializable {
 	// Mettre vesibilite fenetre formation quand on clic sur button Formation
 	private void handleFormationButton(AnchorPane tmp_home, AnchorPane temp_formation, AnchorPane tmp_etudiant,
 			AnchorPane tmp_binome, AnchorPane tmp_note, AnchorPane tmp_projet, Button home_btn, Button binome_btn,
-			Button etudiant_btn, Button projet_btn, Button note_btn, Button formation_btn,
-			ComboBox<String> PromotionList, TextField search_formation, TableView<Formation> tableFormation) {
+			Button etudiant_btn, Button projet_btn, Button note_btn, Button formation_btn) {
 		tmp_home.setVisible(false);
 		temp_formation.setVisible(true);
 		tmp_etudiant.setVisible(false);
@@ -450,8 +390,7 @@ public class FormationController implements Initializable {
 		tmp_projet.setVisible(false);
 
 		addPromotionList();
-		addPromotionList2();
-		SearchFormation();
+
 		formation_btn.setStyle(
 				"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
 		home_btn.setStyle("-fx-background-color: transparent;");
@@ -470,8 +409,8 @@ public class FormationController implements Initializable {
 			tmp_updateformation.setVisible(false);
 			tmp_btnformation.setVisible(false);
 			addformationReset2();
-		
-			addPromotionList();
+			addformationReset();
+
 			addPromotionList2();
 		}
 
@@ -499,7 +438,7 @@ public class FormationController implements Initializable {
 			tmp_updateformation.setVisible(true);
 			tmp_btnformation.setVisible(false);
 			addformationReset();
-			addPromotionList2();
+
 			addPromotionList();
 		}
 	}
@@ -513,7 +452,7 @@ public class FormationController implements Initializable {
 			tmp_btnformation.setVisible(true);
 			addformationReset();
 			addPromotionList();
-			addPromotionList2();
+
 		}
 	}
 
@@ -522,19 +461,13 @@ public class FormationController implements Initializable {
 	// notre scene Dashboard
 	public void tmpSwitch(ActionEvent event, AnchorPane tmp_home, AnchorPane temp_formation, AnchorPane tmp_etudiant,
 			AnchorPane tmp_binome, AnchorPane tmp_note, AnchorPane tmp_projet, Button home_btn, Button binome_btn,
-			Button etudiant_btn, Button projet_btn, Button note_btn, Button formation_btn, AnchorPane tmp_addEtudiant,
-			AnchorPane tmp_btnEtudiant, AnchorPane tmp_updateEtudiant, Button btn_tmpBackEtudient2,
-			Button btn_tmpaddEtudient, Button btn_tmpbackEtudient, Button btn_tmpupdateEtudient,
-			AnchorPane tmp_addProjet, AnchorPane tmpDeleteProjet, AnchorPane tmp_updateProjet, Button back_projet,
-			Button back_projet2, Button btn_Add_projet, Button btn_updateProjet, TableView<Etudiant> tableEtudiant,
-			TextField search_Etudiant) {
+			Button etudiant_btn, Button projet_btn, Button note_btn, Button formation_btn) {
 		if (event.getSource() == home_btn) {
 			handleHomeButton(tmp_home, temp_formation, tmp_etudiant, tmp_binome, tmp_note, tmp_projet, home_btn,
 					binome_btn, etudiant_btn, projet_btn, note_btn, formation_btn);
 		} else if (event.getSource() == formation_btn) {
-			handleFormationButton(tmp_home, temp_formation, tmp_etudiant, tmp_binome, tmp_note, tmp_projet,
-					home_btn, binome_btn, etudiant_btn, projet_btn, note_btn, formation_btn,
-					PromotionList, search_formation, tableFormation);
+			handleFormationButton(tmp_home, temp_formation, tmp_etudiant, tmp_binome, tmp_note, tmp_projet, home_btn,
+					binome_btn, etudiant_btn, projet_btn, note_btn, formation_btn);
 
 		} else if (event.getSource() == etudiant_btn) {
 			tmp_home.setVisible(false);
@@ -543,7 +476,6 @@ public class FormationController implements Initializable {
 			tmp_binome.setVisible(false);
 			tmp_note.setVisible(false);
 			tmp_projet.setVisible(false);
-			// etudiantS.searchEtudiant(search_Etudiant, tableEtudiant);
 
 			etudiant_btn.setStyle(
 					"-fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(20, 20, 54, 1) 44%, rgba(29, 139, 162, 1) 100%);");
@@ -601,25 +533,6 @@ public class FormationController implements Initializable {
 			formation_btn.setStyle("-fx-background-color: transparent;");
 		}
 
-		else if (event.getSource() == btn_tmpaddEtudient) {
-			handleBtnTmpAddEtudiant(tmp_addEtudiant, tmp_btnEtudiant, tmp_updateEtudiant);
-		} else if (event.getSource() == btn_tmpbackEtudient) {
-			handleBackEtudiant(btn_tmpbackEtudient, tmp_addEtudiant, tmp_btnEtudiant, tmp_updateEtudiant);
-		} else if (event.getSource() == btn_tmpupdateEtudient) {
-			handleBtnTmpUpdateEtudiant(tmp_addEtudiant, tmp_btnEtudiant, tmp_updateEtudiant);
-		} else if (event.getSource() == btn_tmpBackEtudient2) {
-			handleBackEtudiant2(btn_tmpBackEtudient2, tmp_addEtudiant, tmp_btnEtudiant, tmp_updateEtudiant);
-		} else if (event.getSource() == back_projet) {
-			handleBackProjet(tmp_addProjet, tmpDeleteProjet, tmp_updateProjet);
-
-		} else if (event.getSource() == back_projet2) {
-			handleBackProjet(tmp_addProjet, tmpDeleteProjet, tmp_updateProjet);
-		} else if (event.getSource() == btn_Add_projet) {
-			handleBtnTmpAddProjet(tmp_addProjet, tmpDeleteProjet, tmp_updateProjet);
-		} else if (event.getSource() == btn_updateProjet) {
-			handleBtnTmpUpdateProjet(tmp_addProjet, tmpDeleteProjet, tmp_updateProjet);
-
-		}
 	}
 
 	@Override
