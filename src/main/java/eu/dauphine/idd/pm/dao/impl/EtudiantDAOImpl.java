@@ -161,8 +161,8 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 	            while (rs.next()) {
 	                int idEtudiant = rs.getInt("ID_Etudiant");
 	                idFormation = rs.getInt("ID_Formation");
-	                Formation formation = formationDAO.findById(idFormation);
-	                etudiant = new Etudiant(idEtudiant, nom, prenom, formation);
+	              
+	                etudiant = new Etudiant(idEtudiant, nom, prenom, null);
 	            }
 	        }
 	    } catch (SQLException e) {
