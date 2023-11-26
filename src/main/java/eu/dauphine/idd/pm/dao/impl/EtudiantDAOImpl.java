@@ -148,26 +148,27 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 
 	@Override
 	public Etudiant findByName(String nom, String prenom) {
-	    Etudiant etudiant = null;
-	    int idFormation = 0;
+		Etudiant etudiant = null;
+		int idFormation = 0;
 
-	    try (Connection connection = getConnection();
-	         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Etudiant WHERE Nom = ? AND Prenom = ?");
-	    ) {
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection
+						.prepareStatement("SELECT * FROM Etudiant WHERE Nom = ? AND Prenom = ?");) {
+			preparedStatement.setString(1, nom);
+			preparedStatement.setString(2, prenom);
+			ResultSet rs = preparedStatement.executeQuery();
 
-	        preparedStatement.setString(1, nom);
-	        preparedStatement.setString(2, prenom);
-	        try (ResultSet rs = preparedStatement.executeQuery()) {
-	            while (rs.next()) {
-	                int idEtudiant = rs.getInt("ID_Etudiant");
-	                idFormation = rs.getInt("ID_Formation");
-	              
-	                etudiant = new Etudiant(idEtudiant, nom, prenom, null);
-	            }
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
+			if (rs.next()) {
+				int idEtudiant = rs.getInt("ID_Etudiant");
+				idFormation = rs.getInt("ID_Formation");
+				etudiant = new Etudiant(idEtudiant, nom, prenom, null);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+
 		}
+		Formation formation = formationDAO.findById(idFormation);
+		etudiant.setFormation(formation);
 
 		return etudiant;
 	}
