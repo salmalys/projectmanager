@@ -50,7 +50,7 @@ CREATE
         ,"ID_Etudiant2" INTEGER
         ,--optionnel
         "ID_Projet" INTEGER NOT NULL
-        ,"Date_Remise_Effective" DATE
+        ,"Date_Remise_Effective" TEXT
         ,PRIMARY KEY ("ID_BinomeProjet")
         ,FOREIGN KEY ("ID_Etudiant2") REFERENCES "Etudiant"("ID_Etudiant")
         ,FOREIGN KEY ("ID_Etudiant1") REFERENCES "Etudiant"("ID_Etudiant")

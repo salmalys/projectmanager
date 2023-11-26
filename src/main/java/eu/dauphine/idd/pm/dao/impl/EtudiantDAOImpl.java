@@ -70,12 +70,14 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 				String prenom = rs.getString("Prenom");
 				idFormation = rs.getInt("ID_Formation");
 				etudiant = new Etudiant(idEtudiant, nom, prenom, null);
+				
 			}
+			Formation formation = formationDAO.findById(idFormation);
+			etudiant.setFormation(formation);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		Formation formation = formationDAO.findById(idFormation);
-		etudiant.setFormation(formation);
+		
 		return etudiant;
 	}
 
@@ -196,7 +198,7 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 
 		System.out.println(s.findAll());
 		System.out.println(s.findById(1));
-		System.out.println(s.findByName("yani", "lhaj"));
+		System.out.println(s.findByName("SAIS", "Ilyes"));
 	}
 
 }
