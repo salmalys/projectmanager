@@ -148,24 +148,25 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 
 	@Override
 	public Etudiant findByName(String nom, String prenom) {
-		Etudiant etudiant = null;
-		int idFormation = 0;
-		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection
-						.prepareStatement("SELECT * FROM Etudiant WHERE Nom = ? AND Prenom = ?")) {
+	    Etudiant etudiant = null;
+	    int idFormation = 0;
 
-			preparedStatement.setString(1, nom);
-			preparedStatement.setString(2, prenom);
-			ResultSet rs = preparedStatement.executeQuery();
+	    try (Connection connection = getConnection();
+	         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Etudiant WHERE Nom = ? AND Prenom = ?");
+	    ) {
 
-			if (rs.next()) {
-				int idEtudiant = rs.getInt("ID_Etudiant");
-				idFormation = rs.getInt("ID_Formation");
-				Formation formation = formationDAO.findById(idFormation);
-				etudiant = new Etudiant(idEtudiant, nom, prenom, formation);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+	        preparedStatement.setString(1, nom);
+	        preparedStatement.setString(2, prenom);
+	        try (ResultSet rs = preparedStatement.executeQuery()) {
+	            while (rs.next()) {
+	                int idEtudiant = rs.getInt("ID_Etudiant");
+	                idFormation = rs.getInt("ID_Formation");
+	                Formation formation = formationDAO.findById(idFormation);
+	                etudiant = new Etudiant(idEtudiant, nom, prenom, formation);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
 		}
 
 		return etudiant;
@@ -187,6 +188,14 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 		}
 
 		return totalEtudiants;
+	}
+
+	public static void main(String[] args) {
+		EtudiantDAOImpl s = new EtudiantDAOImpl();
+
+		System.out.println(s.findAll());
+		System.out.println(s.findById(1));
+		System.out.println(s.findByName("yani", "lhaj"));
 	}
 
 }

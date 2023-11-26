@@ -71,7 +71,7 @@ public class BinomeProjetServiceImpl implements BinomeProjetService {
 
 	@Override
 	public void updateDateRemise(Integer valueOf, Date sqlDate) {
-		// TODO Auto-generated method stub
+		
 		 BinomeProjet binomeProjet = binomeProjetDAO.findById(valueOf);
 
 		    if (binomeProjet == null) {

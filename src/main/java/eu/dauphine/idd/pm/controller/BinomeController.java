@@ -16,6 +16,7 @@ import eu.dauphine.idd.pm.service.FormationService;
 import eu.dauphine.idd.pm.service.ProjetService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -29,11 +30,13 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Callback;
 
 public class BinomeController implements Initializable {
 	@FXML
@@ -157,28 +160,28 @@ public class BinomeController implements Initializable {
 			System.out.println(idEtudiant1 + " " + idEtudiant2 + " " + idProjet);
 
 			// Convertir la date du DatePicker en java.sql.Date
-			if (DateRemise != null) {
-				java.sql.Date dateRemise = java.sql.Date.valueOf(DateRemise.getValue());
 
-				// Appeler le service pour créer le binôme
-				int result = binomeS.createBinomeProjet(idEtudiant1, idEtudiant2, idProjet, dateRemise);
-				System.out.println(result);
+			java.sql.Date dateRemise = java.sql.Date.valueOf(DateRemise.getValue());
 
-				// Gérer le résultat
-				switch (result) {
-				case 0: // Succès
-					showAlert(AlertType.INFORMATION, "Success", "Binome added successfully!");
-					addShowBinome();
-					resetBinomeFields(); // Réinitialiser les champs après l'ajout
-					break;
-				case 1:
-					showAlert(AlertType.ERROR, "Error Message", "An error occurred while creating the binome.");
-					break;
-				default:
-					showAlert(AlertType.ERROR, "Error Message", "An unexpected error occurred.");
-					break;
-				}
+			// Appeler le service pour créer le binôme
+			int result = binomeS.createBinomeProjet(idEtudiant1, idEtudiant2, idProjet, dateRemise);
+			System.out.println(result);
+
+			// Gérer le résultat
+			switch (result) {
+			case 0: // Succès
+				showAlert(AlertType.INFORMATION, "Success", "Binome added successfully!");
+				addShowBinome();
+				resetBinomeFields(); // Réinitialiser les champs après l'ajout
+				break;
+			case 1:
+				showAlert(AlertType.ERROR, "Error Message", "An error occurred while creating the binome.");
+				break;
+			default:
+				showAlert(AlertType.ERROR, "Error Message", "An unexpected error occurred.");
+				break;
 			}
+
 		} catch (Exception e) {
 			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
 			e.printStackTrace();
@@ -335,7 +338,8 @@ public class BinomeController implements Initializable {
 		col_Sujtprojet
 				.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProjet().getSujet()));
 
-		 col_DateRemiseProjet.setCellValueFactory(null);
+		// col_DateRemiseProjet.setCellValueFactory((Callback<CellDataFeatures<BinomeProjet,
+		// String>, ObservableValue<String>>) new SimpleStringProperty());
 
 		tableBinome.setItems(addBinome);
 	}

@@ -20,8 +20,6 @@ public class Etudiant {
 		this.formation = formation;
 	}
 
-	public Etudiant() {
-	}
 
 	public int getIdEtudiant() {
 		return this.idEtudiant;
