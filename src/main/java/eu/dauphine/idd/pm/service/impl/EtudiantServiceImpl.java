@@ -22,16 +22,19 @@ public class EtudiantServiceImpl implements EtudiantService {
 	public int createEtudiant(String nom, String prenom, int idFormation) {
 		Etudiant existingEtudiant = etudiantDAO.findByName(nom, prenom);
 
-		if (existingEtudiant != null) {
-			System.out.println("Student already exists with name: " + nom + " " + prenom);
-			return 1;
-		} else {
-			Formation formation = formationDAO.findById(idFormation);
-			Etudiant etudiant = new Etudiant(nom, prenom, formation);
-			etudiantDAO.create(etudiant);
-			System.out.println("Student created successfully: " + etudiant.toString());
-			return 0;
-		}
+
+	    if (existingEtudiant != null) {
+	        System.out.println("Student already exists with name: " + nom + " " + prenom);
+	        return 1;
+	    } else {
+	    	System.out.println("Not null");
+	    	Formation formation = formationDAO.findById(idFormation);
+	        Etudiant etudiant = new Etudiant(nom, prenom, formation);
+	        etudiantDAO.create(etudiant);
+	        System.out.println("Student created successfully: " + etudiant.toString());
+	        return 0;
+	    }
+
 	}
 
 	@Override

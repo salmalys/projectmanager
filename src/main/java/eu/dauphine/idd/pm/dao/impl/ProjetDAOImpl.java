@@ -26,7 +26,7 @@ public class ProjetDAOImpl implements ProjetDAO {
 	private static final String DELETE_PROJET_BY_ID = "DELETE FROM Projet WHERE ID_Projet = ?";
 	private static final String COUNT_NBPROJET = "SELECT COUNT(ID_Projet) AS totalProjets FROM Projet";
 
-	private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	private static SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 	
 	private Connection getConnection() {
 		try {
@@ -46,7 +46,6 @@ public class ProjetDAOImpl implements ProjetDAO {
 
 			preparedStatement.setString(1, projet.getNomMatiere());
 			preparedStatement.setString(2, projet.getSujet());
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			String formattedDate = formatter.format(projet.getDateRemiseRapport());
 			preparedStatement.setString(3, formattedDate);
 
@@ -120,7 +119,6 @@ public class ProjetDAOImpl implements ProjetDAO {
 
 			preparedStatement.setString(1, projet.getNomMatiere());
 			preparedStatement.setString(2, projet.getSujet());
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			String formattedDate = formatter.format(projet.getDateRemiseRapport());
 			preparedStatement.setString(3, formattedDate);
 			preparedStatement.setInt(4, projet.getIdProjet());
