@@ -265,6 +265,7 @@ public class EtudiantController implements Initializable {
 			tableEtudiant.setItems(sortedList);
 		}
 	}
+	
 
 	@FXML
 	public void selectEtudient() {

@@ -1,6 +1,7 @@
 package eu.dauphine.idd.pm.dao.impl;
 
 import eu.dauphine.idd.pm.dao.BinomeProjetDAO;
+
 import eu.dauphine.idd.pm.dao.DAOFactory;
 import eu.dauphine.idd.pm.dao.EtudiantDAO;
 import eu.dauphine.idd.pm.dao.ProjetDAO;
@@ -14,11 +15,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,9 +55,12 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
             preparedStatement.setInt(1, binome.getProjet().getIdProjet());
             preparedStatement.setInt(2, binome.getMembre1().getIdEtudiant());
             preparedStatement.setInt(3, binome.getMembre2().getIdEtudiant());
+            if (binome.getDateRemiseEffective() != null) {
             java.sql.Date date = new java.sql.Date(binome.getDateRemiseEffective().getTime());
 			preparedStatement.setDate(4, date);
-            		
+            }else {
+				preparedStatement.setNull(4, Types.DATE);
+            }
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,6 +83,7 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
                 Etudiant e1 = etudiantDAO.findById(idEtudiant1);
                 Etudiant e2 = etudiantDAO.findById(idEtudiant2);
                 Projet p = projetDAO.findById(idProjet);
+                
                 java.sql.Date date = rs.getDate("Date_Remise_Effective");
                 binome = new BinomeProjet(id, e1, e2, p,date);
             }

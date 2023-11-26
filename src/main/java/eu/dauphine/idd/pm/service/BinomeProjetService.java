@@ -10,4 +10,5 @@ public interface BinomeProjetService {
     void deleteBinomeProjetById(int idBinome);
     ObservableList<BinomeProjet> listBinomeProjets();
     void updateBinomeProjet(int idBinome, int idEtudiant1, int idEtudiant2, int idProjet, Date dateRemiseEffective);
+	void updateDateRemise(Integer valueOf, Date sqlDate);
 }

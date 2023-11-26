@@ -28,11 +28,11 @@ public class ProjetServiceImpl implements ProjetService {
 		} else {
 			java.util.Date date = null;
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	        try {
-	            date = formatter.parse(dateRemise);
-	        } catch (ParseException e) {
-	            e.printStackTrace();
-	        }
+			try {
+				date = formatter.parse(dateRemise);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			Projet projet = new Projet(nomMatiere, sujet, date);
 			projetDAO.create(projet);
 			System.out.println("Project created successfully: " + projet.toString());
@@ -56,15 +56,20 @@ public class ProjetServiceImpl implements ProjetService {
 	public void updateProjet(int id, String nomMatiere, String sujet, String dateRemise) {
 		java.util.Date date = null;
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            date = formatter.parse(dateRemise);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+		try {
+			date = formatter.parse(dateRemise);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		Projet projet = new Projet(id, nomMatiere, sujet, date);
 		projetDAO.update(projet);
 		System.out.println("Project with ID " + id + " successfully updated.");
 		System.out.println(projet.toString());
 	}
-	//Count
+	// Count
+
+	@Override
+	public int getProjetIdByNomMatiereAndSujet(String nomMatiere, String sujetProjet) {
+		return projetDAO.findByCourseSubject(nomMatiere, sujetProjet).getIdProjet();
+	}
 }

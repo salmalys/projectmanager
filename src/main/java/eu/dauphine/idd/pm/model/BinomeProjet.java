@@ -10,19 +10,19 @@ public class BinomeProjet {
 	private Projet projet;
 	private Date dateRemiseEffective;
 
-	public BinomeProjet(int id, Etudiant e1, Etudiant e2, Projet p, Date d) {
+	public BinomeProjet(int id, Etudiant e1, Etudiant e2, Projet p, Date dateRemiseEffective2) {
 		this.idBinome = id;
 		this.membre1 = e1;
 		this.membre2 = e2;
 		this.projet = p;
-		this.dateRemiseEffective = d;
+		this.dateRemiseEffective = dateRemiseEffective2;
 	}
 
-	public BinomeProjet(Etudiant e1, Etudiant e2, Projet p, Date d) {
+	public BinomeProjet(Etudiant e1, Etudiant e2, Projet p, Date dateRemiseEffective2) {
 		this.membre1 = e1;
 		this.membre2 = e2;
 		this.projet = p;
-		this.dateRemiseEffective = d;
+		this.dateRemiseEffective = dateRemiseEffective2;
 	}
 
 	public BinomeProjet() {
@@ -59,7 +59,7 @@ public class BinomeProjet {
 	public void setProjet(Projet projet) {
 		this.projet = projet;
 	}
-	
+
 	public Date getDateRemiseEffective() {
 		return this.dateRemiseEffective;
 	}
@@ -73,7 +73,8 @@ public class BinomeProjet {
 		SimpleDateFormat newFormatter = new SimpleDateFormat("dd-MM-yyyy");
 		String formattedDate = newFormatter.format(this.dateRemiseEffective);
 		return "Binome [Id = " + this.idBinome + ", membre1 = " + this.membre1.toString() + ", membre2 = "
-				+ this.membre2.toString() + ", projet = " + this.projet.toString() + ", dateRemiseEffective =" + formattedDate + "]";
+				+ this.membre2.toString() + ", projet = " + this.projet.toString() + ", dateRemiseEffective ="
+				+ formattedDate + "]";
 	}
 
 }

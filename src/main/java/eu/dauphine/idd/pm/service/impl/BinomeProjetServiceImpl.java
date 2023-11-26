@@ -68,6 +68,24 @@ public class BinomeProjetServiceImpl implements BinomeProjetService {
         System.out.println("BinomeProjet with ID " + idBinome + " successfully updated.");
         System.out.println(binomeProjet.toString());
     }
+
+	@Override
+	public void updateDateRemise(Integer valueOf, Date sqlDate) {
+		// TODO Auto-generated method stub
+		 BinomeProjet binomeProjet = binomeProjetDAO.findById(valueOf);
+
+		    if (binomeProjet == null) {
+		        System.out.println("Invalid BinomeProjet ID");
+		        return;
+		    }
+
+		    binomeProjet.setDateRemiseEffective(sqlDate);
+		    binomeProjetDAO.update(binomeProjet);
+
+		    System.out.println("Date of Remise for BinomeProjet with ID " + valueOf + " successfully updated.");
+		    System.out.println(binomeProjet.toString());
+		
+	}
     
     //Count
 }

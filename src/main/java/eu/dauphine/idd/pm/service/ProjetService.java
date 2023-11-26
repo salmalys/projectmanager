@@ -8,4 +8,5 @@ public interface ProjetService {
     void deleteProjetById(int id);
     ObservableList<Projet> listProjets();
     void updateProjet(int id, String nomMatiere, String sujet, String dateRemise);
+    int getProjetIdByNomMatiereAndSujet(String nomMatiere,String sujetProjet);
 }
