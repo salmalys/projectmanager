@@ -6,6 +6,7 @@ import eu.dauphine.idd.pm.model.Formation;
 import eu.dauphine.idd.pm.service.BinomeProjetService;
 import eu.dauphine.idd.pm.service.FormationService;
 import eu.dauphine.idd.pm.service.ProjetService;
+import eu.dauphine.idd.pm.service.NotesService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
 
 public class MainTest {
@@ -35,10 +36,12 @@ public class MainTest {
 		p.updateProjet(1, "POA" , "Gestion de Projets", "2023-12-01");
 		*/
 		
-		/*
-		BinomeProjetService b = ServiceFactory.getBinomeProjetService();
-		System.out.println(b.listBinomeProjets());
-		*/
 		
+		BinomeProjetService b = ServiceFactory.getBinomeProjetService();
+		//b.createBinomeProjet(1, 1, 1, null);
+		System.out.println(b.listBinomeProjets());
+		
+		NotesService n = ServiceFactory.getNotesService();
+		n.createNotes(1, 16, 14, 15);
 	}
 }

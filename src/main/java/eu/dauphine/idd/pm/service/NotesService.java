@@ -8,4 +8,5 @@ public interface NotesService {
     void deleteNotesById(int idNotes);
     ObservableList<Notes> listNotes();
     void updateNotes(int idNotes, int idBinome, double noteRapport, double noteSoutenanceMembre1, double noteSoutenanceMembre2);
+    double[] calculNoteFinale(int idNotes);
 }

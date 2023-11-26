@@ -1,10 +1,15 @@
 package eu.dauphine.idd.pm.service.impl;
 
+import java.time.Instant;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 import eu.dauphine.idd.pm.dao.BinomeProjetDAO;
 import eu.dauphine.idd.pm.dao.DAOFactory;
 import eu.dauphine.idd.pm.dao.NotesDAO;
 import eu.dauphine.idd.pm.model.BinomeProjet;
 import eu.dauphine.idd.pm.model.Notes;
+import eu.dauphine.idd.pm.model.Projet;
 import eu.dauphine.idd.pm.service.NotesService;
 import javafx.collections.ObservableList;
 
@@ -55,5 +60,35 @@ public class NotesServiceImpl implements NotesService {
         notesDAO.update(notes);
         System.out.println("Note with ID " + idNotes + " successfully updated.");
         System.out.println(notes.toString());
+    }
+    
+    @Override
+    public double[] calculNoteFinale(int idNotes) {
+    	Notes notes = notesDAO.findById(idNotes);
+    	
+    	BinomeProjet binome = notes.getBinomeProjet();
+    	Projet projet = binome.getProjet();
+    	
+    	Date dateRendu = projet.getDateRemiseRapport();
+    	Date dateRemiseEffective = binome.getDateRemiseEffective();
+    	
+        Instant instantRemise = dateRendu.toInstant();
+        Instant instantRendu = dateRemiseEffective.toInstant();
+        
+        // Calcul de la difference en millisecondes
+        long diffInMillis = instantRendu.toEpochMilli() - instantRemise.toEpochMilli();
+
+        // Calcul de la penalite
+        long penalite = 0;
+        if (diffInMillis > 0) {
+            // Conversion en jours si retard
+            penalite = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+        }
+  	
+    	double[] notesFinales = new double[2];
+    	notesFinales[0] = notes.getNoteSoutenanceMembre1()*0.5 +  notes.getNoteRapport()*0.5 - penalite;
+    	notesFinales[1] = notes.getNoteSoutenanceMembre2()*0.5 +  notes.getNoteRapport()*0.5 - penalite;
+    	
+    	return notesFinales;
     }
 }
