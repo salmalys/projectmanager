@@ -26,6 +26,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 	        System.out.println("Student already exists with name: " + nom + " " + prenom);
 	        return 1;
 	    } else {
+	    	System.out.println("Not null");
 	    	Formation formation = formationDAO.findById(idFormation);
 	        Etudiant etudiant = new Etudiant(nom, prenom, formation);
 	        etudiantDAO.create(etudiant);

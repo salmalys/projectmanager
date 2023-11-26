@@ -1,6 +1,5 @@
 package eu.dauphine.idd.pm.service.impl;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -9,6 +8,7 @@ import eu.dauphine.idd.pm.dao.ProjetDAO;
 import eu.dauphine.idd.pm.model.Projet;
 import eu.dauphine.idd.pm.service.ProjetService;
 import javafx.collections.ObservableList;
+import java.util.Date;
 
 public class ProjetServiceImpl implements ProjetService {
 
@@ -17,23 +17,18 @@ public class ProjetServiceImpl implements ProjetService {
 	public ProjetServiceImpl() {
 		this.projetDAO = DAOFactory.getProjetDAO();
 	}
+	
+	private static SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
 	@Override
-	public int createProjet(String nomMatiere, String sujet, String dateRemise) {
+	public int createProjet(String nomMatiere, String sujet, Date dateRemise) {
 		Projet existingProjet = projetDAO.findByCourseSubject(nomMatiere, sujet);
 
 		if (existingProjet != null) {
 			System.out.println("For this course: " + nomMatiere + " Project already exists with subject: " + sujet);
 			return 1;
 		} else {
-			java.util.Date date = null;
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-	        try {
-	            date = formatter.parse(dateRemise);
-	        } catch (ParseException e) {
-	            e.printStackTrace();
-	        }
-			Projet projet = new Projet(nomMatiere, sujet, date);
+			Projet projet = new Projet(nomMatiere, sujet, dateRemise);
 			projetDAO.create(projet);
 			System.out.println("Project created successfully: " + projet.toString());
 			return 0;
@@ -55,7 +50,6 @@ public class ProjetServiceImpl implements ProjetService {
 	@Override
 	public void updateProjet(int id, String nomMatiere, String sujet, String dateRemise) {
 		java.util.Date date = null;
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
             date = formatter.parse(dateRemise);
         } catch (ParseException e) {

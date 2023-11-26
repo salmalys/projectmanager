@@ -1,7 +1,8 @@
 package eu.dauphine.idd.pm.controller;
 
 import java.net.URL;
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -91,7 +92,7 @@ public class ProjetController implements Initializable {
 			String nomMatiere = NomMatiereP.getText();
 			String sujet = SujetProjet.getText();
 			// Convertir la date du DatePicker en java.sql.Date
-			java.sql.Date dateRemise = java.sql.Date.valueOf(dateRemisePorjet.getValue());
+			java.util.Date dateRemise = java.sql.Date.valueOf(dateRemisePorjet.getValue());
 
 			// Check if required fields are not empty
 			if (!isInputValid(nomMatiere, sujet, dateRemise)) {
@@ -102,7 +103,7 @@ public class ProjetController implements Initializable {
 			} else {
 
 				// Call the ProjetService to add the project
-				int result = projetS.createProjet(nomMatiere, sujet, String.valueOf(dateRemise));
+				int result = projetS.createProjet(nomMatiere, sujet, dateRemise);
 
 				// Handle the result
 				switch (result) {
@@ -200,6 +201,9 @@ public class ProjetController implements Initializable {
 		col_DateRemiseProjet.toString();
 		col_idProjet.setCellValueFactory(new PropertyValueFactory<>("idProjet"));
 		col_MatiereProjet.setCellValueFactory(new PropertyValueFactory<>("nomMatiere"));
+		
+		SimpleDateFormat newFormatter = new SimpleDateFormat("dd-MM-yyyy");
+		
 		col_DateRemiseProjet.setCellValueFactory(new PropertyValueFactory<>("dateRemiseRapport"));
 		col_SujetProjet.setCellValueFactory(new PropertyValueFactory<>("sujet"));
 
