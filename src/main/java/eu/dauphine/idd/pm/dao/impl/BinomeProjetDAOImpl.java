@@ -38,6 +38,8 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
 	private EtudiantDAO etudiantDAO = DAOFactory.getEtudiantDAO();
 	private ProjetDAO projetDAO = DAOFactory.getProjetDAO();
 	
+	private static SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+	
     private Connection getConnection() {
         try {
             return DatabaseConnection.getInstance().getConnection();
@@ -67,6 +69,9 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
     @Override
     public BinomeProjet findById(int id) {
         BinomeProjet binome = null;
+        int idProjet = 0;
+        int idEtudiant1 = 0;
+        int idEtudiant2 = 0;
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BINOME_BY_ID)) {
 
@@ -74,18 +79,24 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
             ResultSet rs = preparedStatement.executeQuery();
 
             if (rs.next()) {
-                int idProjet = rs.getInt("ID_Projet");
-                int idEtudiant1 = rs.getInt("ID_Etudiant1");
-                int idEtudiant2 = rs.getInt("ID_Etudiant2");
-                Etudiant e1 = etudiantDAO.findById(idEtudiant1);
-                Etudiant e2 = etudiantDAO.findById(idEtudiant2);
-                Projet p = projetDAO.findById(idProjet);
-                
-                java.sql.Date date = rs.getDate("Date_Remise_Effective");
-                binome = new BinomeProjet(id, e1, e2, p,date);
+                idProjet = rs.getInt("ID_Projet");
+                idEtudiant1 = rs.getInt("ID_Etudiant1");
+                idEtudiant2 = rs.getInt("ID_Etudiant2");
+				Date date = formatter.parse(rs.getString("Date_Remise_Effective"));
+                binome = new BinomeProjet(id, null, null, null,date);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }catch (ParseException e) {
+        	e.printStackTrace();
+        }
+        if (binome != null) {
+            Etudiant e1 = etudiantDAO.findById(idEtudiant1);
+            Etudiant e2 = etudiantDAO.findById(idEtudiant2);
+            Projet p = projetDAO.findById(idProjet);
+            binome.setMembre1(e1);
+            binome.setMembre2(e2);
+            binome.setProjet(p);
         }
         return binome;
     }
