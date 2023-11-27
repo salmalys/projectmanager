@@ -1,8 +1,10 @@
 package eu.dauphine.idd.pm.main;
 
+import eu.dauphine.idd.pm.dao.BinomeProjetDAO;
 import eu.dauphine.idd.pm.dao.DAOFactory;
 import eu.dauphine.idd.pm.dao.EtudiantDAO;
 import eu.dauphine.idd.pm.dao.FormationDAO;
+import eu.dauphine.idd.pm.dao.ProjetDAO;
 import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 import eu.dauphine.idd.pm.model.BinomeProjet;
 import eu.dauphine.idd.pm.model.Etudiant;
@@ -16,7 +18,7 @@ import eu.dauphine.idd.pm.service.ServiceFactory;
 
 public class MainTest {
 	public static void main(String[] args) {
-		String dbPath = "./src/main/resources/sample.db" ;
+		String dbPath = "./src/main/resources/DataBaseGestion.db" ;
 		//Si argument en ligne de commande on recupere le chemin de la base de donnees
 		if (args.length > 0) {
 			dbPath = args[0]; 
@@ -47,22 +49,30 @@ public class MainTest {
 		//Etudiant saber = e.findByName("KHAROUF", "Saber");
 		//System.out.println(saber);
 		//eS.deleteEtudiantById(saber.getIdEtudiant());
-		eS.createEtudiant("KHAROUF", "Saber", 9);
+		//eS.createEtudiant("KHAROUF", "Saber", 9);
+		//System.out.println(e.findById(2));
 		
 		
+		
+		ProjetService pS  = ServiceFactory.getProjetService();
+		ProjetDAO p = DAOFactory.getProjetDAO();
 		/*
-		ProjetService p  = ServiceFactory.getProjetService();
 		System.out.println(p.listProjets());
 		p.createProjet("Programmation C", "Algorithme du PageRank","2024-05-15");
 		p.deleteProjetById(3);
 		System.out.println(p.listProjets());
 		p.updateProjet(1, "POA" , "Gestion de Projets", "2023-12-01");
 		*/
+		//System.out.println(pS.listProjets());
+		//System.out.println(p.findById(2));
 		
 		
-		BinomeProjetService b = ServiceFactory.getBinomeProjetService();
+		
+		BinomeProjetService bS = ServiceFactory.getBinomeProjetService();
+		BinomeProjetDAO b = DAOFactory.getBinomeProjetDAO();
 		//b.createBinomeProjet(1, 1, 1, null);
-		//System.out.println(b.listBinomeProjets());
+		System.out.println(bS.listBinomeProjets());
+		//System.out.println(b.findById(1));
 		
 		NotesService n = ServiceFactory.getNotesService();
 		//n.createNotes(1, 16, 14, 15);

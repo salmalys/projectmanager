@@ -47,7 +47,7 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
-		String dbPath = "./src/main/resources/sample.db" ;
+		String dbPath = "./src/main/resources/DataBaseGestionProjet.db" ;
 		
 		//Si argument en ligne de commande on recupere le chemin de la base de donnees
 		if (args.length > 0) {
