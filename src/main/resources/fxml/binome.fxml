@@ -97,7 +97,7 @@
                   <Label layoutX="35.0" layoutY="230.0" text="Projet :" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="tmp_updateBinome" layoutX="559.0" layoutY="9.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css" visible="false">
+            <AnchorPane fx:id="tmp_updateBinome" layoutX="559.0" layoutY="9.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css">
                <styleClass>
                   <String fx:value="shadow" />
                   <String fx:value="white-bg" />
@@ -119,7 +119,7 @@
                   <Button fx:id="Back_Binome2" layoutX="246.0" layoutY="477.0" mnemonicParsing="false" onAction="#handleBackBinome" prefHeight="30.0" prefWidth="57.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="BACK" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="tmp_RemisBinome" layoutX="562.0" layoutY="11.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css">
+            <AnchorPane fx:id="tmp_RemisBinome" layoutX="562.0" layoutY="11.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css" visible="false">
                <styleClass>
                   <String fx:value="shadow" />
                   <String fx:value="white-bg" />

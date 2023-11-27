@@ -4,8 +4,11 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.util.StringConverter;
 
 import eu.dauphine.idd.pm.model.Projet;
 import eu.dauphine.idd.pm.service.ProjetService;
@@ -19,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -77,7 +81,7 @@ public class ProjetController implements Initializable {
 	@FXML
 	private TableColumn<Projet, String> col_MatiereProjet;
 	@FXML
-	private TableColumn<Projet, Date> col_DateRemiseProjet;
+	private TableColumn<Projet, String> col_DateRemiseProjet;
 	@FXML
 	private TableColumn<Projet, String> col_SujetProjet;
 
@@ -92,8 +96,12 @@ public class ProjetController implements Initializable {
 			String nomMatiere = NomMatiereP.getText();
 			String sujet = SujetProjet.getText();
 			// Convertir la date du DatePicker en java.sql.Date
-			java.util.Date dateRemise = java.sql.Date.valueOf(dateRemisePorjet.getValue());
+			LocalDate localDate = dateRemisePorjet.getValue();
+			java.sql.Date dateRemise = null;
 
+			if (localDate != null) {
+				dateRemise = java.sql.Date.valueOf(localDate);
+			}
 			// Check if required fields are not empty
 			if (!isInputValid(nomMatiere, sujet, dateRemise)) {
 
@@ -133,9 +141,14 @@ public class ProjetController implements Initializable {
 			String sujet = SujetProjet2.getText();
 			String idProjetStr = Idprojet.getText();
 
-			// Convertir la date du DatePicker en java.sql.Date
-			java.sql.Date dateRemise = java.sql.Date.valueOf(dateRemisePorjet2.getValue());
+			   // Convertir la date du DatePicker en java.sql.Date
+	        LocalDate localDate = dateRemisePorjet2.getValue();
+	        System.out.println(localDate.toString());
+	        java.sql.Date dateRemise = null;
 
+	        if (localDate != null) {
+	            dateRemise = java.sql.Date.valueOf(localDate);
+	        }
 			Alert alert;
 			if (!isInputValid(matiere, sujet, dateRemise)) {
 				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
@@ -147,7 +160,7 @@ public class ProjetController implements Initializable {
 
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.get().equals(ButtonType.OK)) {
-					projetS.updateProjet(Integer.valueOf(idProjetStr), matiere, sujet, String.valueOf(dateRemise));
+					projetS.updateProjet(Integer.valueOf(idProjetStr), matiere, sujet, dateRemise);
 
 					showAlert(AlertType.INFORMATION, "Information Message", "Projet Updated successfully!");
 
@@ -191,6 +204,8 @@ public class ProjetController implements Initializable {
 
 	// Liste d'éléments de projet
 	private ObservableList<Projet> addprojet;
+	// Define SimpleDateFormat as a class member
+	private SimpleDateFormat newFormatter = new SimpleDateFormat("dd-MM-yyyy");
 
 	// Fonction qui affiche le tableau de projets dans l'interface graphique
 	public void addProjetShow() {
@@ -198,13 +213,17 @@ public class ProjetController implements Initializable {
 		addprojet = projetS.listProjets();
 
 		// Définition des cellules des colonnes
-		col_DateRemiseProjet.toString();
+
 		col_idProjet.setCellValueFactory(new PropertyValueFactory<>("idProjet"));
 		col_MatiereProjet.setCellValueFactory(new PropertyValueFactory<>("nomMatiere"));
-		
-		SimpleDateFormat newFormatter = new SimpleDateFormat("dd-MM-yyyy");
-		
-		col_DateRemiseProjet.setCellValueFactory(new PropertyValueFactory<>("dateRemiseRapport"));
+
+		// Use a StringConverter to format the date
+		col_DateRemiseProjet.setCellValueFactory(cellData -> {
+			Projet projet = cellData.getValue();
+			String formattedDate = newFormatter.format(projet.getDateRemiseRapport());
+			return new SimpleObjectProperty<>(formattedDate);
+		});
+
 		col_SujetProjet.setCellValueFactory(new PropertyValueFactory<>("sujet"));
 
 		// Affichage des projets dans le tableau

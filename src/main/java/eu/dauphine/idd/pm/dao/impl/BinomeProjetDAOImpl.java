@@ -55,13 +55,10 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
             preparedStatement.setInt(1, binome.getProjet().getIdProjet());
             preparedStatement.setInt(2, binome.getMembre1().getIdEtudiant());
             preparedStatement.setInt(3, binome.getMembre2().getIdEtudiant());
-            if (binome.getDateRemiseEffective() != null) {
-            java.sql.Date date = new java.sql.Date(binome.getDateRemiseEffective().getTime());
-			preparedStatement.setDate(4, date);
-            }else {
-				preparedStatement.setNull(4, Types.DATE);
-            }
+            preparedStatement.setNull(4, Types.DATE); // Always set to null
+
             preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -95,11 +92,10 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
 
     @Override
     public ObservableList<BinomeProjet> findAll() {
-    	
         ObservableList<BinomeProjet> binomes = FXCollections.observableArrayList();
         Map<BinomeProjet, Integer[]> binomeMap = new HashMap<>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        
+
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_BINOMES)) {
 
@@ -111,7 +107,8 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
                 ids[0] = rs.getInt("ID_Projet");
                 ids[1] = rs.getInt("ID_Etudiant1");
                 ids[2] = rs.getInt("ID_Etudiant2");
-                Date date = formatter.parse(rs.getString("Date_Remise_Effective"));
+                String dateString = rs.getString("Date_Remise_Effective");
+                Date date = dateString != null ? formatter.parse(dateString) : null;
                 BinomeProjet binome = new BinomeProjet(id, null, null, null, date);
                 binomes.add(binome);
                 binomeMap.put(binome, ids);
@@ -121,17 +118,19 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-		for (BinomeProjet binome : binomes) {
-			Projet projet = projetDAO.findById(binomeMap.get(binome)[0]);
-			Etudiant etudiant1 = etudiantDAO.findById(binomeMap.get(binome)[1]);
-			Etudiant etudiant2 = etudiantDAO.findById(binomeMap.get(binome)[2]);
-			binome.setProjet(projet);
-			binome.setMembre1(etudiant1);
-			binome.setMembre2(etudiant2);
-		}
-		
+
+        for (BinomeProjet binome : binomes) {
+            Projet projet = projetDAO.findById(binomeMap.get(binome)[0]);
+            Etudiant etudiant1 = etudiantDAO.findById(binomeMap.get(binome)[1]);
+            Etudiant etudiant2 = etudiantDAO.findById(binomeMap.get(binome)[2]);
+            binome.setProjet(projet);
+            binome.setMembre1(etudiant1);
+            binome.setMembre2(etudiant2);
+        }
+
         return binomes;
     }
+
 
     @Override
     public void update(BinomeProjet binome) {

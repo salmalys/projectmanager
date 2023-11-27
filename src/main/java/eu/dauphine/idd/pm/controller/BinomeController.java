@@ -4,6 +4,7 @@ import java.net.URL;
 
 import java.time.LocalDate;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -15,6 +16,7 @@ import eu.dauphine.idd.pm.service.EtudiantService;
 import eu.dauphine.idd.pm.service.FormationService;
 import eu.dauphine.idd.pm.service.ProjetService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -159,13 +161,10 @@ public class BinomeController implements Initializable {
 			int idProjet = projetS.getProjetIdByNomMatiereAndSujet(nomMatiere, sujetProjet);
 			System.out.println(idEtudiant1 + " " + idEtudiant2 + " " + idProjet);
 
-			// Convertir la date du DatePicker en java.sql.Date
-
-			java.sql.Date dateRemise = java.sql.Date.valueOf(DateRemise.getValue());
-
 			// Appeler le service pour créer le binôme
-			int result = binomeS.createBinomeProjet(idEtudiant1, idEtudiant2, idProjet, dateRemise);
-			System.out.println(result);
+			int result = binomeS.createBinomeProjet(idEtudiant1, idEtudiant2, idProjet, null);
+
+			
 
 			// Gérer le résultat
 			switch (result) {
@@ -226,12 +225,11 @@ public class BinomeController implements Initializable {
 					int etudiant1Id = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant1, prenomEtudiant1);
 					int etudiant2Id = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant2, prenomEtudiant2);
 					int projetId = projetS.getProjetIdByNomMatiereAndSujet(nomMatiere, sujetProjet);
-					// Créez une instance de java.util.Date avec la date actuelle
-					// Créez une instance de java.sql.Date avec la date actuelle
-					java.sql.Date dateRemise = java.sql.Date.valueOf(DateRemise.getValue());
+				
+				
 					// Assuming you have an updateBinome method in your binomeS service
 					binomeS.updateBinomeProjet(Integer.valueOf(idBinomeString), etudiant1Id, etudiant2Id, projetId,
-							dateRemise);
+							null);
 
 					showAlert(AlertType.INFORMATION, "Information Message", "Binome Updated successfully!");
 
@@ -321,6 +319,9 @@ public class BinomeController implements Initializable {
 		DateRemise.getEditor().clear(); // Clear the DatePicker
 	}
 
+	// Define SimpleDateFormat as a class member
+	private SimpleDateFormat newFormatter = new SimpleDateFormat("dd-MM-yyyy");
+
 	@FXML
 	public void addShowBinome() {
 		addBinome = binomeS.listBinomeProjets();
@@ -331,16 +332,24 @@ public class BinomeController implements Initializable {
 				cellData.getValue().getMembre1().getNom() + " " + cellData.getValue().getMembre1().getPrenom()));
 
 		col_Etudiant2.setCellValueFactory(cellData -> new SimpleStringProperty(
-				cellData.getValue().getMembre1().getNom() + " " + cellData.getValue().getMembre1().getPrenom()));
+				cellData.getValue().getMembre2().getNom() + " " + cellData.getValue().getMembre2().getPrenom()));
 
 		col_NomMatiere.setCellValueFactory(
 				cellData -> new SimpleStringProperty(cellData.getValue().getProjet().getNomMatiere()));
 		col_Sujtprojet
 				.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProjet().getSujet()));
 
-		// col_DateRemiseProjet.setCellValueFactory((Callback<CellDataFeatures<BinomeProjet,
-		// String>, ObservableValue<String>>) new SimpleStringProperty());
+		col_DateRemiseProjet.setCellValueFactory(cellData -> {
+			BinomeProjet binomeProjet = cellData.getValue();
+			java.util.Date dateRemise = binomeProjet.getDateRemiseEffective();
 
+			if (dateRemise != null) {
+				String formattedDate = newFormatter.format(dateRemise);
+				return new SimpleStringProperty(formattedDate);
+			} else {
+				return new SimpleStringProperty("_"); 
+			}
+		});
 		tableBinome.setItems(addBinome);
 	}
 

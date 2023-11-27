@@ -35,9 +35,9 @@ public class BinomeProjetServiceImpl implements BinomeProjetService {
             return 1;
         }
 
-        BinomeProjet binomeProjet = new BinomeProjet(membre1, membre2, projet, dateRemiseEffective);
-        binomeProjetDAO.create(binomeProjet);
-        System.out.println("BinomeProjet created successfully: " + binomeProjet.toString());
+        // Always set dateRemiseEffective to null
+        binomeProjetDAO.create(new BinomeProjet(membre1, membre2, projet, null));
+        System.out.println("BinomeProjet created successfully.");
         return 0;
     }
 
@@ -85,6 +85,12 @@ public class BinomeProjetServiceImpl implements BinomeProjetService {
 		    System.out.println("Date of Remise for BinomeProjet with ID " + valueOf + " successfully updated.");
 		    System.out.println(binomeProjet.toString());
 		
+	}
+	
+	public static void main(String[] args) {
+		BinomeProjetServiceImpl l=new BinomeProjetServiceImpl();
+		System.out.println(l.createBinomeProjet(3, 1, 2, null));
+		l.updateBinomeProjet(2, 1, 3, 2, null);
 	}
     
     //Count

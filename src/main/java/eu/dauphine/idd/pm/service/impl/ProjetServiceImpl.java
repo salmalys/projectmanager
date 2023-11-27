@@ -17,7 +17,7 @@ public class ProjetServiceImpl implements ProjetService {
 	public ProjetServiceImpl() {
 		this.projetDAO = DAOFactory.getProjetDAO();
 	}
-	
+
 	private static SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 
 	@Override
@@ -50,16 +50,10 @@ public class ProjetServiceImpl implements ProjetService {
 	}
 
 	@Override
-	public void updateProjet(int id, String nomMatiere, String sujet, String dateRemise) {
-		java.util.Date date = null;
+	public void updateProjet(int id, String nomMatiere, String sujet, Date dateRemise) {
+		
 
-        try {
-            date = formatter.parse(dateRemise);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-		Projet projet = new Projet(id, nomMatiere, sujet, date);
+		Projet projet = new Projet(id, nomMatiere, sujet, dateRemise);
 		projetDAO.update(projet);
 		System.out.println("Project with ID " + id + " successfully updated.");
 		System.out.println(projet.toString());
