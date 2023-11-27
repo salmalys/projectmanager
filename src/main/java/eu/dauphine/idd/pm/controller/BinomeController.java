@@ -324,35 +324,47 @@ public class BinomeController implements Initializable {
 
 	@FXML
 	public void addShowBinome() {
-		addBinome = binomeS.listBinomeProjets();
+	    addBinome = binomeS.listBinomeProjets();
 
-		col_idBinome.setCellValueFactory(new PropertyValueFactory<>("idBinome"));
+	    col_idBinome.setCellValueFactory(new PropertyValueFactory<>("idBinome"));
 
-		col_Etudiant1.setCellValueFactory(cellData -> new SimpleStringProperty(
-				cellData.getValue().getMembre1().getNom() + " " + cellData.getValue().getMembre1().getPrenom()));
+	    col_Etudiant1.setCellValueFactory(cellData -> {
+	        Etudiant membre1 = cellData.getValue().getMembre1();
+	        if (membre1 != null) {
+	            return new SimpleStringProperty(membre1.getNom() + " " + membre1.getPrenom());
+	        } else {
+	            return new SimpleStringProperty("_");
+	        }
+	    });
 
-		col_Etudiant2.setCellValueFactory(cellData -> new SimpleStringProperty(
-				cellData.getValue().getMembre2().getNom() + " " + cellData.getValue().getMembre2().getPrenom()));
+	    col_Etudiant2.setCellValueFactory(cellData -> {
+	        Etudiant membre2 = cellData.getValue().getMembre2();
+	        if (membre2 != null) {
+	            return new SimpleStringProperty(membre2.getNom() + " " + membre2.getPrenom());
+	        } else {
+	            return new SimpleStringProperty("_");
+	        }
+	    });
 
-		col_NomMatiere.setCellValueFactory(
-				cellData -> new SimpleStringProperty(cellData.getValue().getProjet().getNomMatiere()));
-		col_Sujtprojet
-				.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProjet().getSujet()));
+	    col_NomMatiere.setCellValueFactory(
+	            cellData -> new SimpleStringProperty(cellData.getValue().getProjet().getNomMatiere()));
+	    col_Sujtprojet
+	            .setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProjet().getSujet()));
 
-		col_DateRemiseProjet.setCellValueFactory(cellData -> {
-			BinomeProjet binomeProjet = cellData.getValue();
-			java.util.Date dateRemise = binomeProjet.getDateRemiseEffective();
+	    col_DateRemiseProjet.setCellValueFactory(cellData -> {
+	        BinomeProjet binomeProjet = cellData.getValue();
+	        java.util.Date dateRemise = binomeProjet.getDateRemiseEffective();
 
-			if (dateRemise != null) {
-				String formattedDate = newFormatter.format(dateRemise);
-				return new SimpleStringProperty(formattedDate);
-			} else {
-				return new SimpleStringProperty("_"); 
-			}
-		});
-		tableBinome.setItems(addBinome);
+	        if (dateRemise != null) {
+	            String formattedDate = newFormatter.format(dateRemise);
+	            return new SimpleStringProperty(formattedDate);
+	        } else {
+	            return new SimpleStringProperty("_");
+	        }
+	    });
+
+	    tableBinome.setItems(addBinome);
 	}
-
 	@FXML
 	public void searchBinome() {
 		if (search_Binome != null) {
