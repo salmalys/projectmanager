@@ -70,28 +70,15 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 				String prenom = rs.getString("Prenom");
 				idFormation = rs.getInt("ID_Formation");
 				etudiant = new Etudiant(idEtudiant, nom, prenom, null);
-<<<<<<< HEAD
 
-=======
->>>>>>> branch 'develop' of https://github.com/salmalys/projectmanager.git
-			}
-<<<<<<< HEAD
-			if (etudiant != null) {
-
-				Formation formation = formationDAO.findById(idFormation);
-				etudiant.setFormation(formation);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-=======
-		} catch (SQLException e) {
+		} }catch (SQLException e) {
 			System.out.println("Error while searching student");
 			e.printStackTrace();
 		}
 		if (etudiant != null) {
 			Formation formation = formationDAO.findById(idFormation);
 			etudiant.setFormation(formation);
->>>>>>> branch 'develop' of https://github.com/salmalys/projectmanager.git
+
 		}
 
 		return etudiant;
@@ -179,10 +166,7 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 			if (rs.next()) {
 				int idEtudiant = rs.getInt("ID_Etudiant");
 				idFormation = rs.getInt("ID_Formation");
-<<<<<<< HEAD
-				System.out.println("id : " + idEtudiant + " " + idFormation);
-=======
->>>>>>> branch 'develop' of https://github.com/salmalys/projectmanager.git
+
 				etudiant = new Etudiant(idEtudiant, nom, prenom, null);
 			}
 		} catch (SQLException e) {
