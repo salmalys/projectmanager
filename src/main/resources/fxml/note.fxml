@@ -14,7 +14,7 @@
 	<children>
 		<AnchorPane layoutX="6.0" layoutY="8.0" prefHeight="537.0" prefWidth="885.0" stylesheets="@../css/dashboard.css">
 			<children>
-            <AnchorPane fx:id="tmp_addNote" layoutX="580.0" layoutY="12.0" prefHeight="514.0" prefWidth="301.0" stylesheets="@../css/dashboard.css">
+            <AnchorPane fx:id="tmp_addNote" layoutX="580.0" layoutY="12.0" prefHeight="514.0" prefWidth="301.0" stylesheets="@../css/dashboard.css" visible="false">
                <styleClass>
                   <String fx:value="shadow" />
                   <String fx:value="white-bg" />
@@ -101,7 +101,7 @@
                   <String fx:value="white-bg" />
                </styleClass>
             </AnchorPane>
-            <AnchorPane fx:id="tmp_optionNote" layoutX="578.0" layoutY="12.0" prefHeight="514.0" prefWidth="301.0" stylesheets="@../css/dashboard.css" visible="false">
+            <AnchorPane fx:id="tmp_optionNote" layoutX="578.0" layoutY="12.0" prefHeight="514.0" prefWidth="301.0" stylesheets="@../css/dashboard.css">
                <children>
                   <Button fx:id="btn_saisirNote" layoutX="14.0" layoutY="172.0" mnemonicParsing="false" onAction="#handleBtnSaisirNote" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Saisir note Binome" />
                   <Button fx:id="btn_affichernote" layoutX="171.0" layoutY="172.0" mnemonicParsing="false" onAction="#handleBtnAfficherNote" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Afficher Note" />
