@@ -3,8 +3,8 @@ package eu.dauphine.idd.pm.controller;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import eu.dauphine.idd.pm.dao.impl.EtudiantDAOImpl;
-import eu.dauphine.idd.pm.dao.impl.ProjetDAOImpl;
+import eu.dauphine.idd.pm.service.ServiceFactory;
+import eu.dauphine.idd.pm.service.UtilService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -79,15 +79,22 @@ public class DashboardController implements Initializable {
 	@FXML
 	private AnchorPane tmp_home;
 	
-	private ProjetDAOImpl p = new ProjetDAOImpl();
-	private EtudiantDAOImpl e = new EtudiantDAOImpl();
+	private UtilService utilS = ServiceFactory.getUtilService();
 
 	public void home_countEtudiant() {
-		Count_totaletudiant.setText(String.valueOf(e.getTotalEtudiants()));
+		Count_totaletudiant.setText(String.valueOf(utilS.getTotalEtudiants()));
 	}
 
 	public void home_countProjet() {
-		count_totalprojet.setText(String.valueOf(p.getTotalProjets()));
+		count_totalprojet.setText(String.valueOf(utilS.getTotalProjets()));
+	}
+	
+	public void home_countAvantProjet() {
+		count_avantprojet.setText(String.valueOf(utilS.getNbprojetRemisAvantDate()));
+	}
+	
+	public void home_countApresProjet() {
+		count_apresprojet.setText(String.valueOf(utilS.getNbprojetRemisApresDate()));
 	}
 
 	private FormationController formationController = new FormationController();
@@ -98,6 +105,8 @@ public class DashboardController implements Initializable {
 				home_btn, binome_btn, etudiant_btn, projet_btn, note_btn, formation_btn);
 		home_countEtudiant();
 		home_countProjet();
+		home_countAvantProjet();
+		home_countApresProjet();
 	}
 
 	/**

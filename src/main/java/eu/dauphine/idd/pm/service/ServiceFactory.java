@@ -9,6 +9,8 @@ public class ServiceFactory {
     private static ProjetService projetService;
     private static BinomeProjetService binomeProjetService;
     private static NotesService notesService;
+    
+    private static UtilService utilService;
 
     public static FormationService getFormationService() {
         if (formationService == null) {
@@ -43,5 +45,12 @@ public class ServiceFactory {
         	notesService = new NotesServiceImpl();
         }
         return notesService;
+    }
+    
+    public static UtilService getUtilService() {
+        if (utilService == null) {
+        	utilService = new UtilServiceImpl();
+        }
+        return utilService;
     }
 }
