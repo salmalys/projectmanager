@@ -109,7 +109,7 @@
 						<Button fx:id="Back_formation" layoutX="26.0" layoutY="457.0" mnemonicParsing="false" onAction="#handleBackFormation" prefHeight="32.0" prefWidth="67.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Retour" />
 					</children>
 				</AnchorPane>
-				<AnchorPane fx:id="tmp_updateformation" layoutX="415.0" layoutY="1.0" prefHeight="500.0" prefWidth="409.0" stylesheets="@../css/dashboard.css">
+				<AnchorPane fx:id="tmp_updateformation" layoutX="457.0" layoutY="8.0" prefHeight="513.0" prefWidth="409.0" stylesheets="@../css/dashboard.css">
 					<styleClass>
 						<String fx:value="shadow" />
 						<String fx:value="white-bg" />

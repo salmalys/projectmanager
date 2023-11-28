@@ -96,6 +96,10 @@ public class DashboardController implements Initializable {
 	public void home_countApresProjet() {
 		count_apresprojet.setText(String.valueOf(utilS.getNbprojetRemisApresDate()));
 	}
+	
+	public void home_countBinome() {
+		count_totalbinome.setText(String.valueOf(utilS.getNbBinome()));
+	}
 
 	private FormationController formationController = new FormationController();
 
@@ -107,6 +111,7 @@ public class DashboardController implements Initializable {
 		home_countProjet();
 		home_countAvantProjet();
 		home_countApresProjet();
+		home_countBinome();
 	}
 
 	/**
