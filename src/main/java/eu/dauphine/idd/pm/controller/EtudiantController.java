@@ -238,34 +238,31 @@ public class EtudiantController implements Initializable {
 	// l'interface graphique
 	@FXML
 	public void searchEtudiant() {
-		if (search_Etudiant != null) {
-			FilteredList<Etudiant> filter = new FilteredList<>(addEtudiant, e -> true);
+	    FilteredList<Etudiant> filter = new FilteredList<>(addEtudiant, e -> true);
 
-			search_Etudiant.textProperty().addListener((observable, oldValue, newValue) -> {
-				filter.setPredicate(predData -> {
-					if (newValue == null || newValue.isEmpty()) {
-						return true;
-					}
-					String searchKey = newValue.toLowerCase();
+	    search_Etudiant.textProperty().addListener((observable, oldValue, newValue) -> {
+	        filter.setPredicate(predData -> {
+	            if (newValue == null || newValue.isEmpty()) {
+	                return true;
+	            }
+	            String searchKey = newValue.toLowerCase();
 
-					// Check if any of the fields contain the search keyword
-					boolean idMatches = Integer.toString(predData.getIdEtudiant()).contains(searchKey);
-					boolean nomMatches = predData.getNom().toLowerCase().contains(searchKey);
-					boolean prenomMatches = predData.getPrenom().toLowerCase().contains(searchKey);
-					boolean nomFormationMatches = predData.getFormation().getNom().toLowerCase().contains(searchKey);
-					boolean promotionMatches = predData.getFormation().getPromotion().toLowerCase().contains(searchKey);
+	            // Check if any of the fields contain the search keyword
+	            boolean idMatches = Integer.toString(predData.getIdEtudiant()).contains(searchKey);
+	            boolean nomMatches = predData.getNom().toLowerCase().contains(searchKey);
+	            boolean prenomMatches = predData.getPrenom().toLowerCase().contains(searchKey);
+	            boolean nomFormationMatches = predData.getFormation().getNom().toLowerCase().contains(searchKey);
+	            boolean promotionMatches = predData.getFormation().getPromotion().toLowerCase().contains(searchKey);
 
-					return idMatches || nomMatches || prenomMatches || nomFormationMatches || promotionMatches;
-				});
-			});
+	            return idMatches || nomMatches || prenomMatches || nomFormationMatches || promotionMatches;
+	        });
 
-			SortedList<Etudiant> sortedList = new SortedList<>(filter);
-			sortedList.comparatorProperty().bind(tableEtudiant.comparatorProperty());
+	        SortedList<Etudiant> sortedList = new SortedList<>(filter);
+	        sortedList.comparatorProperty().bind(tableEtudiant.comparatorProperty());
 
-			tableEtudiant.setItems(sortedList);
-		}
+	        tableEtudiant.setItems(sortedList);
+	    });
 	}
-
 	@FXML
 	public void selectEtudient() {
 

@@ -205,7 +205,7 @@ public class FormationController implements Initializable {
 
 					addformationshow();
 					addformationReset();
-					SearchFormation();
+					
 
 				}
 			}
@@ -410,7 +410,6 @@ public class FormationController implements Initializable {
 			tmp_btnformation.setVisible(false);
 			addformationReset2();
 			addformationReset();
-
 			addPromotionList2();
 		}
 
@@ -438,7 +437,6 @@ public class FormationController implements Initializable {
 			tmp_updateformation.setVisible(true);
 			tmp_btnformation.setVisible(false);
 			addformationReset();
-
 			addPromotionList();
 		}
 	}
@@ -541,6 +539,7 @@ public class FormationController implements Initializable {
 		addformationshow();
 		addPromotionList();
 		addPromotionList2();
+		
 
 	}
 

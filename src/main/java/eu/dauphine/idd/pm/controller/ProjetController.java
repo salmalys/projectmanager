@@ -14,6 +14,8 @@ import eu.dauphine.idd.pm.model.Projet;
 import eu.dauphine.idd.pm.service.ProjetService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -201,6 +203,38 @@ public class ProjetController implements Initializable {
 			e.printStackTrace();
 		}
 	}
+	@FXML
+	public void searchProjet() {
+	    if (search_projet != null) {
+	        FilteredList<Projet> filter = new FilteredList<>(addprojet, e -> true);
+
+	        search_projet.textProperty().addListener((observable, oldValue, newValue) -> {
+	            filter.setPredicate(predData -> {
+	                if (newValue == null || newValue.isEmpty()) {
+	                    return true;
+	                }
+	                String searchKey = newValue.toLowerCase();
+	                String idProjet = String.valueOf(predData.getIdProjet());
+
+	                // Check if any of the fields contain the search keyword
+	                boolean idMatches = idProjet.contains(searchKey);
+	                boolean matiereMatches = predData.getNomMatiere().toLowerCase().contains(searchKey);
+	                boolean sujetMatches = predData.getSujet().toLowerCase().contains(searchKey);
+
+	             
+
+	                return idMatches || matiereMatches || sujetMatches;
+	            });
+	        });
+
+	        SortedList<Projet> sortedList = new SortedList<>(filter);
+	        sortedList.comparatorProperty().bind(tableProjet.comparatorProperty());
+
+	        tableProjet.setItems(sortedList);
+	      
+	    }
+	}
+
 
 	// Liste d'éléments de projet
 	private ObservableList<Projet> addprojet;

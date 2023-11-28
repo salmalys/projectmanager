@@ -102,8 +102,7 @@ public class NoteController implements Initializable {
 	@FXML
 	private AnchorPane tmp_tableBinomeR;
 
-	@FXML
-	private AnchorPane tmp_tableshowNotes;
+
 	@FXML
 	private TextField id_binomeAffiche;
 
@@ -297,8 +296,8 @@ public class NoteController implements Initializable {
 	private void handleBtnAfficherNote(ActionEvent event) {
 		if (event.getSource() == btn_affichernote) {
 			tmp_showNotes.setVisible(true);
-			tmp_tableshowNotes.setVisible(true);
-			tmp_tableBinomeR.setVisible(false);
+	
+			tmp_tableBinomeR.setVisible(true);
 			tmp_addNote.setVisible(false);
 			tmp_modifierNote.setVisible(false);
 			tmp_supprimerNote.setVisible(false);
@@ -312,10 +311,10 @@ public class NoteController implements Initializable {
 
 			tmp_modifierNote.setVisible(true);
 			tmp_showNotes.setVisible(false);
-			tmp_tableBinomeR.setVisible(false);
+			tmp_tableBinomeR.setVisible(true);
 			tmp_addNote.setVisible(false);
 			tmp_supprimerNote.setVisible(false);
-			tmp_tableshowNotes.setVisible(true);
+	
 			tmp_optionNote.setVisible(false);
 		}
 	}
@@ -326,9 +325,9 @@ public class NoteController implements Initializable {
 			tmp_supprimerNote.setVisible(true);
 			tmp_modifierNote.setVisible(false);
 			tmp_showNotes.setVisible(false);
-			tmp_tableBinomeR.setVisible(false);
+			tmp_tableBinomeR.setVisible(true);
 			tmp_addNote.setVisible(false);
-			tmp_tableshowNotes.setVisible(true);
+		
 			tmp_optionNote.setVisible(false);
 		}
 	}
@@ -354,7 +353,7 @@ public class NoteController implements Initializable {
 		tmp_supprimerNote.setVisible(false);
 		tmp_showNotes.setVisible(false);
 		tmp_tableBinomeR.setVisible(true);
-		tmp_tableshowNotes.setVisible(false);
+	
 	}
 
 	@Override
