@@ -10,16 +10,17 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.dauphine.idd.pm.controller.FormationController">
 	<children>
-		<AnchorPane layoutX="36.0" layoutY="23.0" prefHeight="507.0" prefWidth="827.0" stylesheets="@../css/dashboard.css">
+		<AnchorPane layoutX="20.0" layoutY="14.0" prefHeight="525.0" prefWidth="864.0" stylesheets="@../css/dashboard.css">
 			<styleClass>
 				<String fx:value="shadow" />
 				<String fx:value="white-bg" />
 			</styleClass>
 			<children>
-				<AnchorPane layoutX="-10.0" prefHeight="507.0" prefWidth="419.0" stylesheets="@../css/dashboard.css">
+				<AnchorPane layoutX="7.0" layoutY="7.0" prefHeight="513.0" prefWidth="449.0" stylesheets="@../css/dashboard.css">
 					<styleClass>
 						<String fx:value="shadow" />
 						<String fx:value="white-bg" />
@@ -45,68 +46,70 @@
 								<FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="1.5em" />
 							</graphic>
 						</Button>
-						<Button fx:id="Printformation" layoutX="234.0" layoutY="54.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="77.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
-							<graphic>
-								<FontAwesomeIconView fill="WHITE" glyphName="PRINT" size="1.5em" />
-							</graphic>
-						</Button>
 					</children>
 				</AnchorPane>
-				<AnchorPane fx:id="tmp_btnformation" layoutX="416.0" prefHeight="502.0" prefWidth="409.0" stylesheets="@../css/dashboard.css" visible="false">
+				<AnchorPane fx:id="tmp_btnformation" layoutX="466.0" layoutY="8.0" prefHeight="513.0" prefWidth="391.0" stylesheets="@../css/dashboard.css" visible="false">
 					<styleClass>
 						<String fx:value="shadow" />
 						<String fx:value="white-bg" />
 					</styleClass>
 					<children>
-						<Button fx:id="btn_tmpupdate" layoutX="249.0" layoutY="356.0" mnemonicParsing="false" onAction="#handleBtnTmpUpdate" prefHeight="36.0" prefWidth="136.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier Formation" />
-						<Button fx:id="btn_tmpadd" layoutX="52.0" layoutY="356.0" mnemonicParsing="false" onAction="#handleBtnTmpAdd" prefHeight="36.0" prefWidth="139.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter Formation" />
-						<Button fx:id="RemoveFormation" layoutX="68.0" layoutY="233.0" mnemonicParsing="false" onAction="#deleteFormation" prefHeight="36.0" prefWidth="108.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Remove" />
-						<TextField fx:id="IdFormation" layoutX="160.0" layoutY="38.0" prefHeight="25.0" prefWidth="177.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-						<Label layoutX="52.0" layoutY="42.0" text="ID Formation :">
+						<Button fx:id="btn_tmpupdate" layoutX="219.0" layoutY="196.0" mnemonicParsing="false" onAction="#handleBtnTmpUpdate" prefHeight="30.0" prefWidth="143.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier Formation" />
+						<Button fx:id="btn_tmpadd" layoutX="33.0" layoutY="196.0" mnemonicParsing="false" onAction="#handleBtnTmpAdd" prefHeight="30.0" prefWidth="143.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter Formation" />
+						<Button fx:id="RemoveFormation" layoutX="84.0" layoutY="434.0" mnemonicParsing="false" onAction="#deleteFormation" prefHeight="33.0" prefWidth="237.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Supprimer la formation sélectionné" />
+						<TextField fx:id="IdFormation" layoutX="115.0" layoutY="384.0" prefHeight="25.0" prefWidth="177.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<Label layoutX="21.0" layoutY="388.0" text="ID Formation :">
 							<font>
 								<Font name="Tahoma" size="14.0" />
 							</font>
 						</Label>
-						<Button fx:id="Clearformation1" layoutX="269.0" layoutY="233.0" mnemonicParsing="false" onAction="#addformationReset" prefHeight="36.0" prefWidth="77.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+						<Button fx:id="Clearformation1" layoutX="302.0" layoutY="384.0" mnemonicParsing="false" onAction="#addformationReset" prefHeight="26.0" prefWidth="56.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                  <Text layoutX="80.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sélectionner une des options ">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Text>
+                  <Label layoutX="27.0" layoutY="41.0" prefHeight="38.0" prefWidth="352.0" text="Gestion des formations">
+                     <font>
+                        <Font name="Tahoma Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <Text layoutX="101.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sélectionner une formation">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Text>
 					</children>
 				</AnchorPane>
-				<AnchorPane fx:id="tmp_addformation" layoutX="416.0" layoutY="1.0" prefHeight="503.0" prefWidth="409.0" stylesheets="@../css/dashboard.css">
+				<AnchorPane fx:id="tmp_addformation" layoutX="465.0" layoutY="8.0" prefHeight="510.0" prefWidth="396.0" stylesheets="@../css/dashboard.css" visible="false">
 					<styleClass>
 						<String fx:value="shadow" />
 						<String fx:value="white-bg" />
 					</styleClass>
 					<children>
-						<TextField fx:id="Nomformation2" layoutX="166.0" layoutY="94.0" prefHeight="25.0" prefWidth="177.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-						<Label layoutX="69.0" layoutY="26.0" text="Ajouter Une Formation">
+						<TextField fx:id="Nomformation2" layoutX="160.0" layoutY="148.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<Label layoutX="45.0" layoutY="52.0" text="Ajouter une Formation">
 							<font>
-								<Font name="Tahoma Bold" size="24.0" />
+								<Font name="Tahoma Bold" size="28.0" />
 							</font>
 						</Label>
-						<Label layoutX="40.0" layoutY="98.0" text="Nom Formation :">
-							<font>
-								<Font name="Tahoma" size="14.0" />
-							</font>
-						</Label>
-						<ComboBox fx:id="PromotionList2" layoutX="166.0" layoutY="197.0" onAction="#addPromotionList2" prefHeight="25.0" prefWidth="177.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-						<Label layoutX="69.0" layoutY="201.0" text="Promotion :">
+						<Label layoutX="45.0" layoutY="150.0" text="Nom Formation :">
 							<font>
 								<Font name="Tahoma" size="14.0" />
 							</font>
 						</Label>
-						<Button fx:id="Clearformation2" layoutX="265.0" layoutY="374.0" mnemonicParsing="false" onAction="#addformationReset2" prefHeight="36.0" prefWidth="77.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
-						<Button fx:id="AddFormation" layoutX="127.0" layoutY="374.0" mnemonicParsing="false" onAction="#addFormation" prefHeight="36.0" prefWidth="77.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Add">
-							<graphic>
-								<FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="1.5em" />
-							</graphic>
-						</Button>
-						<Button fx:id="Back_formation" layoutX="331.0" layoutY="460.0" mnemonicParsing="false" onAction="#handleBackFormation" prefHeight="36.0" prefWidth="77.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css">
-							<graphic>
-								<FontAwesomeIconView glyphName="REFRESH" size="1.5em" />
-							</graphic>
-						</Button>
+						<ComboBox fx:id="PromotionList2" layoutX="160.0" layoutY="225.0" onAction="#addPromotionList2" prefHeight="25.0" prefWidth="178.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<Label layoutX="45.0" layoutY="225.0" text="Promotion :">
+							<font>
+								<Font name="Tahoma" size="14.0" />
+							</font>
+						</Label>
+						<Button fx:id="Clearformation2" layoutX="278.0" layoutY="312.0" mnemonicParsing="false" onAction="#addformationReset2" prefHeight="20.0" prefWidth="56.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+						<Button fx:id="AddFormation" layoutX="296.0" layoutY="457.0" mnemonicParsing="false" onAction="#addFormation" prefHeight="32.0" prefWidth="76.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter" />
+						<Button fx:id="Back_formation" layoutX="26.0" layoutY="457.0" mnemonicParsing="false" onAction="#handleBackFormation" prefHeight="32.0" prefWidth="67.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Retour" />
 					</children>
 				</AnchorPane>
-				<AnchorPane fx:id="tmp_updateformation" layoutX="415.0" layoutY="1.0" prefHeight="500.0" prefWidth="409.0" stylesheets="@../css/dashboard.css" visible="false">
+				<AnchorPane fx:id="tmp_updateformation" layoutX="415.0" layoutY="1.0" prefHeight="500.0" prefWidth="409.0" stylesheets="@../css/dashboard.css">
 					<styleClass>
 						<String fx:value="shadow" />
 						<String fx:value="white-bg" />

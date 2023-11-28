@@ -86,8 +86,21 @@ public class NotesServiceImpl implements NotesService {
         }
   	
     	double[] notesFinales = new double[2];
-    	notesFinales[0] = notes.getNoteSoutenanceMembre1()*0.5 +  notes.getNoteRapport()*0.5 - penalite;
-    	notesFinales[1] = notes.getNoteSoutenanceMembre2()*0.5 +  notes.getNoteRapport()*0.5 - penalite;
+    	double notePartielle1 = notes.getNoteSoutenanceMembre1() * 0.5 + notes.getNoteRapport() * 0.5;
+
+    	if (notePartielle1 > penalite) {
+    	    notesFinales[0] = notePartielle1 - penalite;
+    	} else {
+    	    notesFinales[0] = 0;
+    	}   
+    	
+    	double notePartielle2 = notes.getNoteSoutenanceMembre2() * 0.5 + notes.getNoteRapport() * 0.5;
+
+    	if (notePartielle2 > penalite) {
+    	    notesFinales[0] = notePartielle2 - penalite;
+    	} else {
+    	    notesFinales[0] = 0;
+    	} 
     	
     	return notesFinales;
     }
