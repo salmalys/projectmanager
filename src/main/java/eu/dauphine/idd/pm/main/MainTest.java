@@ -18,7 +18,7 @@ import eu.dauphine.idd.pm.service.ServiceFactory;
 
 public class MainTest {
 	public static void main(String[] args) {
-		String dbPath = "./src/main/resources/DataBaseGestion.db" ;
+		String dbPath = "./src/main/resources/DataBaseGestionProjet.db" ;
 		//Si argument en ligne de commande on recupere le chemin de la base de donnees
 		if (args.length > 0) {
 			dbPath = args[0]; 
@@ -70,8 +70,15 @@ public class MainTest {
 		
 		BinomeProjetService bS = ServiceFactory.getBinomeProjetService();
 		BinomeProjetDAO b = DAOFactory.getBinomeProjetDAO();
-		//b.createBinomeProjet(1, 1, 1, null);
-		System.out.println(bS.listBinomeProjets());
+		Etudiant saber = e.findByName("KHAROUF", "Saber");
+		//Etudiant saber = e.findById(4);
+		//Etudiant youssef = e.findByName("LAHRACH", "Youssef");
+		System.out.println(saber);
+		//System.out.println(youssef);
+		//System.out.println(e.findAll());
+		//Binome binome = new Binome()
+		//b.create();
+		//System.out.println(bS.listBinomeProjets());
 		//System.out.println(b.findById(1));
 		
 		NotesService n = ServiceFactory.getNotesService();

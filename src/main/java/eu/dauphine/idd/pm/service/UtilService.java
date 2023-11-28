@@ -5,4 +5,5 @@ public interface UtilService {
 	public int getTotalEtudiants();
 	public int getNbprojetRemisAvantDate();
 	public int getNbprojetRemisApresDate();
+	public int getNbBinome();
 }

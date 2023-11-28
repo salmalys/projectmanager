@@ -50,7 +50,8 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
 	public void create(BinomeProjet binome) {
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BINOME)) {
-
+			
+			System.out.println(binome);
 			preparedStatement.setInt(3, binome.getProjet().getIdProjet());
 			preparedStatement.setInt(1, binome.getMembre1().getIdEtudiant());
 			preparedStatement.setInt(2, binome.getMembre2().getIdEtudiant());

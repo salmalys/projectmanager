@@ -14,6 +14,7 @@ public class UtilServiceImpl implements UtilService {
 	private static final String COUNT_NBETUDIANT = "SELECT COUNT(ID_Etudiant) AS totalEtudiants FROM Etudiant";
 	private static final String COUNT_REMISEAVANTDATE = "SELECT COUNT(*) AS NombreProjetsRemisATemps FROM BinomeProjet BP JOIN Projet P ON BP.ID_Projet = P.ID_Projet WHERE SUBSTR(BP.Date_Remise_Effective, 7, 4) || '-' || SUBSTR(BP.Date_Remise_Effective, 4, 2) || '-' || SUBSTR(BP.Date_Remise_Effective, 1, 2) <= SUBSTR(P.Date_Remise_Prevue, 7, 4) || '-' || SUBSTR(P.Date_Remise_Prevue, 4, 2) || '-' || SUBSTR(P.Date_Remise_Prevue, 1, 2);";
 	private static final String COUNT_REMISEAPRESDATE = "SELECT COUNT(*) AS NombreProjetsRemisRetard FROM BinomeProjet BP JOIN Projet P ON BP.ID_Projet = P.ID_Projet WHERE SUBSTR(BP.Date_Remise_Effective, 7, 4) || '-' || SUBSTR(BP.Date_Remise_Effective, 4, 2) || '-' || SUBSTR(BP.Date_Remise_Effective, 1, 2)  > SUBSTR(P.Date_Remise_Prevue, 7, 4) || '-' || SUBSTR(P.Date_Remise_Prevue, 4, 2) || '-' || SUBSTR(P.Date_Remise_Prevue, 1, 2);";
+	private static final String COUNT_NBBINOME = "SELECT COUNT(ID_BinomeProjet) AS totalBinomes FROM BinomeProjet";
 
 	private Connection getConnection() {
 		try {
@@ -98,6 +99,25 @@ public class UtilServiceImpl implements UtilService {
 	    }
 
 	    return totalProjets;
+	}
+	
+	@Override
+	public int getNbBinome() {
+	    int totalBinome = 0;
+
+	    try (Connection connection = getConnection();
+	         PreparedStatement preparedStatement = connection.prepareStatement(COUNT_NBBINOME);
+	         ResultSet resultSet = preparedStatement.executeQuery()) {
+
+	        if (resultSet.next()) {
+	        	totalBinome = resultSet.getInt("totalBinomes");
+	        }
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return totalBinome;
 	}
 	
 }
