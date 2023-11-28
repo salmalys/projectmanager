@@ -205,6 +205,7 @@ public class ProjetController implements Initializable {
 	}
 	@FXML
 	public void searchProjet() {
+		
 	    if (search_projet != null) {
 	        FilteredList<Projet> filter = new FilteredList<>(addprojet, e -> true);
 
