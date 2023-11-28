@@ -72,5 +72,10 @@ public class EtudiantServiceImpl implements EtudiantService {
 		    }
 		
 	}
+	public static void main(String[] args) {
+		
+		EtudiantServiceImpl d=new EtudiantServiceImpl();
+		//System.out.println(d.getEtudiantIdByNameAndPrenom("SAIS", "Hamz"));
+	}
 
 }

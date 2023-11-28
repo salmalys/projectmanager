@@ -257,6 +257,16 @@ public class ProjetController implements Initializable {
 //			}
 		}
 	}
+	// Refresh les donnees de tableau dans UI
+		@FXML
+		public void refreshData() {
+			try {
+				addProjetShow();
+				showAlert(AlertType.INFORMATION, "Refresh", "Data refreshed successfully!");
+			} catch (Exception e) {
+				showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
+			}
+		}
 
 	// Add a method to reset Projet fields
 	@FXML

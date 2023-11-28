@@ -1,5 +1,6 @@
 package eu.dauphine.idd.pm.dao.impl;
 
+import eu.dauphine.idd.pm.controller.Data;
 import eu.dauphine.idd.pm.dao.ProjetDAO;
 
 import java.sql.Connection;
@@ -100,6 +101,7 @@ public class ProjetDAOImpl implements ProjetDAO {
 				String nomMatiere = rs.getString("Nom_Matiere");
 				String sujet = rs.getString("Sujet");
 				Date date = formatter.parse(rs.getString("Date_Remise_Prevue"));
+				
 				Projet projet = new Projet(id, nomMatiere, sujet, date);
 				projets.add(projet);
 			}
@@ -187,7 +189,11 @@ public class ProjetDAOImpl implements ProjetDAO {
 
 	    return totalProjets;
 	}
-
+	
+	public static void main(String[] args) {
+		ProjetDAOImpl l=new ProjetDAOImpl();
+		System.out.println(l.findAll());
+	}
 
 
 }

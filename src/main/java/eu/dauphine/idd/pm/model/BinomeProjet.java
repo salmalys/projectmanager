@@ -49,7 +49,7 @@ public class BinomeProjet {
 	}
 
 	public void setMembre2(Etudiant membre2) {
-		this.membre2 = membre1;
+		this.membre2 = membre2;
 	}
 
 	public Projet getProjet() {
@@ -70,16 +70,19 @@ public class BinomeProjet {
 
 	@Override
 	public String toString() {
-		SimpleDateFormat newFormatter = new SimpleDateFormat("dd-MM-yyyy");
-		String formattedDate;
-		if (this.dateRemiseEffective != null) {
-			formattedDate = newFormatter.format(this.dateRemiseEffective);
-		}else {
-			formattedDate = "-";
-		}
-		return "Binome [Id = " + this.idBinome + ", membre1 = " + this.membre1.toString() + ", membre2 = "
-				+ this.membre2.toString() + ", projet = " + this.projet.toString() + ", dateRemiseEffective ="
-				+ formattedDate + "]";
-	}
+	    StringBuilder builder = new StringBuilder();
+	    builder.append("BinomeProjet [idBinome=").append(idBinome).append(", membre1=").append(membre1)
+	            .append(", membre2=").append(membre2).append(", projet=").append(projet);
 
+	    if (dateRemiseEffective != null) {
+	        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+	        String formattedDate = formatter.format(dateRemiseEffective);
+	        builder.append(", dateRemiseEffective=").append(formattedDate);
+	    } else {
+	        builder.append(", dateRemiseEffective=null");
+	    }
+
+	    builder.append("]");
+	    return builder.toString();
+	}
 }

@@ -129,122 +129,104 @@ public class BinomeController implements Initializable {
 
 	@FXML
 	public void addBinome() {
-		try {
-			String etudiant1 = Etudiant1List.getSelectionModel().getSelectedItem();
-			String etudiant2 = Etudiant2List.getSelectionModel().getSelectedItem();
-			String projet = Projet.getSelectionModel().getSelectedItem();
+	    try {
+	        String etudiant1 = Etudiant1List.getSelectionModel().getSelectedItem();
+	        String etudiant2 = Etudiant2List.getSelectionModel().getSelectedItem();
+	        String projet = Projet.getSelectionModel().getSelectedItem();
 
-			if (!isInputValid(etudiant1, etudiant2, projet)) {
-				return;
-			}
+	        if (!isInputValid(etudiant1, etudiant2, projet)) {
+	            showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+	        } else {
+	            String[] etudiant1Parts = etudiant1.split(" ");
+	            String nomEtudiant1 = etudiant1Parts[0];
+	            String prenomEtudiant1 = etudiant1Parts[1];
 
-			// Extraction des noms et prénoms des étudiants à partir des ComboBox
-			String[] etudiant1Parts = etudiant1.split(" ");
-			String nomEtudiant1 = etudiant1Parts[0];
-			String prenomEtudiant1 = etudiant1Parts[1];
+	            String[] etudiant2Parts = etudiant2.split(" ");
+	            String nomEtudiant2 = etudiant2Parts[0];
+	            String prenomEtudiant2 = etudiant2Parts[1];
 
-			String[] etudiant2Parts = etudiant2.split(" ");
-			String nomEtudiant2 = etudiant2Parts[0];
-			String prenomEtudiant2 = etudiant2Parts[1];
+	            String[] projetParts = projet.split(" - ");
+	            String nomMatiere = projetParts[0];
+	            String sujetProjet = projetParts[1];
 
-			// Extraction du nom du sujet et de la matière du projet à partir du ComboBox
-			String[] projetParts = projet.split(" - ");
-			String nomMatiere = projetParts[0];
-			String sujetProjet = projetParts[1];
+	            int idEtudiant1 = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant1, prenomEtudiant1);
+	            int idEtudiant2 = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant2, prenomEtudiant2);
+	            int idProjet = projetS.getProjetIdByNomMatiereAndSujet(nomMatiere, sujetProjet);
 
-			System.out.println(nomEtudiant1 + " " + prenomEtudiant1);
-			System.out.println(nomEtudiant2 + " " + prenomEtudiant2);
-			// Vous devrez probablement ajouter des méthodes pour obtenir les ID à partir
-			// des noms et prénoms
-			int idEtudiant1 = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant1, prenomEtudiant1);
-			int idEtudiant2 = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant2, prenomEtudiant2);
-			int idProjet = projetS.getProjetIdByNomMatiereAndSujet(nomMatiere, sujetProjet);
-			System.out.println(idEtudiant1 + " " + idEtudiant2 + " " + idProjet);
+	            int result = binomeS.createBinomeProjet(idEtudiant1, idEtudiant2, idProjet, null);
 
-			// Appeler le service pour créer le binôme
-			int result = binomeS.createBinomeProjet(idEtudiant1, idEtudiant2, idProjet, null);
-
-			
-
-			// Gérer le résultat
-			switch (result) {
-			case 0: // Succès
-				showAlert(AlertType.INFORMATION, "Success", "Binome added successfully!");
-				addShowBinome();
-				resetBinomeFields(); // Réinitialiser les champs après l'ajout
-				break;
-			case 1:
-				showAlert(AlertType.ERROR, "Error Message", "An error occurred while creating the binome.");
-				break;
-			default:
-				showAlert(AlertType.ERROR, "Error Message", "An unexpected error occurred.");
-				break;
-			}
-
-		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
-			e.printStackTrace();
-		}
+	            switch (result) {
+	                case 0:
+	                    showAlert(AlertType.INFORMATION, "Success", "Binome added successfully!");
+	                    refreshBinomeTable();
+	                    resetBinomeFields();
+	                    break;
+	                case 1:
+	                    showAlert(AlertType.ERROR, "Error Message", "An error occurred while creating the binome.");
+	                    break;
+	                default:
+	                    showAlert(AlertType.ERROR, "Error Message", "An unexpected error occurred.");
+	                    break;
+	            }
+	        }
+	    } catch (Exception e) {
+	        showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
+	        e.printStackTrace();
+	    }
 	}
+
 
 	@FXML
 	public void updateBinome() {
-		try {
+	    try {
+	        String idBinomeString = id_binome.getText();
+	        String etudiant1Name = Etudiant1List2.getValue();
+	        String etudiant2Name = Etudiant2List2.getValue();
+	        String projetName = Projet2.getValue();
 
-			String idBinomeString = id_binome.getText();
-			String etudiant1Name = Etudiant1List2.getValue();
-			String etudiant2Name = Etudiant2List2.getValue();
-			String projetName = Projet2.getValue();
+	        Alert alert;
+	        if (!isInputValid(projetName, etudiant2Name, etudiant1Name)) {
+	            showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+	        } else {
+	            alert = new Alert(AlertType.CONFIRMATION);
+	            alert.setTitle("Confirmation Message");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Are you sure you want to Update ID Binome: " + idBinomeString);
 
-			Alert alert;
-			if (!isInputValid(projetName, etudiant2Name, etudiant1Name)) {
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
-			} else {
-				alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Confirmation Message");
-				alert.setHeaderText(null);
-				alert.setContentText("Are you sure you want to Update ID Binome: " + idBinomeString);
+	            Optional<ButtonType> option = alert.showAndWait();
+	            if (option.isPresent() && option.get().equals(ButtonType.OK)) {
+	                String[] etudiant1Parts = etudiant1Name.split(" ");
+	                String nomEtudiant1 = etudiant1Parts[0];
+	                String prenomEtudiant1 = etudiant1Parts[1];
 
-				Optional<ButtonType> option = alert.showAndWait();
-				if (option.isPresent() && option.get().equals(ButtonType.OK)) {
-					// Splitting the names into first name and last name
-					String[] etudiant1Parts = etudiant1Name.split(" ");
-					String nomEtudiant1 = etudiant1Parts[0];
-					String prenomEtudiant1 = etudiant1Parts[1];
+	                String[] etudiant2Parts = etudiant2Name.split(" ");
+	                String nomEtudiant2 = etudiant2Parts[0];
+	                String prenomEtudiant2 = etudiant2Parts[1];
 
-					String[] etudiant2Parts = etudiant2Name.split(" ");
-					String nomEtudiant2 = etudiant2Parts[0];
-					String prenomEtudiant2 = etudiant2Parts[1];
+	                String[] projetParts = projetName.split(" - ");
+	                String nomMatiere = projetParts[0];
+	                String sujetProjet = projetParts[1];
 
-					// Splitting the projetName into nomMatiere and sujetProjet
-					String[] projetParts = projetName.split(" - ");
-					String nomMatiere = projetParts[0];
-					String sujetProjet = projetParts[1];
+	                int etudiant1Id = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant1, prenomEtudiant1);
+	                int etudiant2Id = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant2, prenomEtudiant2);
+	                int projetId = projetS.getProjetIdByNomMatiereAndSujet(nomMatiere, sujetProjet);
 
-					// Get the IDs of the selected Etudiants and Projet
-					int etudiant1Id = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant1, prenomEtudiant1);
-					int etudiant2Id = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant2, prenomEtudiant2);
-					int projetId = projetS.getProjetIdByNomMatiereAndSujet(nomMatiere, sujetProjet);
-				
-				
-					// Assuming you have an updateBinome method in your binomeS service
-					binomeS.updateBinomeProjet(Integer.valueOf(idBinomeString), etudiant1Id, etudiant2Id, projetId,
-							null);
+	                // Assuming your service method returns a boolean indicating success
+	              binomeS.updateBinomeProjet(Integer.valueOf(idBinomeString), etudiant1Id, etudiant2Id, projetId, null);
 
-					showAlert(AlertType.INFORMATION, "Information Message", "Binome Updated successfully!");
-
-					// You might want to refresh or update your Binome TableView after the update
-					refreshBinomeTable();
-
-					// You might want to clear the Binome fields after the update
-					resetBinomeFields();
-				}
-			}
-		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
-			e.printStackTrace();
-		}
+	             
+	                    showAlert(AlertType.INFORMATION, "Success", "Binome Updated successfully!");
+	                    refreshBinomeTable();
+	                    resetBinomeFields(); // Reset the input fields
+	             
+	            }
+	        }
+	    } catch (Exception e) {
+	        showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
+	        e.printStackTrace();
+	    }
 	}
+
 
 	@FXML
 	public void deleteBinome() {
@@ -280,38 +262,39 @@ public class BinomeController implements Initializable {
 
 	@FXML
 	public void updateDateRemiseProjet() {
-		try {
-			String idBinomeString = Id_Binome2.getText();
+	    try {
+	        String idBinomeString = Id_Binome2.getText();
 
-			if (idBinomeString.isEmpty() || DateRemise.getValue() == null) {
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all fields");
-			} else {
-				java.sql.Date dateRemise = java.sql.Date.valueOf(DateRemise.getValue());
+	        if (idBinomeString.isEmpty() || DateRemise.getValue() == null) {
+	            showAlert(AlertType.ERROR, "Error Message", "Please fill all fields");
+	        } else {
+	            LocalDate localDate = DateRemise.getValue();
+	            java.sql.Date dateRemise = null;
+	            if (localDate != null) {
+	                dateRemise = java.sql.Date.valueOf(localDate);
+	            }
 
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Confirmation Message");
-				alert.setHeaderText(null);
-				alert.setContentText(
-						"Are you sure you want to update the date of remise for Binome ID: " + idBinomeString);
+	            Alert alert = new Alert(AlertType.CONFIRMATION);
+	            alert.setTitle("Confirmation Message");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Are you sure you want to update the date of remise for Binome ID: " + idBinomeString);
 
-				Optional<ButtonType> option = alert.showAndWait();
-				if (option.isPresent() && option.get().equals(ButtonType.OK)) {
-					// Call your service method to update the date of remise
-					binomeS.updateDateRemise(Integer.valueOf(idBinomeString), dateRemise);
+	            Optional<ButtonType> option = alert.showAndWait();
+	            if (option.isPresent() && option.get().equals(ButtonType.OK)) {
+	                binomeS.updateDateRemise(Integer.valueOf(idBinomeString), dateRemise);
 
-					showAlert(AlertType.INFORMATION, "Information Message", "Date of Remise Updated successfully!");
-
-					// You might want to refresh or update your Binome TableView after the update
-					refreshBinomeTable();
-
-					// Clear the fields after the update
-					resetDateRemiseFields();
-				}
-			}
-		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
-			e.printStackTrace();
-		}
+	               
+	                    showAlert(AlertType.INFORMATION, "Information Message", "Date of Remise Updated successfully!");
+	                    refreshBinomeTable();
+	                    resetDateRemiseFields(); // Reset the date remise input fields
+	               
+	                
+	            }
+	        }
+	    } catch (Exception e) {
+	        showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
+	        e.printStackTrace();
+	    }
 	}
 
 	private void resetDateRemiseFields() {
@@ -324,47 +307,61 @@ public class BinomeController implements Initializable {
 
 	@FXML
 	public void addShowBinome() {
-	    addBinome = binomeS.listBinomeProjets();
+		addBinome = binomeS.listBinomeProjets();
+		
 
-	    col_idBinome.setCellValueFactory(new PropertyValueFactory<>("idBinome"));
+		col_idBinome.setCellValueFactory(new PropertyValueFactory<>("idBinome"));
 
-	    col_Etudiant1.setCellValueFactory(cellData -> {
-	        Etudiant membre1 = cellData.getValue().getMembre1();
-	        if (membre1 != null) {
-	            return new SimpleStringProperty(membre1.getNom() + " " + membre1.getPrenom());
-	        } else {
-	            return new SimpleStringProperty("_");
-	        }
-	    });
+		col_Etudiant1.setCellValueFactory(cellData -> {
+			Etudiant membre1 = cellData.getValue().getMembre1();
+			if (membre1 != null) {
+				return new SimpleStringProperty(membre1.getNom() + " " + membre1.getPrenom());
+			} else {
+				return new SimpleStringProperty("_");
+			}
+		});
 
-	    col_Etudiant2.setCellValueFactory(cellData -> {
-	        Etudiant membre2 = cellData.getValue().getMembre2();
-	        if (membre2 != null) {
-	            return new SimpleStringProperty(membre2.getNom() + " " + membre2.getPrenom());
-	        } else {
-	            return new SimpleStringProperty("_");
-	        }
-	    });
+		col_Etudiant2.setCellValueFactory(cellData -> {
+			Etudiant membre2 = cellData.getValue().getMembre2();
+			if (membre2 != null) {
+				return new SimpleStringProperty(membre2.getNom() + " " + membre2.getPrenom());
+			} else {
+				return new SimpleStringProperty("_");
+			}
+		});
+		col_NomMatiere.setCellValueFactory(cellData -> {
+			Projet projet = cellData.getValue().getProjet();
+			if (projet != null) {
+				return new SimpleStringProperty(projet.getNomMatiere());
+			} else {
+				return new SimpleStringProperty("_");
+			}
+		});
 
-	    col_NomMatiere.setCellValueFactory(
-	            cellData -> new SimpleStringProperty(cellData.getValue().getProjet().getNomMatiere()));
-	    col_Sujtprojet
-	            .setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProjet().getSujet()));
+		col_Sujtprojet.setCellValueFactory(cellData -> {
+			Projet projet = cellData.getValue().getProjet();
+			if (projet != null) {
+				return new SimpleStringProperty(projet.getSujet());
+			} else {
+				return new SimpleStringProperty("_");
+			}
+		});
+		col_DateRemiseProjet.setCellValueFactory(cellData -> {
+		    BinomeProjet binomeProjet = cellData.getValue();
+		    java.util.Date dateRemise = binomeProjet.getDateRemiseEffective();
 
-	    col_DateRemiseProjet.setCellValueFactory(cellData -> {
-	        BinomeProjet binomeProjet = cellData.getValue();
-	        java.util.Date dateRemise = binomeProjet.getDateRemiseEffective();
+		    if (dateRemise != null) {
+		        String formattedDate = newFormatter.format(dateRemise);
+		        return new SimpleObjectProperty<>(formattedDate); 
+		    } else {
+		        return new SimpleStringProperty("_");
+		    }
+		});
+	
 
-	        if (dateRemise != null) {
-	            String formattedDate = newFormatter.format(dateRemise);
-	            return new SimpleStringProperty(formattedDate);
-	        } else {
-	            return new SimpleStringProperty("_");
-	        }
-	    });
-
-	    tableBinome.setItems(addBinome);
+		tableBinome.setItems(addBinome);
 	}
+
 	@FXML
 	public void searchBinome() {
 		if (search_Binome != null) {
@@ -454,6 +451,8 @@ public class BinomeController implements Initializable {
 			tmp_updateBinome.setVisible(false);
 			tmp_DeleteBinome.setVisible(false);
 			resetBinomeFields();
+			fillProjetComboBox();
+			fillEtudiantComboBox();
 
 		}
 	}
@@ -468,6 +467,8 @@ public class BinomeController implements Initializable {
 			tmp_DeleteBinome.setVisible(true);
 			tmp_RemisBinome.setVisible(false);
 			resetBinomeFields();
+			fillProjetComboBox();
+			fillEtudiantComboBox();
 		}
 	}
 
@@ -480,6 +481,8 @@ public class BinomeController implements Initializable {
 			tmp_DeleteBinome.setVisible(false);
 			tmp_RemisBinome.setVisible(false);
 			resetBinomeFields2();
+			fillProjetComboBox();
+			fillEtudiantComboBox();
 		}
 	}
 
@@ -492,6 +495,8 @@ public class BinomeController implements Initializable {
 			tmp_DeleteBinome.setVisible(false);
 			tmp_RemisBinome.setVisible(true);
 			resetBinomeFields2();
+			fillProjetComboBox();
+			fillEtudiantComboBox();
 
 		}
 	}
@@ -519,8 +524,15 @@ public class BinomeController implements Initializable {
 		DateRemise.setValue(null);
 	}
 
-	private void refreshBinomeTable() {
-		addShowBinome();
+	// Refresh les donnees de tableau dans UI
+	@FXML
+	public void refreshBinomeTable() {
+		try {
+			addShowBinome();
+			showAlert(AlertType.INFORMATION, "Refresh", "Data refreshed successfully!");
+		} catch (Exception e) {
+			showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
+		}
 	}
 
 	// Condition qui verefier c'est nom et prenom et formation ne sont pas vide dans

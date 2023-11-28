@@ -282,6 +282,16 @@ public class EtudiantController implements Initializable {
 			PrenomEtudiant2.setText(etudiant.getPrenom());
 		}
 	}
+	// Refresh les donnees de tableau dans UI
+	@FXML
+	public void refreshData() {
+		try {
+			addEtudiantshow();
+			showAlert(AlertType.INFORMATION, "Refresh", "Data refreshed successfully!");
+		} catch (Exception e) {
+			showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
+		}
+	}
 
 	// methode qui relier l'action dans interface graphique avec le button clear
 	@FXML
