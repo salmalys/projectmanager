@@ -15,33 +15,33 @@
 	<children>
 		<AnchorPane layoutX="6.0" layoutY="8.0" prefHeight="537.0" prefWidth="885.0" stylesheets="@../css/dashboard.css">
 			<children>
-            <AnchorPane fx:id="tmp_addNote" layoutX="580.0" layoutY="12.0" prefHeight="514.0" prefWidth="301.0" stylesheets="@../css/dashboard.css" visible="false">
+            <AnchorPane fx:id="tmp_addNote" layoutX="580.0" layoutY="12.0" prefHeight="514.0" prefWidth="301.0" stylesheets="@../css/dashboard.css">
                <styleClass>
                   <String fx:value="shadow" />
                   <String fx:value="white-bg" />
                </styleClass>
                <children>
-                  <TextField layoutX="105.0" layoutY="66.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                  <TextField fx:id="id_binomeAdd" layoutX="105.0" layoutY="66.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
                   <Label layoutX="20.0" layoutY="68.0" text="ID Binome :">
                      <font>
                         <Font size="15.0" />
                      </font></Label>
-                  <TextField layoutX="41.0" layoutY="369.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                  <TextField fx:id="NoteRapportAdd" layoutX="41.0" layoutY="369.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
                   <Label layoutX="34.0" layoutY="342.0" text="Note Rapport :">
                      <font>
                         <Font size="15.0" />
                      </font></Label>
-                  <TextField layoutX="38.0" layoutY="235.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                  <TextField fx:id="NoteSetudiant1Add" layoutX="38.0" layoutY="235.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
                   <Label layoutX="37.0" layoutY="210.0" text="Note Soutenance Etudiant 1 :">
                      <font>
                         <Font size="15.0" />
                      </font></Label>
-                  <TextField layoutX="41.0" layoutY="302.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                  <TextField fx:id="NoteSetudiant2Add" layoutX="41.0" layoutY="302.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
                   <Label layoutX="34.0" layoutY="275.0" text="Note Soutenance Etudiant 2 :">
                      <font>
                         <Font size="15.0" />
                      </font></Label>
-                  <Button layoutX="220.0" layoutY="471.0" mnemonicParsing="false" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Valider" />
+                  <Button layoutX="220.0" layoutY="471.0" mnemonicParsing="false" onAction="#addNote" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Valider" />
                   <Label layoutX="75.0" layoutY="142.0" text="Saisir les notes">
                      <font>
                         <Font name="System Bold" size="22.0" />
@@ -61,7 +61,7 @@
                   <String fx:value="white-bg" />
                </styleClass>
                <children>
-                  <TableView fx:id="tableviewBinomeNoteRapport" layoutX="8.0" layoutY="83.0" prefHeight="423.0" prefWidth="551.0">
+                  <TableView fx:id="tableviewBinomeNoteRapport" layoutX="8.0" layoutY="83.0" onMouseClicked="#selectBinome" prefHeight="423.0" prefWidth="551.0">
                      <columns>
                         <TableColumn fx:id="col_IdbinomeNR" prefWidth="70.66665840148926" text="ID Binôme" />
                         <TableColumn fx:id="col_Etudiant1NR" prefWidth="91.99999237060547" text="Etudiant 1" />
@@ -133,7 +133,7 @@
                   <String fx:value="white-bg" />
                </styleClass>
             </AnchorPane>
-            <AnchorPane fx:id="tmp_optionNote" layoutX="578.0" layoutY="12.0" prefHeight="514.0" prefWidth="301.0" stylesheets="@../css/dashboard.css">
+            <AnchorPane fx:id="tmp_optionNote" layoutX="578.0" layoutY="12.0" prefHeight="514.0" prefWidth="301.0" stylesheets="@../css/dashboard.css" visible="false">
                <children>
                   <Button fx:id="btn_saisirNote" layoutX="85.0" layoutY="169.0" mnemonicParsing="false" onAction="#handleBtnSaisirNote" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Saisir les notes" />
                   <Button fx:id="btn_affichernote" layoutX="78.0" layoutY="231.0" mnemonicParsing="false" onAction="#handleBtnAfficherNote" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Afficher les notes" />

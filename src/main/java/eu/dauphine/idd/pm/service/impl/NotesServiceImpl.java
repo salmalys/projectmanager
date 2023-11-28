@@ -64,31 +64,31 @@ public class NotesServiceImpl implements NotesService {
     
     @Override
     public double[] calculNoteFinale(int idNotes) {
-    	Notes notes = notesDAO.findById(idNotes);
-    	
-    	BinomeProjet binome = notes.getBinomeProjet();
-    	Projet projet = binome.getProjet();
-    	
-    	Date dateRendu = projet.getDateRemiseRapport();
-    	Date dateRemiseEffective = binome.getDateRemiseEffective();
-    	
-        Instant instantRemise = dateRendu.toInstant();
-        Instant instantRendu = dateRemiseEffective.toInstant();
-        
-        // Calcul de la difference en millisecondes
-        long diffInMillis = instantRendu.toEpochMilli() - instantRemise.toEpochMilli();
+        Notes notes = notesDAO.findById(idNotes);
 
-        // Calcul de la penalite
-        long penalite = 0;
-        if (diffInMillis > 0) {
-            // Conversion en jours si retard
-            penalite = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+        if (notes == null) {
+            System.out.println("Invalid notes ID");
+            return new double[]{0, 0}; // Ou lancez une exception appropriée
         }
-  	
-    	double[] notesFinales = new double[2];
-    	notesFinales[0] = notes.getNoteSoutenanceMembre1()*0.5 +  notes.getNoteRapport()*0.5 - penalite;
-    	notesFinales[1] = notes.getNoteSoutenanceMembre2()*0.5 +  notes.getNoteRapport()*0.5 - penalite;
-    	
-    	return notesFinales;
+
+        BinomeProjet binome = notes.getBinomeProjet();
+        Projet projet = binome.getProjet();
+
+        Date dateRendu = projet.getDateRemiseRapport();
+        Date dateRemiseEffective = binome.getDateRemiseEffective();
+
+        // Calcul de la différence en millisecondes
+        long diffInMillis = dateRemiseEffective.toInstant().toEpochMilli() - dateRendu.toInstant().toEpochMilli();
+
+        // Calcul de la pénalité
+        long penalite = Math.max(0, TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS));
+
+        // Calcul des notes finales
+        double noteMembre1 = notes.getNoteSoutenanceMembre1() * 0.5 + notes.getNoteRapport() * 0.5 - penalite;
+        double noteMembre2 = notes.getNoteSoutenanceMembre2() * 0.5 + notes.getNoteRapport() * 0.5 - penalite;
+
+        return new double[]{noteMembre1, noteMembre2};
     }
+    
+
 }

@@ -88,10 +88,17 @@ public class BinomeProjetServiceImpl implements BinomeProjetService {
 
 	}
 
+	
+
+	@Override
+	public BinomeProjet getBinomeProjetById(int idBinome) {
+		return binomeProjetDAO.findById(idBinome);
+	}
+
 	public static void main(String[] args) {
-		BinomeProjetServiceImpl l = new BinomeProjetServiceImpl();
-		System.out.println(l.createBinomeProjet(3, 3, 1, null));
-		l.updateBinomeProjet(2, 3, 2, 2, null);
+		BinomeProjetServiceImpl s = new BinomeProjetServiceImpl();
+
+		System.out.println(s.getBinomeProjetById(4));
 	}
 
 	// Count

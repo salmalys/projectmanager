@@ -1,17 +1,43 @@
 package eu.dauphine.idd.pm.controller;
 
 import java.net.URL;
+
 import java.util.ResourceBundle;
 
+import eu.dauphine.idd.pm.model.BinomeProjet;
+import eu.dauphine.idd.pm.model.Etudiant;
+import eu.dauphine.idd.pm.model.Notes;
+import eu.dauphine.idd.pm.model.Projet;
+import eu.dauphine.idd.pm.service.BinomeProjetService;
+import eu.dauphine.idd.pm.service.NotesService;
+import eu.dauphine.idd.pm.service.ServiceFactory;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 public class NoteController implements Initializable {
+
+	@FXML
+	private TextField id_binomeAdd;
+
+	@FXML
+	private TextField NoteRapportAdd;
+
+	@FXML
+	private TextField NoteSetudiant1Add;
+
+	@FXML
+	private TextField NoteSetudiant2Add;
 
 	@FXML
 	private Button btn_affichernote;
@@ -38,25 +64,25 @@ public class NoteController implements Initializable {
 	private Button btn_supprimerNote;
 
 	@FXML
-	private TableColumn<?, ?> col_Etudiant1NR;
+	private TableColumn<Notes, String> col_Etudiant1NR;
 
 	@FXML
-	private TableColumn<?, ?> col_Etudiant2NR;
+	private TableColumn<Notes, String> col_Etudiant2NR;
 
 	@FXML
-	private TableColumn<?, ?> col_IdbinomeNR;
+	private TableColumn<Notes, String> col_IdbinomeNR;
 
 	@FXML
-	private TableColumn<?, ?> col_NomMatiereNR;
+	private TableColumn<Notes, String> col_NomMatiereNR;
 
 	@FXML
-	private TableColumn<?, ?> col_SujetProjetNR;
+	private TableColumn<Notes, String> col_SujetProjetNR;
 
 	@FXML
-	private TableColumn<?, ?> col_notRapportBinome;
+	private TableColumn<Notes, Double> col_notRapportBinome;
 
 	@FXML
-	private TableView<?> tableviewBinomeNoteRapport;
+	private TableView<Notes> tableviewBinomeNoteRapport;
 
 	@FXML
 	private AnchorPane tmp_addNote;
@@ -78,6 +104,180 @@ public class NoteController implements Initializable {
 
 	@FXML
 	private AnchorPane tmp_tableshowNotes;
+	@FXML
+	private TextField id_binomeAffiche;
+
+	@FXML
+	private TextField nomPrenomAffiche1;
+
+	@FXML
+	private TextField nomPrenomAffiche2;
+
+	@FXML
+	private TextField noteF1;
+
+	@FXML
+	private TextField noteF2;
+
+	@FXML
+	private TextField noteS1;
+
+	@FXML
+	private TextField noteS2;
+
+	@FXML
+	private TextField note_RapportAffiche;
+
+	private NotesService NotesS = ServiceFactory.getNotesService();
+	private BinomeProjetService binomeS = ServiceFactory.getBinomeProjetService();
+
+	@FXML
+	public void addNote() {
+		try {
+			// Récupérer l'ID du binôme depuis le champ
+			int idBinome = Integer.parseInt(id_binomeAdd.getText());
+
+			// Récupérer les notes depuis les champs
+			double noteRapport = Double.parseDouble(NoteRapportAdd.getText());
+			double noteS1 = Double.parseDouble(NoteSetudiant1Add.getText());
+			double noteS2 = Double.parseDouble(NoteSetudiant2Add.getText());
+			if (!isInputValid(id_binomeAdd.getText(), NoteRapportAdd.getText(), NoteSetudiant1Add.getText(),
+					NoteSetudiant2Add.getText())) {
+				showAlert(AlertType.ERROR, "Error Message", "Please enter valid numeric values.");
+			} else {
+
+				// Ajouter les notes à la base de données
+				int result = NotesS.createNotes(idBinome, noteRapport, noteS1, noteS2);
+
+				switch (result) {
+				case 0:
+					showAlert(AlertType.INFORMATION, "Success", "Notes added successfully!");
+					resetNoteFields();
+					addShowNote();
+					break;
+				case 1:
+					showAlert(AlertType.ERROR, "Error Message", "An error occurred while creating the notes.");
+					break;
+				default:
+					showAlert(AlertType.ERROR, "Error Message", "An unexpected error occurred.");
+					break;
+				}
+			}
+		} catch (Exception e) {
+			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	public void addShowNote() {
+		ObservableList<Notes> notesList = NotesS.listNotes();
+
+		col_IdbinomeNR.setCellValueFactory(cellData -> {
+			BinomeProjet binomeProjet = cellData.getValue().getBinomeProjet();
+			if (binomeProjet != null) {
+				return new SimpleStringProperty(String.valueOf(binomeProjet.getIdBinome()));
+			} else {
+				return new SimpleStringProperty("_");
+			}
+		});
+
+		col_Etudiant1NR.setCellValueFactory(cellData -> {
+			BinomeProjet binome = cellData.getValue().getBinomeProjet();
+			Etudiant membre1 = binome.getMembre1();
+			if (membre1 != null) {
+				return new SimpleStringProperty(membre1.getNom() + " " + membre1.getPrenom());
+			} else {
+				return new SimpleStringProperty("_");
+			}
+		});
+
+		col_Etudiant2NR.setCellValueFactory(cellData -> {
+			BinomeProjet binome = cellData.getValue().getBinomeProjet();
+			Etudiant membre2 = binome.getMembre2();
+			if (membre2 != null) {
+				return new SimpleStringProperty(membre2.getNom() + " " + membre2.getPrenom());
+			} else {
+				return new SimpleStringProperty("_");
+			}
+		});
+
+		col_NomMatiereNR.setCellValueFactory(cellData -> {
+			BinomeProjet binome = cellData.getValue().getBinomeProjet();
+			Projet projet = binome.getProjet();
+			if (projet != null) {
+				return new SimpleStringProperty(projet.getNomMatiere());
+			} else {
+				return new SimpleStringProperty("_");
+			}
+		});
+
+		col_SujetProjetNR.setCellValueFactory(cellData -> {
+			BinomeProjet binome = cellData.getValue().getBinomeProjet();
+			Projet projet = binome.getProjet();
+			if (projet != null) {
+				return new SimpleStringProperty(projet.getSujet());
+			} else {
+				return new SimpleStringProperty("_");
+			}
+		});
+
+		col_notRapportBinome.setCellValueFactory(new PropertyValueFactory<>("noteRapport"));
+		tableviewBinomeNoteRapport.setItems(notesList);
+	}
+
+	@FXML
+	public void selectBinome() {
+		Notes selectedNote = tableviewBinomeNoteRapport.getSelectionModel().getSelectedItem();
+
+		if (selectedNote != null) {
+			BinomeProjet binome = selectedNote.getBinomeProjet();
+
+			if (binome != null) {
+				id_binomeAdd.setText(String.valueOf(binome.getIdBinome()));
+
+			}
+		}
+
+	}
+
+	private void resetNoteFields() {
+		id_binomeAdd.clear();
+		NoteRapportAdd.clear();
+		NoteSetudiant1Add.clear();
+		NoteSetudiant2Add.clear();
+	}
+
+	// Affiche les fenetre d'alerte specifique pour chaque cas
+	public void showAlert(AlertType alertType, String title, String content) {
+		Alert alert = new Alert(alertType);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(content);
+		alert.showAndWait();
+	}
+
+	private boolean isInputValid(String idBinome, String noteRapport, String noteS1, String noteS2) {
+		return isInteger(idBinome) && isDouble(noteRapport) && isDouble(noteS1) && isDouble(noteS2);
+	}
+
+	private boolean isInteger(String input) {
+		try {
+			Integer.parseInt(input);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+
+	private boolean isDouble(String input) {
+		try {
+			Double.parseDouble(input);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
 
 	@FXML
 	private void handleBtnSaisirNote(ActionEvent event) {
@@ -161,6 +361,7 @@ public class NoteController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 		showOptionNote();
+		addShowNote();
 
 	}
 

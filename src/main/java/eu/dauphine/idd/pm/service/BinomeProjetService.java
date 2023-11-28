@@ -11,4 +11,5 @@ public interface BinomeProjetService {
     ObservableList<BinomeProjet> listBinomeProjets();
     void updateBinomeProjet(int idBinome, int idEtudiant1, int idEtudiant2, int idProjet, Date dateRemiseEffective);
 	void updateDateRemise(Integer IdBinome, Date dateRemiseEffectif);
+	BinomeProjet getBinomeProjetById(int idBinome);
 }
