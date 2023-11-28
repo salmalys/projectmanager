@@ -67,7 +67,7 @@ public class Notes {
 
 	@Override
 	public String toString() {
-		return "Notes [binome = " + this.binomeProjet.toString() + ", NotesRapport = " + this.NoteRapport + ", NotesRapport = " + this.NoteSoutenanceMembre1 + ", NotesSoutenanceMembre2 = " + this.NoteSoutenanceMembre2 + "]";
+		return "Notes [binome = " + this.binomeProjet.toString() + ", NotesRapport = " + this.NoteRapport + ", NotesSoutenanceMembre1 = " + this.NoteSoutenanceMembre1 + ", NotesSoutenanceMembre2 = " + this.NoteSoutenanceMembre2 + "]";
 	}
 
 }

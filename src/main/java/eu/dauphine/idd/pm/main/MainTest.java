@@ -4,11 +4,14 @@ import eu.dauphine.idd.pm.dao.BinomeProjetDAO;
 import eu.dauphine.idd.pm.dao.DAOFactory;
 import eu.dauphine.idd.pm.dao.EtudiantDAO;
 import eu.dauphine.idd.pm.dao.FormationDAO;
+import eu.dauphine.idd.pm.dao.NotesDAO;
 import eu.dauphine.idd.pm.dao.ProjetDAO;
+import eu.dauphine.idd.pm.dao.impl.NotesDAOImpl;
 import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 import eu.dauphine.idd.pm.model.BinomeProjet;
 import eu.dauphine.idd.pm.model.Etudiant;
 import eu.dauphine.idd.pm.model.Formation;
+import eu.dauphine.idd.pm.model.Notes;
 import eu.dauphine.idd.pm.service.BinomeProjetService;
 import eu.dauphine.idd.pm.service.EtudiantService;
 import eu.dauphine.idd.pm.service.FormationService;
@@ -70,10 +73,10 @@ public class MainTest {
 		
 		BinomeProjetService bS = ServiceFactory.getBinomeProjetService();
 		BinomeProjetDAO b = DAOFactory.getBinomeProjetDAO();
-		Etudiant saber = e.findByName("KHAROUF", "Saber");
+		//Etudiant saber = e.findByName("KHAROUF", "Saber");
 		//Etudiant saber = e.findById(4);
 		//Etudiant youssef = e.findByName("LAHRACH", "Youssef");
-		System.out.println(saber);
+		//System.out.println(saber);
 		//System.out.println(youssef);
 		//System.out.println(e.findAll());
 		//Binome binome = new Binome()
@@ -81,7 +84,23 @@ public class MainTest {
 		//System.out.println(bS.listBinomeProjets());
 		//System.out.println(b.findById(1));
 		
-		NotesService n = ServiceFactory.getNotesService();
+		NotesService nS = ServiceFactory.getNotesService();
+		NotesDAO n = DAOFactory.getNotesDAO();
+		
+		//System.out.println(b.findById(1));
+		BinomeProjet binomeSI = b.findById(1);
+		Notes notes = new Notes(binomeSI, 14, 16, 17);
+		//System.out.println(notes);
+		n.delete(notes);
+		//System.out.println(notes.getId());
+		//System.out.println(n.findAll());
+		System.out.println(n.findById(1));
+		n.deleteById(1);
+		System.out.println(n.findAll());
+		//n.findById(1);
+		//n.create(notes);
+		//System.out.println(n.findAll());
+		
 		//n.createNotes(1, 16, 14, 15);
 	}
 }

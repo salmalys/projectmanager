@@ -161,8 +161,6 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 			preparedStatement.setString(1, nom);
 			preparedStatement.setString(2, prenom);
 			ResultSet rs = preparedStatement.executeQuery();
-			System.out.println(nom);
-			System.out.println(prenom);
 			if (rs.next()) {
 				int idEtudiant = rs.getInt("ID_Etudiant");
 				idFormation = rs.getInt("ID_Formation");
