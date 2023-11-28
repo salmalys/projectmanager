@@ -21,7 +21,6 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 	private static final String SELECT_ALL_ETUDIANTS = "SELECT * FROM Etudiant";
 	private static final String UPDATE_ETUDIANT = "UPDATE Etudiant SET Nom = ?, Prenom = ?, ID_Formation = ? WHERE ID_Etudiant = ?";
 	private static final String DELETE_ETUDIANT_BY_ID = "DELETE FROM Etudiant WHERE ID_Etudiant = ?";
-	private static final String COUNT_NBETUDIANT = "SELECT COUNT(ID_Etudiant) AS totalEtudiants FROM Etudiant";
 
 	private FormationDAO formationDAO = DAOFactory.getFormationDAO();
 
@@ -181,23 +180,6 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 		return etudiant;
 	}
 
-	public int getTotalEtudiants() {
-		int totalEtudiants = 0;
-
-		try (Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(COUNT_NBETUDIANT);
-				ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			if (resultSet.next()) {
-				totalEtudiants = resultSet.getInt("totalEtudiants");
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return totalEtudiants;
-	}
 
 	public static void main(String[] args) {
 		EtudiantDAOImpl s = new EtudiantDAOImpl();

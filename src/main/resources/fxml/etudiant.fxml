@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.dauphine.idd.pm.controller.EtudiantController">
 	<children>
@@ -55,89 +56,99 @@
 						<String fx:value="white-bg" />
 					</styleClass>
 					<children>
-						<Label layoutX="77.0" layoutY="24.0" text="Supprimer un Etudiant">
+						<TextField fx:id="IdEtudiant" layoutX="115.0" layoutY="384.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<Label layoutX="21.0" layoutY="388.0" text="ID Etudiant :">
 							<font>
-								<Font name="Tahoma Bold" size="24.0" />
+								<Font name="Arial" size="15.0" />
 							</font>
 						</Label>
-						<TextField fx:id="IdEtudiant" layoutX="137.0" layoutY="108.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-						<Label layoutX="26.0" layoutY="112.0" text="Id_Etudiant :">
-							<font>
-								<Font name="Arial" size="16.0" />
-							</font>
-						</Label>
-						<Button fx:id="btn_tmpaddEtudient" layoutX="56.0" layoutY="413.0" mnemonicParsing="false" onAction="#handleBtnTmpAddEtudiant" prefHeight="30.0" prefWidth="143.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter un Etudiant" />
-						<Button fx:id="btn_tmpupdateEtudient" layoutX="225.0" layoutY="412.0" mnemonicParsing="false" onAction="#handleBtnTmpUpdateEtudiant" prefHeight="33.0" prefWidth="143.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier un Etudiant" />
-						<Button layoutX="91.0" layoutY="283.0" mnemonicParsing="false" onAction="#deleteEtudiant" prefHeight="33.0" prefWidth="74.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Delete" />
-						<Button layoutX="246.0" layoutY="282.0" mnemonicParsing="false" onAction="#addEtudiantReset" prefHeight="34.0" prefWidth="76.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+						<Button fx:id="btn_tmpaddEtudient" layoutX="33.0" layoutY="196.0" mnemonicParsing="false" onAction="#handleBtnTmpAddEtudiant" prefHeight="30.0" prefWidth="143.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter un étudiant" />
+						<Button fx:id="btn_tmpupdateEtudient" layoutX="219.0" layoutY="196.0" mnemonicParsing="false" onAction="#handleBtnTmpUpdateEtudiant" prefHeight="30.0" prefWidth="143.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier un étudiant" />
+						<Button layoutX="84.0" layoutY="434.0" mnemonicParsing="false" onAction="#deleteEtudiant" prefHeight="33.0" prefWidth="237.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Supprimer l'étudiant sélectionné" />
+						<Button layoutX="302.0" layoutY="384.0" mnemonicParsing="false" onAction="#addEtudiantReset" prefHeight="26.0" prefWidth="56.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                  <Label layoutX="39.0" layoutY="41.0" text="Gestion des étudiants">
+                     <font>
+                        <Font name="Tahoma Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <Text layoutX="80.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sélectionner une des options ">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="101.0" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sélectionner un étudiant">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Text>
 					</children>
 				</AnchorPane>
-				<AnchorPane fx:id="tmp_addEtudiant" layoutX="465.0" layoutY="8.0" prefHeight="510.0" prefWidth="396.0" stylesheets="@../css/dashboard.css" visible="false">
+				<AnchorPane fx:id="tmp_addEtudiant" layoutX="465.0" layoutY="8.0" prefHeight="510.0" prefWidth="396.0" stylesheets="@../css/dashboard.css">
 					<styleClass>
 						<String fx:value="shadow" />
 						<String fx:value="white-bg" />
 					</styleClass>
 					<children>
-						<Label layoutX="79.0" layoutY="14.0" text="Ajouter un Etudiant">
+						<Label layoutX="51.0" layoutY="52.0" text="Ajouter un étudiant">
 							<font>
-								<Font name="Tahoma Bold" size="24.0" />
+								<Font name="Tahoma Bold" size="28.0" />
 							</font>
 						</Label>
-						<Button layoutX="79.0" layoutY="389.0" mnemonicParsing="false" onAction="#addEtudiant" prefHeight="32.0" prefWidth="76.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter" />
-						<Button layoutX="274.0" layoutY="389.0" mnemonicParsing="false" onAction="#addEtudiantReset" prefHeight="32.0" prefWidth="67.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
-						<Label layoutX="62.0" layoutY="286.0" text="Formation :">
-							<font>
-								<Font name="Arial" size="16.0" />
-							</font>
-						</Label>
-						<Label layoutX="15.0" layoutY="170.0" text="Prenom Etudiant :">
+						<Button layoutX="296.0" layoutY="457.0" mnemonicParsing="false" onAction="#addEtudiant" prefHeight="32.0" prefWidth="76.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter" />
+						<Button layoutX="278.0" layoutY="312.0" mnemonicParsing="false" onAction="#addEtudiantReset" prefHeight="20.0" prefWidth="56.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+						<Label layoutX="51.0" layoutY="272.0" text="Formation :">
 							<font>
 								<Font name="Arial" size="16.0" />
 							</font>
 						</Label>
-						<TextField fx:id="NomEtudiant" layoutX="157.0" layoutY="109.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-						<Label layoutX="38.0" layoutY="113.0" text="Nom Etudiant :">
+						<Label layoutX="48.0" layoutY="207.0" text="Prénom  :">
 							<font>
 								<Font name="Arial" size="16.0" />
 							</font>
 						</Label>
-						<ComboBox fx:id="Formation" layoutX="156.0" layoutY="282.0" prefHeight="25.0" prefWidth="178.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-						<TextField fx:id="PrenomEtudiant" layoutX="157.0" layoutY="166.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-						<Button fx:id="btn_tmpbackEtudient" layoutX="316.0" layoutY="464.0" mnemonicParsing="false" onAction="#handleBackEtudiant" prefHeight="32.0" prefWidth="67.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
+						<TextField fx:id="NomEtudiant" layoutX="154.0" layoutY="148.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<Label layoutX="48.0" layoutY="150.0" text="Nom :">
+							<font>
+								<Font name="Arial" size="16.0" />
+							</font>
+						</Label>
+						<ComboBox fx:id="Formation" layoutX="154.0" layoutY="270.0" prefHeight="25.0" prefWidth="178.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<TextField fx:id="PrenomEtudiant" layoutX="154.0" layoutY="205.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<Button fx:id="btn_tmpbackEtudient" layoutX="26.0" layoutY="457.0" mnemonicParsing="false" onAction="#handleBackEtudiant" prefHeight="32.0" prefWidth="67.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Retour" />
 					</children>
 				</AnchorPane>
-				<AnchorPane fx:id="tmp_updateEtudiant" layoutX="462.0" layoutY="7.0" prefHeight="513.0" prefWidth="397.0" stylesheets="@../css/dashboard.css" visible="false">
+				<AnchorPane fx:id="tmp_updateEtudiant" layoutX="462.0" layoutY="7.0" prefHeight="513.0" prefWidth="397.0" stylesheets="@../css/dashboard.css">
 					<styleClass>
 						<String fx:value="shadow" />
 						<String fx:value="white-bg" />
 					</styleClass>
 					<children>
-						<Label layoutX="39.0" layoutY="110.0" text="Nom Etudiant :">
+						<Label layoutX="65.0" layoutY="148.0" text="Nom :">
 							<font>
 								<Font name="Arial" size="16.0" />
 							</font>
 						</Label>
-						<Label layoutX="80.0" layoutY="30.0" text="Modifier un Etudiant">
+						<Label layoutX="75.0" layoutY="59.0" text="Modifier un étudiant">
 							<font>
 								<Font name="Tahoma Bold" size="24.0" />
 							</font>
 						</Label>
-						<Button layoutX="80.0" layoutY="383.0" mnemonicParsing="false" onAction="#updateEtudiant" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
-						<Button layoutX="277.0" layoutY="381.0" mnemonicParsing="false" onAction="#addEtudiantReset2" prefHeight="31.0" prefWidth="73.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
-						<Button fx:id="btn_tmpBackEtudient2" layoutX="307.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleBackEtudiant2" prefHeight="32.0" prefWidth="67.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
-						<Label layoutX="65.0" layoutY="287.0" text="Formation :">
+						<Button layoutX="293.0" layoutY="470.0" mnemonicParsing="false" onAction="#updateEtudiant" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Mettre à jour" />
+						<Button layoutX="285.0" layoutY="291.0" mnemonicParsing="false" onAction="#addEtudiantReset2" prefHeight="25.0" prefWidth="56.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+						<Button fx:id="btn_tmpBackEtudient2" layoutX="20.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleBackEtudiant2" prefHeight="32.0" prefWidth="67.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Retour" />
+						<Label layoutX="68.0" layoutY="257.0" text="Formation :">
 							<font>
 								<Font name="Arial" size="16.0" />
 							</font>
 						</Label>
-						<Label layoutX="16.0" layoutY="189.0" text="Prenom Etudiant :">
+						<Label layoutX="65.0" layoutY="201.0" text="Prénom  :">
 							<font>
 								<Font name="Arial" size="16.0" />
 							</font>
 						</Label>
-						<TextField fx:id="NomEtudiant2" layoutX="175.0" layoutY="185.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-						<ComboBox fx:id="Formation2" layoutX="174.0" layoutY="283.0" prefHeight="25.0" prefWidth="178.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-						<TextField fx:id="PrenomEtudiant2" layoutX="175.0" layoutY="106.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<TextField fx:id="NomEtudiant2" layoutX="163.0" layoutY="199.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<ComboBox fx:id="Formation2" layoutX="163.0" layoutY="255.0" prefHeight="25.0" prefWidth="178.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<TextField fx:id="PrenomEtudiant2" layoutX="163.0" layoutY="145.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
 					</children>
 				</AnchorPane>
 			</children>

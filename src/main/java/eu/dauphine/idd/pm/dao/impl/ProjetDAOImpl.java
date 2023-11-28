@@ -1,6 +1,5 @@
 package eu.dauphine.idd.pm.dao.impl;
 
-import eu.dauphine.idd.pm.controller.Data;
 import eu.dauphine.idd.pm.dao.ProjetDAO;
 
 import java.sql.Connection;
@@ -25,7 +24,6 @@ public class ProjetDAOImpl implements ProjetDAO {
 	private static final String SELECT_ALL_PROJETS = "SELECT * FROM Projet";
 	private static final String UPDATE_PROJET = "UPDATE Projet SET Nom_Matiere = ?, Sujet = ?, Date_Remise_Prevue = ? WHERE ID_Projet = ?";
 	private static final String DELETE_PROJET_BY_ID = "DELETE FROM Projet WHERE ID_Projet = ?";
-	private static final String COUNT_NBPROJET = "SELECT COUNT(ID_Projet) AS totalProjets FROM Projet";
 
 	private static SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 	
@@ -170,24 +168,6 @@ public class ProjetDAOImpl implements ProjetDAO {
             e.printStackTrace();
         }
 		return projet;
-	}
-
-	public int getTotalProjets() {
-	    int totalProjets = 0;
-
-	    try (Connection connection = getConnection();
-	         PreparedStatement preparedStatement = connection.prepareStatement(COUNT_NBPROJET);
-	         ResultSet resultSet = preparedStatement.executeQuery()) {
-
-	        if (resultSet.next()) {
-	            totalProjets = resultSet.getInt("totalProjets");
-	        }
-
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-
-	    return totalProjets;
 	}
 	
 	public static void main(String[] args) {

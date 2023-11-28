@@ -13,7 +13,7 @@ public class DatabaseConnection {
 	private DatabaseConnection() throws SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			connection = DriverManager.getConnection("jdbc:sqlite:./src/main/resources/sample.db");
+			connection = DriverManager.getConnection("jdbc:sqlite:"+dbPath);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 			throw new SQLException("Error: Connection to the SQLite database failed.", e);
