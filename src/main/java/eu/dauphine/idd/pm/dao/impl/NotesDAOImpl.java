@@ -5,11 +5,15 @@ import eu.dauphine.idd.pm.dao.DAOFactory;
 import eu.dauphine.idd.pm.dao.NotesDAO;
 import eu.dauphine.idd.pm.jdbc.DatabaseConnection;
 import eu.dauphine.idd.pm.model.BinomeProjet;
+import eu.dauphine.idd.pm.model.Etudiant;
+import eu.dauphine.idd.pm.model.Formation;
 import eu.dauphine.idd.pm.model.Notes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NotesDAOImpl implements NotesDAO {
 	private static final String INSERT_NOTE = "INSERT INTO Notes(ID_BinomeProjet, Note_Rapport, Note_Soutenance_Etudiant1, Note_Soutenance_Etudiant2) VALUES (?, ?, ?, ?)";
@@ -68,22 +72,28 @@ public class NotesDAOImpl implements NotesDAO {
 	@Override
 	public Notes findById(int idNotes) {
 		Notes note = null;
+		int idBinomeProjet = 0;
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
 			preparedStatement.setInt(1, idNotes);
 			ResultSet rs = preparedStatement.executeQuery();
 			if (rs.next()) {
-				int idBinomeProjet = rs.getInt("ID_BinomeProjet");
-				BinomeProjet b = binomeProjetDAO.findById(idBinomeProjet);
+				idBinomeProjet = rs.getInt("ID_BinomeProjet");
 				
 				double noteR = rs.getDouble("Note_Rapport");
 				double noteS1 = rs.getDouble("Note_Soutenance_Etudiant1");
 				double noteS2 = rs.getDouble("Note_Soutenance_Etudiant2");
-				note = new Notes(idNotes, b, noteR, noteS1, noteS2);
+				note = new Notes(idNotes, null , noteR, noteS1, noteS2);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		if (note != null) {
+			BinomeProjet b = binomeProjetDAO.findById(idBinomeProjet);
+			note.setBinomeProjet(b);
+		}
+		
 		return note;
 	}
 
@@ -91,19 +101,27 @@ public class NotesDAOImpl implements NotesDAO {
 	public ObservableList<Notes> findAll() {
 		Connection connection = getConnection();
 		ObservableList<Notes> notes = FXCollections.observableArrayList();
+		Map<Notes, Integer> notesBinomeMap = new HashMap<>();
 		try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(FIND_ALL_NOTES)) {
 			while (rs.next()) {
 				int idNotes = rs.getInt("ID_Notes");
 				int idBinomeProjet = rs.getInt("ID_BinomeProjet");
-				BinomeProjet b = binomeProjetDAO.findById(idBinomeProjet);
-				
+
 				double noteR = rs.getDouble("Note_Rapport");
 				double noteS1 = rs.getDouble("Note_Soutenance_Etudiant1");
 				double noteS2 = rs.getDouble("Note_Soutenance_Etudiant2");
-				notes.add(new Notes(idNotes, b, noteR, noteS1, noteS2));
+				Notes note = new Notes(idNotes, null, noteR, noteS1, noteS2);
+				notes.add(note);
+				notesBinomeMap.put(note,idBinomeProjet);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		
+		for (Notes note : notes) {
+			int idBinomeProjet = notesBinomeMap.get(note);
+			BinomeProjet b = binomeProjetDAO.findById(idBinomeProjet);
+			note.setBinomeProjet(b);
 		}
 		return notes;
 	}

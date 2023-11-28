@@ -51,7 +51,6 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(INSERT_BINOME)) {
 			
-			System.out.println(binome);
 			preparedStatement.setInt(3, binome.getProjet().getIdProjet());
 			preparedStatement.setInt(1, binome.getMembre1().getIdEtudiant());
 			preparedStatement.setInt(2, binome.getMembre2().getIdEtudiant());
@@ -112,7 +111,6 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
 				}
 
 				binome = new BinomeProjet(id, null, null, null, date);
-				System.out.println(binome.getIdBinome());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
