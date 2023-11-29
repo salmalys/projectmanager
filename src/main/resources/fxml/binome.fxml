@@ -42,9 +42,9 @@
 								<FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="1.5em" />
 							</graphic>
 						</Button>
-						<TextField fx:id="search_Binome" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
+						<TextField fx:id="search_Binome" layoutX="14.0" layoutY="14.0" onKeyTyped="#searchBinome" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
 						<FontAwesomeIconView glyphName="SEARCH" layoutX="20.0" layoutY="33.0" size="1.5em" />
-						<ComboBox layoutX="66.0" layoutY="63.0" prefWidth="150.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<ComboBox fx:id="filtre_binome" layoutX="66.0" layoutY="63.0" prefWidth="150.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
 						<Label layoutX="16.0" layoutY="67.0" prefWidth="42.0" text="Filtre :">
 							<font>
 								<Font name="System Bold" size="14.0" />

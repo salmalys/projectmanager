@@ -72,7 +72,7 @@ public class FormationController implements Initializable {
 	private TableColumn<Formation, String> col_promotion;
 
 	@FXML
-	private ComboBox<?> filtre_formation;
+	private ComboBox<String> filtre_formation;
 
 	@FXML
 	private Button formation_btn;
@@ -272,31 +272,46 @@ public class FormationController implements Initializable {
 	// fonction qui permet de chercher et filter le tableau de formation dans GUI
 	@FXML
 	public void SearchFormation() {
-
 		FilteredList<Formation> filter = new FilteredList<>(addformation, e -> true);
+
 		search_formation.textProperty().addListener((Observable, oldValue, newValue) -> {
 			filter.setPredicate(predData -> {
 				if (newValue == null || newValue.isEmpty()) {
 					return true;
 				}
+
 				String searchKey = newValue.toLowerCase();
 				String idformation = String.valueOf(predData.getIdFormation());
 
-				if (idformation.contains(searchKey)) {
-					return true;
-				} else if (predData.getNom().toLowerCase().contains(searchKey)) {
-					return true;
-				} else if (predData.getPromotion().toLowerCase().contains(searchKey)) {
-					return true;
-				} else
-					return false;
+				// Ajouter la condition pour vérifier si le ComboBox est sélectionné
+				String selectedFilter = filtre_formation.getSelectionModel().getSelectedItem();
+
+				if (selectedFilter != null && !selectedFilter.equals("Select")) {
+					// Si le filtre est sélectionné, utilisez-le pour la recherche
+					if ("IdFormation".equals(selectedFilter) && idformation.contains(searchKey)) {
+						return true;
+					} else if ("Nom Formation".equals(selectedFilter)
+							&& predData.getNom().toLowerCase().contains(searchKey)) {
+						return true;
+					} else if ("Promotion".equals(selectedFilter)
+							&& predData.getPromotion().toLowerCase().contains(searchKey)) {
+						return true;
+					} else {
+						return false;
+					}
+				} else {
+					// Si aucun filtre n'est sélectionné, utilisez la logique sans filtre
+					return idformation.contains(searchKey) || predData.getNom().toLowerCase().contains(searchKey)
+							|| predData.getPromotion().toLowerCase().contains(searchKey);
+				}
 			});
 
 			SortedList<Formation> sortList = new SortedList<>(filter);
 			sortList.comparatorProperty().bind(tableFormation.comparatorProperty());
 			tableFormation.setItems(sortList);
-			tableFormation.refresh(); // Ajoutez cette ligne pour forcer le rafraechissement
+			tableFormation.refresh(); // Ajoutez cette ligne pour forcer le rafraîchissement
 		});
+
 	}
 
 	// initialise la liste deroulente promotion pour liste deroulante ajouter et
@@ -338,8 +353,8 @@ public class FormationController implements Initializable {
 			IdFormation.setText(String.valueOf(formation.getIdFormation()));
 			Nomformation.setText(formation.getNom());
 			Nomformation2.setText(formation.getNom());
-		}
 
+		}
 	}
 
 	// Refresh les donnees de tableau dans UI
@@ -545,6 +560,10 @@ public class FormationController implements Initializable {
 		addPromotionList();
 		addPromotionList2();
 		showOptionFormation();
+		ObservableList<String> formations = FXCollections.observableArrayList("Select", "IdFormation", "Nom Formation",
+				"Promotion");
+
+		filtre_formation.setItems(formations);
 
 	}
 

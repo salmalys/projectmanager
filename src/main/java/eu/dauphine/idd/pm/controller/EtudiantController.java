@@ -83,6 +83,8 @@ public class EtudiantController implements Initializable {
 	private Button btn_tmpbackEtudient;
 	@FXML
 	private Button btn_tmpupdateEtudient;
+	@FXML
+	private ComboBox<String> filtre_etudiant;
 
 	private FormationService formationS = ServiceFactory.getFormationService();
 	private EtudiantService etudiantS = ServiceFactory.getEtudiantService();
@@ -190,7 +192,6 @@ public class EtudiantController implements Initializable {
 
 					addEtudiantshow();
 					addEtudiantReset();
-					searchEtudiant();
 
 				}
 			}
@@ -231,38 +232,62 @@ public class EtudiantController implements Initializable {
 		col_PromotionEtudiant
 				.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFormation().getPromotion()));
 		tableEtudiant.setItems(addEtudiant);
-
+ 
 	}
 
 	// fonction qui permet de chercher et filter le tableau d'étudiants dans
 	// l'interface graphique
 	@FXML
 	public void searchEtudiant() {
-	    FilteredList<Etudiant> filter = new FilteredList<>(addEtudiant, e -> true);
+		FilteredList<Etudiant> filter = new FilteredList<>(addEtudiant, e -> true);
 
-	    search_Etudiant.textProperty().addListener((observable, oldValue, newValue) -> {
-	        filter.setPredicate(predData -> {
-	            if (newValue == null || newValue.isEmpty()) {
-	                return true;
-	            }
-	            String searchKey = newValue.toLowerCase();
+		search_Etudiant.textProperty().addListener((observable, oldValue, newValue) -> {
+			filter.setPredicate(predData -> {
+				if (newValue == null || newValue.isEmpty()) {
+					return true;
+				}
 
-	            // Check if any of the fields contain the search keyword
-	            boolean idMatches = Integer.toString(predData.getIdEtudiant()).contains(searchKey);
-	            boolean nomMatches = predData.getNom().toLowerCase().contains(searchKey);
-	            boolean prenomMatches = predData.getPrenom().toLowerCase().contains(searchKey);
-	            boolean nomFormationMatches = predData.getFormation().getNom().toLowerCase().contains(searchKey);
-	            boolean promotionMatches = predData.getFormation().getPromotion().toLowerCase().contains(searchKey);
+				String searchKey = newValue.toLowerCase();
+				String idEtudiant = Integer.toString(predData.getIdEtudiant());
+				String nomFormation = predData.getFormation().getNom().toLowerCase();
+				String promotion = predData.getFormation().getPromotion().toLowerCase();
 
-	            return idMatches || nomMatches || prenomMatches || nomFormationMatches || promotionMatches;
-	        });
+				// Ajouter la condition pour vérifier quel filtre est sélectionné
+				String selectedFilter = filtre_etudiant.getSelectionModel().getSelectedItem();
 
-	        SortedList<Etudiant> sortedList = new SortedList<>(filter);
-	        sortedList.comparatorProperty().bind(tableEtudiant.comparatorProperty());
+				if (selectedFilter != null) {
+					// Si le filtre est sélectionné, utilisez-le pour la recherche
+					if ("IdEtudiant".equals(selectedFilter) && idEtudiant.contains(searchKey)) {
+						return true;
+					} else if ("Nom Etudiant".equals(selectedFilter)
+							&& predData.getNom().toLowerCase().contains(searchKey)) {
+						return true;
+					} else if ("Prenom Etudiant".equals(selectedFilter)
+							&& predData.getPrenom().toLowerCase().contains(searchKey)) {
+						return true;
+					} else if ("Nom Formation".equals(selectedFilter) && nomFormation.contains(searchKey)) {
+						return true;
+					} else if ("Promotion".equals(selectedFilter) && promotion.contains(searchKey)) {
+						return true;
+					} else {
+						return false;
+					}
+				} else {
+					// Si aucun filtre n'est sélectionné, utilisez la logique sans filtre
+					return idEtudiant.contains(searchKey) || predData.getNom().toLowerCase().contains(searchKey)
+							|| predData.getPrenom().toLowerCase().contains(searchKey)
+							|| nomFormation.contains(searchKey) || promotion.contains(searchKey);
+				}
+			});
 
-	        tableEtudiant.setItems(sortedList);
-	    });
+			SortedList<Etudiant> sortedList = new SortedList<>(filter);
+			sortedList.comparatorProperty().bind(tableEtudiant.comparatorProperty());
+
+			tableEtudiant.setItems(sortedList);
+		});
+
 	}
+
 	@FXML
 	public void selectEtudient() {
 
@@ -279,6 +304,7 @@ public class EtudiantController implements Initializable {
 			PrenomEtudiant2.setText(etudiant.getPrenom());
 		}
 	}
+
 	// Refresh les donnees de tableau dans UI
 	@FXML
 	public void refreshData() {
@@ -382,18 +408,23 @@ public class EtudiantController implements Initializable {
 		alert.setContentText(content);
 		alert.showAndWait();
 	}
+
 	public void showOptionEtudiant() {
 		tmp_addEtudiant.setVisible(false);
 		tmp_btnEtudiant.setVisible(true);
 		tmp_updateEtudiant.setVisible(false);
-		
+
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		addEtudiantshow();
 		fillFormationComboBox();
-		 showOptionEtudiant() ;
+		showOptionEtudiant();
+		ObservableList<String> etudiant = FXCollections.observableArrayList("Select", "IdEtudiant", "Nom Etudiant",
+				"Prenom Etudiant", "Nom Formation", "Promotion");
+
+		filtre_etudiant.setItems(etudiant);
 
 	}
 

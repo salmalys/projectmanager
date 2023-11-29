@@ -40,13 +40,13 @@
 								<FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="1.5em" />
 							</graphic>
 						</Button>
-						<ComboBox layoutX="66.0" layoutY="55.0" prefWidth="150.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<ComboBox fx:id="filtre_Projet" layoutX="66.0" layoutY="55.0" prefWidth="150.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
 						<Label layoutX="14.0" layoutY="60.0" prefWidth="42.0" text="Filtre :">
 							<font>
 								<Font name="System Bold" size="14.0" />
 							</font>
 						</Label>
-						<TextField fx:id="search_projet" layoutX="14.0" layoutY="14.0" onKeyTyped="#searchProjet" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
+						<TextField fx:id="search_projet" layoutX="14.0" layoutY="14.0" onKeyPressed="#searchProjet" onKeyTyped="#searchProjet" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
 						<FontAwesomeIconView glyphName="SEARCH" layoutX="17.0" layoutY="33.0" size="1.5em" />
 					</children>
 				</AnchorPane>
@@ -155,9 +155,7 @@
 						<Button fx:id="back_projet2" layoutX="269.0" layoutY="469.0" mnemonicParsing="false" onAction="#handleBackProjet" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
 					</children>
 				</AnchorPane>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
 			</children>
 		</AnchorPane>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
 	</children>
 </AnchorPane>

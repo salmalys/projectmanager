@@ -55,7 +55,7 @@
 												<Font name="Tahoma Bold" size="25.0" />
 											</font>
 										</Label>
-										<Label fx:id="username" alignment="CENTER" layoutX="14.0" layoutY="152.0" prefHeight="23.0" prefWidth="174.0" text="SalmaLH" textFill="WHITE">
+										<Label fx:id="username" alignment="CENTER" layoutX="14.0" layoutY="152.0" prefHeight="23.0" prefWidth="174.0" text="Admin" textFill="WHITE">
 											<font>
 												<Font name="Arial Italic" size="20.0" />
 											</font>
@@ -80,7 +80,7 @@
 												<String fx:value="shadow" />
 											</styleClass>
 										</Button>
-										<Label layoutX="58.0" layoutY="522.0" text="Déconnexion">
+										<Label layoutX="70.0" layoutY="519.0" text="Déconnexion">
 											<font>
 												<Font name="System Bold" size="14.0" />
 											</font>

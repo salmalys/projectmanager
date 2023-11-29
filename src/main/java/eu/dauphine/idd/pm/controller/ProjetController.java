@@ -4,6 +4,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -13,6 +14,7 @@ import javafx.util.StringConverter;
 import eu.dauphine.idd.pm.model.Projet;
 import eu.dauphine.idd.pm.service.ProjetService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -23,6 +25,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -89,6 +92,8 @@ public class ProjetController implements Initializable {
 
 	@FXML
 	private TableColumn<Projet, String> col_idProjet;
+	@FXML
+	private ComboBox<String> filtre_Projet;
 
 	private ProjetService projetS = ServiceFactory.getProjetService();
 
@@ -143,14 +148,14 @@ public class ProjetController implements Initializable {
 			String sujet = SujetProjet2.getText();
 			String idProjetStr = Idprojet.getText();
 
-			   // Convertir la date du DatePicker en java.sql.Date
-	        LocalDate localDate = dateRemisePorjet2.getValue();
-	        System.out.println(localDate.toString());
-	        java.sql.Date dateRemise = null;
+			// Convertir la date du DatePicker en java.sql.Date
+			LocalDate localDate = dateRemisePorjet2.getValue();
+			System.out.println(localDate.toString());
+			java.sql.Date dateRemise = null;
 
-	        if (localDate != null) {
-	            dateRemise = java.sql.Date.valueOf(localDate);
-	        }
+			if (localDate != null) {
+				dateRemise = java.sql.Date.valueOf(localDate);
+			}
 			Alert alert;
 			if (!isInputValid(matiere, sujet, dateRemise)) {
 				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
@@ -203,39 +208,52 @@ public class ProjetController implements Initializable {
 			e.printStackTrace();
 		}
 	}
+
 	@FXML
 	public void searchProjet() {
-		
-	    if (search_projet != null) {
-	        FilteredList<Projet> filter = new FilteredList<>(addprojet, e -> true);
+		if (search_projet != null) {
+			FilteredList<Projet> filter = new FilteredList<>(addprojet, e -> true);
 
-	        search_projet.textProperty().addListener((observable, oldValue, newValue) -> {
-	            filter.setPredicate(predData -> {
-	                if (newValue == null || newValue.isEmpty()) {
-	                    return true;
-	                }
-	                String searchKey = newValue.toLowerCase();
-	                String idProjet = String.valueOf(predData.getIdProjet());
+			search_projet.textProperty().addListener((observable, oldValue, newValue) -> {
+				filter.setPredicate(predData -> {
+					if (newValue == null || newValue.isEmpty()) {
+						return true;
+					}
 
-	                // Check if any of the fields contain the search keyword
-	                boolean idMatches = idProjet.contains(searchKey);
-	                boolean matiereMatches = predData.getNomMatiere().toLowerCase().contains(searchKey);
-	                boolean sujetMatches = predData.getSujet().toLowerCase().contains(searchKey);
+					String searchKey = newValue.toLowerCase();
+					String idProjet = String.valueOf(predData.getIdProjet());
+					String nomMatiere = predData.getNomMatiere().toLowerCase();
+					String sujet = predData.getSujet().toLowerCase();
 
-	             
+					// Ajouter la condition pour vérifier quel filtre est sélectionné
+					String selectedFilter = filtre_Projet.getSelectionModel().getSelectedItem();
 
-	                return idMatches || matiereMatches || sujetMatches;
-	            });
-	        });
+					if (selectedFilter != null) {
+						// Si le filtre est sélectionné, utilisez-le pour la recherche
+						if ("IdProjet".equals(selectedFilter) && idProjet.contains(searchKey)) {
+							return true;
+						} else if ("Nom Matiere".equals(selectedFilter) && nomMatiere.contains(searchKey)) {
+							return true;
+						} else if ("Sujet Projet".equals(selectedFilter) && sujet.contains(searchKey)) {
+							return true;
+						} else {
+							return false;
+						}
+					} else {
+						// Si aucun filtre n'est sélectionné, utilisez la logique sans filtre
+						return idProjet.contains(searchKey) || nomMatiere.contains(searchKey)
+								|| sujet.contains(searchKey);
+					}
+				});
+			});
 
-	        SortedList<Projet> sortedList = new SortedList<>(filter);
-	        sortedList.comparatorProperty().bind(tableProjet.comparatorProperty());
+			SortedList<Projet> sortedList = new SortedList<>(filter);
+			sortedList.comparatorProperty().bind(tableProjet.comparatorProperty());
 
-	        tableProjet.setItems(sortedList);
-	      
-	    }
+			tableProjet.setItems(sortedList);
+
+		}
 	}
-
 
 	// Liste d'éléments de projet
 	private ObservableList<Projet> addprojet;
@@ -267,41 +285,41 @@ public class ProjetController implements Initializable {
 
 	@FXML
 	public void selectProjet() {
-		Projet projet = tableProjet.getSelectionModel().getSelectedItem();
-		int num = tableProjet.getSelectionModel().getFocusedIndex();
-		if ((num - 1) < -1) {
-			return;
-		}
-		if (projet != null) {
-			Idprojet.setText(String.valueOf(projet.getIdProjet()));
+	    Projet projet = tableProjet.getSelectionModel().getSelectedItem();
+	    int num = tableProjet.getSelectionModel().getFocusedIndex();
+	    if ((num - 1) < -1) {
+	        return;
+	    }
+	    if (projet != null) {
+	        Idprojet.setText(String.valueOf(projet.getIdProjet()));
+	        NomMatiereP.setText(projet.getNomMatiere());
+	        SujetProjet.setText(projet.getSujet());
+	        NomMatiereP2.setText(projet.getNomMatiere());
+	        SujetProjet2.setText(projet.getSujet());
 
-			NomMatiereP.setText(projet.getNomMatiere());
-			SujetProjet.setText(projet.getSujet());
-			NomMatiereP2.setText(projet.getNomMatiere());
-			SujetProjet2.setText(projet.getSujet());
-//			// Convertir la date de java.sql.Date à LocalDate pour le DatePicker
-//			java.sql.Date dateRemise = (Date) projet.getDateRemiseRapport();
-//			if (dateRemise != null) {
-//				LocalDate localDateRemise = dateRemise.toLocalDate();
-//				dateRemisePorjet.setValue(localDateRemise);
-//				dateRemisePorjet2.setValue(localDateRemise);
-//			} else {
-//				// Gérer le cas où la date est null
-//				dateRemisePorjet.setValue(null);
-//				dateRemisePorjet2.setValue(null);
-//			}
-		}
+	        // Convertir la date de java.util.Date à LocalDate pour le DatePicker
+	        java.util.Date dateRemise = projet.getDateRemiseRapport();
+	        if (dateRemise != null) {
+	            LocalDate localDateRemise = dateRemise.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	            dateRemisePorjet.setValue(localDateRemise);
+	            dateRemisePorjet2.setValue(localDateRemise);
+	        } else {
+	            // Gérer le cas où la date est null
+	            dateRemisePorjet.setValue(null);
+	            dateRemisePorjet2.setValue(null);
+	        }
+	    }
 	}
 	// Refresh les donnees de tableau dans UI
-		@FXML
-		public void refreshData() {
-			try {
-				addProjetShow();
-				showAlert(AlertType.INFORMATION, "Refresh", "Data refreshed successfully!");
-			} catch (Exception e) {
-				showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
-			}
+	@FXML
+	public void refreshData() {
+		try {
+			addProjetShow();
+			showAlert(AlertType.INFORMATION, "Refresh", "Data refreshed successfully!");
+		} catch (Exception e) {
+			showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
 		}
+	}
 
 	// Add a method to reset Projet fields
 	@FXML
@@ -381,11 +399,15 @@ public class ProjetController implements Initializable {
 		tmpDeleteProjet.setVisible(true);
 		tmp_updateProjet.setVisible(false);
 	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		showOptionProjet();
-
 		addProjetShow();
+		ObservableList<String> projet = FXCollections.observableArrayList("Select", "IdProjet", "Nom Matiere",
+				"Sujet Projet");
+
+		filtre_Projet.setItems(projet);
 	}
 
 }

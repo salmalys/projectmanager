@@ -130,6 +130,8 @@ public class BinomeController implements Initializable {
 	private Button btn_updateBinome;
 	@FXML
 	private AnchorPane tmp_DeleteBinome;
+	@FXML
+	private ComboBox<String> filtre_binome;
 
 	private ProjetService projetS = ServiceFactory.getProjetService();
 	private EtudiantService etudiantS = ServiceFactory.getEtudiantService();
@@ -369,35 +371,45 @@ public class BinomeController implements Initializable {
 
 	@FXML
 	public void searchBinome() {
-		if (search_Binome != null) {
-			FilteredList<BinomeProjet> filter = new FilteredList<>(addBinome, b -> true);
+	    if (search_Binome != null) {
+	        FilteredList<BinomeProjet> filter = new FilteredList<>(addBinome, b -> true);
 
-			search_Binome.textProperty().addListener((observable, oldValue, newValue) -> {
-				filter.setPredicate(predData -> {
-					if (newValue == null || newValue.isEmpty()) {
-						return true;
-					}
-					String searchKey = newValue.toLowerCase();
+	        search_Binome.textProperty().addListener((observable, oldValue, newValue) -> {
+	            filter.setPredicate(predData -> {
+	                if (newValue == null || newValue.isEmpty()) {
+	                    return true;
+	                }
 
-					// Check if any of the fields contain the search keyword
-					boolean idMatches = Integer.toString(predData.getIdBinome()).contains(searchKey);
-					boolean etudiant1Matches = (predData.getMembre1().getNom() + " "
-							+ predData.getMembre1().getPrenom()).toLowerCase().contains(searchKey);
-					boolean etudiant2Matches = (predData.getMembre2().getNom() + " "
-							+ predData.getMembre2().getPrenom()).toLowerCase().contains(searchKey);
-					boolean projetMatches = (predData.getProjet().getNomMatiere() + " - "
-							+ predData.getProjet().getSujet()).toLowerCase().contains(searchKey);
-					boolean dateRemiseMatches = predData.getDateRemiseEffective().toString().contains(searchKey);
+	                String searchKey = newValue.toLowerCase();
+	                String idBinome = Integer.toString(predData.getIdBinome());
+	                String etudiant1 = (predData.getMembre1().getNom() + " " + predData.getMembre1().getPrenom()).toLowerCase();
+	                String etudiant2 = (predData.getMembre2().getNom() + " " + predData.getMembre2().getPrenom()).toLowerCase();
+	                String nomMatiere = predData.getProjet().getNomMatiere().toLowerCase();
+	                String sujetProjet = predData.getProjet().getSujet().toLowerCase();
 
-					return idMatches || etudiant1Matches || etudiant2Matches || projetMatches || dateRemiseMatches;
-				});
-			});
+	                // Ajouter des impressions pour voir les valeurs pendant la recherche
+	                System.out.println("Search Key: " + searchKey);
+	                System.out.println("Id Binome: " + idBinome);
+	                System.out.println("Etudiant1: " + etudiant1);
+	                System.out.println("Etudiant2: " + etudiant2);
+	                System.out.println("Nom Matiere: " + nomMatiere);
+	                System.out.println("Sujet Projet: " + sujetProjet);
 
-			SortedList<BinomeProjet> sortedList = new SortedList<>(filter);
-			sortedList.comparatorProperty().bind(tableBinome.comparatorProperty());
+	                // Le reste de la logique reste inchangé
+	                // ...
 
-			tableBinome.setItems(sortedList);
-		}
+	                // Retourne le résultat de la recherche
+	                return idBinome.contains(searchKey) || etudiant1.contains(searchKey)
+	                        || etudiant2.contains(searchKey) || nomMatiere.contains(searchKey)
+	                        || sujetProjet.contains(searchKey);
+	            });
+	        });
+
+	        SortedList<BinomeProjet> sortedList = new SortedList<>(filter);
+	        sortedList.comparatorProperty().bind(tableBinome.comparatorProperty());
+
+	        tableBinome.setItems(sortedList);
+	    }
 	}
 
 	@FXML
@@ -560,14 +572,17 @@ public class BinomeController implements Initializable {
 		alert.showAndWait();
 	}
 
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
 		fillEtudiantComboBox();
 		fillProjetComboBox();
 		addShowBinome();
-		
+		ObservableList<String> binome = FXCollections.observableArrayList("Select", 
+				"IdBinome", "Etudiant1",
+				"Etudian2", "Nom Matiere", "Sujet Projet");
+		filtre_binome.setItems(binome);
+
 	}
 
 }
