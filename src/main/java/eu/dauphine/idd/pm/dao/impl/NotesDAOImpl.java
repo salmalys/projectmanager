@@ -41,7 +41,11 @@ public class NotesDAOImpl implements NotesDAO {
 			preparedStatement.setInt(1, note.getBinomeProjet().getIdBinome());
 			preparedStatement.setDouble(2, note.getNoteRapport());
 			preparedStatement.setDouble(3, note.getNoteSoutenanceMembre1());
-			preparedStatement.setDouble(4, note.getNoteSoutenanceMembre2());
+			if  (note.getNoteSoutenanceMembre2() == -1) {
+				preparedStatement.setNull(4, Types.FLOAT );
+			}else {
+				preparedStatement.setDouble(4, note.getNoteSoutenanceMembre2());
+			}
 			preparedStatement.executeUpdate();
 
 			try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
