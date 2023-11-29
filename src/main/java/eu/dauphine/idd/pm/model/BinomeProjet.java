@@ -24,6 +24,19 @@ public class BinomeProjet {
 		this.projet = p;
 		this.dateRemiseEffective = dateRemiseEffective2;
 	}
+	
+	public BinomeProjet(int id, Etudiant e1, Projet p, Date dateRemiseEffective2) {
+		this.idBinome = id;
+		this.membre1 = e1;
+		this.projet = p;
+		this.dateRemiseEffective = dateRemiseEffective2;
+	}
+	
+	public BinomeProjet(Etudiant e1, Projet p, Date dateRemiseEffective2) {
+		this.membre1 = e1;
+		this.projet = p;
+		this.dateRemiseEffective = dateRemiseEffective2;
+	}
 
 	public BinomeProjet() {
 	}

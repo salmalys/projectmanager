@@ -144,26 +144,30 @@ public class BinomeController implements Initializable {
 			String etudiant2 = Etudiant2List.getSelectionModel().getSelectedItem();
 			String projet = Projet.getSelectionModel().getSelectedItem();
 
-			if (!isInputValid(etudiant1, etudiant2, projet)) {
+			if (!isInputValid(etudiant1, projet)) {
 				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
 			} else {
 				String[] etudiant1Parts = etudiant1.split(" ");
 				String nomEtudiant1 = etudiant1Parts[0];
 				String prenomEtudiant1 = etudiant1Parts[1];
-
-				String[] etudiant2Parts = etudiant2.split(" ");
-				String nomEtudiant2 = etudiant2Parts[0];
-				String prenomEtudiant2 = etudiant2Parts[1];
-
+				
 				String[] projetParts = projet.split(" - ");
 				String nomMatiere = projetParts[0];
 				String sujetProjet = projetParts[1];
-
+				
 				int idEtudiant1 = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant1, prenomEtudiant1);
-				int idEtudiant2 = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant2, prenomEtudiant2);
 				int idProjet = projetS.getProjetIdByNomMatiereAndSujet(nomMatiere, sujetProjet);
-
-				int result = binomeS.createBinomeProjet(idEtudiant1, idEtudiant2, idProjet, null);
+				
+				int result;
+				if (etudiant2 != null) {
+					String[] etudiant2Parts = etudiant2.split(" ");
+					String nomEtudiant2 = etudiant2Parts[0];
+					String prenomEtudiant2 = etudiant2Parts[1];
+					int idEtudiant2 = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant2, prenomEtudiant2);
+					result = binomeS.createBinomeProjet(idEtudiant1, idEtudiant2, idProjet, null);
+				}else {
+					result = binomeS.createSoloProjet(idEtudiant1, idProjet, null);
+				}
 
 				switch (result) {
 				case 0:
@@ -194,7 +198,7 @@ public class BinomeController implements Initializable {
 			String projetName = Projet2.getValue();
 
 			Alert alert;
-			if (!isInputValid(projetName, etudiant2Name, etudiant1Name)) {
+			if (!isInputValid(projetName, etudiant1Name)) {
 				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
 			} else {
 				alert = new Alert(AlertType.CONFIRMATION);
@@ -542,9 +546,9 @@ public class BinomeController implements Initializable {
 
 	// Condition qui verefier c'est nom et prenom et formation ne sont pas vide dans
 	// GUI
-	public boolean isInputValid(String Etudiant1, String Etudiant2, String Projet) {
+	public boolean isInputValid(String Etudiant1, String Projet) {
 
-		if (Etudiant1.isEmpty() || Etudiant2.isEmpty() || Projet.isEmpty()) {
+		if (Etudiant1.isEmpty() || Projet.isEmpty()) {
 			showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
 			return false;
 		}
