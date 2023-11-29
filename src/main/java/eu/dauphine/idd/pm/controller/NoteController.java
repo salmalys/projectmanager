@@ -165,61 +165,34 @@ public class NoteController implements Initializable {
 			double noteRapport = Double.parseDouble(NoteRapportAdd.getText());
 			double noteS1 = Double.parseDouble(NoteSetudiant1Add.getText());
 			double noteS2;
-			BinomeProjet b = binomeS.getBinomeProjetById(idBinome);
-			
-			//CAS OU IL Y A UN SEUL MEMBRE
-			if (b.getMembre2() == null) {
-				if (NoteSetudiant2Add.getText()!= "") {
-					showAlert(AlertType.ERROR, "Error Message", "This projet has no second member.\nPlease don't enter notes in the field : \n\"Note Soutenance Membre 2\".");
-				}else {
-					
-					if (!isInputValid(id_binomeAdd.getText(), NoteRapportAdd.getText(), NoteSetudiant1Add.getText())) {
-						showAlert(AlertType.ERROR, "Error Message", "Please enter valid numeric values.");
-					}else {
-						
-						int result = NotesS.createNotes(idBinome, noteRapport, noteS1, -1);
-						switch (result) {
-						case 0:
-							showAlert(AlertType.INFORMATION, "Success", "Notes added successfully!");
-							resetNoteFields();
-							addShowNote();
-							break;
-						case 1:
-							showAlert(AlertType.ERROR, "Error Message", "Selected binome doesn't exist");
-							break;
-						case 2:
-							showAlert(AlertType.ERROR, "Error Message", "Selected binome hasn't deliver the project yet.\nYou can't enter notes.");
-							break;
-						default:
-							showAlert(AlertType.ERROR, "Error Message", "An unexpected error occurred.");
-							break;
-						}
-					}
-					
-				}
-			}else { //CAS OU IL Y A 2 PERSONNES
+			if (NoteSetudiant2Add.getText() == "") {
+				noteS2 = 0;
+			} else {
 				noteS2 = Double.parseDouble(NoteSetudiant2Add.getText());
-				if (!isInputValid(id_binomeAdd.getText(), NoteRapportAdd.getText(), NoteSetudiant1Add.getText())) {
-					showAlert(AlertType.ERROR, "Error Message", "Please enter valid numeric values.");
-				} else {
-					int result = NotesS.createNotes(idBinome, noteRapport, noteS1, noteS2);
+			}
+			if (!isInputValid(id_binomeAdd.getText(), NoteRapportAdd.getText(), NoteSetudiant1Add.getText())) {
+				showAlert(AlertType.ERROR, "Error Message", "Please enter valid numeric values.");
+			} else {
 
-					switch (result) {
-					case 0:
-						showAlert(AlertType.INFORMATION, "Success", "Notes added successfully!");
-						resetNoteFields();
-						addShowNote();
-						break;
-					case 1:
-						showAlert(AlertType.ERROR, "Error Message", "Selected binome doesn't exist");
-						break;
-					case 2:
-						showAlert(AlertType.ERROR, "Error Message", "Selected binome hasn't deliver the project yet.\nYou can't enter notes.");
-						break;
-					default:
-						showAlert(AlertType.ERROR, "Error Message", "An unexpected error occurred.");
-						break;
-					}
+				// Ajouter les notes à la base de données
+				int result = NotesS.createNotes(idBinome, noteRapport, noteS1, noteS2);
+
+				switch (result) {
+				case 0:
+					showAlert(AlertType.INFORMATION, "Success", "Notes added successfully!");
+					resetNoteFields();
+					addShowNote();
+					break;
+				case 1:
+					showAlert(AlertType.ERROR, "Error Message", "Selected binome doesn't exist");
+					break;
+				case 2:
+					showAlert(AlertType.ERROR, "Error Message",
+							"Selected binome hasn't deliver the project yet. You can't enter notes.");
+					break;
+				default:
+					showAlert(AlertType.ERROR, "Error Message", "An unexpected error occurred.");
+					break;
 				}
 			}
 		} catch (Exception e) {
@@ -345,7 +318,7 @@ public class NoteController implements Initializable {
 	private Notes findNoteForBinome(BinomeProjet binomeProjet, List<Notes> notesList) {
 		for (Notes note : notesList) {
 			if (note.getBinomeProjet().getIdBinome() == binomeProjet.getIdBinome()) {
-				// System.out.println("Binome ID: " + binomeProjet.getIdBinome());
+
 				return note;
 			}
 		}
@@ -364,15 +337,15 @@ public class NoteController implements Initializable {
 					.setText(selectedBinome.getMembre1().getNom() + " " + selectedBinome.getMembre1().getPrenom());
 			if (selectedBinome.getMembre2() != null) {
 				nomPrenomAffiche2
-				.setText(selectedBinome.getMembre2().getNom() + " " + selectedBinome.getMembre2().getPrenom());
+						.setText(selectedBinome.getMembre2().getNom() + " " + selectedBinome.getMembre2().getPrenom());
 			}
 
-			// Appeler cette fonction de calcul de la note finale
 			Notes binomeNote = NotesS.findNoteForBinome(selectedBinome.getIdBinome());
 
 			if (binomeNote != null) {
+				// Appeler cette fonction de calcul de la note finale
 				double[] notesFinales = NotesS.calculNoteFinale(binomeNote.getId());
-
+                
 				// Afficher les notes finales dans les TextField
 				noteF1.setText(String.valueOf(notesFinales[0]));
 
@@ -499,6 +472,17 @@ public class NoteController implements Initializable {
 		}
 	}
 
+	// Refresh les donnees de tableau dans UI
+	@FXML
+	public void refreshData() {
+		try {
+			addShowNote();
+			showAlert(AlertType.INFORMATION, "Refresh", "Data refreshed successfully!");
+		} catch (Exception e) {
+			showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
+		}
+	}
+
 	@FXML
 	private void handleBtnSaisirNote(ActionEvent event) {
 		if (event.getSource() == btn_saisirNote) {
@@ -507,7 +491,9 @@ public class NoteController implements Initializable {
 			tmp_supprimerNote.setVisible(false);
 			tmp_showNotes.setVisible(false);
 			tmp_optionNote.setVisible(false);
+
 			tmp_tableBinomeR.setVisible(true);
+
 		}
 	}
 
@@ -572,21 +558,21 @@ public class NoteController implements Initializable {
 		tmp_supprimerNote.setVisible(false);
 		tmp_showNotes.setVisible(false);
 		tmp_tableBinomeR.setVisible(true);
+
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		// TODO Auto-generated method stub
 		showOptionNote();
 		addShowNote();
-
+		// Associer cette fonction à l'événement de sélection du TableView
 		tableviewBinomeNoteRapport.getSelectionModel().selectedItemProperty()
 				.addListener((obs, oldSelection, newSelection) -> {
 					if (newSelection != null) {
 						handleTableSelection();
 					}
 				});
-		//Refresh pour la table ?
-		
 
 	}
 
