@@ -135,7 +135,7 @@
 						</Label>
 						<Button layoutX="293.0" layoutY="470.0" mnemonicParsing="false" onAction="#updateEtudiant" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Mettre à jour" />
 						<Button layoutX="285.0" layoutY="291.0" mnemonicParsing="false" onAction="#addEtudiantReset2" prefHeight="25.0" prefWidth="56.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
-						<Button fx:id="btn_tmpBackEtudient2" layoutX="20.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleBackEtudiant2" prefHeight="32.0" prefWidth="67.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Retour" />
+						<Button fx:id="btn_tmpBackEtudient2" layoutX="31.0" layoutY="468.0" mnemonicParsing="false" onAction="#handleBackEtudiant2" prefHeight="32.0" prefWidth="67.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Retour" />
 						<Label layoutX="68.0" layoutY="257.0" text="Formation :">
 							<font>
 								<Font name="Arial" size="16.0" />

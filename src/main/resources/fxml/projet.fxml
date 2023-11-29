@@ -11,6 +11,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.dauphine.idd.pm.controller.ProjetController">
 	<children>
@@ -49,27 +50,37 @@
 						<FontAwesomeIconView glyphName="SEARCH" layoutX="17.0" layoutY="33.0" size="1.5em" />
 					</children>
 				</AnchorPane>
-				<AnchorPane fx:id="tmpDeleteProjet" layoutX="526.0" layoutY="6.0" prefHeight="522.0" prefWidth="342.0" stylesheets="@../css/dashboard.css">
+				<AnchorPane fx:id="tmpDeleteProjet" layoutX="526.0" layoutY="4.0" prefHeight="522.0" prefWidth="342.0" stylesheets="@../css/dashboard.css">
 					<styleClass>
 						<String fx:value="shadow" />
 						<String fx:value="white-bg" />
 					</styleClass>
 					<children>
-						<Label layoutX="48.0" layoutY="28.0" text="Supprimer un Projet">
+						<Label layoutX="30.0" layoutY="41.0" text="Gestion des projets">
 							<font>
-								<Font name="Tahoma Bold" size="24.0" />
+								<Font name="Tahoma Bold" size="30.0" />
 							</font>
 						</Label>
-						<TextField fx:id="Idprojet" layoutX="97.0" layoutY="98.0" onAction="#resetProjetField" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-						<Label layoutX="14.0" layoutY="101.0" text="ID Projet :">
+						<TextField fx:id="Idprojet" layoutX="88.0" layoutY="384.0" onAction="#resetProjetField" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<Label layoutX="84.0" layoutY="346.0" text="Sélectionner un projet">
 							<font>
-								<Font name="Arial" size="15.0" />
+								<Font size="19.0" />
 							</font>
 						</Label>
-						<Button fx:id="btn_ajoutProjet" layoutX="35.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleBtnTmpAddProjet" prefHeight="31.0" prefWidth="123.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter un Projet" />
-						<Button fx:id="btn_supprimProjet" layoutX="53.0" layoutY="317.0" mnemonicParsing="false" onAction="#deleteProjet" prefHeight="32.0" prefWidth="87.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Supprimer" />
-						<Button fx:id="btn_modifierProjet" layoutX="192.0" layoutY="419.0" mnemonicParsing="false" onAction="#handleBtnTmpUpdateProjet" prefHeight="31.0" prefWidth="129.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier un Projet" />
-						<Button fx:id="ClearProjet" layoutX="225.0" layoutY="316.0" mnemonicParsing="false" onAction="#resetProjetField" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+						<Button fx:id="btn_ajoutProjet" layoutX="20.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleBtnTmpAddProjet" prefHeight="30.0" prefWidth="143.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter un Projet" />
+						<Button fx:id="btn_supprimProjet" layoutX="60.0" layoutY="434.0" mnemonicParsing="false" onAction="#deleteProjet" prefHeight="33.0" prefWidth="237.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Supprimer le projet sélectione" />
+						<Button fx:id="btn_modifierProjet" layoutX="185.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleBtnTmpUpdateProjet" prefHeight="30.0" prefWidth="143.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier un Projet" />
+						<Button fx:id="ClearProjet" layoutX="275.0" layoutY="383.0" mnemonicParsing="false" onAction="#resetProjetField" prefHeight="26.0" prefWidth="56.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                  <Text layoutX="48.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sélectionner une des options ">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="17.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID Projet :">
+                     <font>
+                        <Font name="Arial" size="15.0" />
+                     </font>
+                  </Text>
 					</children>
 				</AnchorPane>
 				<AnchorPane fx:id="tmp_addProjet" layoutX="526.0" layoutY="7.0" prefHeight="520.0" prefWidth="349.0" stylesheets="@../css/dashboard.css" visible="false">
@@ -144,7 +155,9 @@
 						<Button fx:id="back_projet2" layoutX="269.0" layoutY="469.0" mnemonicParsing="false" onAction="#handleBackProjet" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
 					</children>
 				</AnchorPane>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
 			</children>
 		</AnchorPane>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
 	</children>
 </AnchorPane>

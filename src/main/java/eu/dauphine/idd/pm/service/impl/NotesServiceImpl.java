@@ -30,6 +30,7 @@ public class NotesServiceImpl implements NotesService {
             System.out.println("Invalid binome ID");
             return 1;
         }
+        //Verifier que le binome a rendu le projet avant de saisir les notess
 
         Notes notes = new Notes(binome, noteRapport, noteSoutenanceMembre1, noteSoutenanceMembre2);
         notesDAO.create(notes);
@@ -87,7 +88,6 @@ public class NotesServiceImpl implements NotesService {
   	
     	double[] notesFinales = new double[2];
     	double notePartielle1 = notes.getNoteSoutenanceMembre1() * 0.5 + notes.getNoteRapport() * 0.5;
-
     	if (notePartielle1 > penalite) {
     	    notesFinales[0] = notePartielle1 - penalite;
     	} else {
@@ -97,9 +97,9 @@ public class NotesServiceImpl implements NotesService {
     	double notePartielle2 = notes.getNoteSoutenanceMembre2() * 0.5 + notes.getNoteRapport() * 0.5;
 
     	if (notePartielle2 > penalite) {
-    	    notesFinales[0] = notePartielle2 - penalite;
+    	    notesFinales[1] = notePartielle2 - penalite;
     	} else {
-    	    notesFinales[0] = 0;
+    	    notesFinales[1] = 0;
     	} 
     	
     	return notesFinales;

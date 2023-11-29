@@ -389,10 +389,10 @@ public class NoteController implements Initializable {
 		int penalite = calculerPenalite(dateRemiseProjet, dateRemiseEffective);
 
 		// Formater la chaîne avec les informations nécessaires
-		return "Détails des notes :\n\n" + "Étudiant 1 : " + nomPrenom1 + ", Note Soutenance : " + noteSoutenance1
+		return "Détails des notes :\n\n\n" + "Étudiant 1 : " + nomPrenom1 + ", Note Soutenance : " + noteSoutenance1
 				+ ", Note Rapport : " + noteRapport + ", Note Finale :" + noteFinal1 + "\n" + "Étudiant 2 : "
 				+ nomPrenom2 + ", Note Soutenance : " + noteSoutenance2 + ", Note Rapport : " + noteRapport
-				+ ", Note Finale : " + noteFinal1 + "\n" + "Matière : " + nomMatiere + "\n" + "Projet : " + sujetProjet
+				+ ", Note Finale : " + noteFinal2 + "\n" + "Matière : " + nomMatiere + "\n" + "Projet : " + sujetProjet
 				+ "\n" + "Date Remise Projet : " + dateRemiseProjet + "\n" + "Date Remise Effective : "
 				+ dateRemiseEffective + "\n" + "Pénalité : -" + penalite + " pour chaque jour de retard.";
 	}

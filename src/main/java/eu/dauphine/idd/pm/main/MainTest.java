@@ -89,14 +89,24 @@ public class MainTest {
 		
 		//System.out.println(b.findById(1));
 		BinomeProjet binomeSI = b.findById(1);
-		Notes notes = new Notes(binomeSI, 14, 16, 17);
+		Notes notes = n.findById(1);
+		
+		System.out.println(notes.getId());
+		System.out.println(notes);
+		double[] notesfinales = nS.calculNoteFinale(notes.getId());
+		System.out.println((notesfinales[0]));
+		System.out.println((notesfinales[1]));
+		
+		
 		//System.out.println(notes);
-		n.delete(notes);
+		//System.out.println(nS.calculNoteFinale(notes.getId()));
+		//System.out.println(notes);
+		//n.delete(notes);
 		//System.out.println(notes.getId());
 		//System.out.println(n.findAll());
-		System.out.println(n.findById(1));
-		n.deleteById(1);
-		System.out.println(n.findAll());
+		//System.out.println(n.findById(1));
+		//n.deleteById(1);
+		//System.out.println(n.findAll());
 		//n.findById(1);
 		//n.create(notes);
 		//System.out.println(n.findAll());
