@@ -152,14 +152,14 @@ public class BinomeController implements Initializable {
 				String[] etudiant1Parts = etudiant1.split(" ");
 				String nomEtudiant1 = etudiant1Parts[0];
 				String prenomEtudiant1 = etudiant1Parts[1];
-				
+
 				String[] projetParts = projet.split(" - ");
 				String nomMatiere = projetParts[0];
 				String sujetProjet = projetParts[1];
-				
+
 				int idEtudiant1 = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant1, prenomEtudiant1);
 				int idProjet = projetS.getProjetIdByNomMatiereAndSujet(nomMatiere, sujetProjet);
-				
+
 				int result;
 				if (etudiant2 != null) {
 					String[] etudiant2Parts = etudiant2.split(" ");
@@ -167,7 +167,7 @@ public class BinomeController implements Initializable {
 					String prenomEtudiant2 = etudiant2Parts[1];
 					int idEtudiant2 = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant2, prenomEtudiant2);
 					result = binomeS.createBinomeProjet(idEtudiant1, idEtudiant2, idProjet, null);
-				}else {
+				} else {
 					result = binomeS.createSoloProjet(idEtudiant1, idProjet, null);
 				}
 
@@ -375,44 +375,64 @@ public class BinomeController implements Initializable {
 
 	@FXML
 	public void searchBinome() {
-	    if (search_Binome != null) {
-	        FilteredList<BinomeProjet> filter = new FilteredList<>(addBinome, b -> true);
+		if (search_Binome != null) {
+			FilteredList<BinomeProjet> filter = new FilteredList<>(addBinome, b -> true);
 
-	        search_Binome.textProperty().addListener((observable, oldValue, newValue) -> {
-	            filter.setPredicate(predData -> {
-	                if (newValue == null || newValue.isEmpty()) {
-	                    return true;
-	                }
+			search_Binome.textProperty().addListener((observable, oldValue, newValue) -> {
+				filter.setPredicate(predData -> {
+					if (newValue == null || newValue.isEmpty()) {
+						return true;
+					}
+					String etudiant2 = "";
+					String searchKey = newValue.toLowerCase();
+					String idBinome = Integer.toString(predData.getIdBinome());
+					String etudiant1 = (predData.getMembre1().getNom() + " " + predData.getMembre1().getPrenom())
+							.toLowerCase();
+					if (predData.getMembre2() != null) {
+						etudiant2 = (predData.getMembre2().getNom() + " " + predData.getMembre2().getPrenom())
+								.toLowerCase();
+					} else {
+						etudiant2 = "";
+					}
+					String nomMatiere = predData.getProjet().getNomMatiere().toLowerCase();
+					String sujetProjet = predData.getProjet().getSujet().toLowerCase();
+					// Ajouter la condition pour vérifier quel filtre est sélectionné
+					String selectedFilter = filtre_binome.getSelectionModel().getSelectedItem();
+					if (selectedFilter != null && !selectedFilter.equals("Select")) {
 
-	                String searchKey = newValue.toLowerCase();
-	                String idBinome = Integer.toString(predData.getIdBinome());
-	                String etudiant1 = (predData.getMembre1().getNom() + " " + predData.getMembre1().getPrenom()).toLowerCase();
-	                String etudiant2 = (predData.getMembre2().getNom() + " " + predData.getMembre2().getPrenom()).toLowerCase();
-	                String nomMatiere = predData.getProjet().getNomMatiere().toLowerCase();
-	                String sujetProjet = predData.getProjet().getSujet().toLowerCase();
+						// Si le filtre est sélectionné, utilisez-le pour la recherche
+						if ("IdBinome".equals(selectedFilter) && idBinome.contains(searchKey)) {
 
-	                // Ajouter des impressions pour voir les valeurs pendant la recherche
-	                System.out.println("Search Key: " + searchKey);
-	                System.out.println("Id Binome: " + idBinome);
-	                System.out.println("Etudiant1: " + etudiant1);
-	                System.out.println("Etudiant2: " + etudiant2);
-	                System.out.println("Nom Matiere: " + nomMatiere);
-	                System.out.println("Sujet Projet: " + sujetProjet);
+							return true;
+						} else if ("Nom Matiere".equals(selectedFilter) && nomMatiere.contains(searchKey)) {
 
+							return true;
+						} else if ("Sujet Projet".equals(selectedFilter) && sujetProjet.contains(searchKey)) {
 
+							return true;
+						} else if ("Etudiant1".equals(selectedFilter) && etudiant1.contains(searchKey)) {
+							return true;
+						} else if ("Etudiant2".equals(selectedFilter) && etudiant2.contains(searchKey)) {
+							return true;
+						} else {
+							return false;
+						}
 
-	                // Retourne le résultat de la recherche
-	                return idBinome.contains(searchKey) || etudiant1.contains(searchKey)
-	                        || etudiant2.contains(searchKey) || nomMatiere.contains(searchKey)
-	                        || sujetProjet.contains(searchKey);
-	            });
-	        });
+					} else {
 
-	        SortedList<BinomeProjet> sortedList = new SortedList<>(filter);
-	        sortedList.comparatorProperty().bind(tableBinome.comparatorProperty());
+						// Retourne le résultat de la recherche
+						return idBinome.contains(searchKey) || etudiant1.contains(searchKey)
+								|| etudiant2.contains(searchKey) || nomMatiere.contains(searchKey)
+								|| sujetProjet.contains(searchKey);
+					}
+				});
+			});
 
-	        tableBinome.setItems(sortedList);
-	    }
+			SortedList<BinomeProjet> sortedList = new SortedList<>(filter);
+			sortedList.comparatorProperty().bind(tableBinome.comparatorProperty());
+
+			tableBinome.setItems(sortedList);
+		}
 	}
 
 	@FXML
@@ -581,9 +601,8 @@ public class BinomeController implements Initializable {
 		fillEtudiantComboBox();
 		fillProjetComboBox();
 		addShowBinome();
-		ObservableList<String> binome = FXCollections.observableArrayList("Select", 
-				"IdBinome", "Etudiant1",
-				"Etudian2", "Nom Matiere", "Sujet Projet");
+		ObservableList<String> binome = FXCollections.observableArrayList("Select", "IdBinome", "Etudiant1", "Etudian2",
+				"Nom Matiere", "Sujet Projet");
 		filtre_binome.setItems(binome);
 
 	}

@@ -251,6 +251,7 @@ public class EtudiantController implements Initializable {
 				String idEtudiant = Integer.toString(predData.getIdEtudiant());
 				String nomFormation = predData.getFormation().getNom().toLowerCase();
 				String promotion = predData.getFormation().getPromotion().toLowerCase();
+			
 
 				// Ajouter la condition pour vérifier quel filtre est sélectionné
 				String selectedFilter = filtre_etudiant.getSelectionModel().getSelectedItem();
@@ -281,6 +282,7 @@ public class EtudiantController implements Initializable {
 			});
 
 			SortedList<Etudiant> sortedList = new SortedList<>(filter);
+			
 			sortedList.comparatorProperty().bind(tableEtudiant.comparatorProperty());
 
 			tableEtudiant.setItems(sortedList);

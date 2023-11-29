@@ -228,19 +228,23 @@ public class ProjetController implements Initializable {
 					// Ajouter la condition pour vérifier quel filtre est sélectionné
 					String selectedFilter = filtre_Projet.getSelectionModel().getSelectedItem();
 
-					if (selectedFilter != null) {
+					if (selectedFilter != null && !selectedFilter.equals("Select")) {
 						// Si le filtre est sélectionné, utilisez-le pour la recherche
 						if ("IdProjet".equals(selectedFilter) && idProjet.contains(searchKey)) {
+						
 							return true;
 						} else if ("Nom Matiere".equals(selectedFilter) && nomMatiere.contains(searchKey)) {
+							
 							return true;
 						} else if ("Sujet Projet".equals(selectedFilter) && sujet.contains(searchKey)) {
+						
 							return true;
 						} else {
 							return false;
 						}
 					} else {
 						// Si aucun filtre n'est sélectionné, utilisez la logique sans filtre
+					
 						return idProjet.contains(searchKey) || nomMatiere.contains(searchKey)
 								|| sujet.contains(searchKey);
 					}
@@ -285,31 +289,32 @@ public class ProjetController implements Initializable {
 
 	@FXML
 	public void selectProjet() {
-	    Projet projet = tableProjet.getSelectionModel().getSelectedItem();
-	    int num = tableProjet.getSelectionModel().getFocusedIndex();
-	    if ((num - 1) < -1) {
-	        return;
-	    }
-	    if (projet != null) {
-	        Idprojet.setText(String.valueOf(projet.getIdProjet()));
-	        NomMatiereP.setText(projet.getNomMatiere());
-	        SujetProjet.setText(projet.getSujet());
-	        NomMatiereP2.setText(projet.getNomMatiere());
-	        SujetProjet2.setText(projet.getSujet());
+		Projet projet = tableProjet.getSelectionModel().getSelectedItem();
+		int num = tableProjet.getSelectionModel().getFocusedIndex();
+		if ((num - 1) < -1) {
+			return;
+		}
+		if (projet != null) {
+			Idprojet.setText(String.valueOf(projet.getIdProjet()));
+			NomMatiereP.setText(projet.getNomMatiere());
+			SujetProjet.setText(projet.getSujet());
+			NomMatiereP2.setText(projet.getNomMatiere());
+			SujetProjet2.setText(projet.getSujet());
 
-	        // Convertir la date de java.util.Date à LocalDate pour le DatePicker
-	        java.util.Date dateRemise = projet.getDateRemiseRapport();
-	        if (dateRemise != null) {
-	            LocalDate localDateRemise = dateRemise.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-	            dateRemisePorjet.setValue(localDateRemise);
-	            dateRemisePorjet2.setValue(localDateRemise);
-	        } else {
-	            // Gérer le cas où la date est null
-	            dateRemisePorjet.setValue(null);
-	            dateRemisePorjet2.setValue(null);
-	        }
-	    }
+			// Convertir la date de java.util.Date à LocalDate pour le DatePicker
+			java.util.Date dateRemise = projet.getDateRemiseRapport();
+			if (dateRemise != null) {
+				LocalDate localDateRemise = dateRemise.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				dateRemisePorjet.setValue(localDateRemise);
+				dateRemisePorjet2.setValue(localDateRemise);
+			} else {
+				// Gérer le cas où la date est null
+				dateRemisePorjet.setValue(null);
+				dateRemisePorjet2.setValue(null);
+			}
+		}
 	}
+
 	// Refresh les donnees de tableau dans UI
 	@FXML
 	public void refreshData() {
