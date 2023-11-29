@@ -205,7 +205,6 @@ public class FormationController implements Initializable {
 
 					addformationshow();
 					addformationReset();
-					
 
 				}
 			}
@@ -533,13 +532,19 @@ public class FormationController implements Initializable {
 
 	}
 
+	public void showOptionFormation() {
+		tmp_addformation.setVisible(false);
+		tmp_updateformation.setVisible(false);
+		tmp_btnformation.setVisible(true);
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
 		addformationshow();
 		addPromotionList();
 		addPromotionList2();
-		
+		showOptionFormation();
 
 	}
 

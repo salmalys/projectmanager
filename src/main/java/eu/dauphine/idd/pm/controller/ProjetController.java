@@ -376,9 +376,14 @@ public class ProjetController implements Initializable {
 		return true;
 	}
 
+	public void showOptionProjet() {
+		tmp_addProjet.setVisible(false);
+		tmpDeleteProjet.setVisible(true);
+		tmp_updateProjet.setVisible(false);
+	}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		showOptionProjet();
 
 		addProjetShow();
 	}

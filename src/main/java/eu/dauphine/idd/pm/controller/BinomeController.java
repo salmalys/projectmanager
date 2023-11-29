@@ -560,12 +560,14 @@ public class BinomeController implements Initializable {
 		alert.showAndWait();
 	}
 
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
 		fillEtudiantComboBox();
 		fillProjetComboBox();
 		addShowBinome();
+		
 	}
 
 }

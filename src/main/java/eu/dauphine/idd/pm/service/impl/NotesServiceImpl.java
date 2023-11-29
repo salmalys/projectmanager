@@ -104,4 +104,7 @@ public class NotesServiceImpl implements NotesService {
     	
     	return notesFinales;
     }
+    public Notes findNoteForBinome(int idBinome) {
+    	return notesDAO.findById(idBinome);
+    }
 }

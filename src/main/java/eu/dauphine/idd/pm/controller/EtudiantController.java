@@ -382,11 +382,18 @@ public class EtudiantController implements Initializable {
 		alert.setContentText(content);
 		alert.showAndWait();
 	}
+	public void showOptionEtudiant() {
+		tmp_addEtudiant.setVisible(false);
+		tmp_btnEtudiant.setVisible(true);
+		tmp_updateEtudiant.setVisible(false);
+		
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		addEtudiantshow();
 		fillFormationComboBox();
+		 showOptionEtudiant() ;
 
 	}
 

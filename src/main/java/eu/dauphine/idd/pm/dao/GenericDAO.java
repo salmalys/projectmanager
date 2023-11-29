@@ -9,4 +9,5 @@ public interface GenericDAO<T>{
     T findById(int id);
     void delete(T entity);
     void deleteById(int id);
+   
 }

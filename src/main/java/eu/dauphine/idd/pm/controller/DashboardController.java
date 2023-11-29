@@ -202,6 +202,9 @@ public class DashboardController implements Initializable {
 		Affichersername();
 		home_countEtudiant();
 		home_countProjet();
+		home_countAvantProjet();
+		home_countApresProjet();
+		home_countBinome();
 
 	}
 

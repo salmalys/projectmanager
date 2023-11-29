@@ -20,6 +20,7 @@ public class NotesDAOImpl implements NotesDAO {
 	private static final String DELETE_NOTE = "DELETE FROM Notes WHERE ID_Notes =?";
 	private static final String FIND_BY_ID = "SELECT * FROM Notes WHERE ID_Notes =?";
 	private static final String FIND_ALL_NOTES = "SELECT * FROM Notes";
+	private static final String FIND_BY_BINOME_ID = "SELECT * FROM Notes WHERE ID_BinomeProjet =?";
 
 	private BinomeProjetDAO binomeProjetDAO = DAOFactory.getBinomeProjetDAO();
 
@@ -142,6 +143,33 @@ public class NotesDAOImpl implements NotesDAO {
 	@Override
 	public void delete(Notes note) {
 		deleteById(note.getId());
+	}
+
+	public Notes findByBinomeId(int idBinome) {
+	    Notes note = null;
+	    try (Connection connection = getConnection();
+	            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_BINOME_ID)) {
+	        preparedStatement.setInt(1, idBinome);
+	        ResultSet rs = preparedStatement.executeQuery();
+	        if (rs.next()) {
+	            int idNotes = rs.getInt("ID_Notes");
+	         
+
+	            double noteR = rs.getDouble("Note_Rapport");
+	            double noteS1 = rs.getDouble("Note_Soutenance_Etudiant1");
+	            double noteS2 = rs.getDouble("Note_Soutenance_Etudiant2");
+	            note = new Notes(idNotes, null, noteR, noteS1, noteS2);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    if (note != null) {
+	        BinomeProjet b = binomeProjetDAO.findById(idBinome);
+	        note.setBinomeProjet(b);
+	    }
+
+	    return note;
 	}
 
 	public static void main(String[] args) {
