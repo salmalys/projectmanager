@@ -187,7 +187,12 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
 
 			preparedStatement.setInt(1, binome.getProjet().getIdProjet());
 			preparedStatement.setInt(2, binome.getMembre1().getIdEtudiant());
-			preparedStatement.setInt(3, binome.getMembre2().getIdEtudiant());
+			
+			if (binome.getMembre2() != null) {
+				preparedStatement.setInt(3, binome.getMembre2().getIdEtudiant());
+			}else {
+				preparedStatement.setNull(3, Types.INTEGER);
+				}
 
 			if (binome.getDateRemiseEffective() != null) {
 				// If dateRemise is not null, update it
