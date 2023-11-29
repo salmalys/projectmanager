@@ -50,7 +50,7 @@
 						<FontAwesomeIconView glyphName="SEARCH" layoutX="17.0" layoutY="33.0" size="1.5em" />
 					</children>
 				</AnchorPane>
-				<AnchorPane fx:id="tmpDeleteProjet" layoutX="526.0" layoutY="4.0" prefHeight="522.0" prefWidth="342.0" stylesheets="@../css/dashboard.css">
+				<AnchorPane fx:id="tmpDeleteProjet" layoutX="526.0" layoutY="4.0" prefHeight="522.0" prefWidth="342.0" stylesheets="@../css/dashboard.css" visible="false">
 					<styleClass>
 						<String fx:value="shadow" />
 						<String fx:value="white-bg" />
@@ -83,45 +83,41 @@
                   </Text>
 					</children>
 				</AnchorPane>
-				<AnchorPane fx:id="tmp_addProjet" layoutX="526.0" layoutY="7.0" prefHeight="520.0" prefWidth="349.0" stylesheets="@../css/dashboard.css" visible="false">
+				<AnchorPane fx:id="tmp_addProjet" layoutX="526.0" layoutY="7.0" prefHeight="520.0" prefWidth="349.0" stylesheets="@../css/dashboard.css">
 					<styleClass>
 						<String fx:value="shadow" />
 						<String fx:value="white-bg" />
 					</styleClass>
 					<children>
-						<Label layoutX="73.0" layoutY="27.0" text="Ajouter un Projet">
+						<Label layoutX="53.0" layoutY="51.0" text="Ajouter un Projet">
 							<font>
-								<Font name="Tahoma Bold" size="24.0" />
+								<Font name="Tahoma Bold" size="28.0" />
 							</font>
 						</Label>
-						<Button fx:id="btn_Add_projet" layoutX="69.0" layoutY="387.0" mnemonicParsing="false" onAction="#addProjet" prefHeight="35.0" prefWidth="77.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Add">
-							<graphic>
-								<FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="1.5em" />
-							</graphic>
-						</Button>
-						<Button layoutX="232.0" layoutY="386.0" mnemonicParsing="false" onAction="#resetProjetField" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
-						<Button fx:id="back_projet" layoutX="270.0" layoutY="461.0" mnemonicParsing="false" onAction="#handleBackProjet" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
-						<DatePicker fx:id="dateRemisePorjet" layoutX="150.0" layoutY="246.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<Button fx:id="btn_Add_projet" layoutX="267.0" layoutY="473.0" mnemonicParsing="false" onAction="#addProjet" prefHeight="32.0" prefWidth="67.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter" />
+						<Button layoutX="272.0" layoutY="281.0" mnemonicParsing="false" onAction="#resetProjetField" prefHeight="25.0" prefWidth="56.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+						<Button fx:id="back_projet" layoutX="14.0" layoutY="473.0" mnemonicParsing="false" onAction="#handleBackProjet" prefHeight="32.0" prefWidth="67.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Retour" />
+						<DatePicker fx:id="dateRemisePorjet" layoutX="154.0" layoutY="246.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
 						<Label layoutY="250.0" text="DateRemiseRapport :">
 							<font>
 								<Font name="Arial" size="15.0" />
 							</font>
 						</Label>
-						<TextField fx:id="SujetProjet" layoutX="152.0" layoutY="151.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-						<Label layoutX="101.0" layoutY="155.0" text="Sujet :">
+						<TextField fx:id="SujetProjet" layoutX="154.0" layoutY="148.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<Label layoutX="99.0" layoutY="198.0" text="Sujet :">
 							<font>
 								<Font name="Arial" size="15.0" />
 							</font>
 						</Label>
-						<TextField fx:id="NomMatiereP" layoutX="153.0" layoutY="96.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-						<Label layoutX="56.0" layoutY="100.0" text="Nom Matiere :">
+						<TextField fx:id="NomMatiereP" layoutX="154.0" layoutY="194.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<Label layoutX="48.0" layoutY="150.0" text="Nom Matiere :">
 							<font>
-								<Font name="Arial" size="15.0" />
+								<Font name="Arial" size="16.0" />
 							</font>
 						</Label>
 					</children>
 				</AnchorPane>
-				<AnchorPane fx:id="tmp_updateProjet" layoutX="526.0" layoutY="8.0" prefHeight="517.0" prefWidth="346.0" stylesheets="@../css/dashboard.css" visible="false">
+				<AnchorPane fx:id="tmp_updateProjet" layoutX="526.0" layoutY="8.0" prefHeight="517.0" prefWidth="346.0" stylesheets="@../css/dashboard.css">
 					<styleClass>
 						<String fx:value="white-bg" />
 						<String fx:value="shadow" />
@@ -150,9 +146,9 @@
 								<Font name="Arial" size="15.0" />
 							</font>
 						</Label>
-						<Button fx:id="btn_updateProjet" layoutX="72.0" layoutY="366.0" mnemonicParsing="false" onAction="#updateProjet" prefHeight="31.0" prefWidth="69.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
-						<Button layoutX="223.0" layoutY="363.0" mnemonicParsing="false" onAction="#resetProjetField2" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
-						<Button fx:id="back_projet2" layoutX="269.0" layoutY="469.0" mnemonicParsing="false" onAction="#handleBackProjet" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
+						<Button fx:id="btn_updateProjet" layoutX="270.0" layoutY="471.0" mnemonicParsing="false" onAction="#updateProjet" prefHeight="31.0" prefWidth="69.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
+						<Button layoutX="276.0" layoutY="304.0" mnemonicParsing="false" onAction="#resetProjetField2" prefHeight="25.0" prefWidth="56.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+						<Button fx:id="back_projet2" layoutX="14.0" layoutY="470.0" mnemonicParsing="false" onAction="#handleBackProjet" prefHeight="31.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Retour" />
 					</children>
 				</AnchorPane>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
