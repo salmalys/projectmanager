@@ -164,9 +164,13 @@ public class NoteController implements Initializable {
 			// Récupérer les notes depuis les champs
 			double noteRapport = Double.parseDouble(NoteRapportAdd.getText());
 			double noteS1 = Double.parseDouble(NoteSetudiant1Add.getText());
-			double noteS2 = Double.parseDouble(NoteSetudiant2Add.getText());
-			if (!isInputValid(id_binomeAdd.getText(), NoteRapportAdd.getText(), NoteSetudiant1Add.getText(),
-					NoteSetudiant2Add.getText())) {
+			double noteS2;
+			if (NoteSetudiant2Add.getText()== "") {
+				noteS2 = 0;
+			}else {
+				noteS2 = Double.parseDouble(NoteSetudiant2Add.getText());
+			}
+			if (!isInputValid(id_binomeAdd.getText(), NoteRapportAdd.getText(), NoteSetudiant1Add.getText())) {
 				showAlert(AlertType.ERROR, "Error Message", "Please enter valid numeric values.");
 			} else {
 
@@ -180,7 +184,10 @@ public class NoteController implements Initializable {
 					addShowNote();
 					break;
 				case 1:
-					showAlert(AlertType.ERROR, "Error Message", "An error occurred while creating the notes.");
+					showAlert(AlertType.ERROR, "Error Message", "Selected binome doesn't exist");
+					break;
+				case 2:
+					showAlert(AlertType.ERROR, "Error Message", "Selected binome hasn't deliver the project yet. You can't enter notes.");
 					break;
 				default:
 					showAlert(AlertType.ERROR, "Error Message", "An unexpected error occurred.");
@@ -327,8 +334,10 @@ public class NoteController implements Initializable {
 			id_binomeAffiche.setText(String.valueOf(selectedBinome.getIdBinome()));
 			nomPrenomAffiche1
 					.setText(selectedBinome.getMembre1().getNom() + " " + selectedBinome.getMembre1().getPrenom());
-			nomPrenomAffiche2
-					.setText(selectedBinome.getMembre2().getNom() + " " + selectedBinome.getMembre2().getPrenom());
+			if (selectedBinome.getMembre2() != null) {
+				nomPrenomAffiche2
+				.setText(selectedBinome.getMembre2().getNom() + " " + selectedBinome.getMembre2().getPrenom());
+			}
 
 			// Appeler cette fonction de calcul de la note finale
 			Notes binomeNote = NotesS.findNoteForBinome(selectedBinome.getIdBinome());
@@ -440,8 +449,8 @@ public class NoteController implements Initializable {
 		alert.showAndWait();
 	}
 
-	private boolean isInputValid(String idBinome, String noteRapport, String noteS1, String noteS2) {
-		return isInteger(idBinome) && isDouble(noteRapport) && isDouble(noteS1) && isDouble(noteS2);
+	private boolean isInputValid(String idBinome, String noteRapport, String noteS1) {
+		return isInteger(idBinome) && isDouble(noteRapport) && isDouble(noteS1);
 	}
 
 	private boolean isInteger(String input) {

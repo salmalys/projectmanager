@@ -30,7 +30,10 @@ public class NotesServiceImpl implements NotesService {
             System.out.println("Invalid binome ID");
             return 1;
         }
-        //Verifier que le binome a rendu le projet avant de saisir les notess
+        if (binome.getDateRemiseEffective() == null) {
+            System.out.println("Date Remise null");
+            return 2;
+        }
 
         Notes notes = new Notes(binome, noteRapport, noteSoutenanceMembre1, noteSoutenanceMembre2);
         notesDAO.create(notes);

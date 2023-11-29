@@ -30,13 +30,29 @@ public class BinomeProjetServiceImpl implements BinomeProjetService {
 		Etudiant membre2 = etudiantDAO.findById(idEtudiant2);
 		Projet projet = projetDAO.findById(idProjet);
 
-		if (membre1 == null || projet == null) {
+		if (membre1 == null || membre2 == null || projet == null) {
 			System.out.println("Invalid member or project ID");
 			return 1;
 		}
 
 		// Always set dateRemiseEffective to null
 		binomeProjetDAO.create(new BinomeProjet(membre1, membre2, projet, null));
+		System.out.println("BinomeProjet created successfully.");
+		return 0;
+	}
+	
+	@Override
+	public int createSoloProjet(int idEtudiant1, int idProjet, Date dateRemiseEffective) {
+		Etudiant membre1 = etudiantDAO.findById(idEtudiant1);
+		Projet projet = projetDAO.findById(idProjet);
+
+		if (membre1 == null || projet == null) {
+			System.out.println("Invalid member or project ID");
+			return 1;
+		}
+
+		// Always set dateRemiseEffective to null
+		binomeProjetDAO.create(new BinomeProjet(membre1, projet, null));
 		System.out.println("BinomeProjet created successfully.");
 		return 0;
 	}
@@ -100,6 +116,7 @@ public class BinomeProjetServiceImpl implements BinomeProjetService {
 
 		System.out.println(s.getBinomeProjetById(4));
 	}
+	
 
 	// Count
 }
