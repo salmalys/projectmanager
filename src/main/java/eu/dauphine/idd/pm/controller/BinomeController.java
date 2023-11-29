@@ -395,8 +395,7 @@ public class BinomeController implements Initializable {
 	                System.out.println("Nom Matiere: " + nomMatiere);
 	                System.out.println("Sujet Projet: " + sujetProjet);
 
-	                // Le reste de la logique reste inchangé
-	                // ...
+
 
 	                // Retourne le résultat de la recherche
 	                return idBinome.contains(searchKey) || etudiant1.contains(searchKey)
