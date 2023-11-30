@@ -42,7 +42,7 @@
 							</font>
 						</Label>
 						<TextField fx:id="search_Etudiant" layoutX="45.0" layoutY="10.0" onKeyTyped="#searchEtudiant" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
-						<FontAwesomeIconView glyphName="SEARCH" layoutX="48.0" layoutY="29.0" size="1.5em" />
+						<FontAwesomeIconView glyphName="SEARCH" layoutX="48.0" layoutY="29.0" size="1.5em" text="" />
 						<Button fx:id="refreshData" layoutX="371.0" layoutY="49.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
 							<graphic>
 								<FontAwesomeIconView fill="WHITE" glyphName="REFRESH" />

@@ -383,91 +383,123 @@ public class BinomeController implements Initializable {
 	}
 
 	@FXML
-	public void searchbinome() {
-	    if (search_Binome != null) {
-	        FilteredList<BinomeProjet> filter = new FilteredList<>(addBinome, b -> true);
+	public void searchBinome() {
+		if (search_Binome != null) {
+			FilteredList<BinomeProjet> filter = new FilteredList<>(addBinome, b -> true);
 
-	        search_Binome.textProperty().addListener((observable, oldValue, newValue) -> {
-	            filter.setPredicate(predData -> {
-	                if (newValue == null || newValue.isEmpty()) {
-	                    return true;
-	                }
+			search_Binome.textProperty().addListener((observable, oldValue, newValue) -> {
+				filter.setPredicate(predData -> {
+					if (newValue == null || newValue.isEmpty()) {
+						return true;
+					}
 
-	                String searchKey = newValue.toLowerCase();
-	                String idBinome = Integer.toString(predData.getIdBinome());
-	                String etudiant1 = (predData.getMembre1().getNom() + " " + predData.getMembre1().getPrenom())
-	                        .toLowerCase();
-	                String etudiant2 = (predData.getMembre2() != null) ? (predData.getMembre2().getNom() + " " + predData.getMembre2().getPrenom())
-	                        .toLowerCase() : "";
-	                String nomMatiere = "";
-	                String sujetProjet = "";
+					String searchKey = newValue.toLowerCase();
+					String idBinome = Integer.toString(predData.getIdBinome());
+					String etudiant1 = (predData.getMembre1() != null)
+							? (predData.getMembre1().getNom() + " " + predData.getMembre1().getPrenom()).toLowerCase()
+							: "";
+					String etudiant2 = (predData.getMembre2() != null)
+							? (predData.getMembre2().getNom() + " " + predData.getMembre2().getPrenom()).toLowerCase()
+							: "";
 
-	                // Vérifier si le projet n'est pas null avant d'accéder à ses propriétés
-	                if (predData.getProjet() != null) {
-	                    nomMatiere = predData.getProjet().getNomMatiere().toLowerCase();
-	                    sujetProjet = predData.getProjet().getSujet().toLowerCase();
-	                }
+					String nomMatiere = "";
+					String sujetProjet = "";
 
-	                // Ajouter la condition pour vérifier quel filtre est sélectionné
-	                String selectedFilter = filtre_binome.getSelectionModel().getSelectedItem();
+					// Vérifier si le projet n'est pas null avant d'accéder à ses propriétés
+					if (predData.getProjet() != null) {
+						// Ajouter des vérifications supplémentaires pour les propriétés du projet
+						if (predData.getProjet().getNomMatiere() != null) {
+							nomMatiere = predData.getProjet().getNomMatiere().toLowerCase();
+						}
+						if (predData.getProjet().getSujet() != null) {
+							sujetProjet = predData.getProjet().getSujet().toLowerCase();
+						}
+					}
 
-	                switch (selectedFilter) {
-	                    case "IdBinome":
-	                        return idBinome.contains(searchKey);
-	                    case "Nom Matiere":
-	                        return nomMatiere.contains(searchKey);
-	                    case "Sujet Projet":
-	                        return sujetProjet.contains(searchKey);
-	                    case "Etudiant1":
-	                        return etudiant1.contains(searchKey);
-	                    case "Etudiant2":
-	                        return etudiant2.contains(searchKey);
-	                    default:
-	                        // Retourne le résultat de la recherche sans filtre
-	                        return idBinome.contains(searchKey) || etudiant1.contains(searchKey)
-	                                || etudiant2.contains(searchKey) || nomMatiere.contains(searchKey)
-	                                || sujetProjet.contains(searchKey);
-	                }
-	            });
-	        });
+					// Ajouter la condition pour vérifier quel filtre est sélectionné
+					String selectedFilter = filtre_binome.getSelectionModel().getSelectedItem();
 
-	        SortedList<BinomeProjet> sortedList = new SortedList<>(filter);
-	        sortedList.comparatorProperty().bind(tableBinome.comparatorProperty());
+					// Vérifier si selectedFilter est null avant d'entrer dans la structure de
+					// commutation
+					if (selectedFilter != null) {
+						switch (selectedFilter) {
+						case "IdBinome":
+							return idBinome.contains(searchKey);
+						case "Nom Matiere":
+							return nomMatiere.contains(searchKey);
+						case "Sujet Projet":
+							return sujetProjet.contains(searchKey);
+						case "Etudiant1":
+							return etudiant1.contains(searchKey);
+						case "Etudiant2":
+							return etudiant2.contains(searchKey);
+						default:
+							return false;
+						}
+					} else {
+						// Retourne le résultat de la recherche sans filtre si selectedFilter est null
+						return idBinome.contains(searchKey) || etudiant1.contains(searchKey)
+								|| etudiant2.contains(searchKey) || nomMatiere.contains(searchKey)
+								|| sujetProjet.contains(searchKey);
+					}
+				});
+			});
 
-	        tableBinome.setItems(sortedList);
-	    }
+			SortedList<BinomeProjet> sortedList = new SortedList<>(filter);
+			sortedList.comparatorProperty().bind(tableBinome.comparatorProperty());
+
+			tableBinome.setItems(sortedList);
+		}
 	}
 
 	@FXML
 	public void selectBinome() {
-		BinomeProjet binome = tableBinome.getSelectionModel().getSelectedItem();
-		int num = tableBinome.getSelectionModel().getFocusedIndex();
+	    BinomeProjet binome = tableBinome.getSelectionModel().getSelectedItem();
+	    int num = tableBinome.getSelectionModel().getFocusedIndex();
 
-		if ((num - 1) < -1 || binome == null) {
-			return;
-		}
+	    if (num < 0 || binome == null || binome.getMembre1() == null || binome.getProjet() == null) {
+	        return;
+	    }
 
-		id_binome.setText(String.valueOf(binome.getIdBinome()));
-		Id_Binome2.setText(String.valueOf(binome.getIdBinome()));
-		Etudiant1List2.setPromptText(binome.getMembre1().getNom() + " " + binome.getMembre1().getPrenom());
-		if (binome.getMembre2() != null) {
-			Etudiant2List2.setPromptText(binome.getMembre2().getNom() + " " + binome.getMembre2().getPrenom());
-		} else {
-			Etudiant2List2.setPromptText("");
-		}
-		Projet2.setPromptText(binome.getProjet().getNomMatiere() + " - " + binome.getProjet().getSujet());
-		// Convertir la date de java.util.Date à LocalDate pour le DatePicker
-		java.util.Date dateRemiseEffectif = binome.getDateRemiseEffective();
-		if (dateRemiseEffectif != null) {
-			LocalDate localDateRemise = dateRemiseEffectif.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-			DateRemise.setValue(localDateRemise);
+	    id_binome.setText(String.valueOf(binome.getIdBinome()));
+	    Id_Binome2.setText(String.valueOf(binome.getIdBinome()));
 
-		} else {
-			// Gérer le cas où la date est null
-			DateRemise.setValue(null);
+	    Etudiant1List2.setPromptText(
+	            binome.getMembre1().getNom() + " " + binome.getMembre1().getPrenom());
 
-		}
+	    if (binome.getMembre2() != null) {
+	        Etudiant2List2.setPromptText(
+	                binome.getMembre2().getNom() + " " + binome.getMembre2().getPrenom());
+	    } else {
+	        Etudiant2List2.setPromptText("");
+	    }
 
+	    if (binome.getProjet()!=null) {
+	        Projet2.setPromptText(binome.getProjet().getNomMatiere() + " - " + binome.getProjet().getSujet());
+	       
+	    } else {
+	    	Etudiant1List2.setPromptText(
+		            binome.getMembre1().getNom() + " " + binome.getMembre1().getPrenom());
+
+		    if (binome.getMembre2() != null) {
+		        Etudiant2List2.setPromptText(
+		                binome.getMembre2().getNom() + " " + binome.getMembre2().getPrenom());
+		    } else {
+		        Etudiant2List2.setPromptText("");
+		    }
+	        Projet2.setPromptText("");
+	    }
+	    
+
+	    // Convertir la date de java.util.Date à LocalDate pour le DatePicker
+	    java.util.Date dateRemiseEffectif = binome.getDateRemiseEffective();
+	    if (dateRemiseEffectif != null) {
+	        LocalDate localDateRemise = dateRemiseEffectif.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	        DateRemise.setValue(localDateRemise);
+	    } else {
+	        // Gérer le cas où la date est null
+	        DateRemise.setValue(null);
+	    }
 	}
 
 	private ObservableList<Etudiant> allEtudiants;

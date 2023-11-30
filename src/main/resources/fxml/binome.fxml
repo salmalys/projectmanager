@@ -43,14 +43,14 @@
 								<FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="1.5em" />
 							</graphic>
 						</Button>
-						<FontAwesomeIconView glyphName="SEARCH" layoutX="16.0" layoutY="34.0" size="1.5em" text="" />
-						<TextField fx:id="search_Binome" layoutX="16.0" layoutY="14.0" onKeyTyped="#searchbinome" prefHeight="25.0" prefWidth="293.0" styleClass="search" stylesheets="@../css/dashboard.css" />
 						<ComboBox fx:id="filtre_binome" layoutX="66.0" layoutY="63.0" prefWidth="150.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
 						<Label layoutX="16.0" layoutY="67.0" prefWidth="42.0" text="Filtre :">
 							<font>
 								<Font name="System Bold" size="14.0" />
 							</font>
 						</Label>
+                  <TextField fx:id="search_Binome" layoutX="14.0" layoutY="15.0" onKeyTyped="#searchBinome" prefHeight="25.0" prefWidth="313.0" styleClass="search" stylesheets="@../css/dashboard.css" />
+						<FontAwesomeIconView glyphName="SEARCH" layoutX="16.0" layoutY="34.0" size="1.5em" text="" />
 					</children>
 				</AnchorPane>
 				<AnchorPane fx:id="tmp_DeleteBinome" layoutX="550.0" layoutY="7.0" prefHeight="521.0" prefWidth="100.0" stylesheets="@../css/dashboard.css" visible="false">

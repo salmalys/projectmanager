@@ -374,7 +374,7 @@ public class NoteController implements Initializable {
 	}
 
 	@FXML
-	public void searchbinome() {
+	public void searchNote() {
 		// Création d'un filtre pour les notes
 		FilteredList<BinomeProjet> filter = new FilteredList<>(BinomesList, n -> true);
 
@@ -387,35 +387,47 @@ public class NoteController implements Initializable {
 				}
 
 				String searchKey = newValue.toLowerCase();
-				String idNote = Integer.toString(predData.getIdBinome());
-				String idEtudiant = (predData.getMembre1() != null) ? Integer.toString(predData.getMembre1().getIdEtudiant()) : "";
-				String nomMatiere = (predData.getProjet() != null && predData.getProjet().getNomMatiere() != null) ? predData.getProjet().getNomMatiere().toLowerCase() : "";
-				String sujetProjet = (predData.getProjet() != null && predData.getProjet().getSujet() != null) ? predData.getProjet().getSujet().toLowerCase() : "";
-			//	String noteRapport = (predData.getNoteRapport() != null) ? Double.toString(predData.getNoteRapport()) : "";
+				
+				String idBibome = Integer.toString(predData.getIdBinome());
+				String Etudiant1 = (predData.getMembre1() != null)
+						? (predData.getMembre1().getNom() + " " + predData.getMembre1().getPrenom()).toLowerCase()
+						: "";
+				String Etudiant2 = (predData.getMembre2() != null)
+						? (predData.getMembre2().getNom() + " " + predData.getMembre2().getPrenom()).toLowerCase()
+						: "";
+				String nomMatiere = (predData.getProjet() != null && predData.getProjet().getNomMatiere() != null)
+						? predData.getProjet().getNomMatiere().toLowerCase()
+						: "";
+				String sujetProjet = (predData.getProjet() != null && predData.getProjet().getSujet() != null)
+						? predData.getProjet().getSujet().toLowerCase()
+						: "";
 
 				// Ajouter la condition pour vérifier quel filtre est sélectionné
 				String selectedFilter = filtre_note.getSelectionModel().getSelectedItem();
 
-				if (selectedFilter != null) {
+				if (selectedFilter != null && !selectedFilter.equals("Select")) {
 					// Si le filtre est sélectionné, utilisez-le pour la recherche
 					switch (selectedFilter) {
-					case "IdNote":
-						return idNote.contains(searchKey);
-					case "IdEtudiant":
-						return idEtudiant.contains(searchKey);
+					case "IdBinome":
+						return idBibome.contains(searchKey);
+					case "Etudiant1":
+						return Etudiant1.contains(searchKey);
+					case "Etudian2":
+						return Etudiant2.contains(searchKey);
 					case "Nom Matiere":
 						return nomMatiere.contains(searchKey);
 					case "Sujet Projet":
 						return sujetProjet.contains(searchKey);
-				
+
 					default:
 						return false;
 					}
 				} else {
 					// Si aucun filtre n'est sélectionné, utilisez la logique sans filtre
-					return idNote.contains(searchKey) || idEtudiant.contains(searchKey)
-							|| nomMatiere.contains(searchKey) || sujetProjet.contains(searchKey);
-							
+					return idBibome.contains(searchKey) || Etudiant1.contains(searchKey)
+							|| Etudiant2.contains(searchKey) || nomMatiere.contains(searchKey)
+							|| sujetProjet.contains(searchKey);
+
 				}
 			});
 
@@ -746,7 +758,7 @@ public class NoteController implements Initializable {
 
 				});
 		ObservableList<String> binome = FXCollections.observableArrayList("Select", "IdBinome", "Etudiant1", "Etudian2",
-				"Nom Matiere", "Sujet Projet", "Note Rapport");
+				"Nom Matiere", "Sujet Projet");
 		filtre_note.setItems(binome);
 
 	}

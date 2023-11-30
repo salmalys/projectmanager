@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -117,6 +118,8 @@ public class DashboardController implements Initializable {
 		home_countAvantProjet();
 		home_countApresProjet();
 		home_countBinome();
+		BarChartDonnee();
+		ajusterLargeurBarres(barChart,1);
 	}
 
 	/**
@@ -206,14 +209,24 @@ public class DashboardController implements Initializable {
 		Stage stage = (Stage) main_form.getScene().getWindow();
 		stage.setIconified(true);
 	}
+	
 
 	/**
 	 * *Partie UI:
 	 * ************************InitialisationActionUI****************************
 	 * 
 	 **/
-	@FXML
-	private BinomeController binomeController;
+    // Méthode pour ajuster la largeur des barres
+    private void ajusterLargeurBarres(BarChart<?, ?> barChart, double largeur) {
+        for (int i = 0; i < barChart.getData().size(); i++) {
+            for (int j = 0; j < barChart.getData().get(i).getData().size(); j++) {
+                Node bar = barChart.lookup(".data" + i + ".bar" + j);
+                if (bar != null) {
+                    bar.setStyle("-fx-bar-width: " + largeur + ";");
+                }
+            }
+        }
+    }
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -226,6 +239,7 @@ public class DashboardController implements Initializable {
 		home_countBinome();
 		// Création d'une série de données
 		BarChartDonnee();
+		ajusterLargeurBarres(barChart,1);
 
 	}
 

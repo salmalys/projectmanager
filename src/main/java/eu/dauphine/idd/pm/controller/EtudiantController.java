@@ -122,6 +122,7 @@ public class EtudiantController implements Initializable {
 				case 1:
 					showAlert(AlertType.ERROR, "Error Message",
 							"Nom etudiant: " + nom + " Prenom: " + prenom + " already exists!");
+					addEtudiantReset();
 					break;
 				default:
 					showAlert(Alert.AlertType.ERROR, "Error", "An error occurred while creating the etudiant.");
@@ -425,6 +426,7 @@ public class EtudiantController implements Initializable {
 		tmp_updateEtudiant.setVisible(false);
 
 	}
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

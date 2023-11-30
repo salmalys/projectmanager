@@ -217,9 +217,9 @@
 														</AnchorPane>
 													</children>
 												</AnchorPane>
-												<BarChart fx:id="barChart" categoryGap="5.0" layoutX="261.0" layoutY="168.0" prefHeight="342.0" prefWidth="578.0" title="Moyennes des notes par projet">
+												<BarChart fx:id="barChart" barGap="1.0" categoryGap="1.0" layoutX="261.0" layoutY="168.0" prefHeight="342.0" prefWidth="578.0" title="Moyennes des notes par projet">
 													<xAxis>
-														<CategoryAxis label="Projet" prefHeight="40.0" prefWidth="498.0" side="BOTTOM">
+														<CategoryAxis label="Projet" prefHeight="55.0" prefWidth="498.0" side="BOTTOM" tickLabelGap="2.0" tickLength="2.0">
                                              <tickLabelFont>
                                                 <Font name="System Bold" size="10.0" />
                                              </tickLabelFont></CategoryAxis>
