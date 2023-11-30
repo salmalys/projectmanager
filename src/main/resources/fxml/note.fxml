@@ -124,9 +124,10 @@
                   <Label layoutX="197.0" layoutY="371.0" text="Note  Final :" />
                   <Label layoutX="74.0" layoutY="371.0" text="Note  Soutenance :" />
                   <TextField fx:id="nomPrenomAffiche2" layoutX="131.0" layoutY="335.0" prefHeight="25.0" prefWidth="126.0" styleClass="textfield" stylesheets="@../css/dashboard.css" text="NOM - Prénom" />
-                  <Button fx:id="btn_backNote2" layoutX="19.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleBtnBackNote" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Retour" />
-                  <Button layoutX="94.0" layoutY="467.0" mnemonicParsing="false" onAction="#handleDetailsButton" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Détails" />
-                  <Button layoutX="234.0" layoutY="467.0" mnemonicParsing="false" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Valider" />
+                  <Button fx:id="btn_backNote2" layoutX="18.0" layoutY="479.0" mnemonicParsing="false" onAction="#handleBtnBackNote" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Retour" />
+                  <Button layoutX="233.0" layoutY="479.0" mnemonicParsing="false" onAction="#handleDetailsButton" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Détails" />
+                  <Button layoutX="232.0" layoutY="441.0" mnemonicParsing="false" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Valider" />
+                  <Button layoutX="18.0" layoutY="441.0" mnemonicParsing="false" onAction="#ClearShowNote" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
                </children>
                <styleClass>
                   <String fx:value="shadow" />

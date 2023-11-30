@@ -53,7 +53,7 @@
 						</Label>
 					</children>
 				</AnchorPane>
-				<AnchorPane fx:id="tmp_DeleteBinome" layoutX="550.0" layoutY="7.0" prefHeight="521.0" prefWidth="100.0" stylesheets="@../css/dashboard.css">
+				<AnchorPane fx:id="tmp_DeleteBinome" layoutX="550.0" layoutY="7.0" prefHeight="521.0" prefWidth="100.0" stylesheets="@../css/dashboard.css" visible="false">
 					<styleClass>
 						<String fx:value="white-bg" />
 						<String fx:value="shadow" />
@@ -122,7 +122,7 @@
                      </font></Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="tmp_updateBinome" layoutX="572.0" layoutY="11.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css" visible="false">
+            <AnchorPane fx:id="tmp_updateBinome" layoutX="562.0" layoutY="10.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css">
                <styleClass>
                   <String fx:value="shadow" />
                   <String fx:value="white-bg" />
@@ -135,7 +135,7 @@
                   </Label>
                   <ComboBox fx:id="Etudiant1List2" layoutX="154.0" layoutY="148.0" prefWidth="150.0" promptText="NOM-PRENOM" styleClass="textfield" stylesheets="@../css/dashboard.css" />
                   <ComboBox fx:id="Etudiant2List2" layoutX="154.0" layoutY="201.0" prefWidth="150.0" promptText="NOM-PRENOM" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-                  <ComboBox fx:id="Projet2" layoutX="154.0" layoutY="257.0" prefWidth="150.0" promptText="NOM-PRENOM" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                  <ComboBox fx:id="Projet2" layoutX="154.0" layoutY="257.0" prefWidth="150.0" promptText="MATIERE-SUJET" styleClass="textfield" stylesheets="@../css/dashboard.css" />
                   <Label layoutX="60.0" layoutY="148.0" text="Etudiant1 :">
                      <font>
                         <Font size="16.0" />

@@ -1,6 +1,8 @@
 package eu.dauphine.idd.pm.controller;
 
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import eu.dauphine.idd.pm.service.ServiceFactory;
@@ -12,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -78,7 +81,9 @@ public class DashboardController implements Initializable {
 	private AnchorPane tmp_binome;
 	@FXML
 	private AnchorPane tmp_home;
-	
+	@FXML
+	private BarChart<String, Number> barChart;
+
 	private UtilService utilS = ServiceFactory.getUtilService();
 
 	public void home_countEtudiant() {
@@ -88,15 +93,15 @@ public class DashboardController implements Initializable {
 	public void home_countProjet() {
 		count_totalprojet.setText(String.valueOf(utilS.getTotalProjets()));
 	}
-	
+
 	public void home_countAvantProjet() {
 		count_avantprojet.setText(String.valueOf(utilS.getNbprojetRemisAvantDate()));
 	}
-	
+
 	public void home_countApresProjet() {
 		count_apresprojet.setText(String.valueOf(utilS.getNbprojetRemisApresDate()));
 	}
-	
+
 	public void home_countBinome() {
 		count_totalbinome.setText(String.valueOf(utilS.getNbBinome()));
 	}
@@ -173,6 +178,20 @@ public class DashboardController implements Initializable {
 
 	}
 
+	public void BarChartDonnee() {
+		HashMap<String, Double> moyennes = utilS.getMoyenneParProjet();
+
+		XYChart.Series<String, Number> series = new XYChart.Series<>();
+		series.setName("Moyenne des Notes");
+
+		for (Map.Entry<String, Double> entry : moyennes.entrySet()) {
+			series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+		}
+
+		barChart.getData().add(series);
+
+	}
+
 	// recuperer Username quand on reussi a connecté et entrer dans dashbord pour
 	// modifer label username dans UI Dashboard
 	public void Affichersername() {
@@ -205,6 +224,8 @@ public class DashboardController implements Initializable {
 		home_countAvantProjet();
 		home_countApresProjet();
 		home_countBinome();
+		// Création d'une série de données
+		BarChartDonnee();
 
 	}
 

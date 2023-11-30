@@ -17,11 +17,11 @@ import java.util.Map;
 public class NotesDAOImpl implements NotesDAO {
 	private static final String INSERT_NOTE = "INSERT INTO Notes(ID_BinomeProjet, Note_Rapport, Note_Soutenance_Etudiant1, Note_Soutenance_Etudiant2) VALUES (?, ?, ?, ?)";
 	private static final String UPDATE_NOTE = "UPDATE Notes SET ID_BinomeProjet=?, Note_Rapport=?, Note_Soutenance_Etudiant1=?, Note_Soutenance_Etudiant2=? WHERE ID_Notes=?";
-	private static final String DELETE_NOTE = "DELETE FROM Notes WHERE ID_Notes =?";
+	private static final String DELETE_NOTE = "DELETE FROM Notes WHERE ID_BinomeProjet =?";
 	private static final String FIND_BY_ID = "SELECT * FROM Notes WHERE ID_Notes =?";
 	private static final String FIND_ALL_NOTES = "SELECT * FROM Notes";
 	private static final String FIND_BY_BINOME_ID = "SELECT * FROM Notes WHERE ID_BinomeProjet =?";
-
+	
 	private BinomeProjetDAO binomeProjetDAO = DAOFactory.getBinomeProjetDAO();
 
 	private Connection getConnection() {
@@ -41,9 +41,9 @@ public class NotesDAOImpl implements NotesDAO {
 			preparedStatement.setInt(1, note.getBinomeProjet().getIdBinome());
 			preparedStatement.setDouble(2, note.getNoteRapport());
 			preparedStatement.setDouble(3, note.getNoteSoutenanceMembre1());
-			if  (note.getNoteSoutenanceMembre2() == -1) {
-				preparedStatement.setNull(4, Types.FLOAT );
-			}else {
+			if (note.getNoteSoutenanceMembre2() == -1) {
+				preparedStatement.setNull(4, Types.FLOAT);
+			} else {
 				preparedStatement.setDouble(4, note.getNoteSoutenanceMembre2());
 			}
 			preparedStatement.executeUpdate();
@@ -65,8 +65,13 @@ public class NotesDAOImpl implements NotesDAO {
 			preparedStatement.setInt(1, note.getBinomeProjet().getIdBinome());
 			preparedStatement.setDouble(2, note.getNoteRapport());
 			preparedStatement.setDouble(3, note.getNoteSoutenanceMembre1());
-			preparedStatement.setDouble(3, note.getNoteSoutenanceMembre2());
-			preparedStatement.setInt(6, note.getId());
+			if (note.getNoteSoutenanceMembre2() == -1) {
+				preparedStatement.setNull(4, Types.FLOAT);
+			} else {
+				preparedStatement.setDouble(4, note.getNoteSoutenanceMembre2());
+			}
+
+			preparedStatement.setInt(5, note.getId());
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -134,10 +139,10 @@ public class NotesDAOImpl implements NotesDAO {
 	}
 
 	@Override
-	public void deleteById(int idNotes) {
+	public void deleteById(int idBinome) {
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(DELETE_NOTE)) {
-			preparedStatement.setInt(1, idNotes);
+			preparedStatement.setInt(1, idBinome);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -149,36 +154,35 @@ public class NotesDAOImpl implements NotesDAO {
 		deleteById(note.getId());
 	}
 
+	@Override
 	public Notes findByBinomeId(int idBinome) {
-	    Notes note = null;
-	    try (Connection connection = getConnection();
-	            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_BINOME_ID)) {
-	        preparedStatement.setInt(1, idBinome);
-	        ResultSet rs = preparedStatement.executeQuery();
-	        if (rs.next()) {
-	            int idNotes = rs.getInt("ID_Notes");
-	         
+		Notes note = null;
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_BINOME_ID)) {
+			preparedStatement.setInt(1, idBinome);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				int idNotes = rs.getInt("ID_Notes");
 
-	            double noteR = rs.getDouble("Note_Rapport");
-	            double noteS1 = rs.getDouble("Note_Soutenance_Etudiant1");
-	            double noteS2 = rs.getDouble("Note_Soutenance_Etudiant2");
-	            note = new Notes(idNotes, null, noteR, noteS1, noteS2);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
+				double noteR = rs.getDouble("Note_Rapport");
+				double noteS1 = rs.getDouble("Note_Soutenance_Etudiant1");
+				double noteS2 = rs.getDouble("Note_Soutenance_Etudiant2");
+				note = new Notes(idNotes, null, noteR, noteS1, noteS2);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-	    if (note != null) {
-	        BinomeProjet b = binomeProjetDAO.findById(idBinome);
-	        note.setBinomeProjet(b);
-	    }
+		if (note != null) {
+			BinomeProjet b = binomeProjetDAO.findById(idBinome);
+			note.setBinomeProjet(b);
+		}
 
-	    return note;
+		return note;
 	}
 
-	public static void main(String[] args) {
-		NotesDAOImpl l = new NotesDAOImpl();
-		System.out.println(l.findById(1));
-	}
+	
+
+	
 
 }

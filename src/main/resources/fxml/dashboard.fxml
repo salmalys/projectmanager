@@ -217,12 +217,18 @@
 														</AnchorPane>
 													</children>
 												</AnchorPane>
-												<BarChart fx:id="home_chart" categoryGap="5.0" layoutX="277.0" layoutY="177.0" prefHeight="334.0" prefWidth="557.0" title="Moyennes des notes par projet">
+												<BarChart fx:id="barChart" categoryGap="5.0" layoutX="261.0" layoutY="168.0" prefHeight="342.0" prefWidth="578.0" title="Moyennes des notes par projet">
 													<xAxis>
-														<CategoryAxis side="BOTTOM" />
+														<CategoryAxis label="Projet" prefHeight="40.0" prefWidth="498.0" side="BOTTOM">
+                                             <tickLabelFont>
+                                                <Font name="System Bold" size="10.0" />
+                                             </tickLabelFont></CategoryAxis>
 													</xAxis>
 													<yAxis>
-														<NumberAxis side="LEFT" />
+														<NumberAxis label="Note" minorTickCount="2" minorTickLength="2.0" prefHeight="252.0" prefWidth="50.0" side="LEFT" tickLabelGap="1.0" tickUnit="2.0" upperBound="20.0">
+                                             <tickLabelFont>
+                                                <Font size="12.0" />
+                                             </tickLabelFont></NumberAxis>
 													</yAxis>
 												</BarChart>
 											</children>

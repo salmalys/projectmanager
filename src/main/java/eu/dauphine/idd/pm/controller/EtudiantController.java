@@ -95,7 +95,9 @@ public class EtudiantController implements Initializable {
 			String nom = NomEtudiant.getText();
 			String prenom = PrenomEtudiant.getText();
 			String formationName = Formation.getSelectionModel().getSelectedItem();
-
+			if (formationName == null) {
+				formationName = Formation.getPromptText();
+			}
 			if (!isInputValid(nom, prenom, formationName)) {
 				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
 			} else {
@@ -138,6 +140,9 @@ public class EtudiantController implements Initializable {
 			String nom = NomEtudiant2.getText();
 			String prenom = PrenomEtudiant2.getText();
 			String formationName = Formation2.getSelectionModel().getSelectedItem();
+			if (formationName == null) {
+				formationName = Formation2.getPromptText();
+			}
 			String idEtudiantString = IdEtudiant.getText();
 
 			Alert alert;
@@ -232,7 +237,7 @@ public class EtudiantController implements Initializable {
 		col_PromotionEtudiant
 				.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFormation().getPromotion()));
 		tableEtudiant.setItems(addEtudiant);
- 
+
 	}
 
 	// fonction qui permet de chercher et filter le tableau d'étudiants dans
@@ -251,7 +256,6 @@ public class EtudiantController implements Initializable {
 				String idEtudiant = Integer.toString(predData.getIdEtudiant());
 				String nomFormation = predData.getFormation().getNom().toLowerCase();
 				String promotion = predData.getFormation().getPromotion().toLowerCase();
-			
 
 				// Ajouter la condition pour vérifier quel filtre est sélectionné
 				String selectedFilter = filtre_etudiant.getSelectionModel().getSelectedItem();
@@ -282,7 +286,7 @@ public class EtudiantController implements Initializable {
 			});
 
 			SortedList<Etudiant> sortedList = new SortedList<>(filter);
-			
+
 			sortedList.comparatorProperty().bind(tableEtudiant.comparatorProperty());
 
 			tableEtudiant.setItems(sortedList);
@@ -304,6 +308,8 @@ public class EtudiantController implements Initializable {
 			NomEtudiant2.setText(etudiant.getNom());
 			PrenomEtudiant.setText(etudiant.getPrenom());
 			PrenomEtudiant2.setText(etudiant.getPrenom());
+			Formation.setPromptText(etudiant.getFormation().getNom() + " - " + etudiant.getFormation().getPromotion());
+			Formation2.setPromptText(etudiant.getFormation().getNom() + " - " + etudiant.getFormation().getPromotion());
 		}
 	}
 

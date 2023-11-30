@@ -3,6 +3,7 @@ package eu.dauphine.idd.pm.controller;
 import java.net.URL;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Optional;
@@ -14,8 +15,10 @@ import eu.dauphine.idd.pm.model.Projet;
 import eu.dauphine.idd.pm.service.BinomeProjetService;
 import eu.dauphine.idd.pm.service.EtudiantService;
 import eu.dauphine.idd.pm.service.FormationService;
+import eu.dauphine.idd.pm.service.NotesService;
 import eu.dauphine.idd.pm.service.ProjetService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
+import eu.dauphine.idd.pm.service.impl.NotesServiceImpl;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -136,7 +139,7 @@ public class BinomeController implements Initializable {
 	private ProjetService projetS = ServiceFactory.getProjetService();
 	private EtudiantService etudiantS = ServiceFactory.getEtudiantService();
 	private BinomeProjetService binomeS = ServiceFactory.getBinomeProjetService();
-
+	private NotesService noteS = ServiceFactory.getNotesService();
 	private ObservableList<BinomeProjet> addBinome;
 
 	@FXML
@@ -198,7 +201,16 @@ public class BinomeController implements Initializable {
 			String etudiant1Name = Etudiant1List2.getValue();
 			String etudiant2Name = Etudiant2List2.getValue();
 			String projetName = Projet2.getValue();
+			if (etudiant1Name == null) {
+				etudiant1Name = Etudiant1List2.getPromptText();
+			}
+			if (etudiant2Name == null) {
+				etudiant2Name = Etudiant2List2.getPromptText();
 
+			}
+			if (projetName == null) {
+				projetName = Projet2.getPromptText();
+			}
 			Alert alert;
 			if (!isInputValid(projetName, etudiant1Name)) {
 				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
@@ -245,6 +257,7 @@ public class BinomeController implements Initializable {
 	@FXML
 	public void deleteBinome() {
 		try {
+
 			String idBinomeString = id_binome.getText();
 
 			Alert alert;
@@ -258,6 +271,7 @@ public class BinomeController implements Initializable {
 
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.isPresent() && option.get().equals(ButtonType.OK)) {
+					noteS.deleteNotesById(Integer.valueOf(idBinomeString));
 					binomeS.deleteBinomeProjetById(Integer.valueOf(idBinomeString));
 					showAlert(AlertType.INFORMATION, "Information Message", "Binome Deleted successfully!");
 
@@ -446,6 +460,24 @@ public class BinomeController implements Initializable {
 
 		id_binome.setText(String.valueOf(binome.getIdBinome()));
 		Id_Binome2.setText(String.valueOf(binome.getIdBinome()));
+		Etudiant1List2.setPromptText(binome.getMembre1().getNom() + " " + binome.getMembre1().getPrenom());
+		if (binome.getMembre2() != null) {
+			Etudiant2List2.setPromptText(binome.getMembre2().getNom() + " " + binome.getMembre2().getPrenom());
+		} else {
+			Etudiant2List2.setPromptText("");
+		}
+		Projet2.setPromptText(binome.getProjet().getNomMatiere() + " - " + binome.getProjet().getSujet());
+		// Convertir la date de java.util.Date à LocalDate pour le DatePicker
+		java.util.Date dateRemiseEffectif = binome.getDateRemiseEffective();
+		if (dateRemiseEffectif != null) {
+			LocalDate localDateRemise = dateRemiseEffectif.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			DateRemise.setValue(localDateRemise);
+
+		} else {
+			// Gérer le cas où la date est null
+			DateRemise.setValue(null);
+
+		}
 
 	}
 

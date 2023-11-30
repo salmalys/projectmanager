@@ -113,7 +113,9 @@ public class FormationController implements Initializable {
 		try {
 			String nom = Nomformation2.getText();
 			String promotion = PromotionList2.getSelectionModel().getSelectedItem();
-
+			if (promotion == null) {
+				promotion = PromotionList2.getPromptText();
+			}
 			if (!isInputValid(nom, promotion)) {
 				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
 			} else {
@@ -152,6 +154,9 @@ public class FormationController implements Initializable {
 			String promotion = PromotionList.getSelectionModel().getSelectedItem();
 			String IdFormatio = IdFormation.getText();
 
+			if (promotion == null) {
+				promotion = PromotionList.getPromptText();
+			}
 			Alert alert;
 			if (!isInputValid(nom, promotion)) {
 				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
@@ -353,6 +358,8 @@ public class FormationController implements Initializable {
 			IdFormation.setText(String.valueOf(formation.getIdFormation()));
 			Nomformation.setText(formation.getNom());
 			Nomformation2.setText(formation.getNom());
+			PromotionList.setPromptText(formation.getPromotion());
+			PromotionList2.setPromptText(formation.getPromotion());
 
 		}
 	}
