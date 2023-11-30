@@ -4,7 +4,7 @@ import java.net.URL;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.sql.Date;
+
 import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -14,14 +14,11 @@ import eu.dauphine.idd.pm.model.Etudiant;
 import eu.dauphine.idd.pm.model.Projet;
 import eu.dauphine.idd.pm.service.BinomeProjetService;
 import eu.dauphine.idd.pm.service.EtudiantService;
-import eu.dauphine.idd.pm.service.FormationService;
 import eu.dauphine.idd.pm.service.NotesService;
 import eu.dauphine.idd.pm.service.ProjetService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
-import eu.dauphine.idd.pm.service.impl.NotesServiceImpl;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -35,13 +32,11 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Callback;
 
 public class BinomeController implements Initializable {
 	@FXML
@@ -388,65 +383,59 @@ public class BinomeController implements Initializable {
 	}
 
 	@FXML
-	public void searchBinome() {
-		if (search_Binome != null) {
-			FilteredList<BinomeProjet> filter = new FilteredList<>(addBinome, b -> true);
+	public void searchbinome() {
+	    if (search_Binome != null) {
+	        FilteredList<BinomeProjet> filter = new FilteredList<>(addBinome, b -> true);
 
-			search_Binome.textProperty().addListener((observable, oldValue, newValue) -> {
-				filter.setPredicate(predData -> {
-					if (newValue == null || newValue.isEmpty()) {
-						return true;
-					}
-					String etudiant2 = "";
-					String searchKey = newValue.toLowerCase();
-					String idBinome = Integer.toString(predData.getIdBinome());
-					String etudiant1 = (predData.getMembre1().getNom() + " " + predData.getMembre1().getPrenom())
-							.toLowerCase();
-					if (predData.getMembre2() != null) {
-						etudiant2 = (predData.getMembre2().getNom() + " " + predData.getMembre2().getPrenom())
-								.toLowerCase();
-					} else {
-						etudiant2 = "";
-					}
-					String nomMatiere = predData.getProjet().getNomMatiere().toLowerCase();
-					String sujetProjet = predData.getProjet().getSujet().toLowerCase();
-					// Ajouter la condition pour vérifier quel filtre est sélectionné
-					String selectedFilter = filtre_binome.getSelectionModel().getSelectedItem();
-					if (selectedFilter != null && !selectedFilter.equals("Select")) {
+	        search_Binome.textProperty().addListener((observable, oldValue, newValue) -> {
+	            filter.setPredicate(predData -> {
+	                if (newValue == null || newValue.isEmpty()) {
+	                    return true;
+	                }
 
-						// Si le filtre est sélectionné, utilisez-le pour la recherche
-						if ("IdBinome".equals(selectedFilter) && idBinome.contains(searchKey)) {
+	                String searchKey = newValue.toLowerCase();
+	                String idBinome = Integer.toString(predData.getIdBinome());
+	                String etudiant1 = (predData.getMembre1().getNom() + " " + predData.getMembre1().getPrenom())
+	                        .toLowerCase();
+	                String etudiant2 = (predData.getMembre2() != null) ? (predData.getMembre2().getNom() + " " + predData.getMembre2().getPrenom())
+	                        .toLowerCase() : "";
+	                String nomMatiere = "";
+	                String sujetProjet = "";
 
-							return true;
-						} else if ("Nom Matiere".equals(selectedFilter) && nomMatiere.contains(searchKey)) {
+	                // Vérifier si le projet n'est pas null avant d'accéder à ses propriétés
+	                if (predData.getProjet() != null) {
+	                    nomMatiere = predData.getProjet().getNomMatiere().toLowerCase();
+	                    sujetProjet = predData.getProjet().getSujet().toLowerCase();
+	                }
 
-							return true;
-						} else if ("Sujet Projet".equals(selectedFilter) && sujetProjet.contains(searchKey)) {
+	                // Ajouter la condition pour vérifier quel filtre est sélectionné
+	                String selectedFilter = filtre_binome.getSelectionModel().getSelectedItem();
 
-							return true;
-						} else if ("Etudiant1".equals(selectedFilter) && etudiant1.contains(searchKey)) {
-							return true;
-						} else if ("Etudiant2".equals(selectedFilter) && etudiant2.contains(searchKey)) {
-							return true;
-						} else {
-							return false;
-						}
+	                switch (selectedFilter) {
+	                    case "IdBinome":
+	                        return idBinome.contains(searchKey);
+	                    case "Nom Matiere":
+	                        return nomMatiere.contains(searchKey);
+	                    case "Sujet Projet":
+	                        return sujetProjet.contains(searchKey);
+	                    case "Etudiant1":
+	                        return etudiant1.contains(searchKey);
+	                    case "Etudiant2":
+	                        return etudiant2.contains(searchKey);
+	                    default:
+	                        // Retourne le résultat de la recherche sans filtre
+	                        return idBinome.contains(searchKey) || etudiant1.contains(searchKey)
+	                                || etudiant2.contains(searchKey) || nomMatiere.contains(searchKey)
+	                                || sujetProjet.contains(searchKey);
+	                }
+	            });
+	        });
 
-					} else {
+	        SortedList<BinomeProjet> sortedList = new SortedList<>(filter);
+	        sortedList.comparatorProperty().bind(tableBinome.comparatorProperty());
 
-						// Retourne le résultat de la recherche
-						return idBinome.contains(searchKey) || etudiant1.contains(searchKey)
-								|| etudiant2.contains(searchKey) || nomMatiere.contains(searchKey)
-								|| sujetProjet.contains(searchKey);
-					}
-				});
-			});
-
-			SortedList<BinomeProjet> sortedList = new SortedList<>(filter);
-			sortedList.comparatorProperty().bind(tableBinome.comparatorProperty());
-
-			tableBinome.setItems(sortedList);
-		}
+	        tableBinome.setItems(sortedList);
+	    }
 	}
 
 	@FXML

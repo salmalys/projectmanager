@@ -18,12 +18,15 @@ import eu.dauphine.idd.pm.service.ServiceFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -149,7 +152,10 @@ public class NoteController implements Initializable {
 	private TextField noteS2Sup;
 	@FXML
 	private TextField id_binomSup;
-
+	@FXML
+	private TextField search_note;
+	@FXML
+	private ComboBox<String> filtre_note;
 	private NotesService NotesS = ServiceFactory.getNotesService();
 	private BinomeProjetService binomeS = ServiceFactory.getBinomeProjetService();
 
@@ -312,9 +318,11 @@ public class NoteController implements Initializable {
 		}
 	}
 
+	private ObservableList<BinomeProjet> BinomesList;
+
 	@FXML
 	public void addShowNote() {
-		ObservableList<BinomeProjet> BinomesList = binomeS.listBinomeProjets();
+		BinomesList = binomeS.listBinomeProjets();
 		ObservableList<Notes> notesList = NotesS.listNotes();
 
 		// Configurer les colonnes du TableView
@@ -363,6 +371,63 @@ public class NoteController implements Initializable {
 		});
 		// Ajouter les données à la table
 		tableviewBinomeNoteRapport.setItems(BinomesList);
+	}
+
+	@FXML
+	public void searchbinome() {
+		// Création d'un filtre pour les notes
+		FilteredList<BinomeProjet> filter = new FilteredList<>(BinomesList, n -> true);
+
+		// Ajout d'un écouteur sur la propriété text de la barre de recherche
+		search_note.textProperty().addListener((observable, oldValue, newValue) -> {
+			filter.setPredicate(predData -> {
+				if (newValue == null || newValue.isEmpty()) {
+					// Si la recherche est vide, afficher toutes les notes
+					return true;
+				}
+
+				String searchKey = newValue.toLowerCase();
+				String idNote = Integer.toString(predData.getIdBinome());
+				String idEtudiant = (predData.getMembre1() != null) ? Integer.toString(predData.getMembre1().getIdEtudiant()) : "";
+				String nomMatiere = (predData.getProjet() != null && predData.getProjet().getNomMatiere() != null) ? predData.getProjet().getNomMatiere().toLowerCase() : "";
+				String sujetProjet = (predData.getProjet() != null && predData.getProjet().getSujet() != null) ? predData.getProjet().getSujet().toLowerCase() : "";
+			//	String noteRapport = (predData.getNoteRapport() != null) ? Double.toString(predData.getNoteRapport()) : "";
+
+				// Ajouter la condition pour vérifier quel filtre est sélectionné
+				String selectedFilter = filtre_note.getSelectionModel().getSelectedItem();
+
+				if (selectedFilter != null) {
+					// Si le filtre est sélectionné, utilisez-le pour la recherche
+					switch (selectedFilter) {
+					case "IdNote":
+						return idNote.contains(searchKey);
+					case "IdEtudiant":
+						return idEtudiant.contains(searchKey);
+					case "Nom Matiere":
+						return nomMatiere.contains(searchKey);
+					case "Sujet Projet":
+						return sujetProjet.contains(searchKey);
+				
+					default:
+						return false;
+					}
+				} else {
+					// Si aucun filtre n'est sélectionné, utilisez la logique sans filtre
+					return idNote.contains(searchKey) || idEtudiant.contains(searchKey)
+							|| nomMatiere.contains(searchKey) || sujetProjet.contains(searchKey);
+							
+				}
+			});
+
+			// Création d'une liste triée à partir du filtre
+			SortedList<BinomeProjet> sortedList = new SortedList<>(filter);
+
+			// Liaison du comparateur de la liste triée avec le comparateur de la table
+			sortedList.comparatorProperty().bind(tableviewBinomeNoteRapport.comparatorProperty());
+
+			// Mise à jour des éléments de la table avec la liste triée
+			tableviewBinomeNoteRapport.setItems(sortedList);
+		});
 	}
 
 	private Notes findNoteForBinome(BinomeProjet binomeProjet, List<Notes> notesList) {
@@ -680,7 +745,9 @@ public class NoteController implements Initializable {
 					}
 
 				});
-		// Refresh pour la table ?
+		ObservableList<String> binome = FXCollections.observableArrayList("Select", "IdBinome", "Etudiant1", "Etudian2",
+				"Nom Matiere", "Sujet Projet", "Note Rapport");
+		filtre_note.setItems(binome);
 
 	}
 

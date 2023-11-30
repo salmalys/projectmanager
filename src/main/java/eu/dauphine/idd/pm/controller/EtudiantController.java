@@ -85,6 +85,8 @@ public class EtudiantController implements Initializable {
 	private Button btn_tmpupdateEtudient;
 	@FXML
 	private ComboBox<String> filtre_etudiant;
+	
+
 
 	private FormationService formationS = ServiceFactory.getFormationService();
 	private EtudiantService etudiantS = ServiceFactory.getEtudiantService();
