@@ -2,6 +2,8 @@ package eu.dauphine.idd.pm.dao;
 
 import eu.dauphine.idd.pm.dao.impl.*;
 
+//Design Pattern --> FACTORY METHOD et SINGLETON
+
 public class DAOFactory {
 	private static FormationDAO formationDAO;
 	private static EtudiantDAO etudiantDAO;

@@ -99,7 +99,7 @@ public class EtudiantController implements Initializable {
 				formationName = Formation.getPromptText();
 			}
 			if (!isInputValid(nom, prenom, formationName)) {
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+				showAlert(AlertType.ERROR, "Error Message", "Remplissez tous les champs");
 			} else {
 				// Extract formation name and promotion from the combo box
 				String[] formationParts = formationName.split(" - ");
@@ -112,24 +112,24 @@ public class EtudiantController implements Initializable {
 				int result = etudiantS.createEtudiant(nom, prenom, idFormation);
 				switch (result) {
 				case 0: // Success
-					showAlert(AlertType.INFORMATION, "Success", "Etudiant added successfully!");
+					showAlert(AlertType.INFORMATION, "Success", "Etudiant ajouté avec succès !");
 					addEtudiantshow();
 					addEtudiantReset();
 
 					break;
 				case 1:
 					showAlert(AlertType.ERROR, "Error Message",
-							"Nom etudiant: " + nom + " Prenom: " + prenom + " already exists!");
+							"L'étudiant " + nom + " " + prenom + " existe déjà !");
 					addEtudiantReset();
 					break;
 				default:
-					showAlert(Alert.AlertType.ERROR, "Error", "An error occurred while creating the etudiant.");
+					showAlert(Alert.AlertType.ERROR, "Error", "Une erreur s'est produite lors de la création de l'étudiant");
 					break;
 
 				}
 			}
 		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
+			showAlert(AlertType.ERROR, "Error", "Une erreur s'est produite : " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -148,7 +148,7 @@ public class EtudiantController implements Initializable {
 
 			Alert alert;
 			if (!isInputValid(nom, prenom, formationName)) {
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+				showAlert(AlertType.ERROR, "Error Message", "Remplissez tous les champs");
 			} else {
 				// Extract formation name and promotion from the combo box
 				String[] formationParts = formationName.split(" - ");
@@ -159,13 +159,13 @@ public class EtudiantController implements Initializable {
 				alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Confirmation Message");
 				alert.setHeaderText(null);
-				alert.setContentText("Are you sure you want to Update ID Etudiant: " + idEtudiantString);
+				alert.setContentText("Êtes-vous sûr de vouloir mettre à jour l'étudiant avec l'ID " + idEtudiantString);
 
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.isPresent() && option.get().equals(ButtonType.OK)) {
 					etudiantS.updateEtudiant(Integer.valueOf(idEtudiantString), nom, prenom, idFormation);
 
-					showAlert(AlertType.INFORMATION, "Information Message", "Etudiant Updated successfully!");
+					showAlert(AlertType.INFORMATION, "Information Message", "Etudiant mis à jour avec succès !");
 
 					addEtudiantshow();
 					addEtudiantReset2();
@@ -185,16 +185,16 @@ public class EtudiantController implements Initializable {
 
 			Alert alert;
 			if (idEtudiantString.isEmpty()) {
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+				showAlert(AlertType.ERROR, "Error Message", "Remplissez tous les champs");
 			} else {
 				alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Confirmation Message");
 				alert.setHeaderText(null);
-				alert.setContentText("Are you sure you want to Delete ID Etudiant : Ligne " + idEtudiantString);
+				alert.setContentText("Êtes-vous sûr de vouloir supprimer l'étudiant avec l'ID " + idEtudiantString);
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.isPresent() && option.get().equals(ButtonType.OK)) {
 					etudiantS.deleteEtudiantById(Integer.valueOf(idEtudiantString));
-					showAlert(AlertType.INFORMATION, "Information Message", "Etudiant Deleted successfully!");
+					showAlert(AlertType.INFORMATION, "Information Message", "Etudiant supprimé avec succès !");
 
 					addEtudiantshow();
 					addEtudiantReset();
@@ -320,9 +320,9 @@ public class EtudiantController implements Initializable {
 		try {
 			addEtudiantshow();
 			fillFormationComboBox();
-			showAlert(AlertType.INFORMATION, "Refresh", "Data refreshed successfully!");
+			showAlert(AlertType.INFORMATION, "Refresh", "Les données ont été actualisées avec succès !");
 		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
+			showAlert(AlertType.ERROR, "Error", "Erreur lors du rafraîchissement des données " + e.getMessage());
 		}
 	}
 

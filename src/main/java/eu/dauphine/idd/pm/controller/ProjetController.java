@@ -110,7 +110,7 @@ public class ProjetController implements Initializable {
 			if (!isInputValid(nomMatiere, sujet, dateRemise)) {
 
 				// Handle the case when some fields are empty
-				showAlert(AlertType.ERROR, "Error Message", "Please fill in all required fields.");
+				showAlert(AlertType.ERROR, "Error Message", "Remplissez tous les champs");
 
 			} else {
 
@@ -120,20 +120,20 @@ public class ProjetController implements Initializable {
 				// Handle the result
 				switch (result) {
 				case 0: // Success
-					showAlert(AlertType.INFORMATION, "Success", "Project added successfully!");
+					showAlert(AlertType.INFORMATION, "Success", "Projet ajouté avec succès !");
 					addProjetShow();
 					resetProjetField();
 					break;
 				case 1:
-					showAlert(AlertType.ERROR, "Error Message", "Project for this course and subject already exists!");
+					showAlert(AlertType.ERROR, "Error Message", "Ce sujet de projet existe déjà pour cette matière");
 					break;
 				default:
-					showAlert(AlertType.ERROR, "Error", "An error occurred while creating the project.");
+					showAlert(AlertType.ERROR, "Error", "Une erreur s'est produite lors de la création du projet");
 					break;
 				}
 			}
 		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
+			showAlert(AlertType.ERROR, "Error", "Une erreur s'est produite : " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -155,18 +155,18 @@ public class ProjetController implements Initializable {
 			}
 			Alert alert;
 			if (!isInputValid(matiere, sujet, dateRemise)) {
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+				showAlert(AlertType.ERROR, "Error Message", "Remplissez tous les champs");
 			} else {
 				alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Confirmation Message");
 				alert.setHeaderText(null);
-				alert.setContentText("Are you sure want to Update ID Projet : " + idProjetStr);
+				alert.setContentText("Êtes-vous sûr de vouloir mettre à jour le projet avec l'ID " + idProjetStr);
 
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.get().equals(ButtonType.OK)) {
 					projetS.updateProjet(Integer.valueOf(idProjetStr), matiere, sujet, dateRemise);
 
-					showAlert(AlertType.INFORMATION, "Information Message", "Projet Updated successfully!");
+					showAlert(AlertType.INFORMATION, "Information Message", "Projet mis à jour avec succès !");
 
 					addProjetShow();
 					resetProjetField();
@@ -185,16 +185,16 @@ public class ProjetController implements Initializable {
 
 			Alert alert;
 			if (idProjetStr.isEmpty()) {
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+				showAlert(AlertType.ERROR, "Error Message", "Remplissez tous les champs");
 			} else {
 				alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Confirmation Message");
 				alert.setHeaderText(null);
-				alert.setContentText("Are you sure want to Delete ID Projet : " + idProjetStr);
+				alert.setContentText("Êtes-vous sûr de vouloir supprimer le projet avec l'ID " + idProjetStr);
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.get().equals(ButtonType.OK)) {
 					projetS.deleteProjetById(Integer.valueOf(idProjetStr));
-					showAlert(AlertType.INFORMATION, "Information Message", "Projet Deleted successfully!");
+					showAlert(AlertType.INFORMATION, "Information Message", "Projet supprimé avec succès !");
 
 					addProjetShow();
 					resetProjetField();
@@ -317,9 +317,9 @@ public class ProjetController implements Initializable {
 	public void refreshData() {
 		try {
 			addProjetShow();
-			showAlert(AlertType.INFORMATION, "Refresh", "Data refreshed successfully!");
+			showAlert(AlertType.INFORMATION, "Refresh", "Les données ont été actualisées avec succès !");
 		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
+			showAlert(AlertType.ERROR, "Error", "Erreur lors du rafraîchissement des données " + e.getMessage());
 		}
 	}
 

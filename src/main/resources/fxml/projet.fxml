@@ -89,18 +89,14 @@
 						<String fx:value="white-bg" />
 					</styleClass>
 					<children>
-						<Label layoutX="73.0" layoutY="27.0" text="Ajouter un Projet">
+						<Label layoutX="53.0" layoutY="27.0" text="Ajouter un Projet">
 							<font>
-								<Font name="Tahoma Bold" size="24.0" />
+								<Font name="Tahoma Bold" size="28.0" />
 							</font>
 						</Label>
-						<Button fx:id="btn_Add_projet" layoutX="69.0" layoutY="387.0" mnemonicParsing="false" onAction="#addProjet" prefHeight="35.0" prefWidth="77.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Add">
-							<graphic>
-								<FontAwesomeIconView fill="WHITE" glyphName="PLUS" size="1.5em" />
-							</graphic>
-						</Button>
-						<Button layoutX="232.0" layoutY="386.0" mnemonicParsing="false" onAction="#resetProjetField" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
-						<Button fx:id="back_projet" layoutX="270.0" layoutY="461.0" mnemonicParsing="false" onAction="#handleBackProjet" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
+						<Button fx:id="btn_Add_projet" layoutX="260.0" layoutY="472.0" mnemonicParsing="false" onAction="#addProjet" prefHeight="35.0" prefWidth="77.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter" />
+						<Button layoutX="251.0" layoutY="302.0" mnemonicParsing="false" onAction="#resetProjetField" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+						<Button fx:id="back_projet" layoutX="14.0" layoutY="473.0" mnemonicParsing="false" onAction="#handleBackProjet" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Retour" />
 						<DatePicker fx:id="dateRemisePorjet" layoutX="150.0" layoutY="246.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
 						<Label layoutY="250.0" text="DateRemiseRapport :">
 							<font>
@@ -127,9 +123,9 @@
 						<String fx:value="shadow" />
 					</styleClass>
 					<children>
-						<Label layoutX="69.0" layoutY="24.0" text="Modifier un Projet">
+						<Label layoutX="46.0" layoutY="38.0" text="Modifier un Projet">
 							<font>
-								<Font name="Tahoma Bold" size="24.0" />
+								<Font name="Tahoma Bold" size="28.0" />
 							</font>
 						</Label>
 						<DatePicker fx:id="dateRemisePorjet2" layoutX="157.0" layoutY="270.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
@@ -150,9 +146,9 @@
 								<Font name="Arial" size="15.0" />
 							</font>
 						</Label>
-						<Button fx:id="btn_updateProjet" layoutX="72.0" layoutY="366.0" mnemonicParsing="false" onAction="#updateProjet" prefHeight="31.0" prefWidth="69.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
-						<Button layoutX="223.0" layoutY="363.0" mnemonicParsing="false" onAction="#resetProjetField2" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
-						<Button fx:id="back_projet2" layoutX="269.0" layoutY="469.0" mnemonicParsing="false" onAction="#handleBackProjet" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Back" />
+						<Button fx:id="btn_updateProjet" layoutX="263.0" layoutY="471.0" mnemonicParsing="false" onAction="#updateProjet" prefHeight="31.0" prefWidth="69.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier" />
+						<Button layoutX="266.0" layoutY="310.0" mnemonicParsing="false" onAction="#resetProjetField2" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+						<Button fx:id="back_projet2" layoutX="14.0" layoutY="470.0" mnemonicParsing="false" onAction="#handleBackProjet" prefHeight="33.0" prefWidth="63.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Retour" />
 					</children>
 				</AnchorPane>
 			</children>

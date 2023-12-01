@@ -149,7 +149,7 @@ public class DashboardController implements Initializable {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Confirmation Message");
 		alert.setHeaderText(null);
-		alert.setContentText("Are you sure you want to logout?");
+		alert.setContentText("Êtes-vous sûr de vouloir vous déconnecter ?");
 		Optional<ButtonType> option = alert.showAndWait();
 		try {
 			if (option.get().equals(ButtonType.OK)) {

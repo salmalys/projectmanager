@@ -35,20 +35,24 @@ public class NotesServiceImpl implements NotesService {
 			if (binome.getDateRemiseEffective() == null) {
 				System.out.println("Date Remise null");
 				return 2;
+			}if (!(estEntreZeroEtVingt(noteRapport)&&estEntreZeroEtVingt(noteSoutenanceMembre1)&&estEntreZeroEtVingt(noteSoutenanceMembre1))) {
+				System.out.println(("Note not between 0 and 20."));
+				return -1;
 			}
-
 			Notes notes = new Notes(binome, noteRapport, noteSoutenanceMembre1, noteSoutenanceMembre2);
 			notesDAO.create(notes);
 			System.out.println("Note created successfully: " + notes.toString());
 			return 0;
 		}catch(Exception e) {
-			System.out.println("eERREEU");
 			e.printStackTrace();
-			System.out.println();
 			return -1;
 		}
 	}
-
+	
+	public boolean estEntreZeroEtVingt(double nombre) {
+	    return nombre >= 0 && nombre <= 20;
+	}
+	
 	@Override
 	public void deleteNotesById(int idBinome) {
 		notesDAO.deleteById(idBinome);

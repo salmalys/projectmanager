@@ -145,7 +145,7 @@ public class BinomeController implements Initializable {
 			String projet = Projet.getSelectionModel().getSelectedItem();
 
 			if (!isInputValid(etudiant1, projet)) {
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+				showAlert(AlertType.ERROR, "Error Message", "Remplissez tous les champs");
 			} else {
 				String[] etudiant1Parts = etudiant1.split(" ");
 				String nomEtudiant1 = etudiant1Parts[0];
@@ -168,7 +168,7 @@ public class BinomeController implements Initializable {
 						result = binomeS.createBinomeProjet(idEtudiant1, idEtudiant2, idProjet, null);
 					} else {
 						showAlert(AlertType.WARNING, "Warning Message",
-								"pour pas avoir deux meme etudiant pour binome.");
+								"L'étudiant 1 et l'étudiant 2 doivent être différents.\n\nPour créer un binôme avec un seul étudiant, veuillez remplir uniquement le champ \"Etudiant 1\"");
 						resetBinomeFields();
 						return;
 					}
@@ -179,20 +179,20 @@ public class BinomeController implements Initializable {
 
 				switch (result) {
 				case 0:
-					showAlert(AlertType.INFORMATION, "Success", "Binome added successfully!");
+					showAlert(AlertType.INFORMATION, "Success", "Binome crée avec succès !");
 					refreshBinomeTable();
 					resetBinomeFields();
 					break;
 				case 1:
-					showAlert(AlertType.ERROR, "Error Message", "An error occurred while creating the binome.");
+					showAlert(AlertType.ERROR, "Error Message", "Une erreur s'est produite lors de la création du binôme.");
 					break;
 				default:
-					showAlert(AlertType.ERROR, "Error Message", "An unexpected error occurred.");
+					showAlert(AlertType.ERROR, "Error Message", "Une erreur s'est produite");
 					break;
 				}
 			}
 		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
+			showAlert(AlertType.ERROR, "Error", "Une erreur s'est produite : " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -216,12 +216,12 @@ public class BinomeController implements Initializable {
 			}
 			Alert alert;
 			if (!isInputValid(projetName, etudiant1Name)) {
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+				showAlert(AlertType.ERROR, "Error Message", "Remplissez tous les champs");
 			} else {
 				alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Confirmation Message");
 				alert.setHeaderText(null);
-				alert.setContentText("Are you sure you want to Update ID Binome: " + idBinomeString);
+				alert.setContentText("Êtes-vous sûr de vouloir mettre à jour le binôme avec l'ID  " + idBinomeString);
 
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.isPresent() && option.get().equals(ButtonType.OK)) {
@@ -245,14 +245,14 @@ public class BinomeController implements Initializable {
 					binomeS.updateBinomeProjet(Integer.valueOf(idBinomeString), etudiant1Id, etudiant2Id, projetId,
 							null);
 
-					showAlert(AlertType.INFORMATION, "Success", "Binome Updated successfully!");
+					showAlert(AlertType.INFORMATION, "Success", "Binôme mis à jour avec succès !");
 					refreshBinomeTable();
 					resetBinomeFields(); // Reset the input fields
 
 				}
 			}
 		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
+			showAlert(AlertType.ERROR, "Error", "Une erreur s'est produite " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -265,18 +265,18 @@ public class BinomeController implements Initializable {
 
 			Alert alert;
 			if (idBinomeString.isEmpty()) {
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+				showAlert(AlertType.ERROR, "Error Message", "Remplissez tous les champs");
 			} else {
 				alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Confirmation Message");
 				alert.setHeaderText(null);
-				alert.setContentText("Are you sure you want to Delete ID Binome: " + idBinomeString);
+				alert.setContentText("Êtes-vous sûr de vouloir supprimer le binôme avec l'ID " + idBinomeString);
 
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.isPresent() && option.get().equals(ButtonType.OK)) {
 					noteS.deleteNotesById(Integer.valueOf(idBinomeString));
 					binomeS.deleteBinomeProjetById(Integer.valueOf(idBinomeString));
-					showAlert(AlertType.INFORMATION, "Information Message", "Binome Deleted successfully!");
+					showAlert(AlertType.INFORMATION, "Information Message", "Binôme supprimé avec succès !");
 
 					// You might want to refresh or update your Binome TableView after the delete
 					refreshBinomeTable();
@@ -286,7 +286,7 @@ public class BinomeController implements Initializable {
 				}
 			}
 		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
+			showAlert(AlertType.ERROR, "Error", "Une erreur s'est produite : " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -297,7 +297,7 @@ public class BinomeController implements Initializable {
 			String idBinomeString = Id_Binome2.getText();
 
 			if (idBinomeString.isEmpty() || DateRemise.getValue() == null) {
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all fields");
+				showAlert(AlertType.ERROR, "Error Message", "Remplissez tous les champs");
 			} else {
 				LocalDate localDate = DateRemise.getValue();
 				java.sql.Date dateRemise = null;
@@ -309,20 +309,20 @@ public class BinomeController implements Initializable {
 				alert.setTitle("Confirmation Message");
 				alert.setHeaderText(null);
 				alert.setContentText(
-						"Are you sure you want to update the date of remise for Binome ID: " + idBinomeString);
+						"Êtes-vous sûr de vouloir mettre à jour la date de remise pour le binôme avec l'ID " + idBinomeString);
 
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.isPresent() && option.get().equals(ButtonType.OK)) {
 					binomeS.updateDateRemise(Integer.valueOf(idBinomeString), dateRemise);
 
-					showAlert(AlertType.INFORMATION, "Information Message", "Date of Remise Updated successfully!");
+					showAlert(AlertType.INFORMATION, "Information Message", "Date de remise mise à jour avec succès !");
 					refreshBinomeTable();
 					resetDateRemiseFields(); // Reset the date remise input fields
 
 				}
 			}
 		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
+			showAlert(AlertType.ERROR, "Error", "Une erreur s'est produite : " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -615,9 +615,9 @@ public class BinomeController implements Initializable {
 			fillEtudiantComboBox();
 			fillProjetComboBox();
 			addShowBinome();
-			showAlert(AlertType.INFORMATION, "Refresh", "Data refreshed successfully!");
+			showAlert(AlertType.INFORMATION, "Refresh", "Les données ont été actualisées avec succès !");
 		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
+			showAlert(AlertType.ERROR, "Error", "Erreur lors du rafraîchissement des données " + e.getMessage());
 		}
 	}
 

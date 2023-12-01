@@ -73,7 +73,7 @@ public class LoginController implements Initializable {
 				alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Error Message");
 				alert.setHeaderText(null);
-				alert.setContentText("Please fill all blank fields");
+				alert.setContentText("Remplissez tous les champs");
 				alert.showAndWait();
 			} else {
 				if (result.next()) {
@@ -82,7 +82,7 @@ public class LoginController implements Initializable {
 					alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Information Message");
 					alert.setHeaderText(null);
-					alert.setContentText("Successfully Login");
+					alert.setContentText("Connexion réussie");
 					alert.showAndWait();
 					Stage currentStage = (Stage) login.getScene().getWindow();
 
@@ -110,7 +110,7 @@ public class LoginController implements Initializable {
 					alert = new Alert(AlertType.ERROR);
 					alert.setTitle("Error Message");
 					alert.setHeaderText(null);
-					alert.setContentText("Wrong Username/Password");
+					alert.setContentText("Nom d'utilisateur ou mot de passe incorrect");
 					alert.showAndWait();
 				}
 			}
