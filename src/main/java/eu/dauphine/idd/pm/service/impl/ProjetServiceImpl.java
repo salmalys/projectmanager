@@ -1,8 +1,5 @@
 package eu.dauphine.idd.pm.service.impl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import eu.dauphine.idd.pm.dao.DAOFactory;
 import eu.dauphine.idd.pm.dao.ProjetDAO;
 import eu.dauphine.idd.pm.model.Projet;
@@ -17,9 +14,7 @@ public class ProjetServiceImpl implements ProjetService {
 	public ProjetServiceImpl() {
 		this.projetDAO = DAOFactory.getProjetDAO();
 	}
-
-	private static SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-
+	
 	@Override
 	public int createProjet(String nomMatiere, String sujet, Date dateRemise) {
 		Projet existingProjet = projetDAO.findByCourseSubject(nomMatiere, sujet);

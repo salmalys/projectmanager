@@ -26,20 +26,27 @@ public class NotesServiceImpl implements NotesService {
 	@Override
 	public int createNotes(int idBinome, double noteRapport, double noteSoutenanceMembre1,
 			double noteSoutenanceMembre2) {
-		BinomeProjet binome = binomeProjetDAO.findById(idBinome);
-		if (binome == null) {
-			System.out.println("Invalid binome ID");
-			return 1;
-		}
-		if (binome.getDateRemiseEffective() == null) {
-			System.out.println("Date Remise null");
-			return 2;
-		}
+		try {
+			BinomeProjet binome = binomeProjetDAO.findById(idBinome);
+			if (binome == null) {
+				System.out.println("Invalid binome ID");
+				return 1;
+			}
+			if (binome.getDateRemiseEffective() == null) {
+				System.out.println("Date Remise null");
+				return 2;
+			}
 
-		Notes notes = new Notes(binome, noteRapport, noteSoutenanceMembre1, noteSoutenanceMembre2);
-		notesDAO.create(notes);
-		System.out.println("Note created successfully: " + notes.toString());
-		return 0;
+			Notes notes = new Notes(binome, noteRapport, noteSoutenanceMembre1, noteSoutenanceMembre2);
+			notesDAO.create(notes);
+			System.out.println("Note created successfully: " + notes.toString());
+			return 0;
+		}catch(Exception e) {
+			System.out.println("eERREEU");
+			e.printStackTrace();
+			System.out.println();
+			return -1;
+		}
 	}
 
 	@Override

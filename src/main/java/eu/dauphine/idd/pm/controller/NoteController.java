@@ -13,7 +13,6 @@ import eu.dauphine.idd.pm.model.Notes;
 import eu.dauphine.idd.pm.model.Projet;
 import eu.dauphine.idd.pm.service.BinomeProjetService;
 import eu.dauphine.idd.pm.service.NotesService;
-import eu.dauphine.idd.pm.service.ProjetService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -196,6 +195,10 @@ public class NoteController implements Initializable {
 							showAlert(AlertType.ERROR, "Error Message",
 									"Selected binome hasn't deliver the project yet.\nYou can't enter notes.");
 							break;
+						case -1:
+							showAlert(AlertType.ERROR, "Error Message",
+									"You have to enter notes between 0 and 20.");
+							break;
 						default:
 							showAlert(AlertType.ERROR, "Error Message", "An unexpected error occurred.");
 							break;
@@ -222,6 +225,11 @@ public class NoteController implements Initializable {
 					case 2:
 						showAlert(AlertType.ERROR, "Error Message",
 								"Selected binome hasn't deliver the project yet.\nYou can't enter notes.");
+						break;
+						
+					case -1:
+						showAlert(AlertType.ERROR, "Error Message",
+								"You have to enter notes between 0 and 20.");
 						break;
 					default:
 						showAlert(AlertType.ERROR, "Error Message", "An unexpected error occurred.");

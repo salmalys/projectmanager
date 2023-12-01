@@ -181,8 +181,4 @@ public class NotesDAOImpl implements NotesDAO {
 		return note;
 	}
 
-	
-
-	
-
 }

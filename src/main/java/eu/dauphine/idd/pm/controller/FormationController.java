@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import eu.dauphine.idd.pm.model.Etudiant;
 import eu.dauphine.idd.pm.model.Formation;
 
 public class FormationController implements Initializable {

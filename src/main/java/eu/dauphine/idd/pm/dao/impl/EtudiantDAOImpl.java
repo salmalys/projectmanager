@@ -179,14 +179,4 @@ public class EtudiantDAOImpl implements EtudiantDAO {
 		return etudiant;
 	}
 
-
-	public static void main(String[] args) {
-		EtudiantDAOImpl s = new EtudiantDAOImpl();
-
-		System.out.println(s.findAll());
-		//System.out.println(s.findById(1));
-		System.out.println(s.findByName("SAIS", "Ilyes"));
-		System.out.println(s.findById(2));
-	}
-
 }

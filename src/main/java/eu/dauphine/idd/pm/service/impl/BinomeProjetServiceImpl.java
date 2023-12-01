@@ -110,13 +110,4 @@ public class BinomeProjetServiceImpl implements BinomeProjetService {
 	public BinomeProjet getBinomeProjetById(int idBinome) {
 		return binomeProjetDAO.findById(idBinome);
 	}
-
-	public static void main(String[] args) {
-		BinomeProjetServiceImpl s = new BinomeProjetServiceImpl();
-
-		System.out.println(s.getBinomeProjetById(4));
-	}
-	
-
-	// Count
 }

@@ -169,11 +169,5 @@ public class ProjetDAOImpl implements ProjetDAO {
         }
 		return projet;
 	}
-	
-	public static void main(String[] args) {
-		ProjetDAOImpl l=new ProjetDAOImpl();
-		System.out.println(l.findAll());
-	}
-
 
 }

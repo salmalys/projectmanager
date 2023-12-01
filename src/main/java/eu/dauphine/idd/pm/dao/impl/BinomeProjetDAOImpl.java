@@ -228,11 +228,4 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
 	public void delete(BinomeProjet binome) {
 		deleteById(binome.getIdBinome());
 	}
-
-	public static void main(String[] args) {
-		BinomeProjetDAOImpl b = new BinomeProjetDAOImpl();
-		// System.out.println(b.findById(4));
-		System.out.println(b.findAll());
-
-	}
 }
