@@ -774,7 +774,7 @@ public class NoteController implements Initializable {
 			// Récupérez la liste de binômes depuis binomeS.listBinomeProjets()
 			ObservableList<BinomeProjet> binomesList = binomeS.listBinomeProjets();
 			ObservableList<Notes> notesList = NotesS.listNotes();
-			String projectFolderPath = "C:\\Users\\ilyes\\git\\projectmanager";
+			String projectFolderPath = "./src/main/resources/pdf/";
 			String fileName = "NoteEtudiant.pdf";
 			String filePath = projectFolderPath + File.separator + fileName;
 			PDDocument document = new PDDocument();
@@ -784,10 +784,9 @@ public class NoteController implements Initializable {
 			PDPageContentStream contentStream = new PDPageContentStream(document, page);
 			contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
 
-		
 			// Ajoutez les en-têtes du tableau pour la première partie
 			contentStream.beginText();
-			contentStream.newLineAtOffset(100, 750); // Ajustez la position verticale des en-têtes
+			contentStream.newLineAtOffset(100, 750);
 			contentStream.showText("ID Binome");
 			contentStream.newLineAtOffset(100, 0);
 			contentStream.showText("Etudiant 1");
@@ -799,7 +798,7 @@ public class NoteController implements Initializable {
 
 			// Ajoutez les en-têtes du tableau pour la deuxième partie
 			contentStream.beginText();
-			contentStream.newLineAtOffset(300, 750); // Ajustez la position verticale des en-têtes
+			contentStream.newLineAtOffset(300, 750);
 			contentStream.showText("Sujet Projet");
 			contentStream.newLineAtOffset(100, 0);
 			contentStream.showText("Note Rapport");
@@ -810,44 +809,45 @@ public class NoteController implements Initializable {
 			contentStream.endText();
 
 			int yPosition = 700;
-			int xOffset = 100;  // Ajustez cet offset pour l'espace entre chaque colonne
+			int xOffset = 100; // Ajustez cet offset pour l'espace entre chaque colonne
 
 			for (BinomeProjet binome : binomesList) {
-			    if (binome.getProjet() != null && binome.getProjet().getNomMatiere() != null) {
-			        contentStream.beginText();
-			        contentStream.newLineAtOffset(xOffset, yPosition -= 20);
-			        contentStream.showText(String.valueOf(binome.getIdBinome()));
-			        contentStream.newLineAtOffset(xOffset, 0);
-			        contentStream.showText(binome.getMembre1().getNom() + " " + binome.getMembre1().getPrenom());
-			        contentStream.newLineAtOffset(xOffset, 0);
-			        contentStream.showText(binome.getMembre2() != null
-			                ? binome.getMembre2().getNom() + " " + binome.getMembre2().getPrenom()
-			                : "_");
-			        contentStream.newLineAtOffset(xOffset, 0);
-			        contentStream.showText(binome.getProjet().getNomMatiere());
-			        contentStream.endText();
+				if (binome.getProjet() != null && binome.getProjet().getNomMatiere() != null) {
+					contentStream.beginText();
+					contentStream.newLineAtOffset(xOffset, yPosition -= 20);
+					contentStream.showText(String.valueOf(binome.getIdBinome()));
+					contentStream.newLineAtOffset(xOffset, 0);
+					contentStream.showText(binome.getMembre1().getNom() + " " + binome.getMembre1().getPrenom());
+					contentStream.newLineAtOffset(xOffset, 0);
+					contentStream.showText(binome.getMembre2() != null
+							? binome.getMembre2().getNom() + " " + binome.getMembre2().getPrenom()
+							: "_");
+					contentStream.newLineAtOffset(xOffset, 0);
+					contentStream.showText(binome.getProjet().getNomMatiere());
+					contentStream.endText();
 
-			        contentStream.beginText();
-			        contentStream.newLineAtOffset(xOffset + 300, yPosition); // Ajustez cet offset pour aligner avec la deuxième partie
-			        contentStream.showText(binome.getProjet().getSujet());
-			        contentStream.newLineAtOffset(100, 0);
+					contentStream.beginText();
+					contentStream.newLineAtOffset(xOffset + 300, yPosition); // Ajustez cet offset pour aligner avec la
+																				// deuxième partie
+					contentStream.showText(binome.getProjet().getSujet());
+					contentStream.newLineAtOffset(100, 0);
 
-			        Notes matchingNote = findNoteForBinome(binome, notesList);
+					Notes matchingNote = findNoteForBinome(binome, notesList);
 
-			        if (matchingNote != null) {
-			            double noteRapport = matchingNote.getNoteRapport();
-			            double noteSoutenance1 = matchingNote.getNoteSoutenanceMembre1();
-			            double noteSoutenance2 = matchingNote.getNoteSoutenanceMembre2();
+					if (matchingNote != null) {
+						double noteRapport = matchingNote.getNoteRapport();
+						double noteSoutenance1 = matchingNote.getNoteSoutenanceMembre1();
+						double noteSoutenance2 = matchingNote.getNoteSoutenanceMembre2();
 
-			            contentStream.showText(String.valueOf(noteRapport));
-			            contentStream.newLineAtOffset(100, 0);
-			            contentStream.showText(String.valueOf(noteSoutenance1));
-			            contentStream.newLineAtOffset(100, 0);
-			            contentStream.showText(String.valueOf(noteSoutenance2));
-			        }
+						contentStream.showText(String.valueOf(noteRapport));
+						contentStream.newLineAtOffset(100, 0);
+						contentStream.showText(String.valueOf(noteSoutenance1));
+						contentStream.newLineAtOffset(100, 0);
+						contentStream.showText(String.valueOf(noteSoutenance2));
+					}
 
-			        contentStream.endText();
-			    }
+					contentStream.endText();
+				}
 
 			}
 			contentStream.close();

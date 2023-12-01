@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -61,64 +62,154 @@ public class LoginController implements Initializable {
 	}
 
 	public void loginAdmin() {
-		String query = "SELECT * FROM admin WHERE username =? and password=? ";
-		connection = getConnection();
-		try {
-			prepare = connection.prepareStatement(query);
-			prepare.setString(1, username.getText());
-			prepare.setString(2, password.getText());
-			result = prepare.executeQuery();
-			Alert alert;
-			if (username.getText().isEmpty() || password.getText().isEmpty()) {
-				alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Error Message");
-				alert.setHeaderText(null);
-				alert.setContentText("Please fill all blank fields");
-				alert.showAndWait();
-			} else {
-				if (result.next()) {
-					Data.username = username.getText();
+	    String adminQuery = "SELECT * FROM admin WHERE username = ? AND password = ?";
+	    String userQuery = "SELECT * FROM users WHERE username = ? AND password = ?";
+	    connection = getConnection();
 
-					alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Information Message");
-					alert.setHeaderText(null);
-					alert.setContentText("Successfully Login");
-					alert.showAndWait();
-					Stage currentStage = (Stage) login.getScene().getWindow();
+	    try {
+	        // Check admin login
+	        if (loginUser(adminQuery)) {
+	            return;
+	        }
 
-					currentStage.close();
-					Parent root = FXMLLoader.load(getClass().getResource("/fxml/dashboard.fxml"));
-					Stage stage = new Stage();
-					Scene scene = new Scene(root);
+	        // Check user login
+	        if (loginUser(userQuery)) {
+	            return;
+	        }
 
-					root.setOnMousePressed((MouseEvent event) -> {
-						x = event.getSceneX();
-						y = event.getSceneY();
+	        // If no match found, create a new user
+	        createUser();
 
-					});
-					root.setOnMouseDragged((MouseEvent event) -> {
-						stage.setX(event.getScreenX() - x);
-						stage.setY(event.getScreenY() - y);
-
-					});
-					stage.initStyle(StageStyle.TRANSPARENT);
-
-					stage.setScene(scene);
-					stage.show();
-
-				} else {
-					alert = new Alert(AlertType.ERROR);
-					alert.setTitle("Error Message");
-					alert.setHeaderText(null);
-					alert.setContentText("Wrong Username/Password");
-					alert.showAndWait();
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
+
+	private boolean loginUser(String query) {
+	    try {
+	        prepare = connection.prepareStatement(query);
+	        prepare.setString(1, username.getText());
+	        prepare.setString(2, password.getText());
+	        result = prepare.executeQuery();
+	        Alert alert;
+
+	        if (username.getText().isEmpty() || password.getText().isEmpty()) {
+	            alert = new Alert(AlertType.ERROR);
+	            alert.setTitle("Error Message");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Please fill all blank fields");
+	            alert.showAndWait();
+	            return false;
+	        } else if (result.next()) {
+	            Data.username = username.getText();
+
+	            alert = new Alert(AlertType.INFORMATION);
+	            alert.setTitle("Information Message");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Successfully Login");
+	            alert.showAndWait();
+
+	            Stage currentStage = (Stage) login.getScene().getWindow();
+	            currentStage.close();
+
+	            if (query.contains("admin")) {
+	                // Admin login, open dashboard.fxml
+	                Parent root = FXMLLoader.load(getClass().getResource("/fxml/dashboard.fxml"));
+	                Stage stage = new Stage();
+	                Scene scene = new Scene(root);
+
+	                root.setOnMousePressed((MouseEvent event) -> {
+	                    x = event.getSceneX();
+	                    y = event.getSceneY();
+	                });
+
+	                root.setOnMouseDragged((MouseEvent event) -> {
+	                    stage.setX(event.getScreenX() - x);
+	                    stage.setY(event.getScreenY() - y);
+	                });
+
+	                stage.initStyle(StageStyle.TRANSPARENT);
+	                stage.setScene(scene);
+	                stage.show();
+	            } else {
+	                // Regular user login, open NotesUser.fxml
+	                Parent root = FXMLLoader.load(getClass().getResource("/fxml/NoteUsers.fxml"));
+	                Stage stage = new Stage();
+	                Scene scene = new Scene(root);
+
+	                root.setOnMousePressed((MouseEvent event) -> {
+	                    x = event.getSceneX();
+	                    y = event.getSceneY();
+	                });
+
+	                root.setOnMouseDragged((MouseEvent event) -> {
+	                    stage.setX(event.getScreenX() - x);
+	                    stage.setY(event.getScreenY() - y);
+	                });
+
+	                stage.initStyle(StageStyle.TRANSPARENT);
+	                stage.setScene(scene);
+	                stage.show();
+	            }
+
+	            return true;
+	        }
+
+	    } catch (SQLException | IOException e) {
+	        e.printStackTrace();
+	    }
+
+	    return false;
+	}
+
+	public void createUser() {
+	    String etudiantQuery = "SELECT * FROM Etudiant WHERE Nom = ? AND Prenom = ?";
+	    String insertUserQuery = "INSERT INTO users(username, password) VALUES (?, ?)";
+	    
+	    connection = getConnection();
+
+	    try {
+	        // Check if the corresponding student exists
+	        prepare = connection.prepareStatement(etudiantQuery);
+	        prepare.setString(1, username.getText()); // Nom
+	        prepare.setString(2, password.getText()); // Prenom
+	        result = prepare.executeQuery();
+
+	        if (result.next()) {
+	            // Student exists, insert into the users table
+	            prepare = connection.prepareStatement(insertUserQuery);
+	            prepare.setString(1, username.getText()); // Nom as username
+	            prepare.setString(2, password.getText()); // Prenom as password
+
+	            // Execute the update
+	            int userResult = prepare.executeUpdate();
+
+	            if (userResult > 0) {
+	                Alert alert = new Alert(AlertType.INFORMATION);
+	                alert.setTitle("Information Message");
+	                alert.setHeaderText(null);
+	                alert.setContentText("Successfully Created User");
+	                alert.showAndWait();
+	            } else {
+	                Alert alert = new Alert(AlertType.ERROR);
+	                alert.setTitle("Error Message");
+	                alert.setHeaderText(null);
+	                alert.setContentText("Failed to Create User");
+	                alert.showAndWait();
+	            }
+	        } else {
+	            Alert alert = new Alert(AlertType.ERROR);
+	            alert.setTitle("Error Message");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Student does not exist");
+	            alert.showAndWait();
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+
 
 	public void close() {
 
