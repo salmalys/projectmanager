@@ -31,11 +31,11 @@
 						<TableView fx:id="tableBinome" layoutY="108.0" onMouseClicked="#selectBinome" prefHeight="405.0" prefWidth="540.0">
 							<columns>
 								<TableColumn fx:id="col_idBinome" prefWidth="64.00000190734863" text="ID Binome" />
-								<TableColumn fx:id="col_Etudiant1" prefWidth="105.99999237060547" text=" Etudiant1" />
+								<TableColumn fx:id="col_Etudiant1" prefWidth="100.00000762939453" text=" Etudiant1" />
 								<TableColumn fx:id="col_Etudiant2" prefWidth="115.33335876464844" text=" Etudiant2" />
-								<TableColumn fx:id="col_NomMatiere" prefWidth="85.3333740234375" text="Nom Matiere" />
+								<TableColumn fx:id="col_NomMatiere" prefWidth="92.6666259765625" text="Nom Matiere" />
 								<TableColumn fx:id="col_Sujtprojet" prefWidth="78.6666259765625" text="Sujet Projet" />
-                        <TableColumn fx:id="col_DateRemiseProjet" prefWidth="82.00009155273438" text="DateRemiseEffectiif" />
+                        <TableColumn fx:id="col_DateRemiseProjet" prefWidth="84.66671752929688" text="DateRemiseEffectiif" />
 							</columns>
 						</TableView>
 						<Button fx:id="RefreshBinome" layoutX="462.0" layoutY="64.0" mnemonicParsing="false" onAction="#refreshBinomeTable" prefHeight="27.0" prefWidth="67.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
@@ -53,7 +53,7 @@
 						<FontAwesomeIconView glyphName="SEARCH" layoutX="16.0" layoutY="34.0" size="1.5em" text="" />
 					</children>
 				</AnchorPane>
-				<AnchorPane fx:id="tmp_DeleteBinome" layoutX="550.0" layoutY="7.0" prefHeight="521.0" prefWidth="100.0" stylesheets="@../css/dashboard.css" visible="false">
+				<AnchorPane fx:id="tmp_DeleteBinome" layoutX="555.0" layoutY="10.0" prefHeight="521.0" prefWidth="100.0" stylesheets="@../css/dashboard.css">
 					<styleClass>
 						<String fx:value="white-bg" />
 						<String fx:value="shadow" />
@@ -115,14 +115,14 @@
                      <font>
                         <Font size="16.0" />
                      </font></Label>
-                  <ComboBox fx:id="Projet" layoutX="154.0" layoutY="272.0" prefWidth="150.0" promptText="NOM-PRENOM" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                  <ComboBox fx:id="Projet" layoutX="154.0" layoutY="272.0" prefWidth="150.0" promptText="MATIERE-PROJET" styleClass="textfield" stylesheets="@../css/dashboard.css" />
                   <Label layoutX="70.0" layoutY="271.0" text="Projet :">
                      <font>
                         <Font size="16.0" />
                      </font></Label>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="tmp_updateBinome" layoutX="562.0" layoutY="10.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css">
+            <AnchorPane fx:id="tmp_updateBinome" layoutX="562.0" layoutY="10.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css" visible="false">
                <styleClass>
                   <String fx:value="shadow" />
                   <String fx:value="white-bg" />

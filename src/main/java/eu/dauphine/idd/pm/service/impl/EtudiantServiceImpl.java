@@ -72,6 +72,14 @@ public class EtudiantServiceImpl implements EtudiantService {
 		    }
 		
 	}
+	@Override
+	public Etudiant getEtudiantById(int IdEtudiant) {
+		
+
+		return etudiantDAO.findById(IdEtudiant);
+		
+	}
+	
 	public static void main(String[] args) {
 		
 		EtudiantServiceImpl d=new EtudiantServiceImpl();

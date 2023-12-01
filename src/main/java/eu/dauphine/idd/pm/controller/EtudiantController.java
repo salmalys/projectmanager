@@ -85,8 +85,6 @@ public class EtudiantController implements Initializable {
 	private Button btn_tmpupdateEtudient;
 	@FXML
 	private ComboBox<String> filtre_etudiant;
-	
-
 
 	private FormationService formationS = ServiceFactory.getFormationService();
 	private EtudiantService etudiantS = ServiceFactory.getEtudiantService();
@@ -321,6 +319,7 @@ public class EtudiantController implements Initializable {
 	public void refreshData() {
 		try {
 			addEtudiantshow();
+			fillFormationComboBox();
 			showAlert(AlertType.INFORMATION, "Refresh", "Data refreshed successfully!");
 		} catch (Exception e) {
 			showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
@@ -405,7 +404,7 @@ public class EtudiantController implements Initializable {
 	public boolean isInputValid(String nom, String prenom, String formation) {
 
 		if (prenom.isEmpty() || formation.isEmpty() || nom.isEmpty()) {
-			showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+
 			return false;
 		}
 		return true;
@@ -426,7 +425,6 @@ public class EtudiantController implements Initializable {
 		tmp_updateEtudiant.setVisible(false);
 
 	}
-	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

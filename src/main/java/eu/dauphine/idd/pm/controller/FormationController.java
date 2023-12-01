@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import eu.dauphine.idd.pm.model.Etudiant;
 import eu.dauphine.idd.pm.model.Formation;
 
 public class FormationController implements Initializable {
@@ -225,7 +224,7 @@ public class FormationController implements Initializable {
 	public boolean isInputValid(String nom, String promotion) {
 
 		if (promotion == null || promotion.isEmpty() || nom.isEmpty() || nom == null) {
-			showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+
 			return false;
 		}
 		return true;
@@ -409,7 +408,7 @@ public class FormationController implements Initializable {
 		tmp_binome.setVisible(false);
 		tmp_note.setVisible(false);
 		tmp_projet.setVisible(false);
-
+	
 		addPromotionList();
 
 		formation_btn.setStyle(
@@ -489,6 +488,7 @@ public class FormationController implements Initializable {
 					binome_btn, etudiant_btn, projet_btn, note_btn, formation_btn);
 
 		} else if (event.getSource() == etudiant_btn) {
+
 			tmp_home.setVisible(false);
 			temp_formation.setVisible(false);
 			tmp_etudiant.setVisible(true);

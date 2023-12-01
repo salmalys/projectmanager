@@ -1,15 +1,16 @@
 package eu.dauphine.idd.pm.controller;
 
 import java.net.URL;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.util.StringConverter;
+
 
 import eu.dauphine.idd.pm.model.Projet;
 import eu.dauphine.idd.pm.service.ProjetService;
@@ -27,7 +28,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -393,7 +393,7 @@ public class ProjetController implements Initializable {
 	private boolean isInputValid(String nomMatiere, String sujet, Date dateRemise) {
 
 		if (nomMatiere.isEmpty() || sujet.isEmpty() || dateRemise == null) {
-			showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+	
 			return false;
 		}
 		return true;
