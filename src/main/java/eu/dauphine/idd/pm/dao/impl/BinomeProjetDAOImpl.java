@@ -218,4 +218,32 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
 	public void delete(BinomeProjet binome) {
 		deleteById(binome.getIdBinome());
 	}
+	
+	public BinomeProjet findByMembersAndIdProjet(int idEtudiant1, int idEtudiant2, int idProjet) {
+		BinomeProjet binome = null;
+		try (Connection connection = getConnection();
+				PreparedStatement preparedStatement = connection
+						.prepareStatement("SELECT * FROM BinomeProjet WHERE ID_BinomeProjet = ? AND ID_Etudiant1 = ? AND ID_Etudiant2 = ?");) {
+			preparedStatement.setInt(1, idProjet);
+			preparedStatement.setInt(2, idEtudiant1);
+			preparedStatement.setInt(3, idEtudiant2);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				binome = new BinomeProjet(null, null, null, null);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		}
+		if (binome != null) {
+			Etudiant e1 = etudiantDAO.findById(idEtudiant1);
+			Etudiant e2 = etudiantDAO.findById(idEtudiant2);
+			Projet p = projetDAO.findById(idProjet);
+			binome.setMembre1(e1);
+			binome.setMembre2(e2);
+			binome.setProjet(p);
+		}
+
+		return binome;
+	}
 }
