@@ -1,6 +1,7 @@
 package eu.dauphine.idd.pm.controller;
 
 import java.net.URL;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -11,7 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
@@ -29,7 +29,7 @@ import javafx.stage.StageStyle;
 public class DashboardController implements Initializable {
 
 	/**
-	 * *Partie 0: ************************ButtonHome****************************
+	 * *Partie 1: ************************ButtonHome****************************
 	 * 
 	 **/
 
@@ -84,6 +84,7 @@ public class DashboardController implements Initializable {
 	private AnchorPane tmp_home;
 	@FXML
 	private BarChart<String, Number> barChart;
+	private XYChart.Series<String, Number> series = new XYChart.Series<>();
 
 	private UtilService utilS = ServiceFactory.getUtilService();
 
@@ -119,11 +120,11 @@ public class DashboardController implements Initializable {
 		home_countApresProjet();
 		home_countBinome();
 		BarChartDonnee();
-		ajusterLargeurBarres(barChart,1);
+
 	}
 
 	/**
-	 * *Partie X: ************************Deconnexion et reglage de scene
+	 * *Partie 2: ************************Deconnexion et reglage de scene
 	 * dashboard***********************
 	 * 
 	 **/
@@ -181,11 +182,9 @@ public class DashboardController implements Initializable {
 
 	}
 
-	public void BarChartDonnee() {
+	private void BarChartDonnee() {
+		barChart.getData().clear();
 		HashMap<String, Double> moyennes = utilS.getMoyenneParProjet();
-
-		XYChart.Series<String, Number> series = new XYChart.Series<>();
-		series.setName("Moyenne des Notes");
 
 		for (Map.Entry<String, Double> entry : moyennes.entrySet()) {
 			series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
@@ -209,24 +208,12 @@ public class DashboardController implements Initializable {
 		Stage stage = (Stage) main_form.getScene().getWindow();
 		stage.setIconified(true);
 	}
-	
 
 	/**
 	 * *Partie UI:
 	 * ************************InitialisationActionUI****************************
 	 * 
 	 **/
-    // Méthode pour ajuster la largeur des barres
-    private void ajusterLargeurBarres(BarChart<?, ?> barChart, double largeur) {
-        for (int i = 0; i < barChart.getData().size(); i++) {
-            for (int j = 0; j < barChart.getData().get(i).getData().size(); j++) {
-                Node bar = barChart.lookup(".data" + i + ".bar" + j);
-                if (bar != null) {
-                    bar.setStyle("-fx-bar-width: " + largeur + ";");
-                }
-            }
-        }
-    }
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -237,9 +224,9 @@ public class DashboardController implements Initializable {
 		home_countAvantProjet();
 		home_countApresProjet();
 		home_countBinome();
+
 		// Création d'une série de données
 		BarChartDonnee();
-		ajusterLargeurBarres(barChart,1);
 
 	}
 

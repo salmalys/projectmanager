@@ -81,6 +81,12 @@
                   </Button>
                   <Label layoutX="24.0" layoutY="53.0" text="Filtres : " />
                   <ComboBox fx:id="filtre_note" layoutX="72.0" layoutY="49.0" prefWidth="150.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                  <Button layoutX="370.0" layoutY="39.0" mnemonicParsing="false" onAction="#supprimeTousNotes" prefHeight="27.0" prefWidth="101.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear Note" />
+                  <Button layoutX="477.0" layoutY="4.0" mnemonicParsing="false" onAction="#generatePdf" prefHeight="27.0" prefWidth="64.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
+                     <graphic>
+                        <FontAwesomeIconView fill="#f2f2f2" glyphName="PRINT" size="1.5em" />
+                     </graphic>
+                  </Button>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="tmp_showNotes" layoutX="578.0" layoutY="12.0" prefHeight="514.0" prefWidth="301.0" stylesheets="@../css/dashboard.css">
@@ -129,8 +135,7 @@
                   <TextField fx:id="nomPrenomAffiche2" layoutX="131.0" layoutY="335.0" prefHeight="25.0" prefWidth="126.0" styleClass="textfield" stylesheets="@../css/dashboard.css" text="NOM - Prénom" />
                   <Button fx:id="btn_backNote2" layoutX="18.0" layoutY="479.0" mnemonicParsing="false" onAction="#handleBtnBackNote" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Retour" />
                   <Button layoutX="233.0" layoutY="479.0" mnemonicParsing="false" onAction="#handleDetailsButton" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Détails" />
-                  <Button layoutX="232.0" layoutY="441.0" mnemonicParsing="false" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Valider" />
-                  <Button layoutX="18.0" layoutY="441.0" mnemonicParsing="false" onAction="#ClearShowNote" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                  <Button layoutX="231.0" layoutY="437.0" mnemonicParsing="false" onAction="#ClearShowNote" prefHeight="25.0" prefWidth="62.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
                </children>
                <styleClass>
                   <String fx:value="shadow" />

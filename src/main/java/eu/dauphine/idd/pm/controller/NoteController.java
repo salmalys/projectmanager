@@ -1,7 +1,15 @@
 package eu.dauphine.idd.pm.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+
+import javafx.collections.ObservableList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -16,7 +24,6 @@ import eu.dauphine.idd.pm.service.NotesService;
 import eu.dauphine.idd.pm.service.ServiceFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
@@ -326,6 +333,22 @@ public class NoteController implements Initializable {
 		}
 	}
 
+	@FXML
+	private void supprimeTousNotes() {
+		ObservableList<Notes> notesList = NotesS.listNotes();
+
+		if (!notesList.isEmpty()) {
+			NotesS.deleteAll();
+			addShowNote();
+
+			showAlert(AlertType.INFORMATION, "Success", "All Notes Deleted successfully!");
+		} else {
+			showAlert(AlertType.INFORMATION, "Success", "Tous les notes sont deja supprimer!");
+
+		}
+
+	}
+
 	private ObservableList<BinomeProjet> BinomesList;
 
 	@FXML
@@ -395,7 +418,7 @@ public class NoteController implements Initializable {
 				}
 
 				String searchKey = newValue.toLowerCase();
-				
+
 				String idBibome = Integer.toString(predData.getIdBinome());
 				String Etudiant1 = (predData.getMembre1() != null)
 						? (predData.getMembre1().getNom() + " " + predData.getMembre1().getPrenom()).toLowerCase()
@@ -453,7 +476,7 @@ public class NoteController implements Initializable {
 	private Notes findNoteForBinome(BinomeProjet binomeProjet, List<Notes> notesList) {
 		for (Notes note : notesList) {
 			if (note.getBinomeProjet().getIdBinome() == binomeProjet.getIdBinome()) {
-				// System.out.println("Binome ID: " + binomeProjet.getIdBinome());
+
 				return note;
 			}
 		}
@@ -750,6 +773,108 @@ public class NoteController implements Initializable {
 		} catch (Exception e) {
 			showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
 		}
+	}
+
+	@FXML
+	public void generatePdf() {
+		try {
+			// Récupérez la liste de binômes depuis binomeS.listBinomeProjets()
+			ObservableList<BinomeProjet> binomesList = binomeS.listBinomeProjets();
+			ObservableList<Notes> notesList = NotesS.listNotes();
+			String projectFolderPath = "C:\\Users\\ilyes\\git\\projectmanager";
+			String fileName = "NoteEtudiant.pdf";
+			String filePath = projectFolderPath + File.separator + fileName;
+			PDDocument document = new PDDocument();
+			PDPage page = new PDPage();
+			document.addPage(page);
+
+			PDPageContentStream contentStream = new PDPageContentStream(document, page);
+			contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+
+		
+			// Ajoutez les en-têtes du tableau pour la première partie
+			contentStream.beginText();
+			contentStream.newLineAtOffset(100, 750); // Ajustez la position verticale des en-têtes
+			contentStream.showText("ID Binome");
+			contentStream.newLineAtOffset(100, 0);
+			contentStream.showText("Etudiant 1");
+			contentStream.newLineAtOffset(100, 0);
+			contentStream.showText("Etudiant 2");
+			contentStream.newLineAtOffset(100, 0);
+			contentStream.showText("Nom Matiere");
+			contentStream.endText();
+
+			// Ajoutez les en-têtes du tableau pour la deuxième partie
+			contentStream.beginText();
+			contentStream.newLineAtOffset(300, 750); // Ajustez la position verticale des en-têtes
+			contentStream.showText("Sujet Projet");
+			contentStream.newLineAtOffset(100, 0);
+			contentStream.showText("Note Rapport");
+			contentStream.newLineAtOffset(100, 0);
+			contentStream.showText("Note Soutenance Membre 1");
+			contentStream.newLineAtOffset(100, 0);
+			contentStream.showText("Note Soutenance Membre 2");
+			contentStream.endText();
+
+			int yPosition = 700;
+			int xOffset = 100;  // Ajustez cet offset pour l'espace entre chaque colonne
+
+			for (BinomeProjet binome : binomesList) {
+			    if (binome.getProjet() != null && binome.getProjet().getNomMatiere() != null) {
+			        contentStream.beginText();
+			        contentStream.newLineAtOffset(xOffset, yPosition -= 20);
+			        contentStream.showText(String.valueOf(binome.getIdBinome()));
+			        contentStream.newLineAtOffset(xOffset, 0);
+			        contentStream.showText(binome.getMembre1().getNom() + " " + binome.getMembre1().getPrenom());
+			        contentStream.newLineAtOffset(xOffset, 0);
+			        contentStream.showText(binome.getMembre2() != null
+			                ? binome.getMembre2().getNom() + " " + binome.getMembre2().getPrenom()
+			                : "_");
+			        contentStream.newLineAtOffset(xOffset, 0);
+			        contentStream.showText(binome.getProjet().getNomMatiere());
+			        contentStream.endText();
+
+			        contentStream.beginText();
+			        contentStream.newLineAtOffset(xOffset + 300, yPosition); // Ajustez cet offset pour aligner avec la deuxième partie
+			        contentStream.showText(binome.getProjet().getSujet());
+			        contentStream.newLineAtOffset(100, 0);
+
+			        Notes matchingNote = findNoteForBinome(binome, notesList);
+
+			        if (matchingNote != null) {
+			            double noteRapport = matchingNote.getNoteRapport();
+			            double noteSoutenance1 = matchingNote.getNoteSoutenanceMembre1();
+			            double noteSoutenance2 = matchingNote.getNoteSoutenanceMembre2();
+
+			            contentStream.showText(String.valueOf(noteRapport));
+			            contentStream.newLineAtOffset(100, 0);
+			            contentStream.showText(String.valueOf(noteSoutenance1));
+			            contentStream.newLineAtOffset(100, 0);
+			            contentStream.showText(String.valueOf(noteSoutenance2));
+			        }
+
+			        contentStream.endText();
+			    }
+
+			}
+			contentStream.close();
+
+			// Enregistrez le document PDF
+			String absoluteFilePath = new File(filePath).getAbsolutePath();
+			document.save(absoluteFilePath);
+			document.close();
+			showAlert(AlertType.INFORMATION, "Print", "Data Printed successfully!");
+		} catch (IOException e) {
+			showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
+		}
+	}
+
+	// Fonction pour trouver la note correspondante pour un binôme donné
+	private Notes findNoteForBinome(BinomeProjet binome, ObservableList<Notes> notesList) {
+		return notesList
+				.filtered(note -> note.getBinomeProjet().getIdBinome() == binome.getIdBinome()
+						&& note.getBinomeProjet().getProjet().getIdProjet() == binome.getProjet().getIdProjet())
+				.stream().findFirst().orElse(null);
 	}
 
 	@Override

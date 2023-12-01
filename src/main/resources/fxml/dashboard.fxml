@@ -80,7 +80,7 @@
 												<String fx:value="shadow" />
 											</styleClass>
 										</Button>
-										<Label layoutX="70.0" layoutY="519.0" text="Déconnexion">
+										<Label layoutX="58.0" layoutY="519.0" text="Déconnexion">
 											<font>
 												<Font name="System Bold" size="14.0" />
 											</font>
@@ -119,13 +119,9 @@
 							<children>
 								<AnchorPane fx:id="tmp_home" layoutX="89.0" layoutY="90.0" prefHeight="554.6666666666666" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 									<children>
-										<AnchorPane layoutX="23.0" layoutY="21.0" prefHeight="511.0" prefWidth="841.0" stylesheets="@../css/dashboard.css">
-											<styleClass>
-												<String fx:value="white-bg" />
-												<String fx:value="shadow" />
-											</styleClass>
+										<AnchorPane layoutX="7.0" layoutY="5.0" prefHeight="545.0" prefWidth="887.0" stylesheets="@../css/dashboard.css">
 											<children>
-												<AnchorPane prefHeight="164.0" prefWidth="841.0" stylesheets="@../css/dashboard.css">
+												<AnchorPane layoutX="23.0" layoutY="14.0" prefHeight="164.0" prefWidth="841.0" stylesheets="@../css/dashboard.css">
 													<styleClass>
 														<String fx:value="white-bg" />
 														<String fx:value="shadow" />
@@ -183,7 +179,7 @@
 														</AnchorPane>
 													</children>
 												</AnchorPane>
-												<AnchorPane layoutY="175.0" prefHeight="335.0" prefWidth="261.0" styleClass="shadow" stylesheets="@../css/dashboard.css">
+												<AnchorPane layoutX="23.0" layoutY="181.0" prefHeight="335.0" prefWidth="264.0" stylesheets="@../css/dashboard.css">
 													<children>
 														<AnchorPane layoutX="18.0" layoutY="14.0" prefHeight="137.0" prefWidth="223.0" styleClass="card" stylesheets="@../css/dashboard.css">
 															<children>
@@ -216,10 +212,14 @@
 															</children>
 														</AnchorPane>
 													</children>
+                                       <styleClass>
+                                          <String fx:value="shadow" />
+                                          <String fx:value="white-bg" />
+                                       </styleClass>
 												</AnchorPane>
-												<BarChart fx:id="barChart" barGap="1.0" categoryGap="1.0" layoutX="261.0" layoutY="168.0" prefHeight="342.0" prefWidth="578.0" title="Moyennes des notes par projet">
+												<BarChart fx:id="barChart" barGap="1.0" categoryGap="1.0" layoutX="275.0" layoutY="181.0" prefHeight="342.0" prefWidth="589.0" stylesheets="@../css/dashboard.css" title="Moyennes des notes par projet">
 													<xAxis>
-														<CategoryAxis label="Projet" prefHeight="55.0" prefWidth="498.0" side="BOTTOM" tickLabelGap="2.0" tickLength="2.0">
+														<CategoryAxis endMargin="1.0" label="Projet" prefHeight="55.0" prefWidth="498.0" side="BOTTOM" startMargin="1.0" stylesheets="@../css/dashboard.css" tickLabelGap="2.0" tickLength="2.0">
                                              <tickLabelFont>
                                                 <Font name="System Bold" size="10.0" />
                                              </tickLabelFont></CategoryAxis>
@@ -232,6 +232,10 @@
 													</yAxis>
 												</BarChart>
 											</children>
+                                 <styleClass>
+                                    <String fx:value="white-bg" />
+                                    <String fx:value="shadow" />
+                                 </styleClass>
 										</AnchorPane>
 									</children>
 								</AnchorPane>

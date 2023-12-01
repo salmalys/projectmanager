@@ -117,8 +117,14 @@ public class NotesServiceImpl implements NotesService {
 		return notesFinales;
 	}
 
+	@Override
 	public Notes findNoteForBinome(int idBinome) {
 		return notesDAO.findByBinomeId(idBinome);
+	}
+    @Override
+	public void deleteAll() {
+		notesDAO.deleteAll();
+
 	}
 
 }

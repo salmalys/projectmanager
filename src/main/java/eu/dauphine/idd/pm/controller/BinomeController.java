@@ -158,13 +158,21 @@ public class BinomeController implements Initializable {
 				int idEtudiant1 = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant1, prenomEtudiant1);
 				int idProjet = projetS.getProjetIdByNomMatiereAndSujet(nomMatiere, sujetProjet);
 
-				int result;
+				int result = -1;
 				if (etudiant2 != null) {
 					String[] etudiant2Parts = etudiant2.split(" ");
 					String nomEtudiant2 = etudiant2Parts[0];
 					String prenomEtudiant2 = etudiant2Parts[1];
 					int idEtudiant2 = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant2, prenomEtudiant2);
-					result = binomeS.createBinomeProjet(idEtudiant1, idEtudiant2, idProjet, null);
+					if (idEtudiant1 != idEtudiant2) {
+						result = binomeS.createBinomeProjet(idEtudiant1, idEtudiant2, idProjet, null);
+					} else {
+						showAlert(AlertType.WARNING, "Warning Message",
+								"pour pas avoir deux meme etudiant pour binome.");
+						resetBinomeFields();
+						return;
+					}
+
 				} else {
 					result = binomeS.createSoloProjet(idEtudiant1, idProjet, null);
 				}
@@ -454,52 +462,35 @@ public class BinomeController implements Initializable {
 
 	@FXML
 	public void selectBinome() {
-	    BinomeProjet binome = tableBinome.getSelectionModel().getSelectedItem();
-	    int num = tableBinome.getSelectionModel().getFocusedIndex();
+		BinomeProjet binome = tableBinome.getSelectionModel().getSelectedItem();
+		int num = tableBinome.getSelectionModel().getFocusedIndex();
 
-	    if (num < 0 || binome == null || binome.getMembre1() == null || binome.getProjet() == null) {
-	        return;
-	    }
+		if (num < 0 || binome == null || binome.getMembre1() == null || binome.getProjet() == null) {
+			return;
+		}
 
-	    id_binome.setText(String.valueOf(binome.getIdBinome()));
-	    Id_Binome2.setText(String.valueOf(binome.getIdBinome()));
+		id_binome.setText(String.valueOf(binome.getIdBinome()));
+		Id_Binome2.setText(String.valueOf(binome.getIdBinome()));
 
-	    Etudiant1List2.setPromptText(
-	            binome.getMembre1().getNom() + " " + binome.getMembre1().getPrenom());
+		Etudiant1List2.setPromptText(binome.getMembre1().getNom() + " " + binome.getMembre1().getPrenom());
 
-	    if (binome.getMembre2() != null) {
-	        Etudiant2List2.setPromptText(
-	                binome.getMembre2().getNom() + " " + binome.getMembre2().getPrenom());
-	    } else {
-	        Etudiant2List2.setPromptText("");
-	    }
+		if (binome.getMembre2() != null) {
+			Etudiant2List2.setPromptText(binome.getMembre2().getNom() + " " + binome.getMembre2().getPrenom());
+		} else {
+			Etudiant2List2.setPromptText("");
+		}
 
-	    if (binome.getProjet()!=null) {
-	        Projet2.setPromptText(binome.getProjet().getNomMatiere() + " - " + binome.getProjet().getSujet());
-	       
-	    } else {
-	    	Etudiant1List2.setPromptText(
-		            binome.getMembre1().getNom() + " " + binome.getMembre1().getPrenom());
+		Projet2.setPromptText(binome.getProjet().getNomMatiere() + " - " + binome.getProjet().getSujet());
 
-		    if (binome.getMembre2() != null) {
-		        Etudiant2List2.setPromptText(
-		                binome.getMembre2().getNom() + " " + binome.getMembre2().getPrenom());
-		    } else {
-		        Etudiant2List2.setPromptText("");
-		    }
-	        Projet2.setPromptText("");
-	    }
-	    
-
-	    // Convertir la date de java.util.Date à LocalDate pour le DatePicker
-	    java.util.Date dateRemiseEffectif = binome.getDateRemiseEffective();
-	    if (dateRemiseEffectif != null) {
-	        LocalDate localDateRemise = dateRemiseEffectif.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-	        DateRemise.setValue(localDateRemise);
-	    } else {
-	        // Gérer le cas où la date est null
-	        DateRemise.setValue(null);
-	    }
+		// Convertir la date de java.util.Date à LocalDate pour le DatePicker
+		java.util.Date dateRemiseEffectif = binome.getDateRemiseEffective();
+		if (dateRemiseEffectif != null) {
+			LocalDate localDateRemise = dateRemiseEffectif.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			DateRemise.setValue(localDateRemise);
+		} else {
+			// Gérer le cas où la date est null
+			DateRemise.setValue(null);
+		}
 	}
 
 	private ObservableList<Etudiant> allEtudiants;
@@ -621,6 +612,8 @@ public class BinomeController implements Initializable {
 	@FXML
 	public void refreshBinomeTable() {
 		try {
+			fillEtudiantComboBox();
+			fillProjetComboBox();
 			addShowBinome();
 			showAlert(AlertType.INFORMATION, "Refresh", "Data refreshed successfully!");
 		} catch (Exception e) {
@@ -633,7 +626,7 @@ public class BinomeController implements Initializable {
 	public boolean isInputValid(String Etudiant1, String Projet) {
 
 		if (Etudiant1.isEmpty() || Projet.isEmpty()) {
-			showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+
 			return false;
 		}
 		return true;

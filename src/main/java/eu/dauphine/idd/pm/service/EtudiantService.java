@@ -13,4 +13,5 @@ public interface EtudiantService {
 	public void updateEtudiant(int id, String nom, String prenom, int idFormation);
 
 	public int getEtudiantIdByNameAndPrenom(String nomEtudiant, String prenomEtudiant);
+	public Etudiant getEtudiantById(int IdEtudiant);
 }

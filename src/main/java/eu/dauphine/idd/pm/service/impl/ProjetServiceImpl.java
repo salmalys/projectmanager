@@ -59,4 +59,9 @@ public class ProjetServiceImpl implements ProjetService {
 	public int getProjetIdByNomMatiereAndSujet(String nomMatiere, String sujetProjet) {
 		return projetDAO.findByCourseSubject(nomMatiere, sujetProjet).getIdProjet();
 	}
+	@Override
+	public Projet getProjetByIdProjet(int Idprojet) {
+		return projetDAO.findById(Idprojet);
+	}
+	
 }

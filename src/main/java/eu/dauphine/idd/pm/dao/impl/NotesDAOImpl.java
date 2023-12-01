@@ -21,6 +21,7 @@ public class NotesDAOImpl implements NotesDAO {
 	private static final String FIND_BY_ID = "SELECT * FROM Notes WHERE ID_Notes =?";
 	private static final String FIND_ALL_NOTES = "SELECT * FROM Notes";
 	private static final String FIND_BY_BINOME_ID = "SELECT * FROM Notes WHERE ID_BinomeProjet =?";
+	  private static final String DELETE_ALL_NOTES = "DELETE FROM Notes";
 	
 	private BinomeProjetDAO binomeProjetDAO = DAOFactory.getBinomeProjetDAO();
 
@@ -180,5 +181,15 @@ public class NotesDAOImpl implements NotesDAO {
 
 		return note;
 	}
+
+	  @Override
+	    public void deleteAll() {
+	        try (Connection connection = getConnection();
+	             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ALL_NOTES)) {
+	            preparedStatement.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 
 }

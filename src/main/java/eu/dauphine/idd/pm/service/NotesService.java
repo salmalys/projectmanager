@@ -10,4 +10,5 @@ public interface NotesService {
     void updateNotes(int idNotes, int idBinome, double noteRapport, double noteSoutenanceMembre1, double noteSoutenanceMembre2);
     double[] calculNoteFinale(int idNotes);
     Notes findNoteForBinome(int idBinome);
+    public void deleteAll();
 }
