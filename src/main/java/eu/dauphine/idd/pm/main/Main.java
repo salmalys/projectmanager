@@ -53,7 +53,7 @@ public class Main extends Application {
 		if (args.length > 0) {
 			dbPath = args[0]; 
 	    }
-		System.out.println("Data Base Path: " + dbPath);
+		System.out.println("Data Base Path: " + dbPath+ "\n");
 		
 		//Injection du chemin de la BDD pour la connexion
 		DatabaseConnection.setDatabasePath(dbPath);

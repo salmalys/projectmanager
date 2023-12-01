@@ -116,28 +116,28 @@ public class FormationController implements Initializable {
 				promotion = PromotionList2.getPromptText();
 			}
 			if (!isInputValid(nom, promotion)) {
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+				showAlert(AlertType.ERROR, "Error Message", "Remplissez tous les champs");
 			} else {
 				int result = formationS.createFormation(nom, promotion);
 				switch (result) {
 				case 0: // Success
-					showAlert(AlertType.INFORMATION, "Success", "Formation added successfully!");
+					showAlert(AlertType.INFORMATION, "Success", "Formation ajouté avec succès !");
 					addformationshow();
 					addformationReset();
 
 					break;
 				case 1:
 					showAlert(AlertType.ERROR, "Error Message",
-							"Nom formation: " + nom + " Promotion: " + promotion + " already exists!");
+							"La formation " + nom + " en " + promotion + " existe déjà !");
 					break;
 				default:
-					showAlert(Alert.AlertType.ERROR, "Error", "An error occurred while creating the formation.");
+					showAlert(Alert.AlertType.ERROR, "Error", "Une erreur s'est produite lors de la création de la formation");
 					break;
 
 				}
 			}
 		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
+			showAlert(AlertType.ERROR, "Error", "Une erreur s'est produite: " + e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -158,26 +158,26 @@ public class FormationController implements Initializable {
 			}
 			Alert alert;
 			if (!isInputValid(nom, promotion)) {
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+				showAlert(AlertType.ERROR, "Error Message", "Remplissez tous les champs");
 
 			} else if (!IdFormatio.isEmpty()) {
 				alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Confirmation Message");
 				alert.setHeaderText(null);
-				alert.setContentText("Are you sure want to Update ID Formation : " + IdFormatio);
+				alert.setContentText("Êtes-vous sûr de vouloir mettre à jour la formation avec l'ID " + IdFormatio);
 
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.isPresent() && option.get().equals(ButtonType.OK)) {
 
 					formationS.update(Integer.valueOf(IdFormatio), nom, promotion);
 
-					showAlert(AlertType.INFORMATION, "Information Message", "Formation Updated successfully!");
+					showAlert(AlertType.INFORMATION, "Information Message", "Formation mise à jour avec succès !");
 
 					addformationshow();
 					addformationReset2();
 				}
 			} else {
-				showAlert(AlertType.ERROR, "Error Message", "ID Formation cannot be empty Select IDformation in table");
+				showAlert(AlertType.ERROR, "Error Message", "Le champ ID Formation ne peut pas être vide\n\nSélectionnez une formation dans la table.");
 			}
 
 		} catch (Exception e) {
@@ -195,17 +195,17 @@ public class FormationController implements Initializable {
 			Alert alert;
 			if (IdFormatio.isEmpty()) {
 
-				showAlert(AlertType.ERROR, "Error Message", "Please fill all blank fields");
+				showAlert(AlertType.ERROR, "Error Message", "Remplissez tous les champs");
 
 			} else {
 				alert = new Alert(AlertType.CONFIRMATION);
 				alert.setTitle("Confirmation Message");
 				alert.setHeaderText(null);
-				alert.setContentText("Are you sure want to Delete ID Formation : Ligne " + IdFormatio);
+				alert.setContentText("Êtes-vous sûr de vouloir supprimer la formation avec l'ID " + IdFormatio);
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.get().equals(ButtonType.OK)) {
 					formationS.deleteFormationById(Integer.valueOf(IdFormatio));
-					showAlert(AlertType.INFORMATION, "Information Message", "Formation Deleted successfully!");
+					showAlert(AlertType.INFORMATION, "Information Message", "Formation supprimée avec succès !");
 
 					addformationshow();
 					addformationReset();
@@ -368,9 +368,9 @@ public class FormationController implements Initializable {
 	public void refreshData() {
 		try {
 			addformationshow();
-			showAlert(AlertType.INFORMATION, "Refresh", "Data refreshed successfully!");
+			showAlert(AlertType.INFORMATION, "Refresh", "Les données ont été actualisées avec succès !");
 		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
+			showAlert(AlertType.ERROR, "Error", "Erreur lors du rafraîchissement des données " + e.getMessage());
 		}
 	}
 

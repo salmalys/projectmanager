@@ -181,6 +181,7 @@ public class NotesDAOImpl implements NotesDAO {
 
 		return note;
 	}
+
 	  @Override
 	    public void deleteAll() {
 	        try (Connection connection = getConnection();
@@ -190,8 +191,5 @@ public class NotesDAOImpl implements NotesDAO {
 	            e.printStackTrace();
 	        }
 	    }
-	
-
-	
 
 }

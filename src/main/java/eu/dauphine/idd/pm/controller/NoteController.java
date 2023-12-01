@@ -3,6 +3,7 @@ package eu.dauphine.idd.pm.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -11,7 +12,6 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import javafx.collections.ObservableList;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 
@@ -21,11 +21,9 @@ import eu.dauphine.idd.pm.model.Notes;
 import eu.dauphine.idd.pm.model.Projet;
 import eu.dauphine.idd.pm.service.BinomeProjetService;
 import eu.dauphine.idd.pm.service.NotesService;
-
 import eu.dauphine.idd.pm.service.ServiceFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
@@ -183,29 +181,33 @@ public class NoteController implements Initializable {
 			if (b.getMembre2() == null) {
 				if (NoteSetudiant2Add.getText() != "") {
 					showAlert(AlertType.ERROR, "Error Message",
-							"This projet has no second member.\nPlease don't enter notes in the field : \n\"Note Soutenance Membre 2\".");
+							"Un seul étudiant a travaillé sur le projet.\n\nN'entrez pas de notes dans le champ \"Note Soutenance Etudiant 2\"");
 				} else {
 
 					if (!isInputValid(id_binomeAdd.getText(), NoteRapportAdd.getText(), NoteSetudiant1Add.getText())) {
-						showAlert(AlertType.ERROR, "Error Message", "Please enter valid numeric values.");
+						showAlert(AlertType.ERROR, "Error Message", "Veuillez entrer des valeurs numériques");
 					} else {
 
 						int result = NotesS.createNotes(idBinome, noteRapport, noteS1, -1);
 						switch (result) {
 						case 0:
-							showAlert(AlertType.INFORMATION, "Success", "Notes added successfully!");
+							showAlert(AlertType.INFORMATION, "Success", "Notes ajoutées avec succès !");
 							resetNoteFields();
 							addShowNote();
 							break;
 						case 1:
-							showAlert(AlertType.ERROR, "Error Message", "Selected binome doesn't exist");
+							showAlert(AlertType.ERROR, "Error Message", "Le binôme sélectionné n'existe pas");
 							break;
 						case 2:
+							showAlert(AlertType.WARNING, "Warning Message",
+									"L'étudiant sélectionné n'a pas encore remis le projet.\n\nVous ne pouvez pas entrez de notes.");
+							break;
+						case -1:
 							showAlert(AlertType.ERROR, "Error Message",
-									"Selected binome hasn't deliver the project yet.\nYou can't enter notes.");
+									"Les notes doivent être comprises entre 0 et 20");
 							break;
 						default:
-							showAlert(AlertType.ERROR, "Error Message", "An unexpected error occurred.");
+							showAlert(AlertType.ERROR, "Error Message", "Une erreur s'est produite");
 							break;
 						}
 					}
@@ -214,31 +216,36 @@ public class NoteController implements Initializable {
 			} else { // CAS OU IL Y A 2 PERSONNES
 				noteS2 = Double.parseDouble(NoteSetudiant2Add.getText());
 				if (!isInputValid(id_binomeAdd.getText(), NoteRapportAdd.getText(), NoteSetudiant1Add.getText())) {
-					showAlert(AlertType.ERROR, "Error Message", "Please enter valid numeric values.");
+					showAlert(AlertType.ERROR, "Error Message", "Veuillez entrer des valeurs numériques");
 				} else {
 					int result = NotesS.createNotes(idBinome, noteRapport, noteS1, noteS2);
 
 					switch (result) {
 					case 0:
-						showAlert(AlertType.INFORMATION, "Success", "Notes added successfully!");
+						showAlert(AlertType.INFORMATION, "Success", "Notes ajoutées avec succès !");
 						resetNoteFields();
 						addShowNote();
 						break;
 					case 1:
-						showAlert(AlertType.ERROR, "Error Message", "Selected binome doesn't exist");
+						showAlert(AlertType.ERROR, "Error Message", "Le binôme sélectionné n'existe pas");
 						break;
 					case 2:
+						showAlert(AlertType.WARNING, "Warning Message",
+								"Le binôme sélectionné n'a pas encore remis le projet.\n\nVous ne pouvez pas entrez de notes.");
+						break;
+						
+					case -1:
 						showAlert(AlertType.ERROR, "Error Message",
-								"Selected binome hasn't deliver the project yet.\nYou can't enter notes.");
+								"Les notes doivent être comprises entre 0 et 20");
 						break;
 					default:
-						showAlert(AlertType.ERROR, "Error Message", "An unexpected error occurred.");
+						showAlert(AlertType.ERROR, "Error Message", "Une erreur s'est produite");
 						break;
 					}
 				}
 			}
 		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "An error occurred: " + e.getMessage());
+			showAlert(AlertType.ERROR, "Error", "Une erreur s'est produite " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -258,7 +265,7 @@ public class NoteController implements Initializable {
 			if (b.getMembre2() == null) {
 				if (!noteS2_mod.getText().equals("")) {
 					showAlert(AlertType.ERROR, "Error Message",
-							"This projet has no second member.\nPlease don't enter notes in the field : \n\"Note Soutenance Membre 2\".");
+							"Un seul étudiant a travaillé sur le projet.\n\nN'entrez pas de notes dans le champ \"Note Soutenance Etudiant 2\".");
 				} else {
 					// Mettre à jour les notes pour une seul etudiant dans la base de données
 					NotesS.updateNotes(id_note, idBinome, noteRapport, noteSoutenance1, -1);
@@ -267,7 +274,7 @@ public class NoteController implements Initializable {
 			} else {
 				if (noteS2_mod.getText().equals("")) {
 					showAlert(AlertType.ERROR, "Error Message",
-							"This projet has a second member.\nPlease enter notes in the field : \n\"Note Soutenance Membre 2\".");
+							"Il y a 2 étudiants dans le binôme.\n\nVeuillez entrez une note dans le champ: \n\"Note Soutenance Membre 2\".");
 				} else {
 					noteSoutenance2 = Double.parseDouble(noteS2_mod.getText());
 					// Mettre à jour les notes pour deux etudians dans la base de données
@@ -334,9 +341,9 @@ public class NoteController implements Initializable {
 			NotesS.deleteAll();
 			addShowNote();
 
-			showAlert(AlertType.INFORMATION, "Success", "All Notes Deleted successfully!");
+			showAlert(AlertType.INFORMATION, "Success", "Toutes les notes ont étés supprimées avce succès !");
 		} else {
-			showAlert(AlertType.INFORMATION, "Success", "Tous les notes sont deja supprimer!");
+			showAlert(AlertType.INFORMATION, "Success", "Tous les notes sont déjà supprimée !");
 
 		}
 
@@ -466,16 +473,6 @@ public class NoteController implements Initializable {
 		});
 	}
 
-	private Notes findNoteForBinome(BinomeProjet binomeProjet, List<Notes> notesList) {
-		for (Notes note : notesList) {
-			if (note.getBinomeProjet().getIdBinome() == binomeProjet.getIdBinome()) {
-
-				return note;
-			}
-		}
-		return null; // Retourne null si aucune note n'est trouvée pour le binôme
-	}
-
 	@FXML
 	private void handleTableSelection() {
 		// Récupérer l'élément sélectionné dans le TableView
@@ -530,7 +527,7 @@ public class NoteController implements Initializable {
 		Notes note = NotesS.findNoteForBinome(Integer.valueOf(idBinome));
 
 		if (note == null) {
-			showAlert(AlertType.ERROR, " Message", "Binome has no note");
+			showAlert(AlertType.ERROR, " Message", "Ce binôme n'a pas de notes.\n\nVeuillez saisir des notes pour consulter le détail");
 		} else {
 
 			// Récupérez les détails que vous souhaitez afficher
@@ -566,25 +563,28 @@ public class NoteController implements Initializable {
 		Date dateRemiseEffective = BProjet.getDateRemiseEffective();
 		String nomMatiere = BProjet.getProjet().getNomMatiere();
 		String sujetProjet = BProjet.getProjet().getSujet();
+		
+		SimpleDateFormat formateur = new SimpleDateFormat("dd-MM-yyyy");
+		String dateFormateeEff = formateur.format(dateRemiseEffective);
+		String dateFormateeProj = formateur.format(dateRemiseProjet);
 
 		// Calcul de la pénalité
 		int penalite = calculerPenalite(dateRemiseProjet, dateRemiseEffective);
 		if (!nomPrenom2.equals("")) {
 			// Formater la chaîne avec les informations nécessaires
-			return "Détails des notes :\n\n\n" + "Étudiant 1 : " + nomPrenom1 + ", Note Soutenance : " + noteSoutenance1
-					+ ", Note Rapport : " + noteRapport + ", Note Finale :" + noteFinal1 + "\n" + "Étudiant 2 : "
-					+ nomPrenom2 + ", Note Soutenance : " + noteSoutenance2 + ", Note Rapport : " + noteRapport
-					+ ", Note Finale : " + noteFinal2 + "\n" + "Matière : " + nomMatiere + "\n" + "Projet : "
-					+ sujetProjet + "\n" + "Date Remise Projet : " + dateRemiseProjet + "\n"
-					+ "Date Remise Effective : " + dateRemiseEffective + "\n" + "Pénalité : -" + penalite
-					+ " pour chaque jour de retard.";
+			return "\nMatière : " + nomMatiere + "\n" + "Sujet du projet : "
+					+ sujetProjet + "\n\n" + "Date de remise prévue :\t" + dateFormateeProj + "\n"
+					+ "Date de remise du binôme :\t" + dateFormateeEff + "\n\n" + "Détails des notes :\n\n" + "Étudiant 1 : " + nomPrenom1 + "\nNote Soutenance :\t" + noteSoutenance1
+					+ "\nNote Rapport : " + noteRapport + "\nNote Finale : " + noteFinal1 + "\n\nÉtudiant 2 : "
+					+ nomPrenom2 + "\nNote Soutenance : " + noteSoutenance2 + "\nNote Rapport : " + noteRapport
+					+ "\nNote Finale : " + noteFinal2 + "\n\nPénalité : - " + penalite
+					+ "\nPour chaque jour de retard, un point est retiré à la note finale de chaque étudiant.";
 
 		} else {
-			return "Détails des notes :\n\n\n" + "Étudiant 1 : " + nomPrenom1 + ", Note Soutenance : " + noteSoutenance1
-					+ ", Note Rapport : " + noteRapport + ", Note Finale :" + noteFinal1 + "\n" + "Matière : "
-					+ nomMatiere + "\n" + "Projet : " + sujetProjet + "\n" + "Date Remise Projet : " + dateRemiseProjet
-					+ "\n" + "Date Remise Effective : " + dateRemiseEffective + "\n\n" + "Pénalité : -" + penalite
-					+ " pour chaque jour de retard.";
+			return "\nMatière : " + nomMatiere + "\nProjet : " + sujetProjet + "\n\nDate de remise prévue :\t" + dateFormateeProj
+					+ "\n" + "Date de remise effective par l'étudiant :\t" + dateFormateeEff + "\n\n" + "Détails des notes :\n\n" + "Étudiant 1 : " + nomPrenom1 + "\nNote Soutenance : " + noteSoutenance1
+					+ "\nNote Rapport : " + noteRapport + "\nNote Finale : " + noteFinal1 + "\n\nPénalité : - " + penalite
+					+ "\nPour chaque jour de retard, un point est retiré à la note finale de chaque étudiant.";
 
 		}
 
@@ -762,9 +762,9 @@ public class NoteController implements Initializable {
 	public void refreshData() {
 		try {
 			addShowNote();
-			showAlert(AlertType.INFORMATION, "Refresh", "Data refreshed successfully!");
+			showAlert(AlertType.INFORMATION, "Refresh", "Les données ont été actualisées avec succès !");
 		} catch (Exception e) {
-			showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
+			showAlert(AlertType.ERROR, "Error", "Erreur lors du rafraîchissement des données " + e.getMessage());
 		}
 	}
 

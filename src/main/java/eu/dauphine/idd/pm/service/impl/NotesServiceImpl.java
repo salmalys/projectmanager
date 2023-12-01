@@ -26,22 +26,33 @@ public class NotesServiceImpl implements NotesService {
 	@Override
 	public int createNotes(int idBinome, double noteRapport, double noteSoutenanceMembre1,
 			double noteSoutenanceMembre2) {
-		BinomeProjet binome = binomeProjetDAO.findById(idBinome);
-		if (binome == null) {
-			System.out.println("Invalid binome ID");
-			return 1;
+		try {
+			BinomeProjet binome = binomeProjetDAO.findById(idBinome);
+			if (binome == null) {
+				System.out.println("Invalid binome ID");
+				return 1;
+			}
+			if (binome.getDateRemiseEffective() == null) {
+				System.out.println("Date Remise null");
+				return 2;
+			}if (!(estEntreZeroEtVingt(noteRapport)&&estEntreZeroEtVingt(noteSoutenanceMembre1)&&estEntreZeroEtVingt(noteSoutenanceMembre1))) {
+				System.out.println(("Note not between 0 and 20."));
+				return -1;
+			}
+			Notes notes = new Notes(binome, noteRapport, noteSoutenanceMembre1, noteSoutenanceMembre2);
+			notesDAO.create(notes);
+			System.out.println("Note created successfully: " + notes.toString());
+			return 0;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
 		}
-		if (binome.getDateRemiseEffective() == null) {
-			System.out.println("Date Remise null");
-			return 2;
-		}
-
-		Notes notes = new Notes(binome, noteRapport, noteSoutenanceMembre1, noteSoutenanceMembre2);
-		notesDAO.create(notes);
-		System.out.println("Note created successfully: " + notes.toString());
-		return 0;
 	}
-
+	
+	public boolean estEntreZeroEtVingt(double nombre) {
+	    return nombre >= 0 && nombre <= 20;
+	}
+	
 	@Override
 	public void deleteNotesById(int idBinome) {
 		notesDAO.deleteById(idBinome);

@@ -57,7 +57,6 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
 			if (binome.getMembre2() != null) {
 				preparedStatement.setInt(2, binome.getMembre2().getIdEtudiant());
 			}else {
-				//preparedStatement.setNull(2, Types.NULL);
 				preparedStatement.setNull(2, Types.INTEGER);
 				}
 			preparedStatement.setNull(4, Types.DATE); // Always set to null
@@ -87,13 +86,9 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
 				idEtudiant1 = rs.getInt("ID_Etudiant1");
 				idEtudiant2 = rs.getInt("ID_Etudiant2");
 
-				// Check for inequality
 				if (idEtudiant1 == idEtudiant2) {
-					// Handle the case where membre1 equals membre2
-					// You may throw an exception, log a warning, or take appropriate action
-					// For now, let's print a message
 					System.err.println("Warning: membre1 equals membre2");
-					return null; // Return null to indicate an issue
+					return null; 
 				}
 
 				String dateString = rs.getString("Date_Remise_Effective");
@@ -104,16 +99,11 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
 						date = formatter.parse(dateString);
 					} catch (ParseException e) {
 						e.printStackTrace();
-						// Handle the parsing exception (e.g., log a warning)
-						// For now, let's print a message
 						System.err.println("Warning: Error parsing Date_Remise_Effective");
-						return null; // Return null to indicate an issue
+						return null; 
 					}
 				} else {
-					// Handle the case where the date is null
-					// For now, let's print a message
 					System.err.println("Warning: Date_Remise_Effective is null");
-					// You can provide a default date here if needed
 				}
 
 				binome = new BinomeProjet(id, null, null, null, date);
@@ -227,12 +217,5 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
 	@Override
 	public void delete(BinomeProjet binome) {
 		deleteById(binome.getIdBinome());
-	}
-
-	public static void main(String[] args) {
-		BinomeProjetDAOImpl b = new BinomeProjetDAOImpl();
-		// System.out.println(b.findById(4));
-		System.out.println(b.findAll());
-
 	}
 }

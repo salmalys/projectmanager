@@ -53,13 +53,13 @@
 						<FontAwesomeIconView glyphName="SEARCH" layoutX="16.0" layoutY="34.0" size="1.5em" text="" />
 					</children>
 				</AnchorPane>
-				<AnchorPane fx:id="tmp_DeleteBinome" layoutX="555.0" layoutY="10.0" prefHeight="521.0" prefWidth="100.0" stylesheets="@../css/dashboard.css">
+				<AnchorPane fx:id="tmp_DeleteBinome" layoutX="556.0" layoutY="10.0" prefHeight="521.0" prefWidth="100.0" stylesheets="@../css/dashboard.css">
 					<styleClass>
 						<String fx:value="white-bg" />
 						<String fx:value="shadow" />
 					</styleClass>
 					<children>
-						<Label layoutX="23.0" layoutY="34.0" text="Gestion des binomes">
+						<Label layoutX="16.0" layoutY="35.0" text="Gestion des binômes ">
 							<font>
 								<Font name="Tahoma Bold" size="30.0" />
 							</font>
@@ -69,22 +69,22 @@
                         <Font size="14.0" />
                      </font></Label>
 						<TextField fx:id="id_binome" layoutX="99.0" layoutY="388.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-						<Button fx:id="btn_addBinome" layoutX="20.0" layoutY="196.0" mnemonicParsing="false" onAction="#handleBtnTmpAddBinome" prefHeight="30.0" prefWidth="143.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter Binome" />
-						<Button fx:id="btn_updateBinome" layoutX="179.0" layoutY="196.0" mnemonicParsing="false" onAction="#handleBtnTmpUpdateBinome" prefHeight="30.0" prefWidth="143.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier Binome" />
-						<Button layoutX="59.0" layoutY="439.0" mnemonicParsing="false" onAction="#deleteBinome" prefHeight="26.0" prefWidth="226.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Supprimer le binome sélectionné" />
+						<Button fx:id="btn_addBinome" layoutX="22.0" layoutY="154.0" mnemonicParsing="false" onAction="#handleBtnTmpAddBinome" prefHeight="30.0" prefWidth="143.0" styleClass="add-btn" stylesheets="@../css/dashboard.css" text="Ajouter un binôme" />
+						<Button fx:id="btn_updateBinome" layoutX="179.0" layoutY="154.0" mnemonicParsing="false" onAction="#handleBtnTmpUpdateBinome" prefHeight="30.0" prefWidth="143.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Modifier un binôme" />
+						<Button layoutX="59.0" layoutY="439.0" mnemonicParsing="false" onAction="#deleteBinome" prefHeight="26.0" prefWidth="226.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Supprimer le binôme sélectionné" />
 						<Button layoutX="262.0" layoutY="388.0" mnemonicParsing="false" onAction="#resetBinomeFields" prefHeight="25.0" prefWidth="60.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
-                  <Button fx:id="btn_RemisBinome" layoutX="116.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleBtnTmpRemiseProjet" prefHeight="30.0" prefWidth="111.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Remise Projet" />
-                  <Text layoutX="52.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sélectionner une des options " wrappingWidth="270.0">
+                  <Button fx:id="btn_RemisBinome" layoutX="117.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleBtnTmpRemiseProjet" prefHeight="30.0" prefWidth="111.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Remise Projet" />
+                  <Text layoutX="44.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sélectionner une des options " wrappingWidth="270.0">
                      <font>
                         <Font size="19.0" />
                      </font>
                   </Text>
-                  <Text layoutX="98.0" layoutY="268.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rendre un projet ">
+                  <Text layoutX="103.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rendre un projet ">
                      <font>
-                        <Font size="19.0" />
+                        <Font size="18.0" />
                      </font>
                   </Text>
-                  <Text layoutX="69.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sélectionner un étudiant">
+                  <Text layoutX="69.0" layoutY="362.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sélectionner un binôme">
                      <font>
                         <Font size="19.0" />
                      </font>

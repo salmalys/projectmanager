@@ -17,6 +17,11 @@ public class EtudiantServiceImpl implements EtudiantService {
 		this.etudiantDAO = DAOFactory.getEtudiantDAO();
 		this.formationDAO = DAOFactory.getFormationDAO();
 	}
+	
+	public EtudiantServiceImpl(EtudiantDAO e, FormationDAO f) {
+		this.etudiantDAO = e;
+		this.formationDAO = f;
+	}
 
 	@Override
 	public int createEtudiant(String nom, String prenom, int idFormation) {
@@ -72,6 +77,7 @@ public class EtudiantServiceImpl implements EtudiantService {
 		    }
 		
 	}
+
 	@Override
 	public Etudiant getEtudiantById(int IdEtudiant) {
 		
@@ -79,11 +85,4 @@ public class EtudiantServiceImpl implements EtudiantService {
 		return etudiantDAO.findById(IdEtudiant);
 		
 	}
-	
-	public static void main(String[] args) {
-		
-		EtudiantServiceImpl d=new EtudiantServiceImpl();
-		//System.out.println(d.getEtudiantIdByNameAndPrenom("SAIS", "Hamz"));
-	}
-
 }
