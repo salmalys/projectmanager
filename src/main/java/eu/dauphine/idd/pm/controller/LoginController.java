@@ -201,7 +201,7 @@ public class LoginController implements Initializable {
 	            Alert alert = new Alert(AlertType.ERROR);
 	            alert.setTitle("Error Message");
 	            alert.setHeaderText(null);
-	            alert.setContentText("Student does not exist");
+	            alert.setContentText("Admin/Etudiant n'existe pas ");
 	            alert.showAndWait();
 	        }
 	    } catch (SQLException e) {

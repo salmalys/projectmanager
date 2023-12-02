@@ -26,6 +26,7 @@ public class BinomeProjetServiceImpl implements BinomeProjetService {
 
 	@Override
 	public int createBinomeProjet(int idEtudiant1, int idEtudiant2, int idProjet, Date dateRemiseEffective) {
+		
 		Etudiant membre1 = etudiantDAO.findById(idEtudiant1);
 		Etudiant membre2 = etudiantDAO.findById(idEtudiant2);
 		Projet projet = projetDAO.findById(idProjet);
@@ -35,6 +36,7 @@ public class BinomeProjetServiceImpl implements BinomeProjetService {
 			return 1;
 		}
 
+		
 		// Always set dateRemiseEffective to null
 		binomeProjetDAO.create(new BinomeProjet(membre1, membre2, projet, null));
 		System.out.println("BinomeProjet created successfully.");

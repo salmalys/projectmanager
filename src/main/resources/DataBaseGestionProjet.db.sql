@@ -80,15 +80,22 @@ CREATE TABLE IF NOT EXISTS "admin" (
 	"password"	TEXT NOT NULL,
 	PRIMARY KEY("Id")
 );
+DROP TABLE IF EXISTS "users";
+CREATE TABLE IF NOT EXISTS "users" (
+	"Id"	INTEGER NOT NULL,
+	"username"	TEXT NOT NULL,
+	"password"	TEXT NOT NULL,
+	PRIMARY KEY("Id")
+);
 INSERT INTO "admin" VALUES (1,'root','root'), 
 (2,'salma','salma'),
 (3,'ilyes','ilyes'),
 (4,'khitema','mdpKHITEMA');
-INSERT INTO "Formation" ("ID_Formation","Nom","Promotion") VALUES (1,'I2D','Initiale'),
+INSERT INTO "Formation" ("ID_Formation","Nom","Promotion") VALUES (1,'I2D','Initial'),
 (2,'MIAGE','Alternance'),
-(3,'MIAGE','Initiale'),
+(3,'MIAGE','Initial'),
 (4,'LSO','Formation Continue'),
-(5,'MEFA','Initiale');
+(5,'MEFA','Initial');
 INSERT INTO "Etudiant" ("ID_Etudiant","Nom","Prenom","ID_Formation") VALUES (1,'LAHRACH','Salma',1),
 (2,'SAIS','Ilyes',1);
 INSERT INTO "Projet" ("ID_Projet","Nom_Matiere","Sujet","Date_Remise_Prevue") VALUES (1,'POA','Gestion de Projet des Etudiants','2023-12-03'),
