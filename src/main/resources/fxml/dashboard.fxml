@@ -47,7 +47,7 @@
 					<left>
 						<AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
 							<children>
-								<AnchorPane layoutX="-14.0" layoutY="51.0" prefHeight="554.6666666666666" prefWidth="200.0" stylesheets="@../css/dashboard.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+								<AnchorPane layoutX="-14.0" layoutY="51.0" prefHeight="554.6666666666666" prefWidth="200.0" styleClass="nav-fram" stylesheets="@../css/dashboard.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 									<children>
 										<FontAwesomeIconView fill="WHITE" glyphName="USER" layoutX="70.0" layoutY="102.0" size="7em" />
 										<Label layoutX="42.0" layoutY="114.0" text="Welcome" textFill="WHITE">
@@ -106,10 +106,6 @@
 											</graphic>
 										</Button>
 									</children>
-									<styleClass>
-										<String fx:value="nav-fram" />
-										<String fx:value="nav-fram" />
-									</styleClass>
 								</AnchorPane>
 							</children>
 						</AnchorPane>
@@ -222,13 +218,15 @@
 														<CategoryAxis endMargin="1.0" label="Projet" prefHeight="55.0" prefWidth="498.0" side="BOTTOM" startMargin="1.0" stylesheets="@../css/dashboard.css" tickLabelGap="2.0" tickLength="2.0">
                                              <tickLabelFont>
                                                 <Font name="System Bold" size="10.0" />
-                                             </tickLabelFont></CategoryAxis>
+                                             </tickLabelFont>
+                                          </CategoryAxis>
 													</xAxis>
 													<yAxis>
 														<NumberAxis label="Note" minorTickCount="2" minorTickLength="2.0" prefHeight="252.0" prefWidth="50.0" side="LEFT" tickLabelGap="1.0" tickUnit="2.0" upperBound="20.0">
                                              <tickLabelFont>
                                                 <Font size="12.0" />
-                                             </tickLabelFont></NumberAxis>
+                                             </tickLabelFont>
+                                          </NumberAxis>
 													</yAxis>
 												</BarChart>
 											</children>

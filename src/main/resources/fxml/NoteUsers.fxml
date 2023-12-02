@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="622.0" prefWidth="933.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.dauphine.idd.pm.controller.UsersController">
 	<children>
-		<AnchorPane layoutX="4.0" layoutY="56.0" prefHeight="566.0" prefWidth="988.0" stylesheets="@../css/dashboard.css">
+		<AnchorPane layoutX="4.0" layoutY="56.0" prefHeight="566.0" prefWidth="1000.0" stylesheets="@../css/dashboard.css">
 			<children>
             <AnchorPane fx:id="tmp_tableBinomeR" layoutX="16.0" layoutY="12.0" prefHeight="541.0" prefWidth="657.0" stylesheets="@../css/dashboard.css">
                <styleClass>
@@ -95,7 +95,7 @@
                   <Label layoutX="74.0" layoutY="371.0" text="Note  Soutenance :" />
                   <TextField fx:id="nomPrenomAffiche2" layoutX="131.0" layoutY="335.0" prefHeight="25.0" prefWidth="126.0" styleClass="textfield" stylesheets="@../css/dashboard.css" text="NOM - Prénom" />
                   <Button fx:id="btn_backNote2" layoutX="18.0" layoutY="479.0" mnemonicParsing="false" onAction="#handleBtnBackNote" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Retour" />
-                  <Button layoutX="233.0" layoutY="479.0" mnemonicParsing="false" onAction="#handleDetailsButton" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Détails" />
+                  <Button layoutX="233.0" layoutY="479.0" mnemonicParsing="false" onAction="#handleDetailsButton" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Détails des notes" />
                   <Button layoutX="231.0" layoutY="437.0" mnemonicParsing="false" onAction="#ClearShowNote" prefHeight="25.0" prefWidth="62.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
                </children>
                <styleClass>
@@ -103,15 +103,15 @@
                   <String fx:value="white-bg" />
                </styleClass>
             </AnchorPane>
-            <AnchorPane fx:id="tmp_optionNote" layoutX="680.0" layoutY="12.0" prefHeight="541.0" prefWidth="301.0" stylesheets="@../css/dashboard.css">
+            <AnchorPane fx:id="tmp_optionNote" layoutX="681.0" layoutY="12.0" prefHeight="541.0" prefWidth="344.0" stylesheets="@../css/dashboard.css">
                <children>
-                  <Button fx:id="btn_affichernote" layoutX="87.0" layoutY="127.0" mnemonicParsing="false" onAction="#handleBtnAfficherNote" prefHeight="35.0" prefWidth="127.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Afficher les notes" />
+                  <Button fx:id="btn_affichernote" layoutX="108.0" layoutY="127.0" mnemonicParsing="false" onAction="#handleBtnAfficherNote" prefHeight="35.0" prefWidth="127.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Afficher les notes" />
                   <Label layoutX="77.0" layoutY="22.0">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Text layoutX="14.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notes Des Etudiants">
+                  <Text layoutX="35.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notes Des Etudiants">
                      <font>
                         <Font name="System Bold" size="29.0" />
                      </font>
@@ -130,10 +130,13 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Button layoutX="93.0" layoutY="315.0" mnemonicParsing="false" onAction="#updateDateRemiseProjet" prefHeight="35.0" prefWidth="116.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Remise Projet" />
-                  <TextField fx:id="id_binome" layoutX="75.0" layoutY="391.0" prefHeight="25.0" prefWidth="140.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-                  <Label layoutX="7.0" layoutY="391.0" prefHeight="21.0" prefWidth="62.0" text="Id_Binome :" />
-                  <Button fx:id="btn_affichernote1" layoutX="225.0" layoutY="389.0" mnemonicParsing="false" onAction="#handleBtnAfficherNote" prefHeight="30.0" prefWidth="61.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
+                  <Button layoutX="114.0" layoutY="314.0" mnemonicParsing="false" onAction="#updateDateRemiseProjet" prefHeight="35.0" prefWidth="116.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Remise Projet" />
+                  <TextField fx:id="id_binome" layoutX="90.0" layoutY="391.0" prefHeight="25.0" prefWidth="140.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+                  <Label layoutX="6.0" layoutY="393.0" prefHeight="21.0" prefWidth="77.0" text="Id_Binome :">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Button layoutX="247.0" layoutY="389.0" mnemonicParsing="false" onAction="#clearIdbinome" prefHeight="30.0" prefWidth="61.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear" />
                </children>
                <styleClass>
                   <String fx:value="white-bg" />
@@ -146,7 +149,7 @@
 				<String fx:value="shadow" />
 			</styleClass>
 		</AnchorPane>
-      <AnchorPane prefHeight="51.0" prefWidth="992.0" stylesheets="@../css/dashboard.css">
+      <AnchorPane fx:id="main_form" prefHeight="51.0" prefWidth="1044.0" stylesheets="@../css/dashboard.css">
          <styleClass>
             <String fx:value="shadow" />
             <String fx:value="top-form" />
@@ -164,12 +167,12 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="close" layoutX="936.0" layoutY="12.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="41.0" styleClass="close" stylesheets="@../css/dashboard.css">
+            <Button fx:id="close" layoutX="988.0" layoutY="11.0" mnemonicParsing="false" onAction="#close" prefHeight="25.0" prefWidth="41.0" styleClass="close" stylesheets="@../css/dashboard.css">
                <graphic>
                   <FontAwesomeIconView glyphName="CLOSE" />
                </graphic>
             </Button>
-            <Button fx:id="minimize" layoutX="894.0" layoutY="10.0" mnemonicParsing="false" onAction="#minimize" prefHeight="30.0" prefWidth="41.0" styleClass="minimize" stylesheets="@../css/dashboard.css">
+            <Button fx:id="minimize" layoutX="938.0" layoutY="11.0" mnemonicParsing="false" onAction="#minimize" prefHeight="30.0" prefWidth="41.0" styleClass="minimize" stylesheets="@../css/dashboard.css">
                <graphic>
                   <FontAwesomeIconView glyphName="MINUS" />
                </graphic>
