@@ -158,7 +158,7 @@ public class BinomeController implements Initializable {
 				int idEtudiant1 = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant1, prenomEtudiant1);
 				int idProjet = projetS.getProjetIdByNomMatiereAndSujet(nomMatiere, sujetProjet);
 
-				int result = -1;
+				int result = 2;
 				if (etudiant2 != null) {
 					String[] etudiant2Parts = etudiant2.split(" ");
 					String nomEtudiant2 = etudiant2Parts[0];
@@ -166,6 +166,7 @@ public class BinomeController implements Initializable {
 					int idEtudiant2 = etudiantS.getEtudiantIdByNameAndPrenom(nomEtudiant2, prenomEtudiant2);
 					if (idEtudiant1 != idEtudiant2) {
 						result = binomeS.createBinomeProjet(idEtudiant1, idEtudiant2, idProjet, null);
+						System.out.println(result);
 					} else {
 						showAlert(AlertType.WARNING, "Warning Message",
 								"L'étudiant 1 et l'étudiant 2 doivent être différents.\n\nPour créer un binôme avec un seul étudiant, veuillez remplir uniquement le champ \"Etudiant 1\"");
@@ -175,6 +176,7 @@ public class BinomeController implements Initializable {
 
 				} else {
 					result = binomeS.createSoloProjet(idEtudiant1, idProjet, null);
+
 				}
 
 				switch (result) {
@@ -184,7 +186,12 @@ public class BinomeController implements Initializable {
 					resetBinomeFields();
 					break;
 				case 1:
-					showAlert(AlertType.ERROR, "Error Message", "Une erreur s'est produite lors de la création du binôme.");
+					showAlert(AlertType.ERROR, "Error Message",
+							"Une erreur s'est produite lors de la création du binôme.");
+					break;
+				case -1:
+					showAlert(AlertType.ERROR, "Error Message", "Binome existe déja!");
+
 					break;
 				default:
 					showAlert(AlertType.ERROR, "Error Message", "Une erreur s'est produite");
@@ -309,7 +316,8 @@ public class BinomeController implements Initializable {
 				alert.setTitle("Confirmation Message");
 				alert.setHeaderText(null);
 				alert.setContentText(
-						"Êtes-vous sûr de vouloir mettre à jour la date de remise pour le binôme avec l'ID " + idBinomeString);
+						"Êtes-vous sûr de vouloir mettre à jour la date de remise pour le binôme avec l'ID "
+								+ idBinomeString);
 
 				Optional<ButtonType> option = alert.showAndWait();
 				if (option.isPresent() && option.get().equals(ButtonType.OK)) {

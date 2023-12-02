@@ -26,23 +26,29 @@ public class BinomeProjetServiceImpl implements BinomeProjetService {
 
 	@Override
 	public int createBinomeProjet(int idEtudiant1, int idEtudiant2, int idProjet, Date dateRemiseEffective) {
-		
-		Etudiant membre1 = etudiantDAO.findById(idEtudiant1);
-		Etudiant membre2 = etudiantDAO.findById(idEtudiant2);
-		Projet projet = projetDAO.findById(idProjet);
+		BinomeProjet binome = binomeProjetDAO.findByMembersAndIdProjet(idEtudiant1, idEtudiant2, idProjet);
 
-		if (membre1 == null || membre2 == null || projet == null) {
-			System.out.println("Invalid member or project ID");
-			return 1;
+		if (binome != null) {
+			System.out.println("Binome already exists!");
+			return -1;
+		} else {
+			Etudiant membre1 = etudiantDAO.findById(idEtudiant1);
+			Etudiant membre2 = etudiantDAO.findById(idEtudiant2);
+			Projet projet = projetDAO.findById(idProjet);
+
+			if (membre1 == null || membre2 == null || projet == null) {
+				System.out.println("Invalid member or project ID");
+				return 1;
+			}
+
+			// Always set dateRemiseEffective to null
+			binomeProjetDAO.create(new BinomeProjet(membre1, membre2, projet, null));
+			System.out.println("BinomeProjet created successfully.");
+
+			return 0;
 		}
-
-		
-		// Always set dateRemiseEffective to null
-		binomeProjetDAO.create(new BinomeProjet(membre1, membre2, projet, null));
-		System.out.println("BinomeProjet created successfully.");
-		return 0;
 	}
-	
+
 	@Override
 	public int createSoloProjet(int idEtudiant1, int idProjet, Date dateRemiseEffective) {
 		Etudiant membre1 = etudiantDAO.findById(idEtudiant1);
@@ -105,8 +111,6 @@ public class BinomeProjetServiceImpl implements BinomeProjetService {
 		System.out.println(binomeProjet.toString());
 
 	}
-
-	
 
 	@Override
 	public BinomeProjet getBinomeProjetById(int idBinome) {

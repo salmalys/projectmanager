@@ -219,11 +219,12 @@ public class BinomeProjetDAOImpl implements BinomeProjetDAO {
 		deleteById(binome.getIdBinome());
 	}
 	
+	@Override
 	public BinomeProjet findByMembersAndIdProjet(int idEtudiant1, int idEtudiant2, int idProjet) {
 		BinomeProjet binome = null;
 		try (Connection connection = getConnection();
 				PreparedStatement preparedStatement = connection
-						.prepareStatement("SELECT * FROM BinomeProjet WHERE ID_BinomeProjet = ? AND ID_Etudiant1 = ? AND ID_Etudiant2 = ?");) {
+						.prepareStatement("SELECT * FROM BinomeProjet WHERE ID_Projet = ? AND ID_Etudiant1 = ? AND ID_Etudiant2 = ?");) {
 			preparedStatement.setInt(1, idProjet);
 			preparedStatement.setInt(2, idEtudiant1);
 			preparedStatement.setInt(3, idEtudiant2);
