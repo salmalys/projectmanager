@@ -43,11 +43,6 @@
                   </Button>
                   <Label layoutX="24.0" layoutY="53.0" text="Filtres : " />
                   <ComboBox fx:id="filtre_note" layoutX="72.0" layoutY="49.0" prefWidth="150.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-                  <Button layoutX="507.0" layoutY="39.0" mnemonicParsing="false" onAction="#generatePdf" prefHeight="27.0" prefWidth="64.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
-                     <graphic>
-                        <FontAwesomeIconView fill="#f2f2f2" glyphName="PRINT" size="1.5em" />
-                     </graphic>
-                  </Button>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="tmp_showNotes" layoutX="680.0" layoutY="12.0" prefHeight="514.0" prefWidth="301.0" stylesheets="@../css/dashboard.css" visible="false">
@@ -111,7 +106,7 @@
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Text layoutX="35.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notes Des Etudiants">
+                  <Text layoutX="35.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notes des étudiants">
                      <font>
                         <Font name="System Bold" size="29.0" />
                      </font>
@@ -132,7 +127,7 @@
                   </Label>
                   <Button layoutX="114.0" layoutY="314.0" mnemonicParsing="false" onAction="#updateDateRemiseProjet" prefHeight="35.0" prefWidth="116.0" styleClass="delete-btn" stylesheets="@../css/dashboard.css" text="Remise Projet" />
                   <TextField fx:id="id_binome" layoutX="90.0" layoutY="391.0" prefHeight="25.0" prefWidth="140.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-                  <Label layoutX="6.0" layoutY="393.0" prefHeight="21.0" prefWidth="77.0" text="Id_Binome :">
+                  <Label layoutX="6.0" layoutY="393.0" prefHeight="21.0" prefWidth="77.0" text="Id_Binôme :">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Label>

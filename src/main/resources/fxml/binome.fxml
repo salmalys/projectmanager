@@ -53,7 +53,7 @@
 						<FontAwesomeIconView glyphName="SEARCH" layoutX="16.0" layoutY="34.0" size="1.5em" text="" />
 					</children>
 				</AnchorPane>
-				<AnchorPane fx:id="tmp_DeleteBinome" layoutX="556.0" layoutY="10.0" prefHeight="521.0" prefWidth="100.0" stylesheets="@../css/dashboard.css" visible="false">
+				<AnchorPane fx:id="tmp_DeleteBinome" layoutX="556.0" layoutY="10.0" prefHeight="521.0" prefWidth="100.0" stylesheets="@../css/dashboard.css">
 					<styleClass>
 						<String fx:value="white-bg" />
 						<String fx:value="shadow" />
@@ -97,7 +97,7 @@
                   <String fx:value="white-bg" />
                </styleClass>
                <children>
-                  <Label layoutX="27.0" layoutY="57.0" text="Ajouter un Binome">
+                  <Label layoutX="27.0" layoutY="57.0" text="Ajouter un binôme">
                      <font>
                         <Font name="Tahoma Bold" size="28.0" />
                      </font>
@@ -128,7 +128,7 @@
                   <String fx:value="white-bg" />
                </styleClass>
                <children>
-                  <Label layoutX="41.0" layoutY="56.0" text="Modifier un Binome">
+                  <Label layoutX="41.0" layoutY="56.0" text="Modifier un binôme">
                      <font>
                         <Font name="Tahoma Bold" size="24.0" />
                      </font>
@@ -153,7 +153,7 @@
                   <Button layoutX="207.0" layoutY="477.0" mnemonicParsing="false" onAction="#updateBinome" prefHeight="30.0" prefWidth="97.0" styleClass="update-btn" stylesheets="@../css/dashboard.css" text="Mettre à jour" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="tmp_RemisBinome" layoutX="562.0" layoutY="11.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css">
+            <AnchorPane fx:id="tmp_RemisBinome" layoutX="562.0" layoutY="11.0" prefHeight="521.0" prefWidth="317.0" stylesheets="@../css/dashboard.css" visible="false">
                <styleClass>
                   <String fx:value="shadow" />
                   <String fx:value="white-bg" />
@@ -165,7 +165,7 @@
                      </font>
                   </Label>
                   <TextField fx:id="Id_Binome2" layoutX="129.0" layoutY="152.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-                  <Label layoutX="38.0" layoutY="42.0" text="Ajoute date Remise &#10;     Projet Binome&#10;">
+                  <Label layoutX="42.0" layoutY="26.0" prefHeight="96.0" prefWidth="247.0" text="Ajout de la date de&#10;         remise ">
                      <font>
                         <Font name="Tahoma Bold" size="24.0" />
                      </font>

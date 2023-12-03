@@ -82,11 +82,6 @@
                   <Label layoutX="24.0" layoutY="53.0" text="Filtres : " />
                   <ComboBox fx:id="filtre_note" layoutX="72.0" layoutY="49.0" prefWidth="150.0" promptText="Select" styleClass="textfield" stylesheets="@../css/dashboard.css" />
                   <Button layoutX="370.0" layoutY="39.0" mnemonicParsing="false" onAction="#supprimeTousNotes" prefHeight="27.0" prefWidth="101.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Clear Note" />
-                  <Button layoutX="477.0" layoutY="4.0" mnemonicParsing="false" onAction="#generatePdf" prefHeight="27.0" prefWidth="64.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
-                     <graphic>
-                        <FontAwesomeIconView fill="#f2f2f2" glyphName="PRINT" size="1.5em" />
-                     </graphic>
-                  </Button>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="tmp_showNotes" layoutX="578.0" layoutY="12.0" prefHeight="514.0" prefWidth="301.0" stylesheets="@../css/dashboard.css" visible="false">
