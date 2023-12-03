@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import javafx.collections.ObservableList;
@@ -233,10 +234,9 @@ public class NoteController implements Initializable {
 						showAlert(AlertType.WARNING, "Warning Message",
 								"Le binôme sélectionné n'a pas encore remis le projet.\n\nVous ne pouvez pas entrez de notes.");
 						break;
-						
+
 					case -1:
-						showAlert(AlertType.ERROR, "Error Message",
-								"Les notes doivent être comprises entre 0 et 20");
+						showAlert(AlertType.ERROR, "Error Message", "Les notes doivent être comprises entre 0 et 20");
 						break;
 					default:
 						showAlert(AlertType.ERROR, "Error Message", "Une erreur s'est produite");
@@ -527,7 +527,8 @@ public class NoteController implements Initializable {
 		Notes note = NotesS.findNoteForBinome(Integer.valueOf(idBinome));
 
 		if (note == null) {
-			showAlert(AlertType.ERROR, " Message", "Ce binôme n'a pas de notes.\n\nVeuillez saisir des notes pour consulter le détail");
+			showAlert(AlertType.ERROR, " Message",
+					"Ce binôme n'a pas de notes.\n\nVeuillez saisir des notes pour consulter le détail");
 		} else {
 
 			// Récupérez les détails que vous souhaitez afficher
@@ -563,7 +564,7 @@ public class NoteController implements Initializable {
 		Date dateRemiseEffective = BProjet.getDateRemiseEffective();
 		String nomMatiere = BProjet.getProjet().getNomMatiere();
 		String sujetProjet = BProjet.getProjet().getSujet();
-		
+
 		SimpleDateFormat formateur = new SimpleDateFormat("dd-MM-yyyy");
 		String dateFormateeEff = formateur.format(dateRemiseEffective);
 		String dateFormateeProj = formateur.format(dateRemiseProjet);
@@ -572,18 +573,21 @@ public class NoteController implements Initializable {
 		int penalite = calculerPenalite(dateRemiseProjet, dateRemiseEffective);
 		if (!nomPrenom2.equals("")) {
 			// Formater la chaîne avec les informations nécessaires
-			return "\nMatière : " + nomMatiere + "\n" + "Sujet du projet : "
-					+ sujetProjet + "\n\n" + "Date de remise prévue :\t" + dateFormateeProj + "\n"
-					+ "Date de remise du binôme :\t" + dateFormateeEff + "\n\n" + "Détails des notes :\n\n" + "Étudiant 1 : " + nomPrenom1 + "\nNote Soutenance :\t" + noteSoutenance1
-					+ "\nNote Rapport : " + noteRapport + "\nNote Finale : " + noteFinal1 + "\n\nÉtudiant 2 : "
-					+ nomPrenom2 + "\nNote Soutenance : " + noteSoutenance2 + "\nNote Rapport : " + noteRapport
-					+ "\nNote Finale : " + noteFinal2 + "\n\nPénalité : - " + penalite
+			return "\nMatière : " + nomMatiere + "\n" + "Sujet du projet : " + sujetProjet + "\n\n"
+					+ "Date de remise prévue :\t" + dateFormateeProj + "\n" + "Date de remise du binôme :\t"
+					+ dateFormateeEff + "\n\n" + "Détails des notes :\n\n" + "Étudiant 1 : " + nomPrenom1
+					+ "\nNote Soutenance :\t" + noteSoutenance1 + "\nNote Rapport : " + noteRapport + "\nNote Finale : "
+					+ noteFinal1 + "\n\nÉtudiant 2 : " + nomPrenom2 + "\nNote Soutenance : " + noteSoutenance2
+					+ "\nNote Rapport : " + noteRapport + "\nNote Finale : " + noteFinal2 + "\n\nPénalité : - "
+					+ penalite
 					+ "\nPour chaque jour de retard, un point est retiré à la note finale de chaque étudiant.";
 
 		} else {
-			return "\nMatière : " + nomMatiere + "\nProjet : " + sujetProjet + "\n\nDate de remise prévue :\t" + dateFormateeProj
-					+ "\n" + "Date de remise effective par l'étudiant :\t" + dateFormateeEff + "\n\n" + "Détails des notes :\n\n" + "Étudiant 1 : " + nomPrenom1 + "\nNote Soutenance : " + noteSoutenance1
-					+ "\nNote Rapport : " + noteRapport + "\nNote Finale : " + noteFinal1 + "\n\nPénalité : - " + penalite
+			return "\nMatière : " + nomMatiere + "\nProjet : " + sujetProjet + "\n\nDate de remise prévue :\t"
+					+ dateFormateeProj + "\n" + "Date de remise effective par l'étudiant :\t" + dateFormateeEff + "\n\n"
+					+ "Détails des notes :\n\n" + "Étudiant 1 : " + nomPrenom1 + "\nNote Soutenance : "
+					+ noteSoutenance1 + "\nNote Rapport : " + noteRapport + "\nNote Finale : " + noteFinal1
+					+ "\n\nPénalité : - " + penalite
 					+ "\nPour chaque jour de retard, un point est retiré à la note finale de chaque étudiant.";
 
 		}
@@ -771,95 +775,105 @@ public class NoteController implements Initializable {
 	@FXML
 	public void generatePdf() {
 		try {
-			// Récupérez la liste de binômes depuis binomeS.listBinomeProjets()
 			ObservableList<BinomeProjet> binomesList = binomeS.listBinomeProjets();
 			ObservableList<Notes> notesList = NotesS.listNotes();
 			String projectFolderPath = "./src/main/resources/pdf/";
 			String fileName = "NoteEtudiant.pdf";
 			String filePath = projectFolderPath + File.separator + fileName;
+
 			PDDocument document = new PDDocument();
-			PDPage page = new PDPage();
+			PDPage page = new PDPage(PDRectangle.A4);
 			document.addPage(page);
 
-			PDPageContentStream contentStream = new PDPageContentStream(document, page);
-			contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+			try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
+				contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
 
-			// Ajoutez les en-têtes du tableau pour la première partie
-			contentStream.beginText();
-			contentStream.newLineAtOffset(100, 750);
-			contentStream.showText("ID Binome");
-			contentStream.newLineAtOffset(100, 0);
-			contentStream.showText("Etudiant 1");
-			contentStream.newLineAtOffset(100, 0);
-			contentStream.showText("Etudiant 2");
-			contentStream.newLineAtOffset(100, 0);
-			contentStream.showText("Nom Matiere");
-			contentStream.endText();
+				float margin = 50;
+				float yStart = page.getMediaBox().getHeight() - margin;
+				float tableWidth = page.getMediaBox().getWidth() - 2 * margin;
+				float yPosition = yStart;
+				float tableHeight = 20;
+				float marginX = 10;
+				float yStartNewPage = page.getMediaBox().getHeight() - margin;
 
-			// Ajoutez les en-têtes du tableau pour la deuxième partie
-			contentStream.beginText();
-			contentStream.newLineAtOffset(300, 750);
-			contentStream.showText("Sujet Projet");
-			contentStream.newLineAtOffset(100, 0);
-			contentStream.showText("Note Rapport");
-			contentStream.newLineAtOffset(100, 0);
-			contentStream.showText("Note Soutenance Membre 1");
-			contentStream.newLineAtOffset(100, 0);
-			contentStream.showText("Note Soutenance Membre 2");
-			contentStream.endText();
+				contentStream.beginText();
+				contentStream.newLineAtOffset(margin + marginX, yStart);
+				contentStream.showText("ID Binome");
+				contentStream.newLineAtOffset(100, 0);
+				contentStream.showText("Etudiant 1");
+				contentStream.newLineAtOffset(100, 0);
+				contentStream.showText("Etudiant 2");
+				contentStream.newLineAtOffset(100, 0);
+				contentStream.showText("Nom Matiere");
+				contentStream.newLineAtOffset(100, 0);
+				contentStream.showText("Sujet Projet");
+				contentStream.newLineAtOffset(100, 0);
+				contentStream.showText("Note Rapport");
+				contentStream.newLineAtOffset(100, 0);
+				contentStream.showText("Note Soutenance Membre 1");
+				contentStream.newLineAtOffset(100, 0);
+				contentStream.showText("Note Soutenance Membre 2");
+				contentStream.endText();
 
-			int yPosition = 700;
-			int xOffset = 100; // Ajustez cet offset pour l'espace entre chaque colonne
+				contentStream.setLineWidth(1);
+				contentStream.moveTo(margin, yStart - 20);
+				contentStream.lineTo(margin + tableWidth, yStart - 20);
+				contentStream.stroke();
 
-			for (BinomeProjet binome : binomesList) {
-				if (binome.getProjet() != null && binome.getProjet().getNomMatiere() != null) {
-					contentStream.beginText();
-					contentStream.newLineAtOffset(xOffset, yPosition -= 20);
-					contentStream.showText(String.valueOf(binome.getIdBinome()));
-					contentStream.newLineAtOffset(xOffset, 0);
-					contentStream.showText(binome.getMembre1().getNom() + " " + binome.getMembre1().getPrenom());
-					contentStream.newLineAtOffset(xOffset, 0);
-					contentStream.showText(binome.getMembre2() != null
-							? binome.getMembre2().getNom() + " " + binome.getMembre2().getPrenom()
-							: "_");
-					contentStream.newLineAtOffset(xOffset, 0);
-					contentStream.showText(binome.getProjet().getNomMatiere());
-					contentStream.endText();
+				
+				int xOffset = 100; // Initial xOffset
 
-					contentStream.beginText();
-					contentStream.newLineAtOffset(xOffset + 300, yPosition); // Ajustez cet offset pour aligner avec la
-																				// deuxième partie
-					contentStream.showText(binome.getProjet().getSujet());
-					contentStream.newLineAtOffset(100, 0);
+				for (BinomeProjet binome : binomesList) {
+					if (binome.getProjet() != null && binome.getProjet().getNomMatiere() != null) {
+						contentStream.beginText();
+						contentStream.newLineAtOffset(xOffset, yPosition -= 20);
+						contentStream.showText(String.valueOf(binome.getIdBinome()));
+						contentStream.newLineAtOffset(getTextWidth(String.valueOf(binome.getIdBinome())), 0);
 
-					Notes matchingNote = findNoteForBinome(binome, notesList);
+						contentStream.showText(binome.getMembre1().getNom() + " " + binome.getMembre1().getPrenom());
+						contentStream.newLineAtOffset(
+								getTextWidth(binome.getMembre1().getNom() + " " + binome.getMembre1().getPrenom()), 0);
 
-					if (matchingNote != null) {
-						double noteRapport = matchingNote.getNoteRapport();
-						double noteSoutenance1 = matchingNote.getNoteSoutenanceMembre1();
-						double noteSoutenance2 = matchingNote.getNoteSoutenanceMembre2();
+						contentStream.showText(binome.getMembre2() != null
+								? binome.getMembre2().getNom() + " " + binome.getMembre2().getPrenom()
+								: "_");
+						contentStream.newLineAtOffset(getTextWidth(binome.getMembre2() != null
+								? binome.getMembre2().getNom() + " " + binome.getMembre2().getPrenom()
+								: "_"), 0);
 
-						contentStream.showText(String.valueOf(noteRapport));
-						contentStream.newLineAtOffset(100, 0);
-						contentStream.showText(String.valueOf(noteSoutenance1));
-						contentStream.newLineAtOffset(100, 0);
-						contentStream.showText(String.valueOf(noteSoutenance2));
+						contentStream.showText(binome.getProjet().getNomMatiere());
+						contentStream.newLineAtOffset(getTextWidth(binome.getProjet().getNomMatiere()), 0);
+
+						Notes matchingNote = findNoteForBinome(binome, notesList);
+
+						if (matchingNote != null) {
+							double noteRapport = matchingNote.getNoteRapport();
+							double noteSoutenance1 = matchingNote.getNoteSoutenanceMembre1();
+							double noteSoutenance2 = matchingNote.getNoteSoutenanceMembre2();
+
+							contentStream.newLineAtOffset(100, 0);
+							contentStream.showText(String.valueOf(noteRapport));
+							contentStream.newLineAtOffset(100, 0);
+							contentStream.showText(String.valueOf(noteSoutenance1));
+							contentStream.newLineAtOffset(100, 0);
+							contentStream.showText(String.valueOf(noteSoutenance2));
+						}
+
+						contentStream.endText();
 					}
-
-					contentStream.endText();
 				}
-
 			}
-			contentStream.close();
 
-			// Enregistrez le document PDF
-			String absoluteFilePath = new File(filePath).getAbsolutePath();
-			document.save(absoluteFilePath);
+			document.save(filePath);
 			document.close();
 			showAlert(AlertType.INFORMATION, "Print", "Data Printed successfully!");
 		} catch (IOException e) {
-			showAlert(AlertType.ERROR, "Error", "Failed to refresh data: " + e.getMessage());
+			showAlert(AlertType.ERROR, "Error", "Failed to generate PDF: " + e.getMessage());
 		}
+	}
+
+	private float getTextWidth(String text) throws IOException {
+		return PDType1Font.HELVETICA_BOLD.getStringWidth(text) / 1000 * 12; // Adjust the font size (12) accordingly
 	}
 
 	// Fonction pour trouver la note correspondante pour un binôme donné

@@ -35,7 +35,7 @@
 								<TableColumn fx:id="col_DateRemiseProjet" prefWidth="133.33331298828125" text="DateRemiseRapport" />
 							</columns>
 						</TableView>
-						<Button fx:id="refreshDataProjet" layoutX="422.0" layoutY="35.0" mnemonicParsing="false" onAction="#refreshData" prefHeight="25.0" prefWidth="69.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
+						<Button fx:id="refreshDataProjet" layoutX="423.0" layoutY="56.0" mnemonicParsing="false" onAction="#refreshData" prefHeight="25.0" prefWidth="69.0" styleClass="update-btn" stylesheets="@../css/dashboard.css">
 							<graphic>
 								<FontAwesomeIconView fill="WHITE" glyphName="REFRESH" size="1.5em" />
 							</graphic>

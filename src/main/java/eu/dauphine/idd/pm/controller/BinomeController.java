@@ -135,7 +135,6 @@ public class BinomeController implements Initializable {
 	private EtudiantService etudiantS = ServiceFactory.getEtudiantService();
 	private BinomeProjetService binomeS = ServiceFactory.getBinomeProjetService();
 	private NotesService noteS = ServiceFactory.getNotesService();
-	private ObservableList<BinomeProjet> addBinome;
 
 	@FXML
 	public void addBinome() {
@@ -342,6 +341,7 @@ public class BinomeController implements Initializable {
 
 	// Define SimpleDateFormat as a class member
 	private SimpleDateFormat newFormatter = new SimpleDateFormat("dd-MM-yyyy");
+	private ObservableList<BinomeProjet> addBinome;
 
 	@FXML
 	public void addShowBinome() {
@@ -437,7 +437,7 @@ public class BinomeController implements Initializable {
 
 					// Vérifier si selectedFilter est null avant d'entrer dans la structure de
 					// commutation
-					if (selectedFilter != null) {
+					if (selectedFilter != null && !selectedFilter.equals("Select")) {
 						switch (selectedFilter) {
 						case "IdBinome":
 							return idBinome.contains(searchKey);
@@ -651,14 +651,11 @@ public class BinomeController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
 		fillEtudiantComboBox();
 		fillProjetComboBox();
 		addShowBinome();
-		ObservableList<String> binome = FXCollections.observableArrayList("Select", "IdBinome", "Etudiant1", "Etudian2",
-				"Nom Matiere", "Sujet Projet");
-		filtre_binome.setItems(binome);
-
+		ObservableList<String> binomeFilters = FXCollections.observableArrayList("Select", "IdBinome", "Etudiant1",
+				"Etudiant2", "Nom Matiere", "Sujet Projet");
+		filtre_binome.setItems(binomeFilters);
 	}
-
 }

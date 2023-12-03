@@ -49,7 +49,7 @@
 								<Font name="System Bold" size="14.0" />
 							</font>
 						</Label>
-                  <TextField fx:id="search_Binome" layoutX="14.0" layoutY="15.0" onKeyTyped="#searchBinome" prefHeight="25.0" prefWidth="313.0" styleClass="search" stylesheets="@../css/dashboard.css" />
+                  <TextField fx:id="search_Binome" layoutX="14.0" layoutY="15.0" onKeyPressed="#searchBinome" prefHeight="25.0" prefWidth="313.0" styleClass="search" stylesheets="@../css/dashboard.css" />
 						<FontAwesomeIconView glyphName="SEARCH" layoutX="16.0" layoutY="34.0" size="1.5em" text="" />
 					</children>
 				</AnchorPane>
