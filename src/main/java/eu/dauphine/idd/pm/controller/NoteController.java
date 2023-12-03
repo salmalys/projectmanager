@@ -820,7 +820,7 @@ public class NoteController implements Initializable {
 				contentStream.lineTo(margin + tableWidth, yStart - 20);
 				contentStream.stroke();
 
-				
+				yPosition = 700;
 				int xOffset = 100; // Initial xOffset
 
 				for (BinomeProjet binome : binomesList) {
