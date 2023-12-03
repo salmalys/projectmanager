@@ -117,7 +117,7 @@
 						<Button fx:id="btn_tmpbackEtudient" layoutX="26.0" layoutY="457.0" mnemonicParsing="false" onAction="#handleBackEtudiant" prefHeight="32.0" prefWidth="67.0" styleClass="clear-btn" stylesheets="@../css/dashboard.css" text="Retour" />
 					</children>
 				</AnchorPane>
-				<AnchorPane fx:id="tmp_updateEtudiant" layoutX="462.0" layoutY="7.0" prefHeight="513.0" prefWidth="397.0" stylesheets="@../css/dashboard.css" visible="false">
+				<AnchorPane fx:id="tmp_updateEtudiant" layoutX="462.0" layoutY="7.0" prefHeight="513.0" prefWidth="397.0" stylesheets="@../css/dashboard.css">
 					<styleClass>
 						<String fx:value="shadow" />
 						<String fx:value="white-bg" />
@@ -146,9 +146,9 @@
 								<Font name="Arial" size="16.0" />
 							</font>
 						</Label>
-						<TextField fx:id="NomEtudiant2" layoutX="163.0" layoutY="199.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<TextField fx:id="PrenomEtudiant2" layoutX="163.0" layoutY="199.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
 						<ComboBox fx:id="Formation2" layoutX="163.0" layoutY="255.0" prefHeight="25.0" prefWidth="178.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
-						<TextField fx:id="PrenomEtudiant2" layoutX="163.0" layoutY="145.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
+						<TextField fx:id="NomEtudiant2" layoutX="163.0" layoutY="145.0" prefHeight="25.0" prefWidth="175.0" styleClass="textfield" stylesheets="@../css/dashboard.css" />
 					</children>
 				</AnchorPane>
 			</children>
