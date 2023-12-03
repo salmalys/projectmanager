@@ -1,0 +1,515 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class BinomeController {
+  + BinomeController(): 
+  + fillProjetComboBox(): void
+  - handleBtnTmpRemiseProjet(ActionEvent): void
+  - resetDateRemiseFields(): void
+  + refreshBinomeTable(): void
+  + addBinome(): void
+  - handleBtnTmpAddBinome(ActionEvent): void
+  + isInputValid(String, String): boolean
+  + addShowBinome(): void
+  - handleBtnTmpUpdateBinome(ActionEvent): void
+  + showAlert(AlertType, String, String): void
+  + updateDateRemiseProjet(): void
+  + deleteBinome(): void
+  - resetBinomeFields(): void
+  + updateBinome(): void
+  - resetBinomeFields2(): void
+  - handleBackBinome(ActionEvent): void
+  + fillEtudiantComboBox(): void
+  + searchBinome(): void
+  + selectBinome(): void
+  + initialize(URL, ResourceBundle): void
+}
+class BinomeProjet {
+  + BinomeProjet(): 
+  + BinomeProjet(Etudiant, Etudiant, Projet, Date): 
+  + BinomeProjet(Etudiant, Projet, Date): 
+  + BinomeProjet(int, Etudiant, Etudiant, Projet, Date): 
+  + BinomeProjet(int, Etudiant, Projet, Date): 
+  - dateRemiseEffective: Date
+  - idBinome: int
+  - membre1: Etudiant
+  - membre2: Etudiant
+  - projet: Projet
+  + toString(): String
+   dateRemiseEffective: Date
+   idBinome: int
+   projet: Projet
+   membre1: Etudiant
+   membre2: Etudiant
+}
+interface BinomeProjetDAO << interface >> {
+  + findByMembersAndIdProjet(int, int, int): BinomeProjet
+}
+class BinomeProjetDAOImpl {
+  + BinomeProjetDAOImpl(): 
+  + findAll(): ObservableList<BinomeProjet>
+  + update(BinomeProjet): void
+  + create(BinomeProjet): void
+  + delete(BinomeProjet): void
+  + deleteById(int): void
+  + findById(int): BinomeProjet
+  + findByMembersAndIdProjet(int, int, int): BinomeProjet
+   connection: Connection
+}
+interface BinomeProjetService << interface >> {
+  + updateDateRemise(Integer, Date): void
+  + createSoloProjet(int, int, Date): int
+  + getBinomeProjetById(int): BinomeProjet
+  + updateBinomeProjet(int, int, int, int, Date): void
+  + listBinomeProjets(): ObservableList<BinomeProjet>
+  + createBinomeProjet(int, int, int, Date): int
+  + deleteBinomeProjetById(int): void
+}
+class BinomeProjetServiceImpl {
+  + BinomeProjetServiceImpl(): 
+  + getBinomeProjetById(int): BinomeProjet
+  + createSoloProjet(int, int, Date): int
+  + updateBinomeProjet(int, int, int, int, Date): void
+  + updateDateRemise(Integer, Date): void
+  + deleteBinomeProjetById(int): void
+  + listBinomeProjets(): ObservableList<BinomeProjet>
+  + createBinomeProjet(int, int, int, Date): int
+}
+class DAOFactory {
+  + DAOFactory(): 
+  - etudiantDAO: EtudiantDAO
+  - formationDAO: FormationDAO
+  - projetDAO: ProjetDAO
+   binomeProjetDAO: BinomeProjetDAO
+   projetDAO: ProjetDAO
+   formationDAO: FormationDAO
+   notesDAO: NotesDAO
+   etudiantDAO: EtudiantDAO
+}
+class DashboardController {
+  + DashboardController(): 
+  + home_countProjet(): void
+  + initialize(URL, ResourceBundle): void
+  + home_countBinome(): void
+  + home_countAvantProjet(): void
+  - BarChartDonnee(): void
+  + home_countApresProjet(): void
+  + tmpSwitch(ActionEvent): void
+  + close(): void
+  + minimize(): void
+  + home_countEtudiant(): void
+  + Affichersername(): void
+  + logout(): void
+}
+class Data {
+  + Data(): 
+}
+class DatabaseConnection {
+  - DatabaseConnection(): 
+  - instance: DatabaseConnection
+  - connection: Connection
+  + closeConnection(): void
+   databasePath: String
+   connection: Connection
+   instance: DatabaseConnection
+}
+class Etudiant {
+  + Etudiant(int, String, String, Formation): 
+  + Etudiant(String, String, Formation): 
+  - formation: Formation
+  - nom: String
+  - prenom: String
+  - idEtudiant: int
+  + toString(): String
+   nom: String
+   formation: Formation
+   prenom: String
+   idEtudiant: int
+}
+class EtudiantController {
+  + EtudiantController(): 
+  + updateEtudiant(): void
+  - handleBackEtudiant2(ActionEvent): void
+  - handleBtnTmpAddEtudiant(ActionEvent): void
+  + isInputValid(String, String, String): boolean
+  + refreshData(): void
+  - handleBtnTmpUpdateEtudiant(ActionEvent): void
+  + deleteEtudiant(): void
+  + searchEtudiant(): void
+  + addEtudiantReset2(): void
+  + showOptionEtudiant(): void
+  + addEtudiantshow(): void
+  - handleBackEtudiant(ActionEvent): void
+  + addEtudiantReset(): void
+  + showAlert(AlertType, String, String): void
+  + addEtudiant(): void
+  + fillFormationComboBox(): void
+  + initialize(URL, ResourceBundle): void
+  + selectEtudient(): void
+}
+interface EtudiantDAO << interface >> {
+  + findByName(String, String): Etudiant
+}
+class EtudiantDAOImpl {
+  + EtudiantDAOImpl(): 
+  + update(Etudiant): void
+  + findById(int): Etudiant
+  + findByName(String, String): Etudiant
+  + create(Etudiant): void
+  + findAll(): ObservableList<Etudiant>
+  + delete(Etudiant): void
+  + deleteById(int): void
+   connection: Connection
+}
+interface EtudiantService << interface >> {
+  + deleteEtudiantById(int): void
+  + updateEtudiant(int, String, String, int): void
+  + createEtudiant(String, String, int): int
+  + getEtudiantIdByNameAndPrenom(String, String): int
+  + getEtudiantById(int): Etudiant
+  + listEtudiants(): ObservableList<Etudiant>
+}
+class EtudiantServiceImpl {
+  + EtudiantServiceImpl(): 
+  + EtudiantServiceImpl(EtudiantDAO, FormationDAO): 
+  + createEtudiant(String, String, int): int
+  + getEtudiantIdByNameAndPrenom(String, String): int
+  + listEtudiants(): ObservableList<Etudiant>
+  + deleteEtudiantById(int): void
+  + updateEtudiant(int, String, String, int): void
+  + getEtudiantById(int): Etudiant
+}
+class EtudiantServiceImplTest {
+  + EtudiantServiceImplTest(): 
+  + testCreateEtudiant(): void
+  + setUp(): void
+  + testCreateEtudiantExisting(): void
+}
+class Formation {
+  + Formation(int, String, String): 
+  + Formation(): 
+  + Formation(String, String): 
+  - idFormation: int
+  - promotion: String
+  - nom: String
+  + toString(): String
+   idFormation: int
+   nom: String
+   promotion: String
+}
+class FormationController {
+  + FormationController(): 
+  + addPromotionList(): void
+  - handleBtnTmpAdd(ActionEvent): void
+  - handleBtnTmpUpdate(ActionEvent): void
+  - handleFormationButton(AnchorPane, AnchorPane, AnchorPane, AnchorPane, AnchorPane, AnchorPane, Button, Button, Button, Button, Button, Button): void
+  - handleBackFormation2(ActionEvent): void
+  + showOptionFormation(): void
+  + addformationshow(): void
+  + addFormation(): void
+  + updateFormation(): void
+  + SearchFormation(): void
+  + isInputValid(String, String): boolean
+  - handleBackFormation(ActionEvent): void
+  + showAlert(AlertType, String, String): void
+  + deleteFormation(): void
+  + refreshData(): void
+  - handleHomeButton(AnchorPane, AnchorPane, AnchorPane, AnchorPane, AnchorPane, AnchorPane, Button, Button, Button, Button, Button, Button): void
+  + addformationReset(): void
+  + addformationReset2(): void
+  + initialize(URL, ResourceBundle): void
+  + tmpSwitch(ActionEvent, AnchorPane, AnchorPane, AnchorPane, AnchorPane, AnchorPane, AnchorPane, Button, Button, Button, Button, Button, Button): void
+  + addPromotionList2(): void
+  + selectFormation(): void
+}
+interface FormationDAO << interface >> {
+  + findByNameAndPromotion(String, String): Formation
+}
+class FormationDAOImpl {
+  + FormationDAOImpl(): 
+  + delete(Formation): void
+  + create(Formation): void
+  + update(Formation): void
+  + findById(int): Formation
+  + findAll(): ObservableList<Formation>
+  + findByNameAndPromotion(String, String): Formation
+  + deleteById(int): void
+   connection: Connection
+}
+interface FormationService << interface >> {
+  + getFormationIdByNameAndPromotion(String, String): int
+  + createFormation(String, String): int
+  + update(int, String, String): void
+  + deleteFormationById(int): void
+  + listFormations(): ObservableList<Formation>
+}
+class FormationServiceImpl {
+  + FormationServiceImpl(FormationDAO): 
+  + FormationServiceImpl(): 
+  + deleteFormationById(int): void
+  + update(int, String, String): void
+  + createFormation(String, String): int
+  + listFormations(): ObservableList<Formation>
+  + getFormationIdByNameAndPromotion(String, String): int
+}
+class FormationServiceImplTest {
+  + FormationServiceImplTest(): 
+  + testCreateFormation(): void
+  + testCreateFormation2(): void
+  + setUp(): void
+}
+interface GenericDAO<T> << interface >> {
+  + create(T): void
+  + findById(int): T
+  + deleteById(int): void
+  + delete(T): void
+  + update(T): void
+  + findAll(): ObservableList<T>
+}
+class LoginController {
+  + LoginController(): 
+  - connection: Connection
+  + initialize(URL, ResourceBundle): void
+  + loginAdmin(): void
+  + close(): void
+  - loginUser(String): boolean
+  + createUser(): void
+   connection: Connection
+}
+class Main {
+  + Main(): 
+  + start(Stage): void
+  + main(String[]): void
+}
+class NoteController {
+  + NoteController(): 
+  - handleBtnSaisirNote(ActionEvent): void
+  - calculerPenalite(Date, Date): int
+  + addNote(): void
+  + generatePdf(): void
+  + initialize(URL, ResourceBundle): void
+  + showOptionNote(): void
+  - showDetailsAlert(String): void
+  - supprimeTousNotes(): void
+  + ClearShowNote(): void
+  + searchNote(): void
+  - modifierNotes(): void
+  - handleBtnModifierNote(ActionEvent): void
+  - handleBtnSupprimerNote(ActionEvent): void
+  - isInteger(String): boolean
+  - handleBtnBackNote(ActionEvent): void
+  - handleTableSelection(): void
+  + refreshData(): void
+  - handleDetailsButton(): void
+  - isInputValid(String, String, String): boolean
+  + showAlert(AlertType, String, String): void
+  - findNoteForBinome(BinomeProjet, ObservableList<Notes>): Notes
+  - handleBtnAfficherNote(ActionEvent): void
+  - supprimerNote(): void
+  - calculerDifferenceEnJours(Date, Date): long
+  - resetNoteFields(): void
+  + selectBinome(): void
+  - isDouble(String): boolean
+  - getTextWidth(String): float
+  + addShowNote(): void
+   detailsFromNotes: String
+}
+class Notes {
+  + Notes(BinomeProjet, double, double, double): 
+  + Notes(): 
+  + Notes(int, BinomeProjet, double, double, double): 
+  - NoteRapport: double
+  - NoteSoutenanceMembre2: double
+  - NoteSoutenanceMembre1: double
+  - binomeProjet: BinomeProjet
+  + toString(): String
+   NoteSoutenanceMembre2: double
+   NoteSoutenanceMembre1: double
+   id: int
+   binomeProjet: BinomeProjet
+   NoteRapport: double
+}
+interface NotesDAO << interface >> {
+  + deleteAll(): void
+  + findByBinomeId(int): Notes
+}
+class NotesDAOImpl {
+  + NotesDAOImpl(): 
+  + create(Notes): void
+  + update(Notes): void
+  + findById(int): Notes
+  + deleteById(int): void
+  + findAll(): ObservableList<Notes>
+  + delete(Notes): void
+  + deleteAll(): void
+  + findByBinomeId(int): Notes
+   connection: Connection
+}
+interface NotesService << interface >> {
+  + deleteNotesById(int): void
+  + updateNotes(int, int, double, double, double): void
+  + findNoteForBinome(int): Notes
+  + createNotes(int, double, double, double): int
+  + calculNoteFinale(int): double[]
+  + deleteAll(): void
+  + listNotes(): ObservableList<Notes>
+}
+class NotesServiceImpl {
+  + NotesServiceImpl(): 
+  + calculNoteFinale(int): double[]
+  + createNotes(int, double, double, double): int
+  + deleteNotesById(int): void
+  + deleteAll(): void
+  + findNoteForBinome(int): Notes
+  + estEntreZeroEtVingt(double): boolean
+  + updateNotes(int, int, double, double, double): void
+  + listNotes(): ObservableList<Notes>
+}
+class Projet {
+  + Projet(int, String, String, Date): 
+  + Projet(String, String, Date): 
+  + Projet(): 
+  - idProjet: int
+  - nomMatiere: String
+  - dateRemiseRapport: Date
+  - sujet: String
+  + toString(): String
+   sujet: String
+   idProjet: int
+   dateRemiseRapport: Date
+   nomMatiere: String
+}
+class ProjetController {
+  + ProjetController(): 
+  + addProjet(): void
+  + resetProjetField(): void
+  + refreshData(): void
+  - handleBackProjet(ActionEvent): void
+  + showOptionProjet(): void
+  + selectProjet(): void
+  + resetProjetField2(): void
+  - isInputValid(String, String, Date): boolean
+  + deleteProjet(): void
+  - handleBtnTmpAddProjet(ActionEvent): void
+  + updateProjet(): void
+  + searchProjet(): void
+  - handleBtnTmpUpdateProjet(ActionEvent): void
+  - showAlert(AlertType, String, String): void
+  + initialize(URL, ResourceBundle): void
+  + addProjetShow(): void
+}
+interface ProjetDAO << interface >> {
+  + findByCourseSubject(String, String): Projet
+}
+class ProjetDAOImpl {
+  + ProjetDAOImpl(): 
+  + create(Projet): void
+  + deleteById(int): void
+  + findAll(): ObservableList<Projet>
+  + findById(int): Projet
+  + delete(Projet): void
+  + findByCourseSubject(String, String): Projet
+  + update(Projet): void
+   connection: Connection
+}
+interface ProjetService << interface >> {
+  + createProjet(String, String, Date): int
+  + getProjetIdByNomMatiereAndSujet(String, String): int
+  + updateProjet(int, String, String, Date): void
+  + getProjetByIdProjet(int): Projet
+  + deleteProjetById(int): void
+  + listProjets(): ObservableList<Projet>
+}
+class ProjetServiceImpl {
+  + ProjetServiceImpl(): 
+  + getProjetByIdProjet(int): Projet
+  + deleteProjetById(int): void
+  + getProjetIdByNomMatiereAndSujet(String, String): int
+  + updateProjet(int, String, String, Date): void
+  + listProjets(): ObservableList<Projet>
+  + createProjet(String, String, Date): int
+}
+class ServiceFactory {
+  + ServiceFactory(): 
+  - formationService: FormationService
+  - projetService: ProjetService
+  - binomeProjetService: BinomeProjetService
+  - etudiantService: EtudiantService
+  - notesService: NotesService
+  - utilService: UtilService
+   etudiantService: EtudiantService
+   projetService: ProjetService
+   utilService: UtilService
+   binomeProjetService: BinomeProjetService
+   formationService: FormationService
+   notesService: NotesService
+}
+class Test {
+  + Test(): 
+}
+class UsersController {
+  + UsersController(): 
+  - calculerPenalite(Date, Date): int
+  ~ ClearShowNote(): void
+  - handleTableSelection(): void
+  + showOptionNote(): void
+  + initialize(URL, ResourceBundle): void
+  - showDetailsAlert(String): void
+  - findNoteForBinome(BinomeProjet, ObservableList<Notes>): Notes
+  - handleDetailsButton(): void
+  + refreshData(): void
+  - handleBtnAfficherNote(ActionEvent): void
+  + updateDateRemiseProjet(): void
+  + clearIdbinome(): void
+  + selectBinome(): void
+  - handleBtnBackNote(ActionEvent): void
+  + generatePdf(): void
+  + Affichersername(): void
+  + searchNote(): void
+  - calculerDifferenceEnJours(Date, Date): long
+  + logout(): void
+  + showAlert(AlertType, String, String): void
+  + close(): void
+  + minimize(): void
+  + addShowNote(): void
+   detailsFromNotes: String
+}
+interface UtilService << interface >> {
+   moyenneParProjet: HashMap<String, Double>
+   nbBinome: int
+   totalProjets: int
+   nbprojetRemisAvantDate: int
+   nbprojetRemisApresDate: int
+   totalEtudiants: int
+}
+class UtilServiceImpl {
+  + UtilServiceImpl(): 
+   nbBinome: int
+   nbprojetRemisAvantDate: int
+   connection: Connection
+   moyenneParProjet: HashMap<String, Double>
+   totalProjets: int
+   nbprojetRemisApresDate: int
+   totalEtudiants: int
+}
+
+BinomeProjetDAO           -[#008200,plain]-^  GenericDAO               
+BinomeProjetDAOImpl       -[#008200,dashed]-^  BinomeProjetDAO          
+BinomeProjetServiceImpl   -[#008200,dashed]-^  BinomeProjetService      
+EtudiantDAO               -[#008200,plain]-^  GenericDAO               
+EtudiantDAOImpl           -[#008200,dashed]-^  EtudiantDAO              
+EtudiantServiceImpl       -[#008200,dashed]-^  EtudiantService          
+FormationDAO              -[#008200,plain]-^  GenericDAO               
+FormationDAOImpl          -[#008200,dashed]-^  FormationDAO             
+FormationServiceImpl      -[#008200,dashed]-^  FormationService         
+NotesDAO                  -[#008200,plain]-^  GenericDAO               
+NotesDAOImpl              -[#008200,dashed]-^  NotesDAO                 
+NotesServiceImpl          -[#008200,dashed]-^  NotesService             
+ProjetDAO                 -[#008200,plain]-^  GenericDAO               
+ProjetDAOImpl             -[#008200,dashed]-^  ProjetDAO                
+ProjetServiceImpl         -[#008200,dashed]-^  ProjetService            
+UtilServiceImpl           -[#008200,dashed]-^  UtilService              
+@enduml
